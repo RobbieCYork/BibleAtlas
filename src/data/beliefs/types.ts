@@ -1,0 +1,180 @@
+/**
+ * Religions and Denominations — the shared record shape.
+ *
+ * One interface for both groups on the Articles page ("World Religions and Worldviews" and
+ * "Christian Traditions and Denominations"), so the two halves of the section are written to the
+ * same template and render through the same panel. Records live in:
+ *
+ *   src/data/beliefs/religions.ts      export const worldReligions: BeliefRecord[]
+ *   src/data/beliefs/denominations.ts  export const christianTraditions: BeliefRecord[]
+ *
+ * Editorial rules this shape exists to enforce (see automation/manager/beliefs-scope.md §1 and the
+ * master prompt's editorial position):
+ *
+ *  - EVERY ARTICLE IS WRITTEN FROM A PROTESTANT EVANGELICAL POSITION (Robbie, 2026-09-07 and
+ *    2026-11-26). The app's own voice frames the whole article: `evangelicalFraming` opens it and
+ *    `evangelicalView` sets out the agreements and disagreements in full. That is not licence to
+ *    editorialise inside the descriptive fields: `selfDescription`, `beliefs`, `practices` and the
+ *    rest report each tradition accurately, attributed to it, in terms its own members would
+ *    recognise and from its own official or primary sources. `ownAnswer` gives the tradition its
+ *    reply in the same article, and `evangelicalsDiffer` names real disagreements among
+ *    evangelicals rather than flattening them.
+ *  - NEVER INVENT A FIGURE. `adherents.verified` is false whenever the number could not be
+ *    confirmed against the cited source on the day it was written; the panel says so to the reader.
+ *  - THE WORD "CULT" IS NOT USED, anywhere in this section.
+ *  - These records are NOT registered with the name auto-linker (lib/verseAnnotations.ts). The
+ *    names collide with Scripture ("Nazarene", "Pentecost", "catholic", "Baptist"), so nothing in
+ *    here may be added to `topics` or to NAME_ENTRIES. Cross-links between articles go through
+ *    `relatedIds`, written by hand.
+ *  - Paragraph strings ARE run through the linker when rendered (unless `noBibleLinks` is set), so
+ *    names of biblical people and places in them become links. Write full names ("Martin Luther", "John Wesley"); a bare
+ *    forename like "John" will link to the wrong John.
+ */
+
+import type { VerseRef } from "../types";
+
+export type BeliefArea = "world-religion" | "christian-tradition";
+
+/** What kind of evidence a source is. Listed so a reader can tell a church's own confession from a
+ * survey or an encyclopedia at a glance. Order sources official/primary first. */
+export type BeliefSourceKind =
+  /** The body's own website, constitution, statement of faith, catechism or yearbook. */
+  | "official"
+  /** A historic primary text: a creed, a confession, a founder's own writing. */
+  | "primary"
+  /** Peer-reviewed or university-press scholarship. */
+  | "scholarly"
+  /** A survey or statistical body: Pew Research Center, a national census, a denominational
+   * statistics office reporting through a third party. */
+  | "data"
+  /** Reputable reference or popular writing: Britannica, Christian History Magazine. */
+  | "reference"
+  /** Wikipedia. Allowed as further reading, never as the only support for a claim. */
+  | "encyclopedic";
+
+export interface BeliefSource {
+  kind: BeliefSourceKind;
+  label: string;
+  url: string;
+  /** Optional clause shown after the label — "official statement of faith, 2000 revision". */
+  note?: string;
+}
+
+export interface BeliefFounding {
+  /**
+   * Who founded it, written for a reader. Say plainly when there is no single founder
+   * ("No single founder: ...") and attribute traditional accounts as traditional ("By Catholic
+   * tradition, founded by Christ on the apostle Peter (Matthew 16:18)").
+   */
+  founders: string;
+  /** "single" | "several" | "none" — drives nothing yet but lets a chart or filter be honest later. */
+  founderKind: "single" | "several" | "none";
+  /** Founding date as written for a reader: "1517 (Ninety-five Theses)", "1845, Augusta, Georgia". */
+  date: string;
+  /** Where the date is a convention or disputed, say why. */
+  dateNote?: string;
+  place?: string;
+}
+
+export interface BeliefAdherents {
+  /** The number as a reader should see it: "about 1.4 billion", "12.7 million (2024)". */
+  figure: string;
+  /** What exactly is being counted, shown after the word "Counts": "baptized Catholics",
+   * "members on the rolls", "people who
+   * self-identify as ...". Different bodies count different things; never compare across them
+   * without saying so. */
+  counts: string;
+  /** The year the figure describes (not the year it was published, if they differ — say so in note). */
+  year: string;
+  source: { label: string; url: string };
+  /** False when the figure could NOT be confirmed against the cited source when written. The panel
+   * shows an "unverified" marker; a fact check must clear it before it ships. */
+  verified: boolean;
+  /** Caveats, competing estimates, how the body's own count differs from surveys. */
+  note?: string;
+}
+
+export interface BeliefPoint {
+  /** Short label: "Scripture", "Salvation", "Baptism", "The Lord's Supper". */
+  label: string;
+  /** Stated as the tradition states it. */
+  statement: string;
+}
+
+export interface BeliefRecord {
+  /** URL-permanent once published (public page at /religion/<id>). Never derive from the name. */
+  id: string;
+  name: string;
+  /** Shown to the reader as "Also called: ..." and used by search. */
+  alternateNames?: string[];
+  area: BeliefArea;
+  /**
+   * Show this article's prose with no auto-links at all (Robbie, 2026-11-26: "There are no biblical
+   * references to Buddhism!"). Set on the religions and worldviews that do not share Scripture —
+   * Islam, Hinduism, Buddhism, Sikhism, Confucianism, Atheism, Agnosticism — where a tappable name
+   * or verse reads as the Bible referring to that tradition. Those records also cite no Bible
+   * passage anywhere in their text and carry no `verses`. Honoured by TopicPanel and by
+   * `beliefPage` in scripts/seo/render.mjs.
+   */
+  noBibleLinks?: true;
+  /** Sub-group inside the area, shown on the article: "Reformation churches", "Eastern Christianity",
+   * "Movements from a Christian background", "Abrahamic religions", "Worldviews". */
+  group: string;
+  /** Short tag under the name in lists: "Protestant denomination (Baptist)". */
+  role: string;
+  /** One or two sentences, descriptive. */
+  summary: string;
+  /** How the body describes itself, close to its own words, cited in `sources`. */
+  selfDescription: string;
+  /**
+   * Visible notice about where the app files this record and why, where a reasonable adherent would
+   * dispute the filing. MANDATORY for the Latter-day Saints and Jehovah's Witnesses (Robbie,
+   * 2026-09-09): state the criterion and the body's own published teaching that produced it, state
+   * that members identify as Christian, and say the filing is the app's editorial judgement.
+   */
+  classificationNote?: string;
+  founding: BeliefFounding;
+  adherents: BeliefAdherents;
+  /** What makes it distinctive — paragraphs. */
+  distinctives: string[];
+  /** Basic beliefs. Aim for 6-10 points. */
+  beliefs: BeliefPoint[];
+  /** Worship and practice — paragraphs. */
+  practices: string[];
+  /** Structure, governance and major branches — paragraphs. */
+  structure: string[];
+  /** Relationship to related groups — paragraphs. */
+  relationships: string[];
+  /** Optional, world religions mainly: how this tradition understands Jesus. */
+  viewOfJesus?: string[];
+  /**
+   * The app's own position on this tradition, stated in a short paragraph that opens the article
+   * ("From a Protestant evangelical perspective"): where evangelicals stand, what they honour, and
+   * the heart of the disagreement. Written in the app's voice, not attributed to the tradition. For
+   * a `noBibleLinks` record it cites no Bible passage.
+   */
+  evangelicalFraming: string;
+  /**
+   * The full assessment. Written from a Protestant evangelical position, fairly and
+   * respectfully. `evangelicalsDiffer` names where evangelicals themselves disagree.
+   */
+  evangelicalView: {
+    agreements: string[];
+    disagreements: string[];
+    evangelicalsDiffer?: string[];
+  };
+  /** How the tradition itself would answer the evangelical disagreements — paragraphs. */
+  ownAnswer: string[];
+  /** Who gives that answer, as the heading names them: "How Catholics would answer", "How atheists
+   * would answer". People, not the -ism or the institution, so the heading reads as a sentence. */
+  answeredBy: string;
+  /** Official and primary sources first. Minimum four, at least two official/primary. */
+  sources: BeliefSource[];
+  /** Optional Scripture references, shown as a "Bible References" block. Must be verified, not
+   * recalled. ONLY JUDAISM carries one (Robbie, 2026-11-26): under any other record the heading
+   * reads as the Bible referring to that religion or church. A passage a doctrine turns on is cited
+   * in the sentence that states the doctrine instead. */
+  verses?: VerseRef[];
+  /** Ids of other BeliefRecords, for hand-written cross-links. */
+  relatedIds?: string[];
+}

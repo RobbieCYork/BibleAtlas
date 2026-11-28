@@ -12,8 +12,11 @@ import {
   type QuizTopicPreset,
 } from "../data/gameQuestions";
 import Icon from "./Icon";
+import { JoinByCode } from "./GameEntry";
 
 interface GamesPanelProps {
+  /** Which first-screen choice led here. */
+  entry: "solo" | "create" | "join";
   onRoomReady: (roomId: string) => void;
 }
 
@@ -21,10 +24,10 @@ const TARGET_SCORE = 50;
 
 const difficultyLabel = (key: QuizDifficultyChoice) => DIFFICULTY_CHOICES.find((d) => d.key === key)?.label ?? key;
 
-/** The Games entry screen — pick a topic and difficulty, create a room (or join one by code), plus the standing Top
- * 5 leaderboard. Mirrors the create/join split every other room-based flow in this app doesn't have
- * yet, so its error handling is local rather than following an existing panel's pattern one-for-one. */
-export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
+/** Bible Trivia's step after its first screen. Play solo and Create show the rules, the topic and
+ * difficulty choice, one start button and the standing Top 5; Join is the code and nothing else.
+ * Error handling is local rather than following an existing panel's pattern one-for-one. */
+export default function GamesPanel({ entry, onRoomReady }: GamesPanelProps) {
   const [preset, setPreset] = useState<QuizTopicPreset>("all");
   const [customMode, setCustomMode] = useState(false);
   const [customQuery, setCustomQuery] = useState("");
@@ -37,10 +40,11 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
   const [highScores, setHighScores] = useState<GameHighScore[] | null>(null);
 
   useEffect(() => {
+    if (entry === "join") return;
     fetchTopHighScores(5)
       .then(setHighScores)
       .catch(() => setHighScores([]));
-  }, []);
+  }, [entry]);
 
   const topic: QuizSettings = customMode ? { customQuery } : { preset };
   // How many questions each difficulty has for the current topic. Cheap to recompute — an in-memory
@@ -76,7 +80,7 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
     }
   };
 
-  /** One line saying what Play will actually serve — including when it will be a short round. */
+  /** One line saying what the start button will actually serve — including when it will be a short round. */
   const roundSummary = () => {
     if (needsCustomText) return "Type a topic to see how many questions match.";
     if (!canStart) {
@@ -142,16 +146,19 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
     }
   };
 
+  if (entry === "join") {
+    return <JoinByCode code={joinCode} onCodeChange={setJoinCode} onJoin={handleJoin} busy={busy} error={error} />;
+  }
+  const solo = entry === "solo";
+
   return (
     <div className="games-panel">
       <div className="games-panel-intro">
-        <h2 className="games-inline-icon">
-          <Icon name="trivia" />
-          Bible Trivia
-        </h2>
+        <h2>{solo ? "Play solo" : "Create multiplayer game"}</h2>
         <p>
-          Play solo or live with friends — every player answers, wrong answers cost you, first correct doubles. First to {TARGET_SCORE} wins, or the
-          highest score when the questions run out.
+          {solo
+            ? `Wrong answers cost you. Reach ${TARGET_SCORE} points to win, or play until the questions run out.`
+            : `Create a room and share the code. Every player answers, wrong answers cost you, first correct doubles. First to ${TARGET_SCORE} wins, or the highest score when the questions run out.`}
         </p>
       </div>
 
@@ -236,57 +243,16 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
         </p>
       </div>
 
-      <div className="games-panel-actions">
-        <div className="games-panel-card">
-          <h3>Play now</h3>
-          <p>Solo practice, or start a room and share the code with others.</p>
-          <button type="button" className="games-primary-button" onClick={handlePlaySolo} disabled={busy || !canStart}>
-            {busy ? (
-              "Starting…"
-            ) : (
-              <>
-                <Icon name="people" />
-                Play Solo
-              </>
-            )}
-          </button>
-          <button type="button" className="games-secondary-button" onClick={handleCreate} disabled={busy || !canStart}>
-            {busy ? (
-              "Creating…"
-            ) : (
-              <>
-                <Icon name="players" />
-                Create Multiplayer Game
-              </>
-            )}
-          </button>
-        </div>
-
-        <div className="games-panel-card">
-          <h3>Join a game</h3>
-          <p>Enter the code the host shared with you.</p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleJoin();
-            }}
-          >
-            <input
-              type="text"
-              className="games-code-input"
-              placeholder="ABC123"
-              value={joinCode}
-              onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-              maxLength={6}
-              autoCapitalize="characters"
-              disabled={busy}
-            />
-            <button type="submit" className="games-primary-button" disabled={busy || !joinCode.trim()}>
-              {busy ? "Joining…" : "Join Game"}
-            </button>
-          </form>
-        </div>
-      </div>
+      <button type="button" className="games-primary-button game-start-button" onClick={solo ? handlePlaySolo : handleCreate} disabled={busy || !canStart}>
+        {busy ? (
+          solo ? "Starting…" : "Creating…"
+        ) : (
+          <>
+            <Icon name={solo ? "play" : "players"} />
+            {solo ? "Start game" : "Create game"}
+          </>
+        )}
+      </button>
 
       {error && <p className="games-error">{error}</p>}
 
@@ -301,10 +267,10 @@ export default function GamesPanel({ onRoomReady }: GamesPanelProps) {
           <p className="games-high-scores-empty">No games finished yet — be the first!</p>
         ) : (
           <ol className="games-high-scores-list">
-            {highScores.map((entry) => (
-              <li key={entry.id}>
-                <span className="games-high-scores-name">{entry.display_name}</span>
-                <span className="games-high-scores-score">{entry.score}</span>
+            {highScores.map((row) => (
+              <li key={row.id}>
+                <span className="games-high-scores-name">{row.display_name}</span>
+                <span className="games-high-scores-score">{row.score}</span>
               </li>
             ))}
           </ol>

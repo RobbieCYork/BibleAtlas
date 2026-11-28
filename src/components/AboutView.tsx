@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import BackButton from "./BackButton";
 import Icon from "./Icon";
 import ReportIssueSheet from "./ReportIssueSheet";
-import { ABOUT_PULL_QUOTE, ABOUT_SECTIONS, ABOUT_TITLE } from "../data/aboutPage";
+import AboutText from "./AboutText";
+import { ABOUT_TITLE } from "../data/aboutPage";
+import { loadAboutContent, useAboutContent } from "../lib/aboutContent";
 import type { ReportSurface } from "../lib/reportContext";
 
 interface AboutViewProps {
@@ -16,9 +18,17 @@ interface AboutViewProps {
 
 /** Full-screen "About Capstone Bible", opened from the main menu. Drawn over whatever the reader was
  * on and borrows My Profile's frame (.myprofile-*), exactly as SettingsView does. The signed-out copy
- * of the same words is the static page at /about (scripts/seo/render.mjs). */
+ * of the same words is the static page at /about (scripts/seo/render.mjs).
+ *
+ * The words are the owner's saved text when there is one (Admin Console -> About page, sql/051), else
+ * the built-in text; see lib/aboutContent.ts. They draw at once from what this browser already has and
+ * refresh when the page opens. */
 export default function AboutView({ userId, onClose, reportSurface }: AboutViewProps) {
   const [reporting, setReporting] = useState(false);
+  const content = useAboutContent();
+  useEffect(() => {
+    void loadAboutContent();
+  }, []);
 
   return (
     <section className="myprofile-root about-root" aria-label={ABOUT_TITLE}>
@@ -28,17 +38,9 @@ export default function AboutView({ userId, onClose, reportSurface }: AboutViewP
       </header>
       <div className="myprofile-body">
         <article className="myprofile-body-inner about-text">
-          <blockquote className="about-quote">{ABOUT_PULL_QUOTE}</blockquote>
-          {ABOUT_SECTIONS.map((section, i) => (
-            <section key={section.heading ?? i}>
-              {section.heading && <h3>{section.heading}</h3>}
-              {section.paragraphs.map((text) => (
-                <p key={text}>{text}</p>
-              ))}
-            </section>
-          ))}
+          <AboutText content={content} />
           <button type="button" className="about-report" onClick={() => setReporting(true)}>
-            <Icon name="flag" inline /> Report a Problem
+            <Icon name="flag" inline /> Report a Problem or Suggest a Feature
           </button>
         </article>
       </div>

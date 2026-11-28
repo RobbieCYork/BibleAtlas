@@ -50,7 +50,21 @@ export const GAMES: GameDef[] = [
     feature: "game_chronology",
     icon: "chronology",
     title: "Chronology",
-    tagline: "Put events from the timeline back in the order they happened — Beginner to Expert.",
+    tagline: "Put events back in the order they happened. Pick a category, Beginner to Expert.",
+  },
+  {
+    key: "daily-name",
+    feature: "game_daily_name",
+    icon: "dailyName",
+    title: "Daily Name",
+    tagline: "One hidden Bible name a day, the same for everyone — six guesses. Practice as much as you like.",
+  },
+  {
+    key: "twenty-questions",
+    feature: "game_twenty_questions",
+    icon: "twentyQuestions",
+    title: "20 Questions",
+    tagline: "A secret person, place or thing from the Bible — find it in twenty yes-or-no questions.",
   },
 ];
 
@@ -68,10 +82,6 @@ export default function GameCenter({ onSelectGame }: GameCenterProps) {
   const shown = GAMES.filter((g) => stages[g.feature].visible);
   return (
     <div className="game-center">
-      <div className="games-panel-intro">
-        <h2>Game Center</h2>
-        <p>Pick a game to play with friends.</p>
-      </div>
       <div className="game-center-list">
         {shown.length === 0 && <p className="games-high-scores-empty">No games are available right now — check back soon.</p>}
         {shown.map((g) => (

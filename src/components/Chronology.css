@@ -198,6 +198,22 @@
   margin-left: 8px;
 }
 
+/* A young-earth date on reveal (datingDebate.ts): a compact tag on the card, a footnote below. */
+.chronology-card-young-earth {
+  padding: 1px 7px;
+  border-radius: 100px;
+  border: 1px dashed var(--border);
+  font-size: calc(11px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.chronology-young-earth-note {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.45;
+}
+
 /* ---------------------------------------------------------------- buttons */
 
 .chronology-btn-primary {
@@ -260,4 +276,68 @@
   gap: 10px;
   width: 100%;
   max-width: 280px;
+}
+
+/* ------------------------------------------------------------------ phones
+ * Arrows side by side make each card shorter and the arrows bigger, so more of the list is on screen
+ * above the pinned Check Order (Game.css, .game-pin). */
+
+@media (max-width: 768px) {
+  .chrono-play .chronology-hud {
+    margin-bottom: 2px;
+  }
+
+  .chrono-play .chronology-instruction {
+    margin-bottom: 6px;
+    font-size: calc(13px * var(--tsz, 1));
+    line-height: 1.3;
+  }
+
+  .chrono-play .chronology-list {
+    gap: 4px;
+    margin-bottom: 4px;
+    padding-left: 8px;
+    flex-shrink: 0;
+  }
+
+  .chrono-play .chronology-card {
+    gap: 8px;
+    padding: 2px 6px;
+    min-height: 44px;
+    scroll-margin-block: 8px 68px;
+  }
+
+  .chrono-play .chronology-card-title {
+    font-size: calc(13px * var(--tsz, 1));
+    line-height: 1.2;
+  }
+
+  .chrono-play .chronology-card-controls {
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .chrono-play .chronology-move {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .chrono-play .chronology-solution {
+    margin-bottom: 8px;
+  }
+}
+
+/* Category, above the difficulty in the same setup card — the Bible Trivia topic picker's look. */
+.chronology-category {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chronology-category h3 {
+  color: var(--text-h);
+  font-family: var(--display);
+  font-size: calc(15px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.2;
 }

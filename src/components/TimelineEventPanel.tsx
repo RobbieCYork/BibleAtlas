@@ -3,6 +3,7 @@ import { timelineEvents } from "../data/timelineEvents";
 import LinkedVerseText from "./LinkedVerseText";
 import ArticleHeader from "./ArticleHeader";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import YoungEarthDateNote from "./YoungEarthDateNote";
 
 interface TimelineEventPanelProps {
   event: TimelineEvent | null;
@@ -102,6 +103,7 @@ export default function TimelineEventPanel({
         <span>{event.dateLabel}</span>
         {certaintyBadge && <span className="person-tier-tag">{certaintyBadge}</span>}
       </p>
+      {event.youngEarthDate && <YoungEarthDateNote onSelectTopic={onSelectTopic} />}
       <p className="person-summary">{event.summary}</p>
 
       <div className="history-section">

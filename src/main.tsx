@@ -12,6 +12,8 @@ import { initOfflineBibles } from './lib/offline/bibles'
 import { SkinController } from './lib/skin'
 // Skins (every signed-in reader). Must load AFTER App.css (imported via App above) so its overrides win ties.
 import './skins.css'
+// Photographs behind the bare landing screens. After skins.css for the same reason.
+import './pageBackgrounds.css'
 
 // Applied synchronously, before the first paint, so a reader who chose "dark" doesn't see a flash
 // of the default light theme first — ThemeProvider's own effect (same localStorage key) takes over

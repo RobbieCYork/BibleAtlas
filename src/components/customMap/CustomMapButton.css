@@ -1,0 +1,66 @@
+/* Top left of the map. On a wide screen the Map/Satellite switch already sits there, so the button
+ * goes under it; on a phone that switch moves to the bottom right. */
+.cm-open-button {
+  position: absolute;
+  top: 72px;
+  left: 12px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 100px;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font: 600 calc(13px * var(--tsz, 1)) / 1.2 var(--sans);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+}
+
+.cm-open-button:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+@media (max-width: 768px) {
+  .cm-open-button {
+    top: 12px;
+    min-height: 44px;
+  }
+
+  /* "Show All Pins" is centred along the same top edge. */
+  .map-area:has(.clear-selection-button) .cm-open-button {
+    top: 66px;
+  }
+}
+
+/* Styled here, not in CustomMap.css: it shows exactly when that file did not arrive. */
+.cm-load-failed {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.cm-load-failed p {
+  flex-basis: 100%;
+}
+
+.cm-load-failed button {
+  padding: 8px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}

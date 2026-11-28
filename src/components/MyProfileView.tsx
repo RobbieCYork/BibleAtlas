@@ -656,7 +656,6 @@ function BibleVersionSetting() {
       <label className="auth-settings-label" htmlFor="myprofile-bible-version">
         Bible version
       </label>
-      <p className="auth-benefits auth-benefits-inline">The translation the Bible tab opens and reads in.</p>
       <select id="myprofile-bible-version" value={translation} onChange={(e) => setTranslation(e.target.value)}>
         {TRANSLATIONS.map((t) => (
           <option key={t.id} value={t.id}>
@@ -690,7 +689,8 @@ const PROFILE_REPORT_SURFACE: ReportSurface = { route: "app", title: "Capstone B
 /** Full-screen "My Profile" mode — same top-level takeover pattern as TimelineView (a boolean in App
  * renders this over the whole app-body, with its own header and Back button) instead of the small
  * anchored dropdown this used to be. Reachable on a phone from the "My Profile" tab and header menu
- * row, and on desktop from the account menu's identity header (avatar, name, email). */
+ * row, and on desktop from the main menu's "Go to" list and the account menu (its "My Profile" row
+ * and the identity header above it). */
 export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends, reportSurface }: MyProfileViewProps) {
   // My Reports and the report form are the same full-screen sheets the account menu opens, drawn over
   // this page. (Settings is not here: it opens from the account menu, see SettingsView.)
@@ -774,7 +774,7 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
             <button type="button" className="myprofile-link-row" onClick={() => setSheet("myReports")}>
-              <Icon name="doc" inline /> My Reports
+              <Icon name="doc" inline /> My Reports &amp; Suggestions
             </button>
           </div>
           {deletionFeature.visible && (

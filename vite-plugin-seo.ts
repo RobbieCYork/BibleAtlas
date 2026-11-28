@@ -19,19 +19,26 @@ import type { Plugin } from 'vite'
 export function seoPlugin(): Plugin {
   let outDir = 'dist'
   let root = process.cwd()
+  // The public Supabase URL and anon key the app bundle is built with, for /about's saved-text loader
+  // (scripts/seo/render.mjs, aboutPage). Read from Vite's own resolved env so the page and the bundle
+  // can never point at different projects.
+  let supabase: { url: string; anonKey: string } | null = null
   return {
     name: 'seo-prerender',
     apply: 'build',
     configResolved(config) {
       root = config.root
       outDir = path.resolve(config.root, config.build.outDir)
+      const url = config.env.VITE_SUPABASE_URL
+      const anonKey = config.env.VITE_SUPABASE_ANON_KEY
+      supabase = typeof url === 'string' && url && typeof anonKey === 'string' && anonKey ? { url, anonKey } : null
     },
     async closeBundle() {
       // Resolved from Vite's own project root rather than this file's location: the config is
       // bundled to a temp module before it runs, so `import.meta.url` is not a path to trust here.
       const generator = pathToFileURL(path.join(root, 'scripts/seo/build-seo.mjs')).href
       const { generateSeo } = await import(/* @vite-ignore */ generator)
-      const result = await generateSeo(outDir)
+      const result = await generateSeo(outDir, { supabase })
       this.info(
         `pre-rendered ${result.pages} public pages + sitemap.xml (${result.urls} urls) — ` +
           Object.entries(result.counts as Record<string, number>)

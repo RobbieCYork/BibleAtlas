@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  categoryLabelFor,
   deleteMyReport,
-  fetchCategories,
+  fetchAllCategories,
   fetchMyReports,
   formatAge,
   humanizeReportError,
+  isSuggestion,
   updateMyReport,
   SEVERITY_LABELS,
   STATUS_BLURBS,
   STATUS_LABELS,
+  SUGGESTION_STATUS_BLURBS,
   TARGET_KIND_LABELS,
   type MyReportRow,
   type ReportCategory,
@@ -57,7 +60,7 @@ function ReportEditor({
       await updateMyReport(report.id, fields);
       onSaved(fields);
     } catch (err) {
-      setError(humanizeReportError(err));
+      setError(humanizeReportError(err, isSuggestion(report)));
     } finally {
       setSaving(false);
     }
@@ -73,17 +76,21 @@ function ReportEditor({
         <span className="report-field-label">Details</span>
         <textarea value={body} onChange={(e) => setBody(e.target.value.slice(0, 8000))} rows={5} maxLength={8000} />
       </label>
-      <label className="report-field">
-        <span className="report-field-label">How much it matters</span>
-        <select value={severity} onChange={(e) => setSeverity(e.target.value as Severity | "")}>
-          <option value="">Not sure / no view</option>
-          {SEVERITY_ORDER.map((s) => (
-            <option key={s} value={s}>
-              {SEVERITY_LABELS[s]}
-            </option>
-          ))}
-        </select>
-      </label>
+      {/* Not asked of a suggestion. Hidden rather than cleared: a report an administrator re-filed as a
+          suggestion keeps whatever its sender chose. */}
+      {!isSuggestion(report) && (
+        <label className="report-field">
+          <span className="report-field-label">How much it matters</span>
+          <select value={severity} onChange={(e) => setSeverity(e.target.value as Severity | "")}>
+            <option value="">Not sure / no view</option>
+            {SEVERITY_ORDER.map((s) => (
+              <option key={s} value={s}>
+                {SEVERITY_LABELS[s]}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       {error && (
         <p className="auth-status auth-error" role="alert">
           {error}
@@ -111,7 +118,7 @@ export default function MyReportsSheet({ userId, onClose, onReportSomething }: M
   const load = useCallback(async () => {
     setError(null);
     try {
-      const [rows, cats] = await Promise.all([fetchMyReports(userId), fetchCategories().catch(() => [])]);
+      const [rows, cats] = await Promise.all([fetchMyReports(userId), fetchAllCategories().catch(() => [])]);
       setReports(rows);
       setCategories(cats);
     } catch (err) {
@@ -124,7 +131,9 @@ export default function MyReportsSheet({ userId, onClose, onReportSomething }: M
     void load();
   }, [load]);
 
-  const categoryLabel = (key: string) => categories.find((c) => c.key === key)?.label ?? key;
+  // All categories, retired ones included, so an old report keeps the name it was filed under.
+  const categoryLabel = (key: string) =>
+    categories.length === 0 ? key : categoryLabelFor(key, categories);
 
   const handleDelete = async (report: MyReportRow) => {
     if (!window.confirm(`Withdraw "${report.title}"? This can't be undone.`)) return;
@@ -132,21 +141,21 @@ export default function MyReportsSheet({ userId, onClose, onReportSomething }: M
     try {
       await deleteMyReport(report.id);
       setReports((prev) => (prev ?? []).filter((r) => r.id !== report.id));
-      setNotice("Report withdrawn.");
+      setNotice(isSuggestion(report) ? "Suggestion withdrawn." : "Report withdrawn.");
     } catch (err) {
-      setError(humanizeReportError(err));
+      setError(humanizeReportError(err, isSuggestion(report)));
       // Its status changed under us, so what's on screen is stale in more ways than one.
       void load();
     }
   };
 
   return (
-    <div className="report-sheet" role="dialog" aria-label="My reports">
+    <div className="report-sheet" role="dialog" aria-label="My reports and suggestions">
       <div className="report-sheet-head">
         <button type="button" className="auth-back-link" onClick={onClose}>
           ← Back
         </button>
-        <h3 className="report-sheet-title">My Reports</h3>
+        <h3 className="report-sheet-title">My Reports &amp; Suggestions</h3>
       </div>
       <div className="report-sheet-body">
         {error && (
@@ -161,13 +170,13 @@ export default function MyReportsSheet({ userId, onClose, onReportSomething }: M
         {reports !== null && reports.length === 0 && (
           <div className="report-empty">
             <p className="report-intro">
-              You haven't reported anything yet. If you spot a mistake, a misspelling, something
-              that looks wrong, or you think of something the app should do — that's what this is
+              You haven't sent anything yet. If you spot a mistake, a misspelling or something
+              that looks wrong, or you think of a feature the app should have — that's what this is
               for.
             </p>
             {onReportSomething && (
               <button type="button" className="report-btn report-btn-primary" onClick={onReportSomething}>
-                Report something
+                Report or suggest something
               </button>
             )}
           </div>
@@ -185,7 +194,9 @@ export default function MyReportsSheet({ userId, onClose, onReportSomething }: M
                 {categoryLabel(report.category)} · filed {formatAge(report.created_at)}
                 {report.page_title && ` · from ${report.page_title}`}
               </p>
-              <p className="report-card-blurb">{STATUS_BLURBS[report.status]}</p>
+              <p className="report-card-blurb">
+                {(isSuggestion(report) ? SUGGESTION_STATUS_BLURBS : STATUS_BLURBS)[report.status]}
+              </p>
 
               {editingId === report.id ? (
                 <ReportEditor

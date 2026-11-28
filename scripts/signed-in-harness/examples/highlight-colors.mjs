@@ -407,7 +407,7 @@ export default async function (h) {
   h.assert((await h.count(".verse-sheet-actions .verse-popup-color-yellow")) === 1, "yellow swatch present");
   await h.screenshot(`sheet-${h.viewport}-${h.theme}.png`);
 
-  h.section("inline note box focused on open");
+  h.section("inline note box focused on open (mouse and keyboard; touch is verse-sheet-keyboard.mjs)");
   const focused = await h.evaluate(() => document.activeElement?.className ?? "");
   h.assert(/\bverse-popup-inline-note\b/.test(await h.evaluate(() => document.activeElement?.closest("form")?.className ?? "")) , "inline note textarea has focus on open (" + focused + ")");
   h.assert((await h.count(".verse-sheet")) === 1, "sheet stayed open after focus moved into the textarea");

@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
 import { createSavingPeterRoom, joinSavingPeterRoom, fetchTopSavingPeterHighScores, type SavingPeterHighScore } from "../lib/savingPeterMultiplayer";
 import Icon from "./Icon";
+import { JoinByCode } from "./GameEntry";
 
 interface SavingPeterMultiplayerPanelProps {
+  entry: "create" | "join";
   onRoomReady: (roomId: string) => void;
 }
 
-/** The multiplayer entry screen — create a room (share the code) or join one by code, plus the
- * standing Top 5 leaderboard. Mirrors GamesPanel.tsx's create/join split, minus the topic picker —
- * every round already draws from a shuffled mix of all five word-bank difficulties. */
-export default function SavingPeterMultiplayerPanel({ onRoomReady }: SavingPeterMultiplayerPanelProps) {
+/** The step after Create or Join on Saving Peter's first screen. Create shows the rules, the one
+ * start button and the standing Top 5; there is nothing to choose, because every round already draws
+ * from a shuffled mix of all five word-bank difficulties. Join is the code and nothing else. */
+export default function SavingPeterMultiplayerPanel({ entry, onRoomReady }: SavingPeterMultiplayerPanelProps) {
   const [joinCode, setJoinCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [highScores, setHighScores] = useState<SavingPeterHighScore[] | null>(null);
 
   useEffect(() => {
+    if (entry !== "create") return;
     fetchTopSavingPeterHighScores(5)
       .then(setHighScores)
       .catch(() => setHighScores([]));
-  }, []);
+  }, [entry]);
 
   const handleCreate = async () => {
     setBusy(true);
@@ -48,55 +51,27 @@ export default function SavingPeterMultiplayerPanel({ onRoomReady }: SavingPeter
     }
   };
 
+  if (entry === "join") {
+    return <JoinByCode code={joinCode} onCodeChange={setJoinCode} onJoin={handleJoin} busy={busy} error={error} />;
+  }
+
   return (
     <div className="games-panel">
       <div className="games-panel-intro">
-        <h2 className="games-inline-icon">
-          <Icon name="savingPeter" />
-          Saving Peter — Multiplayer
-        </h2>
+        <h2>Create multiplayer game</h2>
         <p>
           Up to 4 players with video chat. Every round shows a clue from a random difficulty — only the first correct guess
           scores, wrong guesses cost you. First to 50 wins.
         </p>
       </div>
 
-      <div className="games-panel-actions">
-        <div className="games-panel-card">
-          <h3>Start a game</h3>
-          <p>Create a room and share the code with up to 3 friends.</p>
-          <button type="button" className="games-primary-button" onClick={handleCreate} disabled={busy}>
-            {busy ? "Creating…" : <><Icon name="players" inline /> Create Room</>}
-          </button>
-        </div>
-
-        <div className="games-panel-card">
-          <h3>Join a game</h3>
-          <p>Enter the code the host shared with you.</p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleJoin();
-            }}
-          >
-            <input
-              type="text"
-              className="games-code-input"
-              placeholder="ABC123"
-              value={joinCode}
-              onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-              maxLength={6}
-              autoCapitalize="characters"
-              disabled={busy}
-            />
-            <button type="submit" className="games-primary-button" disabled={busy || !joinCode.trim()}>
-              {busy ? "Joining…" : "Join Game"}
-            </button>
-          </form>
-        </div>
+      <div className="games-panel-card">
+        <p>Create a room and share the code with up to 3 friends.</p>
+        <button type="button" className="games-primary-button game-start-button" onClick={handleCreate} disabled={busy}>
+          {busy ? "Creating…" : <><Icon name="players" inline /> Create game</>}
+        </button>
+        {error && <p className="games-error">{error}</p>}
       </div>
-
-      {error && <p className="games-error">{error}</p>}
 
       <div className="games-high-scores">
         <h3><Icon name="trophy" inline /> Top 5 High Scores</h3>
@@ -106,10 +81,10 @@ export default function SavingPeterMultiplayerPanel({ onRoomReady }: SavingPeter
           <p className="games-high-scores-empty">No games finished yet — be the first!</p>
         ) : (
           <ol className="games-high-scores-list">
-            {highScores.map((entry) => (
-              <li key={entry.id}>
-                <span className="games-high-scores-name">{entry.display_name}</span>
-                <span className="games-high-scores-score">{entry.score}</span>
+            {highScores.map((row) => (
+              <li key={row.id}>
+                <span className="games-high-scores-name">{row.display_name}</span>
+                <span className="games-high-scores-score">{row.score}</span>
               </li>
             ))}
           </ol>

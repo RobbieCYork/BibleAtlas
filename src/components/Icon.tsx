@@ -95,6 +95,8 @@ export type IconName =
   | "fillBlank"
   | "memorization"
   | "chronology"
+  | "dailyName"
+  | "twentyQuestions"
   // The shared difficulty ladder. One construction in five steps, not five pictures.
   | "level1"
   | "level2"
@@ -495,6 +497,35 @@ const PATHS = {
       <rect x="3.2" y="8.2" width="12.6" height="12.6" rx="2.2" />
       <path d="M6.4 16.4h6.2" />
       <circle cx="7.6" cy="12.4" r="1.7" fill="currentColor" stroke="none" />
+    </>
+  ),
+
+  /* Daily Name: a row of three letter tiles under a low rising sun — the one word a day, stated
+     as the board itself rather than as a calendar page (which would sit too close to the paper
+     group). Wide and horizontal like Timeline, but held apart from it by the closed squares and
+     the arc. Solid: the middle tile, the letter that is already right. */
+  dailyName: (
+    <>
+      <path d="M8.6 8.4a3.4 3.4 0 0 1 6.8 0" />
+      <rect x="3" y="11.4" width="5" height="5" rx="1.4" />
+      <rect x="9.5" y="11.4" width="5" height="5" rx="1.4" fill="currentColor" stroke="none" />
+      <rect x="16" y="11.4" width="5" height="5" rx="1.4" />
+      <path d="M3.6 19.8h16.8" />
+    </>
+  ),
+
+  /* 20 Questions: a yes/no decision tree — one question splitting into two, one branch splitting
+     again. The narrowing IS the game, and a branching silhouette is one nothing else in either set
+     has. Solid: the root, the question being asked. */
+  twentyQuestions: (
+    <>
+      <circle cx="11" cy="5" r="2.1" fill="currentColor" stroke="none" />
+      <path d="M9.6 6.6 7 10.4M12.4 6.6l2.8 3.8" />
+      <circle cx="6" cy="12.3" r="2" />
+      <circle cx="16.4" cy="12.3" r="2" />
+      <path d="M15.4 14.1l-1.3 3.4M17.4 14.1l1.3 3.4" />
+      <circle cx="13.6" cy="19.3" r="1.6" />
+      <circle cx="19.2" cy="19.3" r="1.6" />
     </>
   ),
 

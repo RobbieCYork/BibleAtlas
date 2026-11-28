@@ -229,3 +229,35 @@
   width: 100%;
   max-width: 280px;
 }
+
+/* ------------------------------------------------------------------ phones */
+
+@media (max-width: 768px) {
+  .fillblank-play .fillblank-timer-bar {
+    margin-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .fillblank-play .fillblank-form {
+    gap: 6px;
+  }
+
+  .fillblank-play .fillblank-verse-text {
+    font-size: calc(18px * var(--tsz, 1));
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .fillblank-play .fillblank-round-result {
+    gap: 6px;
+  }
+
+  .fillblank-play .fillblank-result-correct,
+  .fillblank-play .fillblank-result-wrong {
+    margin: 0;
+  }
+
+  .fillblank-play .fillblank-missing-count {
+    margin-top: 4px;
+  }
+}

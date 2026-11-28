@@ -10,7 +10,7 @@ import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature } from "../lib/features";
 
-type NotesTab = "verse" | "sermon" | "prayer";
+export type NotesTab = "verse" | "sermon" | "prayer";
 
 interface MyNotesPanelProps {
   userId: string | null | undefined;

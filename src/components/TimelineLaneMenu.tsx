@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
  * lets the user check/uncheck which of the four timelines render. Mirrors
  * PanelMenu's dropdown-checklist idiom (click button, toggle checkboxes,
  * click outside to close) so the interaction feels consistent with the rest
- * of the app, at zoom-control scale to fit TimelineView's header.
+ * of the app, sized to fit TimelineView's header.
  *
  * One entry per LANE, and nothing below that level. There used to be separate
  * checkboxes for biblical / church history / movements, back when each was its
@@ -107,10 +107,6 @@ export default function TimelineLaneMenu({ visible, onToggle }: TimelineLaneMenu
               {TIMELINE_LANE_LABELS[key]}
             </label>
           ))}
-          <p className="tl-lane-menu-caption">
-            Each checked timeline gets its own generous height — checking more means more
-            scrolling to reach them all.
-          </p>
         </div>
       )}
     </div>

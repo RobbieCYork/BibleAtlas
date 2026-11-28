@@ -28,7 +28,7 @@ import { useFeature } from "../lib/features";
 export interface TimelineLinkHandlers {
   /** Navigate straight to one event's TimelineEventPanel (article view). */
   onSelectTimelineEvent: (id: string) => void;
-  /** Open full Timeline mode zoomed to this entity's events/lifespan, briefly highlighted. */
+  /** Open full Timeline mode panned to this entity's events/lifespan, briefly highlighted. */
   onOpenTimelineForEntity: (entityId: string) => void;
 }
 

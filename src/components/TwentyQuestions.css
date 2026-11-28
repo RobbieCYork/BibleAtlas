@@ -1,0 +1,402 @@
+/* --- 20 Questions (TwentyQuestionsView.tsx) ---
+ * Answers are never colour alone: each carries its word (Yes / No / Not stated) and its own mark
+ * (✓ ✕ –). Everything is drawn from the theme tokens, so dark mode and every skin follow. */
+
+.tq-setup {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tq-body {
+  gap: 14px;
+}
+
+.tq-body > * {
+  width: 100%;
+  max-width: 640px;
+}
+
+/* ------------------------------------------------------------------ HUD */
+
+.tq-hud {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.tq-hud-cat {
+  color: var(--text-muted);
+}
+
+.tq-hud-left {
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.tq-hud-low {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tq-meter {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface-sunken);
+  overflow: hidden;
+  margin-top: -8px;
+}
+
+.tq-meter span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+
+/* ---------------------------------------------------------------- history */
+
+.tq-history h3,
+.tq-ask h3 {
+  margin: 0 0 8px;
+  font-size: calc(15px * var(--tsz, 1));
+  color: var(--text-h);
+}
+
+.tq-history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tq-turn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.tq-turn-guess {
+  border-style: dashed;
+}
+
+.tq-turn-n {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tq-turn-text {
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+}
+
+.tq-answer {
+  flex-shrink: 0;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: calc(13px * var(--tsz, 1));
+  white-space: nowrap;
+  border: 1.5px solid transparent;
+}
+
+.tq-answer-yes {
+  background: var(--verdigris);
+  color: #fff;
+}
+
+.tq-answer-no {
+  background: var(--surface-sunken);
+  color: var(--text-h);
+  border-color: var(--border-strong);
+}
+
+.tq-answer-unknown {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px dashed var(--border-strong);
+}
+
+.tq-empty {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: calc(14px * var(--tsz, 1));
+  list-style: none;
+}
+
+/* ---------------------------------------------------------------- ask */
+
+.tq-last {
+  margin: 0 0 10px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.tq-last:empty {
+  display: none;
+}
+
+.tq-search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--input-border, var(--border));
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text);
+  font: inherit;
+  font-size: max(16px, calc(15px * var(--tsz, 1)));
+}
+
+.tq-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.tq-chip {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font: inherit;
+  font-size: calc(13px * var(--tsz, 1));
+  cursor: pointer;
+}
+
+.tq-chip.is-selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 700;
+}
+
+.tq-question-list,
+.tq-guess-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tq-question,
+.tq-guess-option {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.tq-question:hover,
+.tq-guess-option:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+
+.tq-question:focus-visible,
+.tq-guess-option:focus-visible,
+.tq-chip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tq-question-group {
+  font-size: calc(11px * var(--tsz, 1));
+  letter-spacing: var(--tracking-label, 0.04em);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.tq-question-text {
+  font-size: calc(15px * var(--tsz, 1));
+}
+
+/* ---------------------------------------------------------------- guess */
+
+.tq-guess-open {
+  width: 100%;
+}
+
+.tq-guess-card h3 {
+  margin: 0;
+}
+
+.tq-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.tq-guess-list {
+  /* Shorter on a short screen, so the Guess and Keep asking buttons stay above the tab bar. */
+  max-height: clamp(110px, calc(100dvh - 500px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)), 260px);
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.tq-guess-option {
+  flex-direction: row;
+  align-items: center;
+}
+
+.tq-guess-option.is-selected {
+  border: 2px solid var(--accent);
+  font-weight: 700;
+}
+
+.tq-guess-option:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.tq-guessed {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.tq-guess-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ------------------------------------------------------------ how to play */
+
+/* The three answers line up their meanings. */
+.tq-answer-sample {
+  min-width: 7.2em;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: min(calc(13px * var(--tsz, 1)), 18px);
+}
+
+/* ---------------------------------------------------------------- reveal */
+
+.tq-reveal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.tq-reveal-kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label, 0.06em);
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.tq-reveal h3 {
+  margin: 0;
+  font-size: calc(20px * var(--tsz, 1));
+  color: var(--text-h);
+}
+
+.tq-reveal-name {
+  margin: 0;
+  font-size: calc(17px * var(--tsz, 1));
+}
+
+.tq-verse {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  text-align: left;
+}
+
+.tq-verse blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: calc(16px * var(--tsz, 1));
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.tq-verse figcaption {
+  margin-top: 6px;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.tq-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tq-stat-line {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+/* ---------------------------------------------------------------- stats */
+
+.tq-stats h3 {
+  margin: 0;
+}
+
+.tq-stats-where {
+  font-weight: 400;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.tq-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.tq-stats-table th,
+.tq-stats-table td {
+  padding: 6px 4px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.tq-stats-table th[scope="row"],
+.tq-stats-table thead th:first-child {
+  text-align: left;
+}
+
+.tq-stats-table thead th {
+  color: var(--text-muted);
+  font-weight: 600;
+}

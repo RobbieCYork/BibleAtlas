@@ -102,6 +102,25 @@ compile. Three commands, three different questions:
     npm run test:linker            # did any links move?
     npm run build                  # does it compile? exit 0, no exceptions
 
+## Change a feature, change the welcome tour in the same change
+
+**Any change that adds, removes, renames or moves a user-facing feature must update the welcome
+tour in that same change.** The tour ("Welcome to Capstone Bible") is shown to every new account and
+reopens from the main menu and Settings. Its steps and words are all in `src/data/welcomeTour.ts`.
+
+Three checks hold the line, and each sees something the others cannot:
+
+    npm run build                   # tsc: a new feature flag, code switch, menu destination, My Notes tab
+                                    # or Articles section needs a step or a written exclusion (coverage
+                                    # tables at the foot of welcomeTour.ts); vite also runs the next one
+    npm run validate:welcome-tour   # menu rows carry a covered data-menu key, highlight anchors and the
+                                    # on-screen wording each step quotes still exist
+    node scripts/signed-in-harness/run.mjs --viewport 390x844 --script scripts/signed-in-harness/examples/welcome-tour.mjs
+                                    # the running app, also at 1280x800; LOOKS=1 adds skins and text sizes
+
+Green checks do not mean the copy is right. A control that moved, or behaviour that changed under the
+same name, passes all three: read the step. Describe only what is live for ordinary readers.
+
 ## A verification worktree that shares `node_modules` shares `.tsbuildinfo` too
 
 Same class of lie as `--noEmit`, one level further out: the build *runs*, exits
@@ -356,7 +375,18 @@ pages carry no script, no Supabase client and no session — they are documents
 sitting beside the app, not a branch inside it. `App.tsx` returns `<AuthGate />`
 before anything else and there is **no pathname check ahead of it**; the one
 thing pointing outward is a plain `<a href="/library">` under the sign-in card.
-Keep it that way. If a future page needs personal data — notes, highlights, tags,
+Keep it that way.
+
+**One page carries one script, on purpose: `/about`.** The owner can edit the About page from the
+Admin Console without a deploy (`sql/051`), so `/about` ships the built-in words as plain HTML — what a
+crawler and a no-JavaScript reader get, and the fallback for everyone — plus a few inline lines
+(`aboutLoaderScript` in `render.mjs`) that read the one public `about_page` row with the build's public
+anon key and swap the words in with `textContent`. No supabase-js, no session, no cookies, no storage,
+no `innerHTML`, nothing personal, and no script at all when the build has no Supabase config. That is
+the whole exception. Do not copy it to another page or widen what it reads without deciding to; the
+harness (`examples/about-page.mjs`) asserts `/about` has exactly one script.
+
+If a future page needs personal data — notes, highlights, tags,
 posts, groups, messages, profiles, admin — it does not belong in this generator,
 which reads `src/data/*.ts` and nothing else. Widening the public surface should
 require adding a data set to `KINDS` on purpose, and never be something a change

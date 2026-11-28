@@ -15,6 +15,8 @@ import type { ReportSurface } from "../lib/reportContext";
 import Icon from "./Icon";
 import Chevron from "./Chevron";
 import SocialLinks from "./SocialLinks";
+import { confirmDiscardUnsaved } from "../lib/unsavedChanges";
+import { TOUR_ANCHORS } from "../data/welcomeTour";
 
 interface AuthButtonProps {
   session: Session | null;
@@ -28,13 +30,13 @@ interface AuthButtonProps {
    * menu and hands off to the Bible panel, which isn't rendered inside this dropdown. */
   onOpenReadingPlans?: () => void;
   /** Opens the full-screen My Profile view (see MyProfileView/App). Used by the phone routes that arrive
-   * as openProfileNonce, and by the identity header when profileHeaderLink is set. Closes this menu
-   * itself before handing off, same as onOpenReadingPlans. */
+   * as openProfileNonce, and by this menu's My Profile entries when desktopProfileEntry is set. Closes
+   * this menu itself before handing off, same as onOpenReadingPlans. */
   onOpenMyProfile: () => void;
-  /** Desktop only: make the menu's identity header (avatar, name, email) the way into My Profile. There
-   * is no other desktop entry point, so do not turn this off there. A phone has the "My Profile" tab
-   * and header menu row, which is always listed, so its header stays plain. */
-  profileHeaderLink: boolean;
+  /** Desktop only: this menu leads to My Profile, through a labelled "My Profile" row (first) and the
+   * identity header (avatar, name, email) above it. A phone has the "My Profile" tab and header menu
+   * row, which is always listed, so its account menu stays without them. */
+  desktopProfileEntry: boolean;
   /** Opens the full-screen Settings view (see SettingsView/App) for a real account. Same hand-off as
    * onOpenMyProfile. */
   onOpenSettings: () => void;
@@ -89,7 +91,7 @@ export default function AuthButton({
   openProfileNonce,
   onOpenReadingPlans,
   onOpenMyProfile,
-  profileHeaderLink,
+  desktopProfileEntry,
   onOpenSettings,
   profileVersion,
   reportSurface,
@@ -188,6 +190,8 @@ export default function AuthButton({
     if (!open) return;
     const handleClick = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        // The Admin Console's About page editor may be holding unsaved text.
+        if (!confirmDiscardUnsaved()) return;
         setOpen(false);
       }
     };
@@ -256,14 +260,20 @@ export default function AuthButton({
 
   if (session) {
     const label = session.user.is_anonymous ? "Guest" : savedDisplayName ?? session.user.email ?? "Account";
-    // Guests have no profile page, so theirs is never a link.
-    const linkHeader = profileHeaderLink && !session.user.is_anonymous;
+    // Guests have no profile page, so they get neither the row nor the header link.
+    const showProfileEntry = desktopProfileEntry && !session.user.is_anonymous;
+    const openProfile = () => {
+      setOpen(false);
+      onOpenMyProfile();
+    };
     return (
       <div className="auth-button" ref={containerRef}>
         <button
           type="button"
+          data-tour={TOUR_ANCHORS.account}
           className="auth-trigger"
           onClick={() => {
+            if (!confirmDiscardUnsaved()) return;
             setOpen((o) => !o);
             setMenuView("menu");
           }}
@@ -274,16 +284,14 @@ export default function AuthButton({
           </span>
         </button>
         {open && menuView === "menu" && (
-          <div className={`auth-dropdown${linkHeader ? " auth-dropdown-account" : ""}`}>
-            {linkHeader ? (
+          <div className={`auth-dropdown${showProfileEntry ? " auth-dropdown-account" : ""}`}>
+            {showProfileEntry ? (
               <button
                 type="button"
+                data-menu="profile"
                 className="auth-identity auth-identity-link"
                 aria-label={`Open My Profile (${label})`}
-                onClick={() => {
-                  setOpen(false);
-                  onOpenMyProfile();
-                }}
+                onClick={openProfile}
               >
                 <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
                   {label.charAt(0).toUpperCase()}
@@ -311,10 +319,18 @@ export default function AuthButton({
               </div>
             )}
             <div className="auth-settings-divider" />
+            {/* Desktop. Robbie, 2026-11-27: the header above was not recognised as the way in, so My
+                Profile is also named outright. Same icon as the phone's tab. */}
+            {showProfileEntry && (
+              <button type="button" data-menu="profile" className="auth-menu-item" onClick={openProfile}>
+                <Icon name="social" inline /> My Profile
+              </button>
+            )}
             {/* Everyone signed in. A real account gets the full-screen Settings view; a guest gets the
                 same controls inside this dropdown. */}
             <button
               type="button"
+              data-menu="settings"
               className="auth-menu-item"
               onClick={() => {
                 if (session.user.is_anonymous) {
@@ -331,13 +347,13 @@ export default function AuthButton({
                 remains ONLY for an advisor who is not an admin: they hold the reports tier but have no
                 Admin Console to find it in, and removing the row would strand them. */}
             {canSeeReports && !isAdmin && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("reports")}>
+              <button type="button" data-menu="reports" className="auth-menu-item" onClick={() => setMenuView("reports")}>
                 <Icon name="flag" inline /> Reports
                 {untriaged > 0 && <span className="panel-menu-item-badge">{untriaged}</span>}
               </button>
             )}
             {isAdmin && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("admin")}>
+              <button type="button" data-menu="admin" className="auth-menu-item" onClick={() => setMenuView("admin")}>
                 <Icon name="shield" inline /> Admin Console
                 {untriaged > 0 && <span className="panel-menu-item-badge">{untriaged}</span>}
               </button>
@@ -345,6 +361,7 @@ export default function AuthButton({
             {onOpenReadingPlans && (
               <button
                 type="button"
+                data-menu="reading-plans"
                 className="auth-menu-item"
                 onClick={() => {
                   setOpen(false);
@@ -357,8 +374,8 @@ export default function AuthButton({
             {/* Everyone signed in, guests included — the guest branch of the sheet explains why
                 they can't file one, which is a better answer than an item that isn't there. */}
             <div className="auth-settings-divider" />
-            <button type="button" className="auth-menu-item" onClick={() => setMenuView("report")}>
-              <Icon name="flag" inline /> Report a Problem
+            <button type="button" data-menu="report" className="auth-menu-item" onClick={() => setMenuView("report")}>
+              <Icon name="flag" inline /> Report a Problem or Suggest a Feature
             </button>
             {/* App Store Review Guideline 1.2 asks for published contact information and a visible
                 account for how reporting and blocking work. This is where a reviewer — and a reader
@@ -369,11 +386,11 @@ export default function AuthButton({
                 SOCIAL_CONNECTIONS_ENABLED (the sheet is mostly about blocking people and harassment);
                 flip that constant and this row and the sheet below return. */}
             {SOCIAL_CONNECTIONS_ENABLED && (
-              <button type="button" className="auth-menu-item" onClick={() => setMenuView("safety")}>
+              <button type="button" data-menu="safety" className="auth-menu-item" onClick={() => setMenuView("safety")}>
                 <Icon name="shield" inline /> Safety &amp; Contact
               </button>
             )}
-            <button type="button" className="auth-menu-item auth-signout" onClick={handleSignOut}>
+            <button type="button" data-menu="sign-out" className="auth-menu-item auth-signout" onClick={handleSignOut}>
               Log Out
             </button>
             {/* The MOBILE home for Capstone Bible's own accounts. On desktop they sit in the header
@@ -391,7 +408,7 @@ export default function AuthButton({
         {open && menuView === "admin" && isAdmin && (
           <div className="auth-admin-sheet" role="dialog" aria-label="Admin Console">
             <div className="auth-admin-sheet-head">
-              <button type="button" className="auth-back-link" onClick={() => setMenuView("menu")}>
+              <button type="button" className="auth-back-link" onClick={() => confirmDiscardUnsaved() && setMenuView("menu")}>
                 ← Back
               </button>
               <h3 className="auth-admin-sheet-title">Admin Console</h3>

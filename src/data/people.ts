@@ -2406,8 +2406,9 @@ export const people: Person[] = [
     diedYear: -3074,
     lifespanLabel: "c. 4004-3074 BC",
     lifespanCertainty: "traditional",
+    youngEarthDate: true,
     lifespanDatingNotes:
-      "Dates follow the traditional young-earth chronology built from Genesis 5, with creation placed at 4004 BC (Ussher's calculation) and Adam's 930-year lifespan taken at face value (Genesis 5:5). Some evangelical scholars (following B. B. Warfield and others) argue the Genesis 5 genealogy may contain gaps typical of ancient Near Eastern king-lists, which would push these dates earlier without undermining the reliability of the record — the theological point (a real first man, a real fall) doesn't hinge on pinning the exact year.",
+      "Dates follow the traditional young-earth chronology built from Genesis 5, with creation placed at 4004 BC (Ussher's calculation) and Adam's 930-year lifespan taken at face value (Genesis 5:5). Some evangelical scholars (following B. B. Warfield and others) argue the Genesis 5 genealogy may contain gaps typical of ancient Near Eastern king-lists, which would push these dates earlier without undermining the reliability of the record — the theological point (a real first man, a real fall) doesn't hinge on pinning the exact year. See Young Earth and Old Earth Creationism for the case each side makes.",
     tier: "major",
     role: "The first human being, formed by God from the dust of the ground",
     summary: "The first man, created directly by God and placed in the Garden of Eden — his disobedience in eating the forbidden fruit is treated throughout Scripture as the origin point of human sin and mortality, and the New Testament repeatedly casts Christ as the 'second Adam' who reverses his failure.",
@@ -2551,8 +2552,9 @@ export const people: Person[] = [
     diedYear: -1998,
     lifespanLabel: "c. 2948-1998 BC",
     lifespanCertainty: "traditional",
+    youngEarthDate: true,
     lifespanDatingNotes:
-      "Born when Lamech was 182 (Genesis 5:28-29). The flood came in Noah's 600th year (Genesis 7:6), and he lived 350 years afterward, dying at 950 (Genesis 9:28-29). These dates anchor the entire pre-Abrahamic chronology.",
+      "Born when Lamech was 182 (Genesis 5:28-29). The flood came in Noah's 600th year (Genesis 7:6), and he lived 350 years afterward, dying at 950 (Genesis 9:28-29). These dates anchor the entire pre-Abrahamic chronology. The years follow Ussher's young-earth reckoning from the Hebrew (Masoretic) genealogies of Genesis 5; the Greek Septuagint's larger numbers put Noah's Flood centuries earlier, and old-earth evangelicals, who read the genealogies as selective rather than complete, earlier still. See Young Earth and Old Earth Creationism for the reasoning on each side.",
     tier: "major",
     role: "Righteous man chosen by God to build the ark and preserve life through the great flood",
     summary: "A righteous man 'blameless in his generation' who, at God's command, built an ark that preserved his family and pairs of every land animal through a catastrophic flood — his story has a striking parallel in Mesopotamian flood traditions like the Epic of Gilgamesh.",
@@ -2837,8 +2839,9 @@ export const people: Person[] = [
     bornYear: -3382,
     lifespanLabel: "c. 3382-3017 BC (translated, did not die)",
     lifespanCertainty: "traditional",
+    youngEarthDate: true,
     lifespanDatingNotes:
-      "Born when Jared was 162 (Genesis 5:18, 21). Rather than dying, 'he walked with God, and he was not, for God took him' (Genesis 5:24) at about 365 years old — affirmed as a bodily translation, not a death, in Hebrews 11:5. The year given here marks his translation, not a death, which is why diedYear is left blank.",
+      "Born when Jared was 162 (Genesis 5:18, 21). Rather than dying, 'he walked with God, and he was not, for God took him' (Genesis 5:24) at about 365 years old — affirmed as a bodily translation, not a death, in Hebrews 11:5. The year given here marks his translation, not a death, which is why no death year is shown. The years follow Ussher's young-earth reckoning from the Genesis 5 genealogy; old-earth evangelicals, who read that genealogy as selective rather than complete, would place Enoch earlier — see Young Earth and Old Earth Creationism.",
     tier: "notable",
     role: "Antediluvian Patriarch Who Did Not Die",
     summary: "A pre-flood descendant of Seth who 'walked with God' and, uniquely among the patriarchs listed in Genesis 5, did not die but was simply taken by God.",

@@ -1,5 +1,5 @@
 /* ============================================================================
- * TimelineView — full-area zoomable/pannable historical timeline.
+ * TimelineView — full-area pannable historical timeline.
  *
  * Self-contained stylesheet (imported by TimelineView.tsx) so the timeline can
  * evolve without touching App.css. Uses the app's global theme variables
@@ -15,7 +15,7 @@
    *
    * Every value below is one of index.css's raw manuscript pigments, lifted for the
    * dark ground or darkened for the light one so it clears 3:1 as a graphical mark
-   * against its own lane, and so --tl-on-cat clears 4.5:1 as text ON it:
+   * against its own lane:
    *   biblical  gold leaf      church  lapis        movement  rubric red
    *   world     umber/vellum   religion verdigris   lifespans brand violet
    * The Timeline is meant to look alive and graphical, so these stay genuinely
@@ -35,9 +35,6 @@
   --tl-life: #b3a0ea; /* --brand violet, lifted */
   --tl-life-rgb: 179, 160, 234;
   --tl-book-rgb: 179, 160, 234;
-  /* Text/numerals placed ON a filled category swatch (cluster badges). Dark mode's
-   * category colours are all light, so ink wins; light mode's are all dark, so paper wins. */
-  --tl-on-cat: var(--ink-800);
   --tl-grid: color-mix(in srgb, var(--border) 72%, transparent);
   --tl-lane-tint: color-mix(in srgb, var(--panel-bg) 55%, transparent);
 
@@ -49,6 +46,8 @@
   background: var(--bg);
   color: var(--text);
   overflow: hidden;
+  /* Scrolling only: no pinch zoom and no double-tap zoom anywhere on the timeline. */
+  touch-action: pan-x pan-y;
 }
 
 :root[data-theme="light"] .tl-root {
@@ -65,7 +64,6 @@
   --tl-life: #54339e; /* --brand violet, darkened */
   --tl-life-rgb: 84, 51, 158;
   --tl-book-rgb: 84, 51, 158;
-  --tl-on-cat: #ffffff;
 }
 
 /* ---------------------------------------------------------------- header */
@@ -106,50 +104,21 @@
   flex: 1;
 }
 
-.tl-zoom-controls {
+.tl-header-controls {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.tl-zoom-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--border);
-  background: var(--panel-bg);
-  color: var(--text-h);
-  border-radius: 8px;
-  font-size: calc(16px * var(--tsz, 1));
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.tl-zoom-btn.tl-zoom-reset {
-  width: auto;
-  padding: 0 10px;
-  font-size: calc(12px * var(--tsz, 1));
-}
-
-.tl-zoom-btn:hover {
-  background: var(--accent-bg);
-  border-color: var(--accent);
-}
-
-.tl-zoom-btn:active {
-  transform: translateY(1px);
-}
-
 /* ------------------------------------------------------------- lane menu */
 
-/* Persistent lane-visibility control, sitting with the zoom controls so it's reachable at all
- * times regardless of zoom/pan/scroll state — same dropdown-checklist idiom as the app's
- * PanelMenu (.panel-menu* in App.css), sized to match .tl-zoom-btn. */
+/* Persistent lane-visibility control, sitting in the header so it's reachable at all
+ * times regardless of pan or scroll state — same dropdown-checklist idiom as the app's
+ * PanelMenu (.panel-menu* in App.css). */
 .tl-lane-menu {
   position: relative;
+  /* No line box around the button: at large text sizes it pushed the two header menus out of line. */
+  display: flex;
 }
 
 .tl-lane-menu-button {
@@ -214,18 +183,111 @@
   background: var(--accent-bg);
 }
 
-/* The era list is long enough to want its own scroll rather than running off a short viewport. */
-.tl-era-menu-dropdown {
-  /* The era list is capped so it scrolls rather than running off a short viewport. This used to
-     be divided by --text-scale, because .tl-header carried `zoom: var(--text-scale)` and `zoom`
-     scaled ordinary lengths but not viewport units. The zoom is gone; 70vh is 70vh again. */
-  max-height: min(70vh, 480px);
-  overflow-y: auto;
-  min-width: 220px;
+/* ---------------------------------------------------------------- Go to */
+
+.tl-goto-button-text {
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-/* Era entries are buttons, not checkboxes — reuse .tl-lane-menu-item's box and strip the
- * native button chrome the shared rule doesn't cover. */
+/* A year box on top, the era list under it; capped so that it scrolls rather than running off a
+ * short window (or one shortened by a phone keyboard). */
+.tl-goto-dropdown {
+  width: max-content;
+  min-width: 260px;
+  max-width: calc(100vw - 20px);
+  max-height: min(70vh, 520px);
+  max-height: min(70dvh, 520px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.tl-goto-row {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  padding: 0 6px;
+}
+
+/* Never under 16px: iOS zooms the whole page into a smaller field when it takes focus. */
+.tl-goto-input {
+  flex: 1;
+  width: 5em;
+  min-width: 0;
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  font: inherit;
+  font-size: max(16px, calc(16px * var(--tsz, 1)));
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.tl-goto-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.tl-goto-era {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tl-goto-era button,
+.tl-goto-submit {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: none;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font: inherit;
+  font-size: calc(14px * var(--tsz, 1));
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tl-goto-era button[aria-pressed="true"] {
+  background: var(--accent-bg);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.tl-goto-submit {
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent-bg);
+}
+
+.tl-goto-era button:focus-visible,
+.tl-goto-submit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.tl-goto-error {
+  margin: 6px 6px 0;
+  /* Wraps inside the dropdown instead of widening it. */
+  width: 0;
+  min-width: calc(100% - 12px);
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.35;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.tl-goto-eras-title {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* Era entries are buttons — reuse .tl-lane-menu-item's box and strip the native button chrome the
+ * shared rule doesn't cover. */
 .tl-era-menu-item {
   width: 100%;
   text-align: left;
@@ -233,34 +295,45 @@
   background: none;
   color: inherit;
   font: inherit;
+  font-size: calc(14px * var(--tsz, 1));
   appearance: none;
   -webkit-appearance: none;
 }
 
-.tl-era-menu-all {
-  margin-top: 4px;
-  border-top: 1px solid var(--border);
-  border-radius: 0 0 6px 6px;
-  color: var(--text-muted);
+/* The line under the header that "Go to" uses to say a year was off the end of the timeline. */
+.tl-notice-anchor {
+  position: relative;
+  height: 0;
+  z-index: 25;
 }
 
-.tl-lane-menu-caption {
-  margin: 6px 0 0;
-  padding: 6px 8px 0;
-  border-top: 1px solid var(--border);
-  font-size: calc(11px * var(--tsz, 1));
+.tl-notice {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 20px);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: calc(13px * var(--tsz, 1));
   line-height: 1.35;
-  color: var(--text-muted);
+  text-align: center;
+  color: var(--text-h);
+  background: var(--panel-bg);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
 }
 
 /* ---------------------------------------------------------------- canvas */
 
 /* Outer scrollable window. Vertical-only: horizontal overflow from the panning .tl-scroller
- * (a child of .tl-canvas below) is clipped here, while a lane stack taller than the viewport —
- * routinely true now that each visible lane gets its own fixed, generous height (see geom in
- * TimelineView.tsx) rather than being squeezed to fit — scrolls vertically via the
- * scrollbar, native touch, or the wheel handler in TimelineView.tsx (which prevents the default and
- * sets scrollTop itself), independent of the horizontal drag/zoom gestures .tl-canvas still owns. */
+ * (a child of .tl-canvas below) is clipped here, while a lane stack taller than the viewport scrolls
+ * vertically via the scrollbar, native touch, or the wheel handler in TimelineView.tsx (which
+ * prevents the default and sets scrollTop itself), independent of the horizontal drag .tl-canvas
+ * owns. */
 .tl-canvas-viewport {
   position: relative;
   flex: 1;
@@ -270,27 +343,21 @@
   overscroll-behavior: contain;
 }
 
-/* Inner gesture surface: pointer handlers for horizontal pan/zoom live here. Its height is
- * set explicitly from `geom` in TimelineView.tsx as the sum of each checked lane's own fixed,
- * generous height — routinely taller than the viewport, which is what gives .tl-canvas-viewport
- * above something to scroll. */
+/* Inner gesture surface: pointer handlers for horizontal panning live here. It always covers the
+ * whole window (so a drag below the last band still pans); TimelineView.tsx makes it taller when the
+ * bands need it. touch-action: pan-y leaves a one-finger vertical swipe to the browser's own scroll
+ * of .tl-canvas-viewport, while horizontal drags reach the JS handlers. overflow: clip stops a
+ * focused mark that is off screen from scrolling the canvas sideways. */
 .tl-canvas {
   position: relative;
   width: 100%;
+  min-height: 100%;
+  overflow: clip;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
   outline: none;
-}
-
-/* When the lane stack exceeds the viewport (the normal case now — see needsScroll in
- * TimelineView.tsx), let a single-finger vertical swipe reach the browser's native vertical scroll
- * on .tl-canvas-viewport (touch-action permits only the "pan-y" native gesture) while a horizontal
- * drag — not a native action under pan-y — still reaches the JS pointer handlers for panning,
- * exactly as it does when touch-action is "none" for a lane stack that fits without scrolling. */
-.tl-canvas.tl-canvas-scroll-y {
-  touch-action: pan-y;
 }
 
 .tl-canvas.tl-dragging {
@@ -350,10 +417,10 @@
 
 /* Pinned lane name chips (don't pan with content).
  *
- * The chip's HEIGHT is pinned here, and TimelineView.tsx reserves exactly that many pixels
+ * The chip's HEIGHT is pinned here, and the layout reserves exactly that many pixels
  * (LANE_LABEL_H, plus its top offset and a gap = LANE_LABEL_RESERVE) as an empty band at the top
  * of every lane, so no card is ever laid under it. Keep the two in step: if this height changes,
- * change LANE_LABEL_H in TimelineView.tsx to match. It is a fixed height rather than a
+ * change LANE_LABEL_H in timelineLayout.ts to match. It is a fixed height rather than a
  * content-derived one precisely so that a longer lane name — or the smaller phone font size in the
  * media query at the bottom of this file — can never make the chip taller than the band reserved
  * for it. `white-space: nowrap` keeps it one line at any width for the same reason. */
@@ -361,8 +428,8 @@
   position: absolute;
   left: 10px;
   z-index: 6;
-  /* Must equal LANE_LABEL_H in TimelineView.tsx. */
-  height: 22px;
+  /* Must equal LANE_LABEL_H in timelineLayout.ts. */
+  height: 18px;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -373,7 +440,7 @@
   color: var(--text-muted);
   background: var(--panel-bg);
   border: 1px solid var(--tl-grid);
-  padding: 2px 7px;
+  padding: 0 7px;
   border-radius: 100px;
   pointer-events: none;
   backdrop-filter: blur(2px);
@@ -433,9 +500,6 @@
 
 .tl-axis-strip {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
   border-top: 1px solid var(--border);
   background: color-mix(in srgb, var(--panel-bg) 88%, transparent);
   pointer-events: none;
@@ -444,8 +508,7 @@
 
 .tl-axis-label {
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   font-size: calc(11px * var(--tsz, 1));
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
@@ -519,13 +582,11 @@
 }
 
 /* When a book's own bar is too narrow to hold its name, the label sits just to the right of the
- * bar instead of being skipped — the label-gap check (same heuristic as lifespans) already
- * guarantees there's clear room there. IMPORTANT: this only works because .tl-book-bar (above)
+ * bar instead of being skipped. IMPORTANT: this only works because .tl-book-bar (above)
  * does not clip its overflow — a label rendered past the bar's own right edge would otherwise be
  * cropped away entirely, which is exactly what was happening before this fix. The label's own
- * max-width + ellipsis below bounds it to a predictable footprint (rather than the unbounded width
- * a long book name would otherwise take), which is what makes the neighbor-gap check in
- * TimelineView.tsx (LABEL_GAP_PX) a reliable guarantee against overlapping the next bar. */
+ * max-width + ellipsis below bounds it to a predictable footprint rather than the unbounded width
+ * a long book name would otherwise take. */
 .tl-book-bar-label.tl-book-bar-label-outside {
   left: 100%;
   margin-left: 5px;
@@ -575,7 +636,7 @@
   gap: 0;
   font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.2;
   color: var(--text-h);
   padding: 0 7px;
   white-space: nowrap;
@@ -584,10 +645,25 @@
   pointer-events: none;
 }
 
-/* Bounded the same way as .tl-book-bar-label-outside above — max-width + ellipsis gives this label
- * a predictable footprint so the neighbor-gap check (LABEL_GAP_PX in TimelineView.tsx) can actually
- * guarantee it won't run into whatever bar comes next, instead of growing unbounded with a long
- * name (e.g. "Nebuchadnezzar II"). */
+/* A lifetime is usually far wider than the screen, so a name inside its bar follows the left edge of
+ * the screen while any of the bar is still showing, running on past the end of a nearly-gone bar as
+ * far as the next one in the row, and fading out with the last few pixels. All four numbers are
+ * unitless px from TimelineView.tsx (--tl-view-left on the scroller; --x, --w and --room on the
+ * bar); 100% is the label's own width. */
+.tl-life-label:not(.tl-life-label-outside) {
+  text-align: left;
+  transform: translateX(
+    clamp(
+      0px,
+      calc((var(--tl-view-left, 0) - var(--x, 0)) * 1px),
+      max(0px, calc(var(--room, 0) * 1px - 100% - 2px))
+    )
+  );
+  opacity: calc(var(--x, 0) + var(--w, 0) - var(--tl-view-left, 0) - 6);
+}
+
+/* A name to the right of a bar too short to hold it. max-width + ellipsis gives it the footprint
+ * that row packing reserves for it (LIFE_OUTSIDE_LABEL_PX in timelineLayout.ts). */
 .tl-life-label.tl-life-label-outside {
   position: absolute;
   left: 100%;
@@ -606,7 +682,7 @@
 
 /* ------------------------------------------------------------ event lanes */
 
-/* One place decides what colour a mark is. Every mark below (dot, range bar, cluster badge,
+/* One place decides what colour a mark is. Every mark below (dot, range bar,
  * lane chip dot) reads --cat off its own .tl-cat-* class, so the pigment mapping lives here
  * and nowhere else.
  *
@@ -657,6 +733,18 @@
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
 }
 
+/* A bigger target than the dot or bar itself: about a row high. */
+.tl-marker::before,
+.tl-range-bar::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+
+.tl-range-bar::before {
+  inset: -9px 0;
+}
+
 /* Every point event is the same filled disc in its lane's colour. There was briefly a
  * disc/square/ring system separating biblical, church and movement events inside the merged
  * lane; it's gone at the owner's direction — those are all just part of one timeline, so
@@ -698,16 +786,9 @@
 }
 
 /* Always-visible title+year chip for a point-event marker and the label for a range-bar event
- * (Biblical/World/Religion lanes) — same opaque-pill legibility fix, shared by both so a dot and a
- * bar read identically. This used to be plain muted text with no backing (illegible over a busy,
- * colorful lane — the exact bug already fixed once for .tl-range-bar-label below) and was only
- * shown when neighboring items left enough room; now that events are packed into multiple stacked
- * rows via packRows (see eventPacks in TimelineView.tsx, same helper the Lifespans lane uses), each
- * row already has guaranteed clearance, so the label is unconditional — every event gets its own
- * legible title+year without a click, matching what Lifespans already does. The one exception is
- * the rare cluster-fallback path (only reached when a lane is zoomed out further than
- * MAX_EVENT_ROWS can label individually), which still renders a plain single-line title here,
- * conditionally, the same way it always did. */
+ * (Biblical/World/Religion lanes) — one opaque pill, so a dot and a bar read identically. Row
+ * packing reserves its full width (max-width below; see timelineLayout.ts), so every event gets its
+ * own legible title and year without a click and without touching its neighbours. */
 .tl-marker-title,
 .tl-range-bar-label {
   position: absolute;
@@ -720,21 +801,21 @@
   gap: 0;
   font-size: calc(10px * var(--tsz, 1));
   font-weight: 600;
-  line-height: 1.3;
-  padding: 1px 6px;
+  line-height: 1.2;
+  padding: 0 6px;
   color: var(--text-h);
   background: var(--panel-bg);
   border: 1px solid var(--tl-grid);
   border-radius: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
   white-space: nowrap;
+  box-sizing: border-box;
   max-width: 132px;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* Unlike the book/lifespan labels below, this one is ALWAYS positioned past its own button's right
-   * edge (never "inside") — so unlike those, there's no inside case worth preserving pointer-events:
-   * none for; the label needs to be clickable itself (see .tl-marker/.tl-range-bar's onClick, which
-   * this click bubbles up to) or every event's title+year chip is dead. */
+  /* This pill is usually outside its own button's box (a range bar's title can be pushed far along it,
+   * see below), so it needs to be clickable itself — the click bubbles up to .tl-marker/.tl-range-bar
+   * — or every event's title+year chip is dead. */
   pointer-events: auto;
   cursor: pointer;
   /* This label renders past its own marker/bar's box, into the horizontal space of whatever comes
@@ -748,6 +829,50 @@
   z-index: 3;
 }
 
+/* A ranged event's title rests just past the end of its bar. A bar is often wider than the screen,
+ * so while that resting place is out of sight the title holds to an edge of the screen, over the bar:
+ *
+ *  - .tl-range-long (bar and title cannot both fit on screen): at the start of the bar, then held at
+ *    the left edge as the bar goes by, as lifetime names are, until the end arrives and takes it.
+ *  - .tl-range-short (they can): held at the right edge while the end is still beyond it, never
+ *    further back than the start of the bar. Otherwise at rest.
+ *
+ * Either way the title stays between the bar's start and its resting place, which is the footprint row
+ * packing reserves for it, so it can never touch another mark in its row; and it moves continuously,
+ * so it never jumps. All numbers are unitless px from the origin, set by TimelineView.tsx
+ * (--tl-view-left and --tl-view-width on the scroller; --x, --start and --rest on the bar); 100% is
+ * the title's own width. */
+.tl-range-bar-label {
+  left: 0;
+  margin-left: 0;
+}
+
+.tl-range-long .tl-range-bar-label {
+  transform: translate(
+    calc(
+      clamp(
+          var(--start, 0) * 1px,
+          (var(--tl-view-left, 0) + 4) * 1px,
+          var(--rest, 0) * 1px
+        ) - var(--x, 0) * 1px
+    ),
+    -50%
+  );
+}
+
+.tl-range-short .tl-range-bar-label {
+  transform: translate(
+    calc(
+      clamp(
+          var(--start, 0) * 1px,
+          (var(--tl-view-left, 0) + var(--tl-view-width, 0) - 2) * 1px - 100%,
+          var(--rest, 0) * 1px
+        ) - var(--x, 0) * 1px
+    ),
+    -50%
+  );
+}
+
 .tl-event-label-name {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -758,43 +883,6 @@
   font-weight: 500;
   line-height: 1.2;
   color: var(--text-muted);
-}
-
-/* Cluster badges — same visual concept as the map's numbered pin clusters. */
-.tl-cluster {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 7px;
-  border-radius: 100px;
-  font-size: calc(12px * var(--tsz, 1));
-  font-weight: 600;
-  border: 2px solid var(--panel-bg);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  cursor: zoom-in;
-  transform: translate(-50%, -50%);
-  transition: transform 0.14s ease;
-  z-index: 3;
-  font-variant-numeric: tabular-nums;
-}
-
-.tl-cluster:hover,
-.tl-cluster:focus-visible {
-  transform: translate(-50%, -50%) scale(1.16);
-  z-index: 5;
-}
-
-/* Numerals sit ON a filled category swatch, so their colour has to follow the theme's
- * category lightness, not a hardcoded white: dark mode's pigments are all light (ink
- * numerals), light mode's are all dark (paper numerals). The old per-category
- * exceptions here existed because white-on-gold measured 1.9:1 and white-on-amber
- * failed too; --tl-on-cat removes the whole class of bug. */
-.tl-cluster {
-  background: var(--cat);
-  color: var(--tl-on-cat);
 }
 
 /* Buttons used as markers/bars need their native chrome stripped. */
@@ -860,18 +948,14 @@
 }
 
 @media (max-width: 720px) {
-  /* The header is a single non-wrapping row carrying six things at 375px: Back, the title block
-   * (title + year readout), the Eras jump menu, the Lanes menu, −, + and Fit. Measured at 375px
-   * before this block was tightened, the title block was left 79.6px against a 117px title and an
-   * 83px year readout — both ellipsized. The three reclamations below (a 6px row gap, a 4px gap
-   * between the zoom controls, and dropping "Historical" from the heading) give it 93.6px, which
-   * fits both whole with the row still one line and no horizontal page overflow. */
+  /* The header is a single non-wrapping row: Back, the title block (title + year readout), then the
+   * Eras jump menu and the Lanes menu at the right. */
   .tl-header {
     padding: 8px 10px;
     gap: 6px;
   }
 
-  .tl-zoom-controls {
+  .tl-header-controls {
     gap: 4px;
   }
 
@@ -881,25 +965,41 @@
     display: none;
   }
 
-  /* The era list is 220px wide and the desktop rule hangs it off the RIGHT edge of its 35px button.
-   * That button sits at x=150.6 in a 375px header, so right-anchoring put the panel's left edge at
-   * -26px and clipped the first two characters of every era name off the screen. There is no purely
-   * relative anchor that fixes this — the button's distance from the header's right padding edge is
-   * a layout result, not something CSS can name — so on phones the panel leaves the button's
-   * coordinate space and spans the screen instead, inset by the same 10px the header is padded by.
-   *
-   * `top` is derived, not guessed: .tl-header has an explicit `min-height: 54px` which wins here
-   * (its content is a 32px control row inside 8px padding = 48px), and 6px is the same gap the
-   * desktop `top: calc(100% + 6px)` uses. Nothing between here and the viewport is transformed or
-   * filtered, so `fixed` really is viewport-relative. */
-  .tl-era-menu-dropdown {
-    position: fixed;
-    top: 60px;
+  /* On phones the Go to dropdown hangs from the header itself and spans it, inset by the same 10px
+   * the header is padded by: the button is not at the right edge, so hanging the panel off the
+   * button would push it off the screen. */
+  .tl-header {
+    position: relative;
+  }
+
+  .tl-goto-menu {
+    position: static;
+  }
+
+  .tl-goto-dropdown {
     left: 10px;
     right: 10px;
+    width: auto;
     min-width: 0;
-    /* Same as the desktop rule: no ancestor zoom left to correct for. */
-    max-height: calc(100vh - 140px);
+    max-width: none;
+  }
+
+  .tl-goto-button svg {
+    display: none;
+  }
+
+  /* At the larger text sizes the two header buttons stop growing at 1.3x, which leaves the year
+   * readout beside them room to be read. */
+  .tl-header .tl-goto-button-text {
+    font-size: calc(13px * min(var(--tsz, 1), 1.3));
+  }
+
+  .tl-header .tl-lane-menu-count {
+    font-size: calc(11px * min(var(--tsz, 1), 1.3));
+  }
+
+  .tl-header .tl-lane-menu-button {
+    padding: 0 6px;
   }
 
   .tl-title {
@@ -916,14 +1016,7 @@
 
   .tl-lane-label {
     font-size: calc(9px * var(--tsz, 1));
-    padding: 2px 6px;
-  }
-
-  /* The era jump control is one more thing competing with the title for a 375px header,
-   * so on phones it drops to its arrow icon alone — 35px instead of 62.6px. This is the reason the
-   * control could come back at all (see SHOW_ERA_MENU in TimelineView.tsx); do not remove it. */
-  .tl-era-menu-button .tl-lane-menu-count {
-    display: none;
+    padding: 0 6px;
   }
 
   .tl-title-block {
@@ -940,7 +1033,7 @@
 /* ------------------------------------------------- entity focus highlight */
 
 /* Applied briefly to the focused entity's markers/bars after "View in Timeline"
- * zooms to them — a pulsing accent ring that draws the eye, then fades away
+ * pans to them — a pulsing accent ring that draws the eye, then fades away
  * when the class is removed (see focusHighlightOn in TimelineView.tsx). */
 .tl-marker.tl-focused,
 .tl-range-bar.tl-focused,

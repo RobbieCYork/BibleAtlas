@@ -67,11 +67,13 @@ export default async (h) => {
     await h.sleep(1500);
     h.assert((await h.evaluate(() => document.title)) === "About Capstone Bible", "static page: title");
     h.assert((await h.evaluate(() => document.querySelector("main h1")?.textContent)) === "About Capstone Bible", "static page: h1");
-    h.assert((await h.evaluate(() => document.scripts.length - document.querySelectorAll('script[type="application/ld+json"]').length)) === 0, "static page: carries no script");
+    // One script and one only: the saved-text loader (sql/051, render.mjs aboutPage). about-editor.mjs
+    // tests what it does; here, with nothing saved, the built-in words below must be what stays.
+    h.assert((await h.evaluate(() => document.scripts.length - document.querySelectorAll('script[type="application/ld+json"]').length)) === 1, "static page: carries exactly one script, the saved-text loader");
     const got = await wording(h, "main");
     h.assert(JSON.stringify(got) === JSON.stringify(EXPECTED), `static page: wording matches the data module (${got.length}/${EXPECTED.length} blocks)`);
     if (process.env.DUMP) writeFileSync(process.env.DUMP, JSON.stringify(got, null, 1));
-    h.assert((await h.evaluate(() => document.querySelector("main blockquote.pull") === document.querySelector("main h1").nextElementSibling)), "static page: pull quote directly under the title");
+    h.assert((await h.evaluate(() => document.querySelector("main blockquote.pull") === document.querySelector("main h1").nextElementSibling?.firstElementChild)), "static page: pull quote directly under the title");
     h.assert((await h.evaluate(() => [...document.querySelectorAll("main section h2")].map((e) => e.textContent).join("|"))) === "On the use of AI", "static page: one section heading");
     const g = await gutter(h, "main blockquote, main section p, main h1, .back a");
     h.assert(g >= 16 && !(await overflow(h)), `static page: no sideways overflow, gutter ${g}px`);

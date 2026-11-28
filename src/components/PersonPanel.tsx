@@ -10,6 +10,7 @@ import Icon from "./Icon";
 import { personImages } from "../data/personImages";
 import { personCardSpec, shareFilename } from "../lib/shareCard";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
+import YoungEarthDateNote from "./YoungEarthDateNote";
 
 interface PersonPanelProps {
   person: Person | null;
@@ -116,6 +117,7 @@ export default function PersonPanel({
           {lifespanBadge && <span className="person-tier-tag">{lifespanBadge}</span>}
         </p>
       )}
+      {person.lifespanLabel && person.youngEarthDate && <YoungEarthDateNote onSelectTopic={onSelectTopic} />}
       {person.alternateNames && person.alternateNames.length > 0 && (
         <p className="alt-names">Also called: {person.alternateNames.join(", ")}</p>
       )}

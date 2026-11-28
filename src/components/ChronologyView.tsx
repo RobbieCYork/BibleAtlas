@@ -1,16 +1,21 @@
 import { useState } from "react";
 import {
+  CHRONOLOGY_CATEGORIES,
   CHRONOLOGY_LEVELS,
   correctPositions,
   dealRound,
   isOrdered,
   type ChronologyCard,
+  type ChronologyCategory,
   type ChronologyLevel,
   type ChronologyLevelDef,
 } from "../data/chronologyRounds";
+import { AGE_OF_EARTH_TOPIC_NAME, YOUNG_EARTH_DATE_LABEL, YOUNG_EARTH_DATE_NOTE } from "../data/datingDebate";
 import BackButton from "./BackButton";
 import "./Chronology.css";
 import Icon from "./Icon";
+import { LevelSetup } from "./GameEntry";
+import { useScrollTop } from "../lib/useScrollTop";
 
 interface ChronologyViewProps {
   onBack: () => void;
@@ -35,18 +40,21 @@ type Screen = "menu" | "playing" | "gameover";
 export default function ChronologyView({ onBack }: ChronologyViewProps) {
   const [screen, setScreen] = useState<Screen>("menu");
   const [level, setLevel] = useState<ChronologyLevelDef | null>(null);
+  const [choice, setChoice] = useState<ChronologyLevel>(CHRONOLOGY_LEVELS[0].key);
+  const [category, setCategory] = useState<ChronologyCategory>("all");
   const [cards, setCards] = useState<ChronologyCard[]>([]);
   const [checked, setChecked] = useState(false);
   const [lives, setLives] = useState(STARTING_LIVES);
   const [score, setScore] = useState(0);
   const [best, setBest] = useState(0);
   const [streak, setStreak] = useState(0);
+  const playRef = useScrollTop(`${screen} ${cards.map((c) => c.id).sort().join()}`);
 
   const startGame = (key: ChronologyLevel) => {
     const def = CHRONOLOGY_LEVELS.find((l) => l.key === key);
     if (!def) return;
     setLevel(def);
-    setCards(dealRound(def));
+    setCards(dealRound(def, category));
     setChecked(false);
     setLives(STARTING_LIVES);
     setScore(0);
@@ -91,13 +99,13 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
       setScreen("gameover");
       return;
     }
-    setCards(dealRound(level));
+    setCards(dealRound(level, category));
     setChecked(false);
   };
 
   if (screen === "menu") {
     return (
-      <div className="game-root">
+      <div className="game-root" data-page-bg="game-setup">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
           <h2 className="games-inline-icon">
@@ -106,31 +114,34 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
         </h2>
         </header>
         <div className="game-body">
-          <div className="chronology-picker">
-            <div className="games-panel-intro">
-              <h2>Choose a difficulty</h2>
-              <p>
-                Put the events back in the order they happened, earliest first. Higher levels deal more
-                cards, closer together in time. Three lives.
-              </p>
+          <>
+            <div className="chronology-picker">
+              <div className="games-panel-intro">
+                <p>
+                  Put the events back in the order they happened, earliest first. Higher levels deal more
+                  cards, less famous events, and events closer together. Three lives.
+                </p>
+              </div>
+              <LevelSetup name="chronology-level" levels={CHRONOLOGY_LEVELS} value={choice} onChange={setChoice} onStart={() => startGame(choice)}>
+                <div className="games-topic-card chronology-category">
+                  <h3 id="chronology-category-heading">Choose a category</h3>
+                  <select
+                    className="games-topic-select"
+                    aria-labelledby="chronology-category-heading"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value as ChronologyCategory)}
+                  >
+                    {CHRONOLOGY_CATEGORIES.map((c) => (
+                      <option key={c.key} value={c.key}>
+                        {c.label}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="games-topic-description">{CHRONOLOGY_CATEGORIES.find((c) => c.key === category)?.description}</p>
+                </div>
+              </LevelSetup>
             </div>
-            <div className="game-center-list">
-              {CHRONOLOGY_LEVELS.map((l) => (
-                <button key={l.key} type="button" className="game-center-card" onClick={() => startGame(l.key)}>
-                  <span className="game-center-card-icon">
-                    <Icon name={l.icon} />
-                  </span>
-                  <span className="game-center-card-body">
-                    <span className="game-center-card-title">{l.label}</span>
-                    <span className="game-center-card-tagline">{l.description}</span>
-                  </span>
-                  <span className="game-center-card-chevron" aria-hidden="true">
-                    ›
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
+          </>
         </div>
       </div>
     );
@@ -140,7 +151,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
     return (
       <div className="game-root">
         <header className="game-header">
-          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <BackButton onClick={backToMenu} ariaLabel="Back to difficulty select" />
           <h2 className="games-inline-icon">
           <Icon name="chronology" />
           Chronology
@@ -185,7 +196,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
           Chronology
         </h2>
       </header>
-      <div className="game-body">
+      <div ref={playRef} className="game-body game-fit chrono-play">
         <div className="chronology-hud">
           <span className="chronology-lives" aria-label={`${lives} lives remaining`}>
             {Array.from({ length: STARTING_LIVES }, (_, i) => (
@@ -219,6 +230,11 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
                   {checked && (
                     <span className="chronology-card-meta">
                       {card.dateLabel}
+                      {card.youngEarthDate && (
+                        <span className="chronology-card-young-earth" title={YOUNG_EARTH_DATE_NOTE}>
+                          {YOUNG_EARTH_DATE_LABEL}*
+                        </span>
+                      )}
                       <span className="chronology-card-category">{CATEGORY_LABELS[card.category]}</span>
                     </span>
                   )}
@@ -255,26 +271,37 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
             <h4>Correct order</h4>
             <ol>
               {[...cards]
-                .sort((a, b) => a.startYear - b.startYear)
+                .sort((a, b) => a.order - b.order)
                 .map((c) => (
                   <li key={c.id}>
                     <span className="chronology-solution-title">{c.title}</span>
-                    <span className="chronology-solution-date">{c.dateLabel}</span>
+                    <span className="chronology-solution-date">
+                      {c.dateLabel}
+                      {c.youngEarthDate && "*"}
+                    </span>
                   </li>
                 ))}
             </ol>
           </div>
         )}
 
-        {!checked ? (
-          <button type="button" className="chronology-btn-primary" onClick={checkOrder}>
-            Check Order
-          </button>
-        ) : (
-          <button type="button" className="chronology-btn-primary" onClick={nextRound}>
-            {lives <= 0 ? "See Results →" : "Next Round →"}
-          </button>
+        {checked && cards.some((c) => c.youngEarthDate) && (
+          <p className="chronology-young-earth-note">
+            * {YOUNG_EARTH_DATE_NOTE} See {AGE_OF_EARTH_TOPIC_NAME} in Topics.
+          </p>
         )}
+
+        <div className="game-pin">
+          {!checked ? (
+            <button type="button" className="chronology-btn-primary" onClick={checkOrder}>
+              Check Order
+            </button>
+          ) : (
+            <button type="button" className="chronology-btn-primary" onClick={nextRound}>
+              {lives <= 0 ? "See Results →" : "Next Round →"}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

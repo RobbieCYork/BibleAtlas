@@ -3,6 +3,7 @@ import Icon, { type IconName } from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature, SOCIAL_CONNECTIONS_ENABLED, ARCHAEOLOGY_MENU_ROW_VISIBLE, type FeatureVisibility } from "../lib/features";
 import { ABOUT_TITLE } from "../data/aboutPage";
+import { TOUR_ANCHORS } from "../data/welcomeTour";
 
 /** The panel slots the layout can show. There is deliberately no separate "details" slot: a single
  * article (a place/person/topic/POI/timeline event) is a *state* of the Articles panel, not a panel
@@ -10,9 +11,9 @@ import { ABOUT_TITLE } from "../data/aboutPage";
 export type PanelKey = "map" | "bible" | "notes" | "friends" | "articles";
 
 /** The full-area takeovers this menu can navigate to. Not PanelKeys, and deliberately not modelled
- * as such: `showTimeline`/`showGame` in App.tsx render outside the panel system, cover the whole
- * work area, and are mutually exclusive with each other (and with My Profile). */
-export type DestinationKey = "timeline" | "games";
+ * as such: Timeline, My Profile and Games render outside the panel system (see App.tsx), cover the
+ * whole work area, and are mutually exclusive with each other. */
+export type DestinationKey = "timeline" | "profile" | "games";
 
 interface PanelMenuProps {
   panels: Record<PanelKey, boolean>;
@@ -37,6 +38,11 @@ interface PanelMenuProps {
   aboutOpen: boolean;
   /** Open the About Capstone Bible page, or close it when it is already on screen. */
   onToggleAbout: () => void;
+  /** Open the welcome tour (components/WelcomeTour.tsx) over whatever is on screen. */
+  onOpenTour: () => void;
+  /** Whether this account has a profile page, i.e. is not a guest. My Profile has no Testing/Live
+   * stage: it is listed in both views, as the phone's tab and menu row are. */
+  hasProfile: boolean;
 }
 
 const PANEL_LABELS: Record<PanelKey, string> = {
@@ -81,6 +87,7 @@ const PANEL_GROUPS: PanelKey[][] = [
 const GO_TO_ROWS: { key: DestinationKey | "archaeology"; label: string; icon: IconName; blurb: string }[] = [
   { key: "timeline", label: "Timeline", icon: "timeline", blurb: "Biblical & world history" },
   { key: "archaeology", label: "Archaeology", icon: "archaeology", blurb: "Discoveries & manuscripts" },
+  { key: "profile", label: "My Profile", icon: "social", blurb: "Details & reading progress" },
   { key: "games", label: "Games", icon: "games", blurb: "Live trivia with friends" },
 ];
 
@@ -90,8 +97,8 @@ const GO_TO_ROWS: { key: DestinationKey | "archaeology"; label: string; icon: Ic
  *
  *  - **Panels** are checkboxes. Multi-select, capped at three, order-independent — "show me Bible
  *    and Map at once". They keep their existing behaviour and their cap caption verbatim.
- *  - **Go to** rows are buttons, not checkboxes. Timeline and Games are full-area takeovers
- *    (App.tsx's `showTimeline`/`showGame`), single-select, mutually exclusive, and they cover the
+ *  - **Go to** rows are buttons, not checkboxes. Timeline, My Profile and Games are full-area
+ *    takeovers (App.tsx), single-select, mutually exclusive, and they cover the
  *    panels rather than joining them. You don't have Timeline open *alongside* Bible — you go to
  *    it. A checkbox would promise a fourth simultaneous panel that cannot exist.
  *
@@ -115,6 +122,8 @@ export default function PanelMenu({
   onGoToArchaeology,
   aboutOpen,
   onToggleAbout,
+  onOpenTour,
+  hasProfile,
 }: PanelMenuProps) {
   const [open, setOpen] = useState(false);
   // Swaps the caption to name the auto-closed panel for a few seconds, then falls back to the
@@ -130,6 +139,7 @@ export default function PanelMenu({
   const articlesFeature = useFeature("library_articles");
   const goToFeature: Record<DestinationKey | "archaeology", FeatureVisibility> = {
     timeline: timelineFeature,
+    profile: { visible: hasProfile, inTesting: false },
     games: gamesFeature,
     // Archaeology is a shelf of the Articles panel, so it follows Articles' stage.
     archaeology: articlesFeature,
@@ -174,6 +184,12 @@ export default function PanelMenu({
     else onNavigate?.(key);
   };
 
+  const selectTour = () => {
+    setOpen(false);
+    buttonRef.current?.focus();
+    onOpenTour();
+  };
+
   const selectAbout = () => {
     setOpen(false);
     buttonRef.current?.focus();
@@ -185,9 +201,10 @@ export default function PanelMenu({
       <button
         type="button"
         ref={buttonRef}
+        data-tour={TOUR_ANCHORS.menu}
         className="panel-menu-button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Menu — show or hide panels, or go to Timeline or Games"
+        aria-label="Menu — show or hide panels, or go to Timeline, My Profile or Games"
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={open ? menuId : undefined}
@@ -203,7 +220,7 @@ export default function PanelMenu({
               <Fragment key={groupIndex}>
                 {groupIndex > 0 && <div className="panel-menu-separator" role="separator" />}
                 {group.filter((key) => (key !== "friends" || SOCIAL_CONNECTIONS_ENABLED) && panelFeature(key)?.visible !== false).map((key) => (
-                  <label key={key} className="panel-menu-item">
+                  <label key={key} data-menu={key} className="panel-menu-item">
                     <input type="checkbox" checked={panels[key]} onChange={() => onToggle(key)} />
                     {PANEL_LABELS[key]}
                     <TestingMarker show={!!panelFeature(key)?.inTesting} />
@@ -228,6 +245,7 @@ export default function PanelMenu({
               return (
                 <button
                   key={key}
+                  data-menu={key}
                   type="button"
                   className={`panel-menu-link${isCurrent ? " active" : ""}`}
                   aria-current={isCurrent ? "page" : undefined}
@@ -252,8 +270,20 @@ export default function PanelMenu({
             })}
           </div>
           <div className="panel-menu-separator panel-menu-separator-strong" role="separator" />
+          <button type="button" data-menu="tour" className="panel-menu-link panel-menu-tour" onClick={selectTour}>
+            <span className="panel-menu-link-icon">
+              <Icon name="play" />
+            </span>
+            <span className="panel-menu-link-text">
+              <span className="panel-menu-link-label">Welcome tour</span>
+            </span>
+            <span className="panel-menu-link-go" aria-hidden="true">
+              →
+            </span>
+          </button>
           <button
             type="button"
+            data-menu="about"
             className={`panel-menu-link panel-menu-about${aboutOpen ? " active" : ""}`}
             aria-current={aboutOpen ? "page" : undefined}
             aria-label={aboutOpen ? `${ABOUT_TITLE} — on screen now; return to panels` : undefined}

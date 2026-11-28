@@ -17,8 +17,9 @@
    *     to standalone, and why it is `svh` and not `lvh`/`vh`/`%` that is safe unconditionally.
    *     When the toolbar collapses, --app-height (dvh, tracked live) grows past this and `height`
    *     wins, so db2f52d's toolbar tracking is untouched.
-   *   • In an installed standalone app there is no retractable UI at all, so svh, lvh and dvh are
-   *     all the same number: the whole screen. The floor is therefore exactly the full window.
+   *   • In an installed standalone app there is no retractable UI at all, so this floor can never
+   *     be too tall. It is not always the whole screen: the iPhone home-screen app can report svh
+   *     short by the top safe-area inset, which index.css corrects at the root element.
    *
    * And it is inert against the keyboard: index.html declares interactive-widget=resizes-visual, so
    * the on-screen keyboard resizes only the VISUAL viewport, never the layout viewport that svh is
@@ -181,6 +182,54 @@
 .app-header .header-social .social-links-item:hover,
 .app-header .header-social .social-links-item:focus-visible {
   color: var(--text);
+}
+
+/* The Report a Problem flag (HeaderReportButton), between the social marks and the avatar. It also
+ * wears .social-links-item (opacity, radius, focus ring); these rules repeat the header marks' size
+ * and colour and reset the native button chrome. `margin-left:auto` is for the phone, where there is
+ * no social row ahead of it. Beside the marks it closes the 24px header gap to the 2px they keep
+ * between themselves, and the avatar keeps the 12px it had from the marks. */
+.app-header .header-report {
+  flex-shrink: 0;
+  margin-left: auto;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: calc(16px * var(--tsz, 1));
+  padding: 6px;
+}
+
+.app-header .header-report:hover,
+.app-header .header-report:focus-visible {
+  color: var(--text);
+}
+
+.app-header .header-social + .header-report {
+  margin-left: -22px;
+}
+
+.app-header .header-report + .auth-button {
+  margin-left: -12px;
+}
+
+@media (max-width: 768px) {
+  /* 10px header gap here: pull the flag toward the avatar so it costs the search field less. */
+  .app-header .header-report + .auth-button {
+    margin-left: -4px;
+  }
+}
+
+/* Under 375px the flag cuts off the search placeholder ("Search anything..."), so it goes; the
+ * account menu still has Report a Problem or Suggest a Feature. The avatar takes back its own push-right. */
+@media (max-width: 374px) {
+  .app-header .header-report {
+    display: none;
+  }
+
+  .app-header .header-report + .auth-button {
+    margin-left: auto;
+  }
 }
 
 /* The mobile copy, in the account dropdown (see AuthButton). Two selector classes deep so it beats
@@ -1317,6 +1366,20 @@ body.resizing-panels {
   margin-top: 0;
 }
 
+/* The note under a young-earth date (YoungEarthDateNote.tsx). */
+.young-earth-date-note {
+  margin: 4px 0 10px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.young-earth-date-note .verse-location-link {
+  text-align: left;
+}
+
 .pronunciation {
   font-style: italic;
 }
@@ -1719,6 +1782,46 @@ body.resizing-panels {
   border-color: var(--danger);
 }
 
+/* Religions and Denominations. The classification notice sits above the facts block because Robbie
+ * asked (2026-09-09) that a reader meet the disclaimer where they meet the filing. Sunken card, same
+ * as the facts block, with the accent rule on the left so it reads as a note rather than a warning:
+ * it explains a judgement, it does not flag a danger. */
+.belief-classification {
+  margin-top: 14px;
+  padding: 10px 13px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  font-size: calc(13px * var(--tsz, 1));
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.belief-fact-note {
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+}
+
+.belief-fact-note a {
+  color: var(--accent);
+}
+
+.belief-related-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--accent);
+  cursor: pointer;
+  text-align: left;
+}
+
+.belief-related-link:hover {
+  text-decoration: underline;
+}
+
 /* Shared by "See X on the map" and "View the manuscript itself": one is a button and one is an
  * anchor, and they must not look like two different affordances for the same kind of move. */
 .artifact-map-link {
@@ -2050,13 +2153,6 @@ body.resizing-panels {
   margin-bottom: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
-}
-
-/* A description that belongs to the control right under it: no rule between the two. */
-.auth-benefits-inline {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
 }
 
 .auth-settings-section {
@@ -3045,7 +3141,8 @@ a.profile-links-url {
 .walk-panel,
 .display-name-gate-overlay,
 .auth-admin-sheet,
-.report-sheet {
+.report-sheet,
+.welcome-tour-card {
   --tsz: var(--text-scale, 1);
   font-size: calc(1em * var(--text-scale, 1));
 }
@@ -8020,7 +8117,7 @@ a.profile-links-url {
   height: 36px;
 }
 
-/* --- Timeline mode (full-screen zoomable timeline) --- */
+/* --- Timeline mode (full-screen timeline) --- */
 
 /* Covers the entire map/bible/panels area while leaving the header, desktop footer, and mobile tab
  * bar in place — the layout underneath stays mounted, so map/Bible state survives the visit. */
@@ -8992,6 +9089,11 @@ a.profile-links-url {
   gap: 10px;
 }
 
+/* Only the phone layout (below) gives the frame a box of its own. */
+.share-card-frame {
+  display: contents;
+}
+
 .share-modal-photo .share-card-preview {
   position: relative;
   display: block;
@@ -9226,6 +9328,11 @@ a.profile-links-url {
 .share-bg-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
+  /* Rows take their tiles' full height and the grid scrolls. Left at `auto`, WebKit divides the
+     capped height below between the rows (a clipped tile counts as zero minimum height), and the
+     4:5 tiles then spill over one another. */
+  grid-auto-rows: max-content;
+  align-content: start;
   gap: 8px;
   max-height: 260px;
   overflow-y: auto;
@@ -9248,7 +9355,10 @@ a.profile-links-url {
   background-color: var(--border);
 }
 
+/* Out of flow, so the tile's height comes from its 4:5 ratio alone and never from the photo. */
 .share-bg-thumb img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -9341,6 +9451,96 @@ a.profile-links-url {
 
   .share-modal-size-note {
     font-size: calc(10px * var(--tsz, 1));
+  }
+}
+
+/* A phone held upright: the preview, the header and Cancel / Share-Save stay put, and only the text
+   tools and the background picker scroll, so a background can be judged while it is being chosen.
+   Shorter screens than this fall back to the single scrolling sheet above. */
+@media (max-width: 700px) and (min-height: 540px) {
+  .share-modal-photo {
+    --share-preview-h: 32dvh;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .share-modal-photo .share-modal-header,
+  .share-modal-photo .share-modal-actions {
+    flex: none;
+  }
+
+  /* Scrolls only if the preview and the smallest usable picker cannot both fit. */
+  .share-modal-photo .share-modal-body {
+    flex: 1 1 0;
+    min-height: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    overflow-y: auto;
+  }
+
+  .share-card-stage {
+    flex: none;
+  }
+
+  .share-card-frame {
+    display: block;
+    position: relative;
+    flex: none;
+    width: min(100%, 300px, calc(var(--share-preview-h) * var(--card-ratio)));
+    aspect-ratio: var(--card-ratio);
+    margin: 0 auto;
+  }
+
+  /* Laid out at one width and painted smaller, so the type fit and the exported image do not depend
+     on how much room the screen has. The width is PHONE_CARD_WIDTH in ShareCardModal. */
+  .share-modal-photo .share-card-frame > .share-card-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    max-width: none;
+    margin: 0;
+    transform-origin: 0 0;
+    transform: scale(var(--card-scale, 1));
+  }
+
+  .share-modal-photo .share-modal-controls {
+    flex: 1 0 150px;
+    min-width: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .share-modal-controls > * {
+    flex-shrink: 0;
+  }
+
+  /* One scroller, not a scroller inside a scroller. */
+  .share-bg-grid {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .share-modal-photo .share-modal-actions {
+    position: static;
+  }
+}
+
+@media (max-width: 700px) and (min-height: 540px) and (max-height: 700px) {
+  .share-modal-photo {
+    --share-preview-h: 29dvh;
+  }
+}
+
+@media (max-width: 700px) and (min-height: 540px) and (max-height: 600px) {
+  .share-modal-photo {
+    --share-preview-h: 25dvh;
+  }
+
+  .share-modal-photo .share-modal-controls {
+    flex-basis: 130px;
   }
 }
 
@@ -10683,6 +10883,73 @@ a.profile-links-url {
   color: var(--text);
 }
 
+/* --- Report a problem / Suggest a feature: the either-or at the top of the form --- */
+
+.report-kind {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  min-width: 0;
+  margin: 0;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface-sunken);
+}
+
+/* Read out, not drawn: the two options already say what is being asked. */
+.report-kind-legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.report-kind-option {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+}
+
+.report-kind-option input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.report-kind-option span {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: calc(14px * var(--tsz, 1));
+  line-height: 1.3;
+  text-align: center;
+  /* A click lands on the invisible radio above, never on the text. */
+  pointer-events: none;
+}
+
+.report-kind-option input:checked + span {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.report-kind-option input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* --- The captured-context card: what the report will say about where you were --- */
 
 .report-context-card {
@@ -10793,7 +11060,6 @@ a.profile-links-url {
 .report-editor input,
 .report-editor select,
 .report-editor textarea,
-.report-vote-note,
 .report-filter-row select,
 .report-dup-search input,
 .report-admin-box select,
@@ -10813,7 +11079,6 @@ a.profile-links-url {
 
 .report-field textarea,
 .report-editor textarea,
-.report-vote-note,
 .report-admin-box textarea {
   resize: vertical;
   min-height: 80px;
@@ -10822,7 +11087,6 @@ a.profile-links-url {
 .report-field input:focus-visible,
 .report-field select:focus-visible,
 .report-field textarea:focus-visible,
-.report-vote-note:focus-visible,
 .report-dup-search input:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
@@ -11086,6 +11350,67 @@ a.profile-links-url {
   gap: 6px;
 }
 
+/* Category tabs: the piles the queue is sorted into. They WRAP rather than
+ * scroll sideways — eleven tabs in a horizontal scroller hide most of the piles
+ * on a phone, and a wrapped row shows every count at once. */
+.report-category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.report-category-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: calc(13px * var(--tsz, 1));
+  text-align: left;
+  cursor: pointer;
+}
+
+.report-category-tab:hover {
+  background: var(--surface-sunken);
+}
+
+.report-category-tab.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.report-category-tab.retired {
+  border-style: dashed;
+  color: var(--text-muted);
+}
+
+.report-category-count {
+  min-width: 1.6em;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: calc(11px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.7;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-category-tab.active .report-category-count {
+  background: var(--accent);
+  color: var(--panel-bg);
+}
+
 .report-chip {
   min-height: 32px;
   padding: 5px 11px;
@@ -11119,6 +11444,11 @@ a.profile-links-url {
   align-items: stretch;
 }
 
+.report-dup-search select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .report-dup-search input {
   flex: 1 1 auto;
   min-width: 0;
@@ -11128,7 +11458,7 @@ a.profile-links-url {
   flex: 0 0 auto;
 }
 
-/* --- Dashboard: the ranked queue --- */
+/* --- Dashboard: the queue --- */
 
 .report-queue-row {
   display: flex;
@@ -11147,16 +11477,6 @@ a.profile-links-url {
 
 .report-queue-row:hover {
   background: var(--surface-sunken);
-}
-
-.report-queue-score {
-  flex: 0 0 auto;
-  min-width: 2.5em;
-  font-family: var(--display);
-  font-size: calc(20px * var(--tsz, 1));
-  line-height: 1.2;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
 }
 
 /* min-width:0 is what stops a long title from forcing the row wider than the
@@ -11184,13 +11504,13 @@ a.profile-links-url {
   gap: 4px;
 }
 
-.report-queue-votes {
+.report-queue-severity {
   font-size: calc(12px * var(--tsz, 1));
   color: var(--text-muted);
   white-space: nowrap;
 }
 
-/* Below ~430px the vote column and the badge stop fitting beside the title, so
+/* Below ~430px the status column stops fitting beside the title, so
  * the row becomes two lines instead of squeezing the title to nothing. */
 @media (max-width: 430px) {
   .report-queue-row {
@@ -11214,7 +11534,6 @@ a.profile-links-url {
   gap: 10px;
 }
 
-.report-vote-box,
 .report-admin-box {
   display: flex;
   flex-direction: column;
@@ -11225,43 +11544,6 @@ a.profile-links-url {
   background: var(--panel-bg);
 }
 
-.report-vote-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.report-vote-btn {
-  flex: 1 1 auto;
-  min-height: 40px;
-  min-width: 96px;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface-sunken);
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: calc(14px * var(--tsz, 1));
-  cursor: pointer;
-}
-
-.report-vote-btn:hover {
-  background: var(--accent-bg);
-}
-
-.report-vote-btn.active {
-  border-color: var(--accent);
-  background: var(--accent-bg);
-  color: var(--text-h);
-  font-weight: 600;
-}
-
-.report-vote-btn:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-
-.report-vote-row,
 .report-history-row {
   display: flex;
   flex-direction: column;
@@ -11276,26 +11558,7 @@ a.profile-links-url {
   overflow-wrap: anywhere;
 }
 
-.report-vote-mark {
-  font-family: var(--sans);
-  font-size: calc(10px * var(--tsz, 1));
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-}
-
-.report-vote-mark.agree {
-  color: var(--accent);
-}
-
-.report-vote-mark.disagree {
-  color: var(--danger);
-}
-
-.report-vote-who {
-  color: var(--text-muted);
-}
-
-.report-vote-text {
+.report-history-note {
   color: var(--text);
   white-space: pre-wrap;
 }
@@ -14045,4 +14308,443 @@ img.sn-image,
   max-height: calc(var(--app-height, 100svh) - 96px - env(safe-area-inset-top, 0px));
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+/* --- Admin Console -> About page (AboutPageEditor.tsx). Owner only. Phone first: every control is a
+ * full-width row or wraps, fields are 16px+ so iOS does not zoom, nothing is wider than the sheet. --- */
+.admin-about {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.admin-about-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  /* The Admin Console sheet's own background, so the bar reads as part of the page while it sticks. */
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-about-mode,
+.admin-about-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.admin-about-mode button {
+  min-height: 40px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.admin-about-mode button.active {
+  border-color: var(--accent);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.admin-about-actions button {
+  min-height: 40px;
+}
+
+.admin-about-save:not(:disabled) {
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.admin-about-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.admin-about-state {
+  flex: 1 0 100%;
+  margin: 0;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.admin-about-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: #f97316;
+  vertical-align: middle;
+}
+
+.admin-about-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.admin-about-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-sunken);
+}
+
+.admin-about-section legend {
+  padding: 0 4px;
+  font-family: var(--sans);
+  font-size: calc(11px * var(--tsz, 1));
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.admin-about-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.admin-about-label {
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.admin-about-hint {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.admin-about-field input,
+.admin-about-field textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-top: 3px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text);
+  font-family: var(--serif);
+  /* 16px keeps iOS Safari from zooming the page when the field takes focus. */
+  font-size: max(16px, calc(15px * var(--tsz, 1)));
+  line-height: 1.5;
+}
+
+.admin-about-field textarea {
+  resize: vertical;
+}
+
+.admin-about-section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-about-section-actions button,
+.admin-about-add {
+  min-height: 40px;
+}
+
+.admin-about-section-actions button:disabled,
+.admin-about-add:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.admin-about-add {
+  align-self: flex-start;
+}
+
+.admin-about-preview {
+  padding: 4px 12px 8px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.admin-about-preview .about-text {
+  font-size: calc(16px * var(--tsz, 1));
+}
+
+.admin-about-preview .about-quote {
+  font-size: calc(21px * var(--tsz, 1));
+}
+
+.admin-about-preview .about-text h3 {
+  font-size: calc(20px * var(--tsz, 1));
+}
+
+.admin-about-history summary {
+  cursor: pointer;
+  min-height: 32px;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-h);
+}
+
+.admin-about-history[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-about-versions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-about-version {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.admin-about-version-text {
+  display: flex;
+  flex: 1 1 200px;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.admin-about-version-when {
+  font-size: calc(13px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.admin-about-version-words {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.admin-about-version button {
+  min-height: 36px;
+}
+
+/* ============================================================================
+ * USAGE REPORTS (UsageReportsPanel) and the Users tab's Registered accounts card.
+ * Graphs first: one card per metric, chart always drawn. One column on a phone,
+ * two once there is room for two ~420px charts side by side. Every colour is a
+ * theme token, so light and dark (and the skins) move with the theme.
+ * ========================================================================== */
+.usage-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.usage-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.usage-range-picker {
+  flex-wrap: wrap;
+}
+
+.usage-range-picker button {
+  min-height: 32px;
+}
+
+.usage-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.usage-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text);
+  cursor: pointer;
+}
+
+.usage-toggle-off {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.usage-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  transition: opacity 120ms ease;
+}
+
+@media (min-width: 960px) {
+  .usage-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.usage-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-sunken);
+}
+
+.usage-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+}
+
+.usage-card-title {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: calc(14px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.usage-headline {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+}
+
+.usage-headline strong {
+  font-family: var(--display);
+  font-size: calc(26px * var(--tsz, 1));
+  line-height: 1;
+  color: var(--text-h);
+  font-variant-numeric: tabular-nums;
+}
+
+.usage-definition {
+  margin: 0;
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.usage-gap {
+  padding: 8px 10px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 8px;
+}
+
+.usage-not-recorded {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.usage-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.usage-breakdown-heading {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: calc(12px * var(--tsz, 1));
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.usage-breakdown-heading span {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.usage-breakdown-label {
+  max-width: 55%;
+}
+
+.usage-more {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.usage-more > summary {
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text);
+  cursor: pointer;
+}
+
+.usage-more[open] > summary {
+  margin-bottom: 12px;
+}
+
+.admin-registered-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--panel-bg);
+}
+
+.admin-guest-explain {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text);
+}
+
+/* A verse sheet lifted above the on-screen keyboard (lib/onScreenKeyboard.ts sets the attribute, its
+ * bottom and its max-height). It no longer touches the bottom of the screen, so the home-indicator
+ * padding goes, and the note editor's quote and box give up height so Save stays on screen. */
+.verse-sheet[data-keyboard="up"] {
+  padding-bottom: 12px;
+}
+
+.verse-sheet[data-keyboard="up"] .verse-popup-note-editor .verse-popup-quoted {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.verse-sheet[data-keyboard="up"] .verse-popup-note-editor textarea {
+  min-height: 56px;
+  height: 56px;
 }

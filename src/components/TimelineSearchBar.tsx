@@ -20,6 +20,8 @@ export default function TimelineSearchBar({ events, onSelect }: TimelineSearchBa
     if (!q) return [];
     return events
       .filter((e) => {
+        // Nothing to pan to for an event that is not on the timeline.
+        if (e.hiddenOnTimeline) return false;
         return (
           e.title.toLowerCase().includes(q) ||
           e.summary.toLowerCase().includes(q) ||

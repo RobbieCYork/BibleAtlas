@@ -1,0 +1,483 @@
+/* --- Daily Name (DailyNameView.tsx) ---
+ *
+ * Feedback never rests on colour alone. Each mark has its own colour AND its own shape:
+ *   right spot      verdigris fill, solid frame, a solid dot in the corner
+ *   wrong spot      gold fill, DASHED frame, a half-filled dot in the corner
+ *   not in name     sunken well, no frame, a hollow ring in the corner, muted letter
+ * and every tile and key also carries the mark in its accessible name. The two fills are pigments
+ * already in the palette (index.css) and are the same in every theme and skin, so the contrast
+ * below holds everywhere: white on --verdigris #3e6b52 is 6.0:1; ink #1b1410 on --gold #c8912f is
+ * 7.2:1.
+ */
+
+.dn-setup {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dn-body {
+  gap: 10px;
+}
+
+.dn-status {
+  margin: 0;
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ board */
+
+.dn-board-fit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.dn-board {
+  /* Tile size follows the word length so a nine-letter name still fits a 390px screen:
+     the 40px side gutter and the gaps come off first, then the rest is shared out. On the result
+     screen, a short window also holds the tiles back so the result shows under the board. */
+  --dn-gap: 5px;
+  --dn-tile: min(54px, 6.5vh, calc((100vw - 40px - (var(--dn-len) - 1) * var(--dn-gap)) / var(--dn-len)));
+  display: flex;
+  flex-direction: column;
+  gap: var(--dn-gap);
+  margin: 4px 0;
+}
+
+.dn-row {
+  display: flex;
+  gap: var(--dn-gap);
+  justify-content: center;
+}
+
+.dn-tile {
+  position: relative;
+  width: var(--dn-tile);
+  height: var(--dn-tile);
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: calc(var(--dn-tile) * 0.48);
+  text-transform: uppercase;
+  box-sizing: border-box;
+}
+
+.dn-typed {
+  border-color: var(--border-strong);
+}
+
+.dn-mark {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+/* One slot under the board: a refused guess's reason, or the first-guess hint. */
+.dn-under {
+  min-height: 1.4em;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: min(calc(14px * var(--tsz, 1)), 19px);
+  line-height: 1.35;
+}
+
+.dn-message {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.dn-hint {
+  margin: 0;
+  color: var(--text);
+}
+
+/* --------------------------------------------------------------- keyboard */
+
+.dn-keyboard {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  user-select: none;
+}
+
+.dn-key-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.dn-key {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 44px;
+  height: 52px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font: inherit;
+  font-weight: 700;
+  /* Capped: past this a letter no longer fits a phone-width key. */
+  font-size: min(calc(15px * var(--tsz, 1)), 21px);
+  cursor: pointer;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+.dn-key-wide {
+  flex: 1.6 1 0;
+  max-width: 72px;
+  font-size: min(calc(13px * var(--tsz, 1)), 15px);
+}
+
+.dn-key:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------- fit screen
+ *
+ * While a guess is still to be made, everything shares the space between the game header and the
+ * tab bar: status, hint and keyboard take what they need, the board takes the rest and its tiles
+ * are sized from BOTH the width and the height left (container units, measured against these two
+ * boxes, so the header, a banner, safe-area insets and the browser's own bars are all already
+ * accounted for). Key height follows the same space, never under 40px. Browsers without container
+ * units keep the width-only sizes above and scroll. */
+
+.game-body.dn-fit {
+  container: dn-play / size;
+  gap: 6px;
+  padding: 6px 8px 8px;
+}
+
+.dn-fit > * {
+  flex-shrink: 0;
+}
+
+.dn-fit .dn-status {
+  font-size: min(calc(13px * var(--tsz, 1)), 18px);
+  line-height: 1.3;
+}
+
+/* Asks for six full-size rows and gives height back when there isn't room; 20px tiles at least. */
+.dn-fit > .dn-board-fit {
+  container-type: size;
+  flex: 0 1 349px;
+  min-height: 145px;
+  align-items: center;
+}
+
+@supports (height: 1cqh) {
+  .dn-fit .dn-board {
+    --dn-tile: min(54px, calc((100cqw - (var(--dn-len) - 1) * var(--dn-gap)) / var(--dn-len)), calc((100cqh - 5 * var(--dn-gap)) / 6));
+    margin: 0;
+  }
+
+  .dn-fit .dn-key {
+    height: clamp(40px, 9cqh, 52px);
+  }
+}
+
+@container dn-play (max-height: 440px) {
+  .dn-fit .dn-board {
+    --dn-gap: 4px;
+  }
+  .dn-fit .dn-keyboard {
+    gap: 5px;
+  }
+  .dn-fit .dn-legend .dn-tile-sample {
+    --dn-tile: 20px;
+  }
+  /* Read out, not drawn: the hint already gives the length, and the board shows the guess count. */
+  .dn-fit .dn-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Largest text on a small phone can still ask for more than there is. The page then scrolls, and
+ * the keyboard stays pinned in view. Not on very short (landscape) screens, where a pinned
+ * keyboard would cover the board. */
+@media (min-height: 520px) {
+  .dn-fit .dn-keyboard {
+    position: sticky;
+    bottom: -8px;
+    z-index: 1;
+    padding-bottom: 8px;
+    margin-bottom: -8px;
+    background: var(--bg);
+  }
+}
+
+/* ------------------------------------------------------------ how to play */
+
+.dn-example {
+  justify-content: flex-start;
+  --dn-gap: 5px;
+}
+
+.dn-example .dn-tile {
+  --dn-tile: 36px;
+}
+
+.dn-look {
+  color: var(--text-muted);
+}
+
+.how-marks .dn-tile-sample {
+  --dn-tile: 30px;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------------ key
+   Always on screen, between the board and the keyboard: one row of three. The text size is capped
+   like the rest of the fit screen, and a label wraps inside its own column before the row does. */
+
+.dn-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  display: flex;
+  gap: 4px 12px;
+  justify-content: center;
+  font-size: min(calc(12px * var(--tsz, 1)), 15px);
+  line-height: 1.2;
+  color: var(--text);
+  text-align: left;
+}
+
+.dn-legend li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.dn-tile-sample {
+  --dn-tile: 26px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+.dn-tile-sample .dn-mark {
+  top: 1px;
+  right: 1px;
+  width: 5px;
+  height: 5px;
+}
+
+.dn-legend .dn-tile-sample {
+  --dn-tile: 24px;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+/* Nudged off centre so the letter never touches the mark in so small a tile. */
+.dn-legend .dn-tile-sample .dn-letter {
+  position: relative;
+  top: 1.5px;
+  right: 2px;
+}
+.dn-legend .dn-tile-sample .dn-mark {
+  width: 6px;
+  height: 6px;
+}
+
+/* --------------------------------------------------------------- result */
+
+.dn-result {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.dn-result h3 {
+  margin: 0;
+  font-size: calc(20px * var(--tsz, 1));
+  color: var(--text-h);
+}
+
+.dn-answer {
+  margin: 0;
+  font-size: calc(17px * var(--tsz, 1));
+}
+
+.dn-answer-kind {
+  color: var(--text-muted);
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.dn-verse {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  text-align: left;
+}
+
+.dn-verse blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: calc(16px * var(--tsz, 1));
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.dn-verse figcaption {
+  margin-top: 6px;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.dn-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dn-share-note,
+.dn-next {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: calc(14px * var(--tsz, 1));
+}
+
+.dn-share-fallback {
+  margin: 0;
+  padding: 10px;
+  text-align: left;
+  white-space: pre-wrap;
+  user-select: all;
+  background: var(--surface-sunken);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------------- stats */
+
+.dn-stats {
+  text-align: left;
+}
+
+.dn-stats h3 {
+  margin: 0;
+}
+
+.dn-stats-where {
+  font-weight: 400;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.dn-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0;
+  text-align: center;
+}
+
+.dn-stats-row dt {
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.dn-stats-row dd {
+  margin: 0;
+  font-size: calc(22px * var(--tsz, 1));
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.dn-dist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dn-dist li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.dn-dist-n {
+  width: 1em;
+  text-align: right;
+  color: var(--text-muted);
+}
+
+.dn-dist-bar {
+  min-width: 1.6em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--surface-sunken);
+  color: var(--text-h);
+  text-align: right;
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------------ marks
+   Last in the file on purpose: these override the plain tile AND the plain key (.dn-key sets its
+   own background and border above), at the same specificity, so source order decides. */
+
+.dn-right {
+  background: var(--verdigris);
+  border: 2px solid var(--verdigris);
+  color: #fff;
+}
+.dn-right .dn-mark {
+  background: currentColor;
+}
+
+.dn-elsewhere {
+  background: var(--gold);
+  border: 2px dashed #1b1410;
+  color: #1b1410;
+}
+.dn-elsewhere .dn-mark {
+  border: 1.5px solid currentColor;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+}
+
+.dn-absent {
+  background: var(--surface-sunken);
+  border: 2px solid transparent;
+  color: var(--text-muted);
+}
+.dn-absent .dn-mark {
+  border: 1.5px solid currentColor;
+}

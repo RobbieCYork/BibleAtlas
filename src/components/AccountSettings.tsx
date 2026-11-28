@@ -35,7 +35,7 @@ export function AppearanceControl() {
   const { theme, setTheme } = useTheme();
   return (
     <div className="auth-settings-section">
-      <span className="auth-settings-label">Appearance</span>
+      <span className="auth-settings-label">Light or dark</span>
       <div className="auth-appearance-toggle">
         <button type="button" className={theme === "light" ? "active" : ""} onClick={() => setTheme("light")}>
           <Icon name="sun" inline /> Light
@@ -50,7 +50,7 @@ export function AppearanceControl() {
 
 /** Lets a reader choose which of the seven destinations the mobile bottom bar shows. Seven buttons
  * on a 375px phone is a crowded row, and not everyone uses all seven — so each can be switched off
- * and back on here, in the same account-menu Settings view as text size and appearance.
+ * and back on here, in the same account-menu Settings view as text size and light/dark.
  *
  * CALLED "NAVIGATION BAR" TO THE READER, not "tab bar". The owner's word for it, and the accurate
  * one: it is how you get from one part of the app to another. "Tab bar" is a platform term for a
@@ -201,11 +201,18 @@ export function ReadingResetControl({ userId }: { userId: string }) {
   );
 }
 
-/** The account Settings content — text size, appearance, navigation bar, read-mark reset, legal links.
+/** The account Settings content — text size, light or dark, navigation bar, read-mark reset, legal links.
  * One copy, rendered in two homes: the full-screen SettingsView (every real account) and the account
  * menu's own Settings view (guests). Both open from the account menu's Settings row. `userId` is null
  * for a guest, who has no reading marks to reset. */
-export default function AccountSettingsBody({ userId }: { userId: string | null }) {
+export default function AccountSettingsBody({
+  userId,
+  onOpenTour,
+}: {
+  userId: string | null;
+  /** Real accounts only (SettingsView): the row that reopens the welcome tour. */
+  onOpenTour?: () => void;
+}) {
   return (
     <>
       <TextSizeControl />
@@ -215,6 +222,16 @@ export default function AccountSettingsBody({ userId }: { userId: string | null 
         <>
           <div className="auth-settings-divider" />
           <ReadingResetControl userId={userId} />
+        </>
+      )}
+      {onOpenTour && (
+        <>
+          <div className="auth-settings-divider" />
+          <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
+            <button type="button" className="myprofile-link-row settings-tour-row" onClick={onOpenTour}>
+              <Icon name="play" inline /> Welcome tour
+            </button>
+          </div>
         </>
       )}
       <div className="auth-settings-divider" />

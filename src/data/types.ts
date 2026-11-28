@@ -1,3 +1,5 @@
+import type { BeliefRecord } from "./beliefs/types";
+
 export type LocationCategory =
   | "city"
   | "region"
@@ -144,6 +146,10 @@ export interface Person {
   /** How the lifespan dates were derived, including caveats, textual variants, or competing chronologies
    * — rendered as its own "Dating" section, same convention as TimelineEvent.datingNotes. */
   lifespanDatingNotes?: string;
+  /** True when the lifespan comes from a young-earth reading of the Genesis 5 and 11 genealogies
+   * (Ussher's chronology). The panels and the public page show a short note beside it — see
+   * src/data/datingDebate.ts. Same meaning as TimelineEvent.youngEarthDate. */
+  youngEarthDate?: boolean;
   /** Which stream of history this person belongs to. Absent means "biblical", so every person
    * carried over from the original Atlas dataset is unaffected.
    * - "biblical": named in Scripture. `verses` holds real Bible references, rendered as links into
@@ -212,7 +218,11 @@ export type TopicCategory =
   | "people-group"
   | "concept"
   | "discovery"
-  | "manuscript";
+  | "manuscript"
+  /** Religions and Denominations section. Built from `BeliefRecord`s (src/data/beliefs/) by
+   * `beliefToTopic`, never written into topics.ts, and never registered with the auto-linker. */
+  | "world-religion"
+  | "christian-tradition";
 
 /** How a source backing an article should be weighed, so the reader can tell a museum's own object
  * page from a Wikipedia article at a glance instead of meeting six identical-looking links.
@@ -361,6 +371,9 @@ export interface Topic {
   discovery?: DiscoveryFacts;
   /** Present iff `category === "manuscript"`. */
   manuscript?: ManuscriptFacts;
+  /** Present iff the category is "world-religion" or "christian-tradition": the structured record
+   * the article was built from, for the facts block, the classification notice and cross-links. */
+  belief?: BeliefRecord;
   /** Tiered citations. Expected on every discovery/manuscript record and optional elsewhere —
    * which is a data rule, not a compiler one, because making it required would break all 58
    * topics that predate it. `sources` remains the general further-reading list. */
@@ -421,6 +434,12 @@ export interface TimelineEvent {
   /** How we know (or don't know) when this happened — rendered as its own "Dating" section.
    * Required in spirit whenever dateCertainty is "disputed" or "legendary". */
   datingNotes?: string;
+  /** True when the date comes from a young-earth reading of the Genesis 5 and 11 genealogies
+   * (Ussher's chronology: Creation c. 4004 BC, the Flood c. 2348 BC, and the Primeval History dates
+   * reckoned from them). Every place the date is shown adds a short note on the debate pointing at
+   * the Young Earth and Old Earth Creationism topic — see src/data/datingDebate.ts. Never changes the
+   * date itself, its ordering or any game's scoring. */
+  youngEarthDate?: boolean;
   /** Bible references, e.g. "2 Kings 25:8-21" — rendered as clickable verse links in References. */
   scriptureRefs?: string[];
   /** Non-biblical sources/witnesses, e.g. "Josephus, The Jewish War 6.249-270" or a URL. */
@@ -446,6 +465,14 @@ export interface TimelineEvent {
    * The spanning entry is an ordinary TimelineEvent like any other — it is identified purely by
    * being named here, so there is no second field to keep in step. */
   collapsedInto?: string;
+  /** DISPLAY ONLY: this event is not part of the timeline view. It gets no mark on the canvas, is not
+   * offered by the timeline's own search box, and does not on its own make "View in Timeline" appear
+   * for a person or place. Unlike `collapsedInto`, nothing stands in for it.
+   *
+   * The record is otherwise untouched: it stays in `timelineEvents` with its id, article and route,
+   * is listed in Articles, is auto-linked from other text, has its public page, and is dealt by the
+   * games. Do not delete a record to take it off the timeline. */
+  hiddenOnTimeline?: boolean;
 }
 
 /**

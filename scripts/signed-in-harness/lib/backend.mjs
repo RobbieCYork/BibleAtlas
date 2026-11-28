@@ -28,8 +28,12 @@ export function createBackend({ persona, overrides = {} }) {
   const tables = structuredClone(defaultTables(me));
   for (const [t, rows] of Object.entries(overrides.tables ?? {})) tables[t] = structuredClone(rows);
 
-  const log = { requests: [], gaps: [], writes: [], audit: [], preflights: 0 };
-  let session = me ? personaSession(me) : null;
+  const log = { requests: [], gaps: [], writes: [], audit: [], authUpdates: [], preflights: 0 };
+  /** persona id -> { createdAt, metadata, failUpdates }: this run's changes to that auth user. */
+  const accounts = {};
+  const account = (p) => (accounts[p.id] ??= { metadata: {} });
+  const newSession = (p) => personaSession(p, account(p));
+  let session = me ? newSession(me) : null;
   let seq = 1000;
   /** table -> {status, code, message}: every request to that table fails with this PostgREST error. */
   const tableErrors = {};
@@ -55,6 +59,28 @@ export function createBackend({ persona, overrides = {} }) {
       log.audit.push(entry);
       (tables.feature_release_log ??= []).push(entry);
       return { feature: p_feature, live: !!p_live, updated_at: at };
+    },
+    // sql/051. Re-implements the real function's rules — owner only (42501), the shape check (22023,
+    // deliberately shallow here: the real constraint is rehearsed in PGlite, not by this fake), the
+    // optimistic-concurrency check (40001 unless p_overwrite), a no-op when nothing changed, and one
+    // about_page_versions row per real save. RLS on the versions table is NOT modelled.
+    save_about_page: ({ p_content, p_expected_updated_at = null, p_overwrite = false }) => {
+      if (me?.role !== "owner") throw { status: 403, code: "42501", message: "not authorized" };
+      const c = p_content;
+      if (!c || typeof c.quote !== "string" || !Array.isArray(c.sections) || c.sections.length < 1)
+        throw { status: 400, code: "22023", message: "invalid about page content" };
+      const rows = (tables.about_page ??= []);
+      const row = rows.find((r) => r.id === 1);
+      if (!p_overwrite && (row?.updated_at ?? null) !== (p_expected_updated_at ?? null))
+        throw { status: 409, code: "40001", message: "the about page was saved somewhere else after you opened it" };
+      if (row && JSON.stringify(row.content) === JSON.stringify(c)) return row;
+      // Microseconds, like Postgres, so a client that round-trips the string through a JS Date is caught.
+      const at = new Date().toISOString().replace("Z", `${String(seq++ % 1000).padStart(3, "0")}+00:00`);
+      (tables.about_page_versions ??= []).push({ id: seq++, content: structuredClone(c), saved_by: me.id, saved_at: at });
+      log.audit.push({ about_page: "save", at, overwrite: !!p_overwrite });
+      if (row) Object.assign(row, { content: structuredClone(c), updated_at: at });
+      else rows.push({ id: 1, content: structuredClone(c), updated_at: at });
+      return rows.find((r) => r.id === 1);
     },
     increment_reading_time: () => null,
     analytics_track: () => null,
@@ -188,7 +214,7 @@ export function createBackend({ persona, overrides = {} }) {
       log.gaps.push(`RPC ${fn}`);
       return { status: 204, headers: {}, body: "" };
     }
-    rec.how = fn === "set_feature_stage" ? "stateful" : "fixture";
+    rec.how = fn === "set_feature_stage" || fn === "save_about_page" ? "stateful" : "fixture";
     try {
       const v = h(args);
       return v === undefined || v === null ? json(200, null) : json(200, v);
@@ -203,19 +229,27 @@ export function createBackend({ persona, overrides = {} }) {
     rec.how = "fixture";
     if (path === "/auth/v1/user") {
       if (!me) return err(401, "401", "no session");
-      return json(200, personaUser(me));
+      const mine = account(me);
+      if (method === "PUT") {
+        rec.how = "stateful";
+        const data = (bodyText ? JSON.parse(bodyText) : {}).data ?? {};
+        log.authUpdates.push({ data, ok: !mine.failUpdates });
+        if (mine.failUpdates) return err(500, "500", "harness: auth update refused");
+        Object.assign(mine.metadata, data);
+      }
+      return json(200, personaUser(me, mine));
     }
     if (path === "/auth/v1/token") {
       const grant = params.get("grant_type");
       if (grant === "refresh_token" || grant === "password") {
         const p = me ?? PERSONAS.member; // signing in from the signed-out screen becomes the member
-        session = personaSession(p);
+        session = newSession(p);
         return json(200, session);
       }
     }
     if (path === "/auth/v1/signup") {
       const guest = PERSONAS.guest;
-      session = personaSession(guest);
+      session = newSession(guest);
       return json(200, session);
     }
     if (path === "/auth/v1/logout") return { status: 204, headers: {}, body: "" };
@@ -257,12 +291,22 @@ export function createBackend({ persona, overrides = {} }) {
     setPersona(name) {
       me = name === "signedout" ? null : PERSONAS[name];
       if (me === undefined) throw new Error(`unknown persona ${name}`);
-      session = me ? personaSession(me) : null;
+      session = me ? newSession(me) : null;
       const fresh = defaultTables(me);
       tables.admin_users = fresh.admin_users;
       tables.profiles = fresh.profiles;
       return session;
     },
+    /** Change the current persona's auth account: { createdAt, metadata (replaces), failUpdates }.
+     * The browser sees it after h.asPersona(h.persona) issues the session again. */
+    setAccount: ({ createdAt, metadata, failUpdates } = {}) => {
+      const a = account(me);
+      if (createdAt !== undefined) a.createdAt = createdAt;
+      if (metadata !== undefined) a.metadata = { ...metadata };
+      if (failUpdates !== undefined) a.failUpdates = failUpdates;
+    },
+    /** The current persona's auth user metadata, as the fake holds it. */
+    get accountMetadata() { return me ? { ...account(me).metadata } : null; },
     /** Replace a table's rows at run time (from a check script). */
     setTable: (name, rows) => { tables[name] = structuredClone(rows); },
     /** Make every request to a table fail, e.g. setTableError("article_reads", {status: 404, code: "42P01"})

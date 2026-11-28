@@ -26,12 +26,16 @@ import { supabase } from "./supabase";
  * caller's own rows through the policy written for exactly that.
  *
  * ── NUMERICS ARRIVE AS STRINGS ──────────────────────────────────────────────
- * `priority_score` is `numeric` and `total_count` is `bigint`. Neither fits a
- * double without loss in the general case, so PostgREST ships both as JSON
- * strings. Untouched, `a.priority_score - b.priority_score` is NaN and a sort by
- * priority silently becomes a sort by nothing. coerceNumerics() below (and
- * coerceRow(), which wraps it for report_list()'s two computed extras) is the
- * single place that converts them, so no call site has to remember.
+ * `total_count` is `bigint`, which PostgREST ships as a JSON string. coerceRow()
+ * below is the single place that converts it, so no call site has to remember.
+ *
+ * ── THERE IS NO VOTING ANY MORE ─────────────────────────────────────────────
+ * sql/025 let advisors cast agree/disagree votes that fed `priority_score`.
+ * Robbie removed that (2026-11-26) and sql/052 closes every write path to it.
+ * report_list()/report_detail() still RETURN the old vote columns (changing a
+ * RETURNS TABLE is a drop-and-recreate, not worth the risk for an unused
+ * column), so the types below simply leave them out and nothing reads them.
+ * Do not reintroduce a `priority` sort: the score is frozen vote history.
  *
  * ── ERRORS ARE IDENTIFIED BY MESSAGE PREFIX, NOT BY CODE ────────────────────
  * The migration raises `rate_limited:`, `duplicate_submission:`, `report_locked:`,
@@ -84,7 +88,10 @@ export const ROLE_LABELS: Record<Role, string> = {
 
 /** A row of `report_categories`. DATA, not a union type: an administrator can add a category at
  * runtime through report_upsert_category(), so a hardcoded list here would be wrong the moment they
- * did — and the new category's reports would render with a blank label. Always read the table. */
+ * did — and the new category's reports would render with a blank label. Always read the table.
+ *
+ * `is_active = false` is a RETIRED category (sql/052 retires `typo`): not offered to a reporter, but
+ * old reports still point at it, so label lookups must use fetchAllCategories(). */
 export interface ReportCategory {
   key: string;
   label: string;
@@ -104,12 +111,6 @@ export interface ReportListRow {
   body: string;
   reporter_severity: Severity | null;
   status: ReportStatus;
-  /** numeric in Postgres — see the header note. Already coerced by coerceRow(). */
-  priority_score: number;
-  vote_agree: number;
-  vote_disagree: number;
-  /** 1, -1, or null when this viewer has not voted. */
-  my_vote: number | null;
   page_url: string | null;
   route: string | null;
   page_title: string | null;
@@ -134,15 +135,6 @@ export interface ReportListRow {
   total_count: number;
 }
 
-export interface ReportVoteRow {
-  voter_id: string;
-  voter_name: string | null;
-  voter_role: Role;
-  vote: number;
-  note: string | null;
-  updated_at: string;
-}
-
 export interface ReportHistoryRow {
   at: string;
   actor_id: string | null;
@@ -158,12 +150,12 @@ export interface ReportHistoryRow {
  * NOT a ReportListRow, and typing it as one is a trap rather than a shortcut. report_list() is a
  * RETURNS TABLE that joins and computes, so the two shapes differ in BOTH directions. Missing here:
  * `category_label` (joined from report_categories), `reporter_name` (joined from profiles/
- * auth.users), `my_vote` (computed per viewer) and `total_count` (a paging total, which one row has
- * no meaning for) — read the first two off ReportDetail itself and derive the vote from its
- * `votes`. Present here and absent from report_list(): `app_context`, `resolved_by`, `triaged_at`.
+ * auth.users) and `total_count` (a paging total, which one row has no meaning for) — read the first
+ * two off ReportDetail itself. Present here and absent from report_list(): `app_context`,
+ * `resolved_by`, `triaged_at`.
  *
- * The failure mode this type exists to prevent is silent: `detail.report.my_vote` type-checks
- * against ReportListRow, compiles, and is `undefined` at runtime forever. */
+ * The failure mode this type exists to prevent is silent: `detail.report.reporter_name`
+ * type-checks against ReportListRow, compiles, and is `undefined` at runtime forever. */
 export interface ReportRow {
   id: string;
   /** ABSENT, not null, when the viewer is an advisor and `reports.reveal_reporter_to_advisors` is
@@ -197,21 +189,16 @@ export interface ReportRow {
   resolved_at: string | null;
   triaged_at: string | null;
   assigned_to: string | null;
-  vote_agree: number;
-  vote_disagree: number;
-  /** numeric in Postgres — see the header note. Already coerced by fetchReportDetail(). */
-  priority_score: number;
   created_at: string;
   updated_at: string;
 }
 
 /** report_detail()'s jsonb. `report` is the whole table row (minus reporter_id when identity is
- * hidden), so its numerics are strings here too — coerced in fetchReportDetail(). */
+ * hidden). The jsonb also still carries sql/025's `votes` array; it is deliberately not typed. */
 export interface ReportDetail {
   report: ReportRow;
   reporter_name: string | null;
   category_label: string | null;
-  votes: ReportVoteRow[];
   history: ReportHistoryRow[];
 }
 
@@ -220,7 +207,6 @@ export interface ReportCounts {
   by_category: Record<string, number>;
   open: number;
   untriaged: number;
-  unvoted_by_me: number;
 }
 
 export interface UserRoleRow {
@@ -235,8 +221,8 @@ export interface UserRoleRow {
 }
 
 /** Exactly the columns sql/025's INSERT policy and before-insert trigger accept from a client.
- * Everything else on `reports` is server-owned: the trigger overwrites status, priority_score,
- * the vote counts and the timestamps on the way in, so sending them is at best a no-op and at
+ * Everything else on `reports` is server-owned: the trigger overwrites status, the frozen
+ * priority/vote columns and the timestamps on the way in, so sending them is at best a no-op and at
  * worst a bug that looks like it worked. This type is the enforcement — there is no field here
  * that must not be sent. */
 export interface NewReport {
@@ -301,6 +287,26 @@ export const STATUS_BLURBS: Record<ReportStatus, string> = {
   duplicate: "Already reported by someone else — merged with the original.",
 };
 
+/** The category a feature suggestion is filed under: sql/025's `idea` key ("Idea or suggestion", and
+ * "Suggestion" since sql/052). The form sets it itself when the reader chooses "Suggest a feature",
+ * so it is left out of the problem form's category picker. */
+export const SUGGESTION_CATEGORY = "idea";
+
+export function isSuggestion(report: { category: string }): boolean {
+  return report.category === SUGGESTION_CATEGORY;
+}
+
+/** STATUS_BLURBS for a suggestion: the same statuses, without the words that assume something is wrong. */
+export const SUGGESTION_STATUS_BLURBS: Record<ReportStatus, string> = {
+  new: "Waiting to be looked at. You can still edit or delete it.",
+  triaged: "Read and sorted. It can no longer be edited.",
+  accepted: "We'd like to do this. It's on the list.",
+  in_progress: "Someone is working on it now.",
+  resolved: "Done. Thank you for suggesting it.",
+  declined: "Looked at and not taken forward. Any reason given is below.",
+  duplicate: "Already suggested by someone else — merged with the original.",
+};
+
 export const SEVERITY_LABELS: Record<Severity, string> = {
   low: "Minor",
   medium: "Noticeable",
@@ -335,15 +341,22 @@ export const TARGET_KIND_LABELS: Record<TargetKind, string> = {
  * violation in the database; `report_locked:` has no distinguishing code at all; `self_assignment:`
  * and `last_owner:` share 42501 with the plain tier refusal. The prefixes are the discriminator the
  * migration deliberately provides. */
-export function humanizeReportError(err: unknown): string {
+export function humanizeReportError(err: unknown, suggestion = false): string {
   const raw = err instanceof Error ? err.message : typeof err === "string" ? err : "";
   if (raw.startsWith("rate_limited:")) {
+    if (suggestion) {
+      return "You've sent several reports or suggestions in a short time. Give it an hour and try again — the limit is there to stop a stuck button flooding the queue, not to stop you writing in.";
+    }
     return "You've filed several reports in a short time. Give it an hour and try again — the limit is there to stop a stuck button flooding the queue, not to stop you reporting things.";
   }
   if (raw.startsWith("duplicate_submission:")) {
+    if (suggestion) return "That looks like the suggestion you just sent. It's already in — no need to send it twice.";
     return "That looks like the report you just sent. It's already in — no need to send it twice.";
   }
   if (raw.startsWith("report_locked:")) {
+    if (suggestion) {
+      return "The team has already picked this suggestion up, so it can't be changed or withdrawn now. Send a new one if there's something to add.";
+    }
     return "The team has already picked this report up, so it can't be changed or withdrawn now. File a new one if there's something to add.";
   }
   if (raw.startsWith("self_assignment:")) {
@@ -364,6 +377,9 @@ export function humanizeReportError(err: unknown): string {
   // UPDATE, in either direction, with no deploy — so this path is one setting away from real, and
   // a raw Postgres string is never an acceptable thing to show a reader.
   if (raw.includes("row-level security policy")) {
+    if (suggestion) {
+      return "Sending a suggestion needs a full account, so the team can come back to you about it — guest browsing can't. Sign in with an account you created and try again.";
+    }
     return "Filing a report needs a full account, so the team can come back to you about it — guest browsing can't. Sign in with an account you created and try again.";
   }
   // The tier refusal every gated function raises, plus the bare table-grant refusal that reads the
@@ -454,6 +470,52 @@ export async function fetchCategories(): Promise<ReportCategory[]> {
   return (data as ReportCategory[] | null) ?? [];
 }
 
+/** Active AND retired categories, for turning a stored key back into a label. A report filed under a
+ * category that has since been retired (sql/052 retires `typo`) must still show its real name, not
+ * its key and not "Uncategorised". The table's select policy is `using (true)`, so this works for
+ * every reader. */
+export async function fetchAllCategories(): Promise<ReportCategory[]> {
+  const { data, error } = await supabase
+    .from("report_categories")
+    .select("key,label,description,sort_order,is_active")
+    .order("sort_order", { ascending: true })
+    .order("key", { ascending: true });
+  if (error) throw new Error(error.message);
+  return (data as ReportCategory[] | null) ?? [];
+}
+
+/** What a report shows when its key matches no category row at all. The FK on reports.category makes
+ * that impossible today; the label exists so a future data fault reads as a gap, not as a raw key. */
+export const UNCATEGORISED_LABEL = "Uncategorised";
+
+export function categoryLabelFor(key: string | null | undefined, categories: ReportCategory[]): string {
+  if (!key) return UNCATEGORISED_LABEL;
+  return categories.find((c) => c.key === key)?.label ?? UNCATEGORISED_LABEL;
+}
+
+/** The category to preselect from where the report was opened — only where the screen makes it
+ * obvious, and only if that key is actually offered (before sql/052 is applied the area keys do not
+ * exist, so nothing is preselected and the reporter chooses, exactly as before). The reporter can
+ * always change it. */
+export function suggestedCategoryForRoute(route: string, categories: ReportCategory[]): string {
+  const head = route.split("/")[0];
+  const key =
+    head === "bible"
+      ? "bible_reader"
+      : head === "map"
+        ? "map"
+        : head === "timeline"
+          ? "timeline"
+          : head === "games"
+            ? "games"
+            : head === "settings"
+              ? "account"
+              : head === "articles" && route !== "articles"
+                ? "incorrect_info"
+                : "";
+  return key && categories.some((c) => c.key === key && c.is_active) ? key : "";
+}
+
 /* --------------------------------------------------------------------------
  * Filing and reading your own reports
  * ------------------------------------------------------------------------ */
@@ -473,6 +535,16 @@ export async function fetchMyReports(userId: string): Promise<MyReportRow[]> {
     .order("created_at", { ascending: false });
   if (error) throw new Error(error.message);
   return (data as MyReportRow[] | null) ?? [];
+}
+
+/** Administrator re-files a report into another category. A plain table update, because sql/025
+ * already allows it: the RLS UPDATE policy admits administrators, and reports_before_update() lets
+ * staff change `category` (it freezes the reporter's body and every auto-captured field). Works the
+ * same before and after sql/052. Zero rows back means the policy filtered it — i.e. not an admin. */
+export async function setReportCategory(reportId: string, category: string): Promise<void> {
+  const { data, error } = await supabase.from("reports").update({ category }).eq("id", reportId).select("id");
+  if (error) throw new Error(error.message);
+  if (!data || data.length === 0) throw new Error("not authorized");
 }
 
 /** Title, body and severity only — the three columns reports_before_update() lets a reporter touch,
@@ -521,25 +593,9 @@ async function rpc<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
   return data as T;
 }
 
-/** The one place Postgres numerics stop being strings — the three columns BOTH shapes carry, so a
- * ReportListRow and a raw ReportRow can share it. See the header note. */
-function coerceNumerics<T extends { priority_score: number; vote_agree: number; vote_disagree: number }>(row: T): T {
-  return {
-    ...row,
-    priority_score: Number(row.priority_score ?? 0),
-    vote_agree: Number(row.vote_agree ?? 0),
-    vote_disagree: Number(row.vote_disagree ?? 0),
-  };
-}
-
-/** The two extra columns report_list() computes on top of the table's own — see ReportRow for why
- * the raw row has neither. */
+/** The one place the bigint paging total stops being a string. See the header note. */
 function coerceRow(row: ReportListRow): ReportListRow {
-  return {
-    ...coerceNumerics(row),
-    total_count: Number(row.total_count ?? 0),
-    my_vote: row.my_vote === null || row.my_vote === undefined ? null : Number(row.my_vote),
-  };
+  return { ...row, total_count: Number(row.total_count ?? 0) };
 }
 
 export interface ReportListFilters {
@@ -547,7 +603,7 @@ export interface ReportListFilters {
   category?: string | null;
   targetKind?: TargetKind | null;
   search?: string | null;
-  sort?: "priority" | "newest" | "oldest";
+  sort?: "newest" | "oldest";
   limit?: number;
   offset?: number;
 }
@@ -563,7 +619,7 @@ export async function fetchReportList(
     p_category: filters.category ?? null,
     p_target_kind: filters.targetKind ?? null,
     p_search: filters.search?.trim() || null,
-    p_sort: filters.sort ?? "priority",
+    p_sort: filters.sort ?? "newest",
     p_limit: filters.limit ?? 50,
     p_offset: filters.offset ?? 0,
   });
@@ -572,13 +628,15 @@ export async function fetchReportList(
 }
 
 export async function fetchReportDetail(reportId: string): Promise<ReportDetail> {
-  const raw = await rpc<ReportDetail>("report_detail", { p_report_id: reportId });
-  return { ...raw, report: coerceNumerics(raw.report) };
+  return rpc<ReportDetail>("report_detail", { p_report_id: reportId });
 }
 
-/** vote: 1 agree, -1 disagree, 0 retracts. */
-export async function castVote(reportId: string, vote: 1 | -1 | 0, note: string | null): Promise<void> {
-  await rpc<void>("report_vote", { p_report_id: reportId, p_vote: vote, p_note: note?.trim() || null });
+/** How many reports match these filters, without fetching them — report_list() repeats its total on
+ * every row, so a one-row page is enough. Used for the per-category counts in the Admin Console, so
+ * the numbers on the category tabs follow the status chips and search instead of counting everything. */
+export async function countReports(filters: Omit<ReportListFilters, "limit" | "offset" | "sort">): Promise<number> {
+  const { total } = await fetchReportList({ ...filters, limit: 1, offset: 0 });
+  return total;
 }
 
 export async function fetchReportCounts(): Promise<ReportCounts> {

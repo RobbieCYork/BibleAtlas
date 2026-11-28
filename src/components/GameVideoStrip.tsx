@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "./Icon";
+import { GameMediaStatus, GameMediaToggles } from "./GameMediaControls";
+import type { GameMedia } from "../hooks/useGameWebRTC";
 
 interface RoundState {
   answeredUserIds: Set<string>;
@@ -20,21 +22,16 @@ interface GameVideoStripProps {
   players: VideoStripPlayer[];
   userId: string;
   hostId: string;
-  localStream: MediaStream | null;
-  remoteStreams: Record<string, MediaStream>;
-  micOn: boolean;
-  cameraOn: boolean;
-  onToggleMic: () => void;
-  onToggleCamera: () => void;
+  media: GameMedia;
   onLeave: () => void;
   /** Only meaningful (and only rendered as a control) when the caller is the host. */
   onKick?: (targetUserId: string) => void;
   /** Live per-question state, for the answered/correct badges — omitted in the lobby, where there's
    * no question in play yet. */
   round?: RoundState;
-  /** Solo game — no one to video-chat with, so the mic/camera toggles (which control a stream that
-   * was never acquired; see BibleTriviaView's isSolo gate on useGameWebRTC) are hidden. The tile
-   * itself still shows, since it's also the score display. */
+  /** Solo game — no one to video-chat with, so the mic/camera toggles are hidden (see
+   * BibleTriviaView's isSolo gate on useGameWebRTC). The tile itself still shows, since it's also
+   * the score display. */
   isSolo?: boolean;
 }
 
@@ -46,9 +43,23 @@ function ScoreDeltaPop({ value, popKey }: { value: number; popKey: number }) {
   );
 }
 
+/** Picture only, always muted (so every browser lets it start by itself) — other players' sound
+ * comes from GameRemoteAudio. */
+function TileVideo({ track }: { track: MediaStreamTrack }) {
+  const ref = useRef<HTMLVideoElement | null>(null);
+  // Keyed on the track, not the stream around it, so switching the mic doesn't blink the picture.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.muted = true;
+    el.srcObject = new MediaStream([track]);
+    el.play().catch(() => {});
+  }, [track]);
+  return <video ref={ref} autoPlay playsInline muted className="game-video-el" />;
+}
+
 function VideoTile({
   stream,
-  muted,
   label,
   isHost,
   score,
@@ -59,8 +70,8 @@ function VideoTile({
   canKick,
   onKick,
 }: {
+  /** Only when this player's camera is on; otherwise the tile shows their initial and name. */
   stream: MediaStream | null;
-  muted: boolean;
   label: string;
   isHost: boolean;
   score: number;
@@ -71,17 +82,14 @@ function VideoTile({
   canKick: boolean;
   onKick?: () => void;
 }) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  useEffect(() => {
-    if (videoRef.current) videoRef.current.srcObject = stream;
-  }, [stream]);
+  const videoTrack = stream?.getVideoTracks()[0];
 
   const revealClass = round?.revealed ? (correct ? " game-video-tile-correct" : answered ? " game-video-tile-wrong" : "") : "";
 
   return (
     <div className={`game-video-tile${revealClass}`}>
-      {stream ? (
-        <video ref={videoRef} autoPlay playsInline muted={muted} className="game-video-el" />
+      {videoTrack ? (
+        <TileVideo track={videoTrack} />
       ) : (
         <span className="auth-avatar auth-avatar-lg game-video-fallback" aria-hidden="true">
           {label.charAt(0).toUpperCase()}
@@ -112,12 +120,7 @@ export default function GameVideoStrip({
   players,
   userId,
   hostId,
-  localStream,
-  remoteStreams,
-  micOn,
-  cameraOn,
-  onToggleMic,
-  onToggleCamera,
+  media,
   onLeave,
   onKick,
   round,
@@ -155,12 +158,16 @@ export default function GameVideoStrip({
 
   const isHost = hostId === userId;
 
+  /** Another player's stream, unless they say their camera is off. (A player still on an older build
+   * doesn't say; whatever video they send is shown.) */
+  const remoteVideo = (peerId: string) =>
+    media.remoteMedia[peerId]?.camera === false ? null : (media.remoteStreams[peerId] ?? null);
+
   return (
     <div className="game-video-strip">
       <div className="game-video-tiles">
         <VideoTile
-          stream={cameraOn ? localStream : null}
-          muted
+          stream={media.cameraOn ? media.localStream : null}
           label="You"
           isHost={isHost}
           score={players.find((p) => p.user_id === userId)?.score ?? 0}
@@ -175,8 +182,7 @@ export default function GameVideoStrip({
           .map((p) => (
             <VideoTile
               key={p.user_id}
-              stream={remoteStreams[p.user_id] ?? null}
-              muted={false}
+              stream={remoteVideo(p.user_id)}
               label={p.display_name}
               isHost={p.user_id === hostId}
               score={p.score}
@@ -190,30 +196,12 @@ export default function GameVideoStrip({
           ))}
       </div>
       <div className="game-video-controls">
-        {!isSolo && (
-          <>
-            <button
-              type="button"
-              className={`game-video-toggle${micOn ? "" : " game-video-toggle-off"}`}
-              onClick={onToggleMic}
-              aria-label={micOn ? "Mute microphone" : "Unmute microphone"}
-            >
-              <Icon name={micOn ? "mic" : "micOff"} />
-            </button>
-            <button
-              type="button"
-              className={`game-video-toggle${cameraOn ? "" : " game-video-toggle-off"}`}
-              onClick={onToggleCamera}
-              aria-label={cameraOn ? "Turn camera off" : "Turn camera on"}
-            >
-              <Icon name={cameraOn ? "video" : "videoOff"} />
-            </button>
-          </>
-        )}
+        {!isSolo && <GameMediaToggles media={media} />}
         <button type="button" className="game-video-toggle game-video-leave" onClick={onLeave}>
           <Icon name="leave" inline /> Leave
         </button>
       </div>
+      {!isSolo && <GameMediaStatus media={media} />}
     </div>
   );
 }

@@ -63,6 +63,11 @@ const LINKED_TOPIC_CATEGORIES: Record<TopicCategory, boolean> = {
   // letters. Register the unambiguous long form or nothing.
   discovery: true,
   manuscript: true,
+  // Religions and Denominations. NEVER registered: "Nazarene" (Matthew 2:23), "Pentecost" (Acts 2),
+  // "catholic", "Baptist" and "Orthodox" all collide with Scripture or with ordinary prose. These
+  // records are also kept out of topics.ts entirely; this is the second lock on the same door.
+  "world-religion": false,
+  "christian-tradition": false,
 };
 
 /** Every location's (any category) primary + alternate name, every POI's name, and every person's
@@ -1176,6 +1181,16 @@ const OWNER_NAME_OVERRIDES: Record<string, Record<string, string | null>> = {
   // personal name on a first-century ossuary. Neither mention addresses God, so both are
   // suppressed here rather than linked. Added together with the barabbas record, 2026-10-16.
   abba: { barabbas: null },
+  // Religions and Denominations (src/data/beliefs), audited 2026-11-26. In the Judaism article
+  // "Jews"/"Jewish" means the Jewish people and community today, some forty times over; the `jews`
+  // topic is the New Testament's term ("Descendants of Judah; New Testament Term for Israel"), so
+  // every one of those links pointed a reader about modern Judaism at a first-century word study.
+  // In the Latter-day Saints article most "Jesus Christ"s sit inside a church's own name ("The
+  // Church of Jesus Christ of Latter-day Saints", "the Reorganized Church of Jesus Christ of Latter
+  // Day Saints"), where a link to the person page is wrong; the whole-record answer is no link.
+  jews: { judaism: null },
+  jewish: { judaism: null },
+  "jesus christ": { "latter-day-saints": null },
   // "David": the king is the only David with a record, and he is the right answer nearly everywhere.
   // One article names a different one. The Cairo Codex of the Prophets carries a dedication colophon
   // by David b. Yefet, an eleventh- or fifteenth-century Cairo dignitary, and B. Outhwaite's
@@ -2709,6 +2724,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // Pharisees, Herod's rise) that ALSO name the Apostle. Registering the full name on a person
     // record would be the tidier fix if he is ever given one.
     { after: /^\s+Hyrcanus\b/, to: null },
+    // Whitcomb (The Genesis Flood, 1961), Lightfoot (17th-century chronologer), Walton (The
+    // Lost World of Genesis One) and C. John Collins (the analogical-days view) — modern men named in young-earth-old-earth-creationism and the
+    // Flood article. Interim; a record would change the answer.
+    { after: /^\s+(?:Whitcomb|Lightfoot|Walton|Collins)\b/, to: null },
 
     // ── The book intros, pinned one at a time by their own words.
     //
@@ -2890,7 +2909,8 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // and St Thomas Bay, which is a place in Malta rather than a man at all. Roe is Sir Thomas Roe,
     // James I's ambassador to the Porte, who carried Codex Alexandrinus to England — added with the
     // papyri-and-uncials batch, 2026-09-10, and found by modern-names.mjs on that commit.
-    { after: /^\s+(?:More|Cromwell|Clarkson|Thompson|Bay|Roe)\b/, to: null },
+    // Chalmers is the 19th-century Scottish minister who popularised the gap theory of Genesis 1.
+    { after: /^\s+(?:More|Cromwell|Clarkson|Thompson|Bay|Roe|Chalmers)\b/, to: null },
   ],
   peter: [
     // Abelard, Faber (a founding Jesuit), Flint (a Dead Sea Scrolls scholar).

@@ -25,14 +25,17 @@ import {
   type AdminOverview,
   type AdminUserRow,
 } from "../lib/adminApi";
+import AboutPageEditor from "./AboutPageEditor";
 import AdminAddUser from "./AdminAddUser";
 import GrowthPanel from "./GrowthPanel";
+import UsageReportsPanel from "./UsageReportsPanel";
+import RegisteredAccountsCard from "./RegisteredAccountsCard";
 import ModerationQueuePanel from "./ModerationQueuePanel";
 import ReportsDashboard from "./ReportsDashboard";
 import type { Role } from "../lib/reportsApi";
-import Icon from "./Icon";
 import { FeatureStagesPanel, LiveTestSwitch } from "./FeatureRelease";
 import { useFeatureAdmin } from "../lib/features";
+import { confirmDiscardUnsaved } from "../lib/unsavedChanges";
 
 /** Every section loads on demand, so opening the console costs one small query (the overview) rather
  * than eight. `AdminSection` is both the tab key and the loader key. */
@@ -46,7 +49,8 @@ type AdminSection =
   | "moderation"
   | "safety"
   | "reports"
-  | "release";
+  | "release"
+  | "about";
 
 /** "Moderation" and "Safety" are deliberately two tabs, not one, because they answer two different
  * questions. Moderation is a BROWSE — the most recent public posts and comments, whether or not
@@ -55,19 +59,24 @@ type AdminSection =
  * an audit trail behind it (sql/028). Folding the queue into the browse would bury the reports. */
 const SECTION_LABELS: Record<AdminSection, string> = {
   overview: "Overview",
-  growth: "Growth",
+  // The usage graphs (sql/054; draws what it can before that). Was "Growth", a table of counts with a chart
+  // behind each row; Robbie looked for graphs under "Reports", so both tabs now say which kind of report.
+  growth: "Usage reports",
   users: "Users",
   engagement: "Engagement",
   // The usage ranking. Was labelled "Features" until the owner's Testing/Live controls arrived and
   // needed that name — two tabs both called "Features" would mean two different things.
-  features: "Usage",
+  features: "Feature use", // "Usage" alone sat next to "Usage reports" and read as the same thing.
   content: "Content",
   moderation: "Moderation",
   safety: "Safety",
   // The reader-filed reports queue (sql/025) — what the account menu's top-level "Reports" row used to open.
-  reports: "Reports",
+  reports: "Problem reports",
   // Testing / Live stages (sql/039). Owner only — the tab is not drawn for anyone else.
   release: "Features",
+  // The words of About Capstone Bible (sql/051). Owner only, like Features — the other site-wide
+  // setting this console edits. save_about_page() refuses everyone else, administrators included.
+  about: "About page",
 };
 
 const WINDOW_OPTIONS = [7, 30, 90] as const;
@@ -117,7 +126,9 @@ export interface AdminConsoleReports {
 export default function AdminConsole({ reports }: { reports?: AdminConsoleReports } = {}) {
   const [section, setSection] = useState<AdminSection>("overview");
   const { isOwner } = useFeatureAdmin();
-  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter((k) => (k !== "release" || isOwner) && (k !== "reports" || !!reports));
+  const sectionKeys = (Object.keys(SECTION_LABELS) as AdminSection[]).filter(
+    (k) => ((k !== "release" && k !== "about") || isOwner) && (k !== "reports" || !!reports)
+  );
   const [days, setDays] = useState<number>(30);
   const [error, setError] = useState<string | null>(null);
 
@@ -126,7 +137,6 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
   const [users, setUsers] = useState<AdminUserRow[] | null>(null);
   const [userSearch, setUserSearch] = useState("");
   const [guests, setGuests] = useState<AdminGuestSummary | null>(null);
-  const [guestsOpen, setGuestsOpen] = useState(false);
   const [engagement, setEngagement] = useState<AdminEngagement | null>(null);
   const [features, setFeatures] = useState<AdminFeatureRow[] | null>(null);
   const [panelBreakdown, setPanelBreakdown] = useState<AdminBreakdownRow[] | null>(null);
@@ -153,9 +163,12 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
   // The overview is always loaded — it's the landing section and it's one round trip.
   useEffect(() => {
     void run(async () => {
-      const [ov, d] = await Promise.all([fetchOverview(), fetchDailyActivity(30)]);
+      // The guest summary is fetched only to SUBTRACT the retired guest accounts: every number on the
+      // Overview is registered accounts only. Nothing about guests is shown.
+      const [ov, d, g] = await Promise.all([fetchOverview(), fetchDailyActivity(30), fetchGuestSummary(30)]);
       setOverview(ov);
       setDaily(d);
+      setGuests(g);
     });
   }, [run]);
 
@@ -209,12 +222,22 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
     });
   };
 
-  const maxDaily = Math.max(1, ...(daily ?? []).map((d) => Math.max(d.signups, d.sessions)));
+  // Registered accounts only: each day's sign-ups and sessions minus that day's retired-guest ones
+  // (both functions bucket by the UTC date). "—" until the guest figures arrive, never a guest-inflated number.
+  const minusGuests = (all: number, guest: number | undefined) =>
+    guests ? Math.max(0, Number(all ?? 0) - Number(guest ?? 0)) : "—";
+  const guestDay = new Map((guests?.days ?? []).map((g) => [g.day, g]));
+  const regDaily = guests
+    ? (daily ?? []).map((d) => ({
+        ...d,
+        signups: Math.max(0, Number(d.signups) - Number(guestDay.get(d.day)?.new_guests ?? 0)),
+        sessions: Math.max(0, Number(d.sessions) - Number(guestDay.get(d.day)?.sessions ?? 0)),
+      }))
+    : [];
+  const maxDaily = Math.max(1, ...regDaily.map((d) => Math.max(d.signups, d.sessions)));
   const maxFeature = Math.max(1, ...(features ?? []).map((f) => f.uses));
-  // Guests are rolled into one card; only real accounts get a row of their own.
+  // Registered accounts only. Old anonymous ("Continue as Guest") rows are never listed or counted.
   const registeredUsers = (users ?? []).filter((u) => !u.is_anonymous);
-  const guestRowCount = (users ?? []).length - registeredUsers.length;
-  const maxGuestDay = Math.max(1, ...(guests?.days ?? []).map((d) => Math.max(d.new_guests, d.sessions)));
 
   return (
     <div className="admin-console">
@@ -230,7 +253,11 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
             role="tab"
             aria-selected={section === key}
             className={`admin-tab${section === key ? " admin-tab-active" : ""}`}
-            onClick={() => setSection(key)}
+            onClick={() => {
+              // The About page editor may be holding unsaved text; switching tabs unmounts it.
+              if (key !== section && !confirmDiscardUnsaved()) return;
+              setSection(key);
+            }}
           >
             {SECTION_LABELS[key]}
             {key === "reports" && reports && reports.untriaged > 0 && (
@@ -264,22 +291,23 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
       {section === "overview" && overview && (
         <>
           <div className="admin-stat-grid">
-            <Stat label="Total accounts" value={overview.users_total} />
-            <Stat label="Registered" value={overview.users_registered} hint="with an email" />
-            <Stat label="Guests" value={overview.users_anonymous} hint="anonymous sessions" />
-            <Stat label="New (24h)" value={overview.users_new_24h} />
-            <Stat label="New (7d)" value={overview.users_new_7d} />
-            <Stat label="New (30d)" value={overview.users_new_30d} />
-            <Stat label="Active (24h)" value={overview.active_24h} hint="daily actives" />
-            <Stat label="Active (7d)" value={overview.active_7d} hint="weekly actives" />
-            <Stat label="Sessions (7d)" value={overview.sessions_7d} />
+            <Stat label="Registered accounts" value={overview.users_registered} hint="signed up with an email" />
+            <Stat label="New (24h)" value={minusGuests(overview.users_new_24h, guests?.new_24h)} />
+            <Stat label="New (7d)" value={minusGuests(overview.users_new_7d, guests?.new_7d)} />
+            <Stat label="New (30d)" value={minusGuests(overview.users_new_30d, guests?.new_30d)} />
+            <Stat label="Active (24h)" value={minusGuests(overview.active_24h, guests?.active_24h)} hint="last seen in 24h" />
+            <Stat label="Active (7d)" value={minusGuests(overview.active_7d, guests?.active_7d)} hint="last seen in 7 days" />
           </div>
+          <p className="admin-note">
+            Registered accounts only — accounts left over from the retired “Continue as Guest” are not counted here. The graphs
+            are under Usage reports.
+          </p>
           <AnalyticsSinceNote since={overview.analytics_since} />
-          {daily && daily.length > 0 && (
+          {regDaily.length > 0 && (
             <div className="admin-block">
               <h4 className="admin-block-heading">Last 30 days</h4>
               <ul className="admin-rows">
-                {daily
+                {regDaily
                   .slice()
                   .reverse()
                   .filter((d) => d.signups > 0 || d.sessions > 0)
@@ -299,7 +327,7 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
                     </li>
                   ))}
               </ul>
-              {daily.every((d) => d.signups === 0 && d.sessions === 0) && (
+              {regDaily.every((d) => d.signups === 0 && d.sessions === 0) && (
                 <p className="admin-note">No activity recorded in this window yet.</p>
               )}
             </div>
@@ -311,11 +339,25 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
       {/* Owns its own period control and its own fetch: its day/week/month toggle
           scopes only this section, and folding it into the console's 7/30/90-day
           picker would give two controls that mean different things the same name. */}
-      {section === "growth" && <GrowthPanel />}
+      {section === "growth" && (
+        <>
+          <UsageReportsPanel />
+          {/* The older catalogue of every count (sql/026), kept one tap away rather than as a second tab. */}
+          <details className="usage-more">
+            <summary>Every other count, as a table (notes, highlights, posts, groups, messages…)</summary>
+            <GrowthPanel />
+          </details>
+        </>
+      )}
 
       {/* ----------------------------------------------------------------- USERS */}
       {section === "users" && (
         <>
+          {/* First thing on the tab: real accounts, counted over the whole database, never over the
+              (searchable, capped) list below. Guests are not shown anywhere in this console any more:
+              "Continue as Guest" is retired and an anonymous session only ever reaches the sign-in gate
+              (showAuthGate in App.tsx). Their old rows stay in the database, untouched, and are left out. */}
+          <RegisteredAccountsCard overview={overview} guests={guests} />
           {/* Above the search box: an invitation, never a password (see AdminAddUser). On success the
               list is re-searched for the new address so the row is right there. */}
           <AdminAddUser
@@ -343,154 +385,18 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
           {users && (
             <>
               <p className="admin-note">
-                {registeredUsers.length} registered account{registeredUsers.length === 1 ? "" : "s"}
-                {guestRowCount > 0 ? ` and ${guestRowCount} guest session${guestRowCount === 1 ? "" : "s"}` : ""} in
-                this result
-                {users.length < (users[0]?.total_count ?? 0) ? ` — showing the newest ${users.length} of ${users[0]?.total_count}` : ""}
+                {registeredUsers.length} registered account{registeredUsers.length === 1 ? "" : "s"} in this result
+                {users.length < (users[0]?.total_count ?? 0) ? `, from the newest ${users.length} sign-ups — search to find older ones` : ""}
                 .
               </p>
-
-              {/* Guests are throwaway: "Continue as Guest" mints a new anonymous account on every
-                  tap, so they outnumber real people several to one and listing them individually
-                  buries the handful of accounts worth looking at. One card stands in for all of
-                  them; the people who matter stay listed below, one row each. */}
-              {guestRowCount > 0 && guests && (
-                <div className="admin-guest-card">
-                  <button
-                    type="button"
-                    className="admin-guest-summary"
-                    aria-expanded={guestsOpen}
-                    onClick={() => setGuestsOpen((v) => !v)}
-                  >
-                    <span className="admin-guest-head">
-                      <span className="admin-guest-title">
-                        <Icon name="people" inline /> Guests
-                        <span className="admin-badge admin-badge-muted">{guests.total}</span>
-                      </span>
-                      <span className="admin-guest-chevron" aria-hidden="true">
-                        {guestsOpen ? "▾" : "▸"}
-                      </span>
-                    </span>
-                    <span className="admin-guest-figures">
-                      <span>
-                        <strong>{guests.new_24h}</strong> new in 24h
-                      </span>
-                      <span>
-                        <strong>{guests.new_7d}</strong> new in 7d
-                      </span>
-                      <span>
-                        <strong>{guests.active_7d}</strong> active in 7d
-                      </span>
-                      <span>Newest {formatWhen(guests.newest_seen)}</span>
-                      <span>First {formatWhen(guests.first_seen)}</span>
-                    </span>
-                  </button>
-
-                  {guestsOpen && (
-                    <div className="admin-guest-detail">
-                      <div className="admin-stat-grid">
-                        <Stat label="Guest accounts" value={guests.total} hint="one per “Continue as Guest” tap" />
-                        <Stat
-                          label="Measured"
-                          value={guests.guests_with_sessions}
-                          hint="have session data"
-                        />
-                        <Stat label="Sessions" value={guests.sessions_total} />
-                        <Stat label="Median session" value={formatDuration(guests.median_session_seconds)} />
-                        <Stat label="Total time" value={formatDuration(guests.sessions_seconds_total)} />
-                        <Stat label="Came back" value={guests.returning_guests} hint="more than one session" />
-                        <Stat label="Active (24h)" value={guests.active_24h} />
-                        <Stat label="Last active" value={formatWhen(guests.last_active_at)} />
-                      </div>
-
-                      {/* The caveat, stated where the numbers are — not in a footnote. Most guests
-                          predate migration 019, so they have a creation date and nothing else. A
-                          small "sessions" figure next to a large "guests" figure is a gap in the
-                          record, not a finding about behaviour. */}
-                      {guests.guests_before_analytics > 0 && (
-                        <p className="admin-note">
-                          {guests.guests_before_analytics} of these {guests.total} guests were created before usage
-                          tracking started
-                          {guests.analytics_since
-                            ? ` on ${new Date(guests.analytics_since).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}`
-                            : ""}
-                          . We know when they arrived and nothing else — no session lengths, no times, no activity.
-                          Every session figure above and every time below covers only the{" "}
-                          {guests.guests_with_sessions} guest{guests.guests_with_sessions === 1 ? "" : "s"} who arrived
-                          after that. It can't be backfilled.
-                        </p>
-                      )}
-
-                      <div className="admin-block">
-                        <h4 className="admin-block-heading">By day</h4>
-                        {guests.days.length === 0 ? (
-                          <p className="admin-note">No guest arrived and no guest session started in the last 30 days.</p>
-                        ) : (
-                          <ul className="admin-rows">
-                            {guests.days.map((d) => (
-                              <li key={d.day} className="admin-row">
-                                <span className="admin-row-label">
-                                  {new Date(`${d.day}T12:00:00`).toLocaleDateString(undefined, {
-                                    month: "short",
-                                    day: "numeric",
-                                  })}
-                                </span>
-                                <Bar value={Math.max(d.new_guests, d.sessions)} max={maxGuestDay} />
-                                <span className="admin-row-value">
-                                  {d.new_guests} new
-                                  {d.sessions > 0
-                                    ? ` · ${d.sessions} session${d.sessions === 1 ? "" : "s"} · ${formatDuration(d.seconds)}`
-                                    : " · no session data"}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-
-                      <div className="admin-block">
-                        <h4 className="admin-block-heading">Most recent guest visits</h4>
-                        {guests.recent_sessions.length === 0 ? (
-                          <p className="admin-note">
-                            No guest session has been recorded yet. Guests created before tracking started don't have
-                            one, so this stays empty until a new guest visits with this build installed.
-                          </p>
-                        ) : (
-                          <ul className="admin-rows">
-                            {guests.recent_sessions.map((sn) => (
-                              <li key={sn.session_id} className="admin-row admin-row-stacked">
-                                <span className="admin-row-label">{formatWhen(sn.started_at)}</span>
-                                <span className="admin-row-value">
-                                  {formatDuration(sn.seconds)} · {sn.event_count} action
-                                  {sn.event_count === 1 ? "" : "s"} · left{" "}
-                                  {new Date(sn.last_seen_at).toLocaleTimeString(undefined, {
-                                    hour: "numeric",
-                                    minute: "2-digit",
-                                  })}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-
-                      <p className="admin-note">
-                        A guest has no name, email, or profile — nothing here identifies anyone. A guest who later
-                        creates an account appears as a separate registered row below; the two are not linked.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
 
               <ul className="admin-user-list">
                 {registeredUsers.map((u) => (
                   <li key={u.user_id} className="admin-user">
                     <div className="admin-user-main">
                       <span className="admin-user-name">
-                        {u.display_name || u.email || (u.is_anonymous ? "Guest" : "—")}
+                        {u.display_name || u.email || "—"}
                         {u.is_admin && <span className="admin-badge">admin</span>}
-                        {u.is_anonymous && <span className="admin-badge admin-badge-muted">guest</span>}
                       </span>
                       {u.email && <span className="admin-user-email">{u.email}</span>}
                     </div>
@@ -513,9 +419,7 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
               </ul>
               {registeredUsers.length === 0 && (
                 <p className="admin-note">
-                  {guestRowCount > 0
-                    ? "No registered account matches that search — only guests, which are summarised above."
-                    : "No accounts match that search."}
+                  No registered account matches that search.
                 </p>
               )}
             </>
@@ -526,6 +430,11 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
       {/* ------------------------------------------------------------ ENGAGEMENT */}
       {section === "engagement" && engagement && (
         <>
+          {/* These windowed figures come from 019 functions that cannot tell a retired guest session from
+              a registered one. Separating them needs a database change, so say so instead of hiding it. */}
+          <p className="admin-note">
+            May include a few sessions left over from the retired “Continue as Guest”; the Usage reports graphs leave them out.
+          </p>
           <div className="admin-stat-grid">
             <Stat label="Sessions" value={engagement.sessions} hint={`last ${days} days`} />
             <Stat label="Median session" value={formatDuration(engagement.median_seconds)} hint="excludes bounces" />
@@ -548,6 +457,11 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
       {/* -------------------------------------------------------------- FEATURES */}
       {section === "features" && features && (
         <>
+          {/* These windowed figures come from 019 functions that cannot tell a retired guest session from
+              a registered one. Separating them needs a database change, so say so instead of hiding it. */}
+          <p className="admin-note">
+            May include a few sessions left over from the retired “Continue as Guest”; the Usage reports graphs leave them out.
+          </p>
           {features.length === 0 ? (
             <>
               <p className="admin-note">Nothing recorded in the last {days} days yet.</p>
@@ -639,6 +553,9 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
 
       {/* -------------------------------------------------------------- RELEASE */}
       {section === "release" && isOwner && <FeatureStagesPanel />}
+
+      {/* ------------------------------------------------------------ ABOUT PAGE */}
+      {section === "about" && isOwner && <AboutPageEditor />}
 
       {section === "moderation" && moderation && (
         <>

@@ -9,6 +9,8 @@ import {
 import BackButton from "./BackButton";
 import "./FillBlank.css";
 import Icon from "./Icon";
+import { LevelSetup } from "./GameEntry";
+import { useScrollTop } from "../lib/useScrollTop";
 
 interface FillBlankViewProps {
   onBack: () => void;
@@ -37,6 +39,7 @@ type Screen = "menu" | "playing" | "gameover";
 export default function FillBlankView({ onBack }: FillBlankViewProps) {
   const [screen, setScreen] = useState<Screen>("menu");
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
+  const [choice, setChoice] = useState<Difficulty>(DIFFICULTY_LEVELS[0].key);
   const [queue, setQueue] = useState<FillBlankVerse[]>([]);
   const [current, setCurrent] = useState<FillBlankVerse | null>(null);
   const [inputs, setInputs] = useState<string[]>([]);
@@ -46,6 +49,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
   const [revealed, setRevealed] = useState(false);
   const [roundCorrect, setRoundCorrect] = useState<boolean | null>(null);
   const firstInputRef = useRef<HTMLInputElement | null>(null);
+  const playRef = useScrollTop(`${screen} ${current?.reference}`);
 
   const pool = useMemo(() => (difficulty ? FILL_BLANK_VERSES.filter((v) => v.difficulty === difficulty) : []), [difficulty]);
 
@@ -145,7 +149,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
 
   if (screen === "menu") {
     return (
-      <div className="game-root">
+      <div className="game-root" data-page-bg="game-setup">
         <header className="game-header">
           <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
           <h2 className="games-inline-icon">
@@ -156,25 +160,9 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
         <div className="game-body">
           <div className="fillblank-picker">
             <div className="games-panel-intro">
-              <h2>Choose a difficulty</h2>
               <p>Standout verses from the Old and New Testaments — type the missing words before time runs out. Three lives.</p>
             </div>
-            <div className="game-center-list">
-              {DIFFICULTY_LEVELS.map((l) => (
-                <button key={l.key} type="button" className="game-center-card" onClick={() => startGame(l.key)}>
-                  <span className="game-center-card-icon">
-                    <Icon name={l.icon} />
-                  </span>
-                  <span className="game-center-card-body">
-                    <span className="game-center-card-title">{l.label}</span>
-                    <span className="game-center-card-tagline">{l.description}</span>
-                  </span>
-                  <span className="game-center-card-chevron" aria-hidden="true">
-                    ›
-                  </span>
-                </button>
-              ))}
-            </div>
+            <LevelSetup name="fill-blank-level" levels={DIFFICULTY_LEVELS} value={choice} onChange={setChoice} onStart={() => startGame(choice)} />
           </div>
         </div>
       </div>
@@ -185,7 +173,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
     return (
       <div className="game-root">
         <header className="game-header">
-          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
+          <BackButton onClick={backToMenu} ariaLabel="Back to difficulty select" />
           <h2 className="games-inline-icon">
           <Icon name="fillBlank" />
           Fill in the Blank
@@ -232,7 +220,7 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
           Fill in the Blank
         </h2>
       </header>
-      <div className="game-body">
+      <div ref={playRef} className="game-body game-fit fillblank-play">
         <div className="fillblank-hud">
           <span className="fillblank-lives" aria-label={`${lives} lives remaining`}>
             {Array.from({ length: STARTING_LIVES }, (_, i) => (
@@ -285,22 +273,24 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
             })}
           </p>
 
-          {!revealed ? (
-            <button type="submit" className="fillblank-btn-primary">
-              Check Answer
-            </button>
-          ) : (
-            <div className="fillblank-round-result">
-              <p className={roundCorrect ? "fillblank-result-correct" : "fillblank-result-wrong"}>
-                {roundCorrect ? <><Icon name="check" inline /> Correct!</> : timeLeft <= 0 ? <><Icon name="timer" inline /> Time's up!</> : <><Icon name="close" inline /> Not quite.</>}
-              </p>
-              {lives > 0 && (
-                <button type="button" className="fillblank-btn-primary" onClick={handleContinue}>
-                  Next Verse →
-                </button>
-              )}
-            </div>
-          )}
+          <div className="game-pin">
+            {!revealed ? (
+              <button type="submit" className="fillblank-btn-primary">
+                Check Answer
+              </button>
+            ) : (
+              <div className="fillblank-round-result">
+                <p className={roundCorrect ? "fillblank-result-correct" : "fillblank-result-wrong"}>
+                  {roundCorrect ? <><Icon name="check" inline /> Correct!</> : timeLeft <= 0 ? <><Icon name="timer" inline /> Time's up!</> : <><Icon name="close" inline /> Not quite.</>}
+                </p>
+                {lives > 0 && (
+                  <button type="button" className="fillblank-btn-primary" onClick={handleContinue}>
+                    Next Verse →
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         </form>
 
         <p className="fillblank-missing-count">

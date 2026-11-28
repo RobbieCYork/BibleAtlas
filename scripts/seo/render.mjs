@@ -127,6 +127,7 @@ const NAV = [
   ["/sites", "Sites"],
   ["/people", "People"],
   ["/topics", "Topics"],
+  ["/religions", "Religions"],
   ["/events", "Timeline"],
 ];
 
@@ -225,7 +226,7 @@ ${FONTS}
 <main${wide ? ' class="wide"' : ""} id="content">
 ${crumbsHtml(trail)}
 ${body}
-<div class="cta"><p>Capstone Bible is a free interactive study app — a map of every place in this library, a zoomable timeline of biblical and church history, the Bible text with every name in it linked to its article and personal notes.</p><a class="btn" href="/">Open Capstone Bible</a></div>
+<div class="cta"><p>Capstone Bible is a free interactive study app — a map of every place in this library, a timeline of biblical and church history, the Bible text with every name in it linked to its article and personal notes.</p><a class="btn" href="/">Open Capstone Bible</a></div>
 <footer><p>Part of the <a href="/library">Capstone Bible library</a> — <a href="/places">places</a>, <a href="/sites">sites</a>, <a href="/people">people</a>, <a href="/topics">topics</a> and the <a href="/events">timeline</a>. Articles are written from a Protestant evangelical position and name other traditions' views where they differ.</p><p>Contact: <a href="mailto:admin@capstonebible.com">admin@capstonebible.com</a></p><p><a href="/about">About Capstone Bible</a> · <a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a> · <a href="/delete-account">Delete your account</a></p></footer>
 </main>
 </body>
@@ -422,6 +423,19 @@ const heading = (title, kicker, sub) =>
     sub ? `<p class="sub">${sub}</p>` : ""
   }`;
 
+/** The short note under a young-earth date (src/data/datingDebate.ts), with a link to the topic
+ * that argues each side. Plain text, never linkified, so it adds no block to the seo-only-links
+ * snapshot; the topic link is resolved through urlFor like any other explicit cross-reference, so a
+ * missing topic renders the note without a dead link. */
+const youngEarthNote = (record, ctx) => {
+  const d = ctx.datingDebate;
+  if (!record.youngEarthDate || !d) return "";
+  const href = ctx.urlFor("topic", d.AGE_OF_EARTH_TOPIC_ID);
+  return `<p class="note"><strong>${esc(d.YOUNG_EARTH_DATE_LABEL)}.</strong> ${esc(d.YOUNG_EARTH_DATE_NOTE)}${
+    href ? ` <a href="${esc(href)}">Read the case for each view: ${esc(d.AGE_OF_EARTH_TOPIC_NAME)}</a>` : ""
+  }</p>`;
+};
+
 const paras = (arr, id, ctx) => (arr ?? []).map((t) => p(ctx.linkify(t, id))).join("");
 
 const splitParas = (text) =>
@@ -615,6 +629,7 @@ export function personPage(person, ctx) {
         .filter(Boolean)
         .join(" · ")
     ),
+    youngEarthNote(person, ctx),
     `<p class="lead">${ctx.linkify(person.summary, person.id)}</p>`,
     section("Life and work", paras(person.lifeStory, person.id, ctx)),
     dl([
@@ -785,6 +800,94 @@ function topicJsonLd(topic) {
   return [{ ...article, about: { "@id": `${absolute(path)}#subject` } }, { "@id": `${absolute(path)}#subject`, ...about }];
 }
 
+// ---------------------------------------------------------------- religions and denominations
+const BELIEF_AREA_LABEL = {
+  "world-religion": "World Religions and Worldviews",
+  "christian-tradition": "Christian Traditions and Denominations",
+};
+
+const BELIEF_SOURCE_LABEL = {
+  official: "Official",
+  primary: "Primary text",
+  scholarly: "Scholarship",
+  data: "Survey / statistics",
+  reference: "Reference",
+  encyclopedic: "Encyclopedia",
+};
+
+/** A Religions and Denominations article. Built from the Topic-shaped record (so its sections are
+ * exactly the app's), with the structured BeliefRecord on `topic.belief` for the facts block, the
+ * classification notice and the typed source list. JSON-LD is a plain Article: schema.org has no
+ * type for "a religion", and none is invented. */
+export function beliefPage(topic, ctx) {
+  const b = topic.belief;
+  const a = b.adherents;
+  // Same switch TopicPanel reads: no auto-links in an article on a tradition outside Scripture.
+  const prose = b.noBibleLinks ? { ...ctx, linkify: (text) => esc(String(text ?? "")) } : ctx;
+  const description = clip(`${topic.name} — ${topic.summary}`);
+  const path = itemPath("religion", topic.id);
+  const trail = [
+    { name: "Library", path: "/library" },
+    { name: "Religions and Denominations", path: indexPath("religions") },
+    { name: topic.name, path },
+  ];
+  const facts = dl([
+    [b.founding.founderKind === "single" ? "Founder" : "Founders", esc(b.founding.founders)],
+    [
+      "Founded",
+      `${esc(b.founding.date)}${b.founding.place ? ` · ${esc(b.founding.place)}` : ""}${
+        b.founding.dateNote ? ` <span class="note">${esc(b.founding.dateNote)}</span>` : ""
+      }`,
+    ],
+    [
+      "Adherents",
+      `${esc(`${a.figure} (${a.year})`)} <span class="note">Counts ${esc(a.counts)}. Source: ${extLink(a.source.url, a.source.label)}${
+        a.verified ? "" : " · figure not yet verified"
+      }${a.note ? `. ${esc(a.note)}` : ""}</span>`,
+    ],
+    ["Group", esc(`${BELIEF_AREA_LABEL[b.area]} · ${b.group}`)],
+  ]);
+  const related = (b.relatedIds ?? [])
+    .map((id) => ({ href: ctx.urlFor("belief", id), name: ctx.nameFor?.("belief", id) }))
+    .filter((r) => r.href && r.name);
+  const body = [
+    heading(
+      topic.name,
+      topic.role,
+      topic.alternateNames?.length ? `Also called ${esc(topic.alternateNames.join(", "))}` : ""
+    ),
+    `<p class="lead">${prose.linkify(topic.summary, topic.id)}</p>`,
+    b.classificationNote ? `<p class="note"><strong>About this classification.</strong> ${esc(b.classificationNote)}</p>` : "",
+    facts,
+    (topic.sections ?? []).map((s) => section(s.heading, paras(s.paragraphs, topic.id, prose))).join(""),
+    versesSection(topic.verses),
+    section(
+      "Sources",
+      ul(
+        b.sources.map(
+          (s) =>
+            `<span class="cite-tier">${esc(BELIEF_SOURCE_LABEL[s.kind] ?? s.kind)}</span>${extLink(s.url, s.label)}${
+              s.note ? ` <span class="note">— ${esc(s.note)}</span>` : ""
+            }`
+        )
+      )
+    ),
+    related.length
+      ? section("Related articles", ul(related.map((r) => `<a href="${r.href}">${esc(r.name)}</a>`)))
+      : "",
+    moreSection("religions and denominations", ctx.siblings),
+  ].join("");
+  return page({
+    title: `${topic.name} — ${topic.role} | ${SITE_NAME}`,
+    description,
+    canonical: path,
+    trail,
+    jsonLd: [articleLd(`${topic.name}: ${topic.role}`, topic.summary, path)],
+    body,
+    current: "/religions",
+  });
+}
+
 export function eventPage(ev, ctx) {
   const cat = EVENT_CATEGORY_LABEL[ev.category] ?? ev.category;
   const description = clip(`${ev.title} (${ev.dateLabel}) — ${ev.summary}`);
@@ -803,6 +906,7 @@ export function eventPage(ev, ctx) {
           : ""
       }`
     ),
+    youngEarthNote(ev, ctx),
     `<p class="lead">${ctx.linkify(ev.summary, ev.id)}</p>`,
     section("The event", paras(splitParas(ev.article), ev.id, ctx)),
     ev.datingNotes ? section("Dating", p(ctx.linkify(ev.datingNotes, ev.id))) : "",
@@ -889,6 +993,7 @@ export function hubPage(counts, total) {
     ["/sites", "Biblical Sites & Archaeology", counts.pois, "Excavated sites, fortresses, pools and tombs, with what has actually been recovered at each."],
     ["/people", "People", counts.people, "Biblical figures, church fathers, reformers, and the rulers of the surrounding world."],
     ["/topics", "Topics & Doctrines", counts.topics, "Practices, doctrines, people groups and concepts the text assumes you already know."],
+    ["/religions", "Religions and Denominations", counts.beliefTopics, "World religions, worldviews and the Christian traditions — founders, adherents, beliefs and practice, with an evangelical assessment and each one's own reply."],
     ["/events", "Bible & Church History Timeline", counts.timelineEvents, "Creation to the modern missions movement, with how firmly each date is established."],
   ];
   const body = [
@@ -932,21 +1037,36 @@ export function hubPage(counts, total) {
 
 // ---------------------------------------------------------------- about
 /**
- * The public "About Capstone Bible" page at /about. The words are Robbie's and live in
+ * The public "About Capstone Bible" page at /about. The built-in words are Robbie's and live in
  * src/data/aboutPage.ts, which the app's own AboutView reads too. They are escaped and otherwise
- * untouched: no auto-linking, nothing added. "Back" is a plain link to the app because these pages
- * carry no script.
+ * untouched: no auto-linking, nothing added. "Back" is a plain link to the app.
+ *
+ * THE ONE PUBLIC PAGE THAT CARRIES A SCRIPT, AND WHY. The owner can change these words from the Admin
+ * Console without a deploy (sql/051, lib/aboutContent.ts), and this address has to show the saved
+ * text too. So the HTML below is the BUILT-IN text — what a crawler, a link preview and a reader
+ * without JavaScript get, and what everyone gets if anything below fails — and `aboutLoaderScript`
+ * then asks Supabase for the saved row and, only if one exists in the right shape, swaps the words.
+ *
+ * What that script is NOT, which is what AGENTS.md's "no script, no Supabase client, no session" rule
+ * protects: it is not supabase-js, it has no session, sends no cookies (credentials: "omit"), stores
+ * nothing, reads one row of one table that anon is granted SELECT on and that holds nothing but the
+ * page's words, and it draws them with textContent — never innerHTML — so the saved text cannot become
+ * markup. The anon key it carries is the same public key already in the app bundle. When the build has
+ * no Supabase config, no script is emitted at all and the page is exactly the static document it was.
  */
-export function aboutPage(about) {
+export function aboutPage(about, supabase = null) {
   const trail = [{ name: about.ABOUT_TITLE, path: "/about" }];
   const body = [
     `<p class="back"><a href="/">‹ Back to Capstone Bible</a></p>`,
     heading(about.ABOUT_TITLE, "", ""),
+    `<div id="about-words">`,
     `<blockquote class="pull">${esc(about.ABOUT_PULL_QUOTE)}</blockquote>`,
     ...about.ABOUT_SECTIONS.map((s) => {
       const inner = s.paragraphs.map((t) => p(esc(t))).join("");
       return s.heading ? section(s.heading, inner) : `<section>${inner}</section>`;
     }),
+    `</div>`,
+    aboutLoaderScript(supabase),
   ].join("");
 
   return page({
@@ -967,6 +1087,28 @@ export function aboutPage(about) {
     current: "/about",
     ogType: "website",
   });
+}
+
+/** The inline loader for /about. See aboutPage() above. `ok` mirrors sql/051's
+ * about_page_content_ok() and lib/aboutContent.ts's aboutContentProblem(): a row in any other shape
+ * is ignored and the built-in text stays. Returns "" (no script) unless both values are present and
+ * the URL is https. */
+export function aboutLoaderScript(supabase) {
+  const url = supabase?.url;
+  const key = supabase?.anonKey;
+  if (typeof url !== "string" || typeof key !== "string" || !/^https:\/\/[^\s"'<>]+$/.test(url) || !key) return "";
+  const lit = (v) => JSON.stringify(v).replace(/</g, "\\u003c");
+  return `<script>(function(){var U=${lit(url.replace(/\/+$/, ""))},K=${lit(key)};if(!window.fetch)return;
+function str(v,max,blank){return typeof v==="string"&&v.length<=max&&(blank||v.trim().length>0)}
+function ok(c){if(!c||typeof c!=="object"||Array.isArray(c)||Object.keys(c).length!==2||!str(c.quote,1000,true)||!Array.isArray(c.sections)||c.sections.length<1||c.sections.length>40)return false;
+for(var i=0;i<c.sections.length;i++){var s=c.sections[i];if(!s||typeof s!=="object"||Object.keys(s).length!==2||!(s.heading===null||str(s.heading,200))||!Array.isArray(s.paragraphs)||s.paragraphs.length<1||s.paragraphs.length>100)return false;
+for(var j=0;j<s.paragraphs.length;j++)if(!str(s.paragraphs[j],10000))return false}return true}
+function el(tag,text,cls){var e=document.createElement(tag);e.textContent=text;if(cls)e.className=cls;return e}
+fetch(U+"/rest/v1/about_page?id=eq.1&select=content",{headers:{apikey:K,Authorization:"Bearer "+K,Accept:"application/json"},credentials:"omit",cache:"no-store"})
+.then(function(r){return r.ok?r.json():null}).then(function(rows){var c=rows&&rows[0]&&rows[0].content;var root=document.getElementById("about-words");if(!root||!ok(c))return;
+var f=document.createDocumentFragment();if(c.quote.trim())f.appendChild(el("blockquote",c.quote,"pull"));
+c.sections.forEach(function(s){var sec=document.createElement("section");if(s.heading)sec.appendChild(el("h2",s.heading));s.paragraphs.forEach(function(t){sec.appendChild(el("p",t))});f.appendChild(sec)});
+while(root.firstChild)root.removeChild(root.firstChild);root.appendChild(f);root.setAttribute("data-source","saved")}).catch(function(){})})();</script>`;
 }
 
 // ---------------------------------------------------------------- account deletion

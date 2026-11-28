@@ -5,6 +5,8 @@ import {
   humanizeReportError,
   submitReport,
   SEVERITY_LABELS,
+  SUGGESTION_CATEGORY,
+  suggestedCategoryForRoute,
   TARGET_KIND_LABELS,
   type ReportCategory,
   type Severity,
@@ -48,6 +50,43 @@ const BODY_MAX = 8000;
 
 const SEVERITY_ORDER: Severity[] = ["low", "medium", "high", "critical"];
 
+type Kind = "problem" | "suggestion";
+
+/** Every piece of wording that differs between reporting a fault and suggesting a feature. */
+const COPY = {
+  problem: {
+    choice: "Report a problem",
+    choiceIcon: "flag",
+    from: "Reporting from:",
+    selection: "You had this selected — it'll be sent with the report so the exact wording can be found:",
+    titleLabel: "In one line, what's wrong?",
+    titlePlaceholder: "e.g. Nazareth article says Galilee is a city",
+    bodyLabel: "Tell us more",
+    bodyPlaceholder:
+      "What did you expect, and what happened instead? If it's about wording or a fact, quoting the bit that's wrong helps most.",
+    captured: "What gets sent with this report",
+    send: "Send report",
+    sentLabel: "Report sent",
+    mine: "See my reports",
+  },
+  suggestion: {
+    choice: "Suggest a feature",
+    choiceIcon: "plus",
+    from: "Suggesting from:",
+    selection: "You had this selected — it'll be sent with your suggestion:",
+    titleLabel: "In one line, what's your idea?",
+    titlePlaceholder: "e.g. Let me compare two translations side by side",
+    bodyLabel: "Describe the feature",
+    bodyPlaceholder: "What would you like to be able to do, and when would you use it?",
+    captured: "What gets sent with this suggestion",
+    send: "Send suggestion",
+    sentLabel: "Suggestion sent",
+    mine: "See my suggestions",
+  },
+} as const;
+
+const KINDS: Kind[] = ["problem", "suggestion"];
+
 /** One captured field, shown to the reporter before anything is sent. Rendered for every field on
  * CapturedContext — see the "nothing is captured that the reporter is not shown" rule in
  * lib/reportContext.ts. */
@@ -65,7 +104,10 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
   // auto-advancing, a selection being cleared) rewrite what the reporter is looking at while they
   // are typing about it.
   const [context, setContext] = useState<CapturedContext>(() => captureReportContext(surface));
+  const [kind, setKind] = useState<Kind>("problem");
   const [categories, setCategories] = useState<ReportCategory[] | null>(null);
+  // Kept apart from the send error: only the problem form has a category list to fail to load.
+  const [categoriesError, setCategoriesError] = useState<string | null>(null);
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -85,25 +127,38 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
       .then((rows) => {
         if (cancelled) return;
         setCategories(rows);
-        // Don't preselect a kind of problem on the reporter's behalf — an unchosen category is a
-        // question they have to answer, and it is the field that routes the report.
+        // Preselected only where the screen makes the area obvious (Bible reader, map, timeline,
+        // games, settings, an open article) and only if that category is on offer; otherwise the
+        // reporter must choose — it is required, and it is what files the report in the Admin
+        // Console. Never overwrites a choice they already made.
+        const suggested = suggestedCategoryForRoute(context.route, rows);
+        if (suggested) setCategory((current) => current || suggested);
       })
       .catch((err) => {
-        if (!cancelled) setError(humanizeReportError(err));
+        if (!cancelled) setCategoriesError(humanizeReportError(err));
       });
     return () => {
       cancelled = true;
     };
-  }, [isGuest]);
+    // context.route is fixed at mount (the context is captured once), so this still runs once.
+  }, [isGuest, context.route]);
 
+  const suggesting = kind === "suggestion";
+  const copy = COPY[kind];
+
+  // The suggestion category is chosen with the switch at the top, so the problem picker leaves it out.
+  const problemCategories = useMemo(
+    () => (categories ?? []).filter((c) => c.key !== SUGGESTION_CATEGORY),
+    [categories]
+  );
   const selectedCategory = useMemo(
-    () => (categories ?? []).find((c) => c.key === category) ?? null,
-    [categories, category]
+    () => problemCategories.find((c) => c.key === category) ?? null,
+    [problemCategories, category]
   );
 
   const trimmedTitle = title.trim();
   const trimmedBody = body.trim();
-  const canSend = !!category && trimmedTitle.length >= 3 && trimmedBody.length >= 1 && !sending;
+  const canSend = (suggesting || !!category) && trimmedTitle.length >= 3 && trimmedBody.length >= 1 && !sending;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,10 +168,11 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
     try {
       await submitReport({
         reporter_id: userId,
-        category,
+        category: suggesting ? SUGGESTION_CATEGORY : category,
         title: trimmedTitle,
         body: trimmedBody,
-        reporter_severity: severity || null,
+        // How much a fault matters; a suggestion is not asked, and anything picked before switching is dropped.
+        reporter_severity: suggesting ? null : severity || null,
         page_url: context.page_url,
         route: context.route,
         page_title: context.page_title,
@@ -135,7 +191,7 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
       clearRememberedSelection();
       setSent(true);
     } catch (err) {
-      setError(humanizeReportError(err));
+      setError(humanizeReportError(err, suggesting));
     } finally {
       setSending(false);
     }
@@ -143,18 +199,18 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
 
   if (isGuest) {
     return (
-      <div className="report-sheet" role="dialog" aria-label="Report a problem">
+      <div className="report-sheet" role="dialog" aria-label="Report a problem or suggest a feature">
         <div className="report-sheet-head">
           <button type="button" className="auth-back-link" onClick={onClose}>
             ← Back
           </button>
-          <h3 className="report-sheet-title">Report a problem</h3>
+          <h3 className="report-sheet-title">Report a problem or suggest a feature</h3>
         </div>
         <div className="report-sheet-body">
           <p className="report-intro">
-            Reports are tied to an account so the team can come back to you about them, and so a
-            fix can be told apart from a flood. Guest browsing can't file one. Sign in with a real
-            account and the option appears in this menu.
+            Reports and suggestions are tied to an account so the team can come back to you about
+            them, and so a fix can be told apart from a flood. Guest browsing can't send one. Sign
+            in with a real account and the option appears in this menu.
           </p>
         </div>
       </div>
@@ -163,7 +219,7 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
 
   if (sent) {
     return (
-      <div className="report-sheet" role="dialog" aria-label="Report sent">
+      <div className="report-sheet" role="dialog" aria-label={copy.sentLabel}>
         <div className="report-sheet-head">
           <button type="button" className="auth-back-link" onClick={onClose}>
             ← Back
@@ -172,14 +228,16 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
         </div>
         <div className="report-sheet-body">
           <p className="report-intro">
-            Your report is in. It goes to the team's review queue, where advisors read it and vote
-            on how urgent it is. You can see where it's got to any time under <strong>My Reports</strong>,
+            {suggesting
+              ? "Your suggestion is in. It goes to the team's review queue with the other suggestions."
+              : "Your report is in. It goes to the team's review queue, filed under the category you chose."}{" "}
+            You can see where it's got to any time under <strong>My Reports &amp; Suggestions</strong>,
             and you can still edit or delete it until someone picks it up.
           </p>
           <div className="report-actions">
             {onOpenMyReports && (
               <button type="button" className="report-btn report-btn-primary" onClick={onOpenMyReports}>
-                See my reports
+                {copy.mine}
               </button>
             )}
             <button type="button" className="report-btn" onClick={onClose}>
@@ -192,19 +250,42 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
   }
 
   return (
-    <div className="report-sheet" role="dialog" aria-label="Report a problem">
+    <div className="report-sheet" role="dialog" aria-label={copy.choice}>
       <div className="report-sheet-head">
         <button type="button" className="auth-back-link" onClick={onClose}>
           ← Back
         </button>
-        <h3 className="report-sheet-title">Report a problem or suggest an idea</h3>
+        <h3 className="report-sheet-title">{copy.choice}</h3>
       </div>
       <div className="report-sheet-body">
+        {/* Native radios, so arrow keys and screen readers treat the pair as one either/or choice.
+            What has been typed stays put when the reader switches. */}
+        <fieldset className="report-kind" disabled={sending}>
+          <legend className="report-kind-legend">What would you like to send?</legend>
+          {KINDS.map((k) => (
+            <label key={k} className="report-kind-option">
+              <input
+                type="radio"
+                name="report-kind"
+                value={k}
+                checked={kind === k}
+                onChange={() => {
+                  setKind(k);
+                  setError(null);
+                }}
+              />
+              <span>
+                <Icon name={COPY[k].choiceIcon} inline /> {COPY[k].choice}
+              </span>
+            </label>
+          ))}
+        </fieldset>
+
         {/* The whole point of the feature: the reporter can see what the report will say about
             where they were, before they write a word of it. */}
         <div className="report-context-card">
           <p className="report-context-line">
-            <Icon name="pin" inline /> Reporting from: <strong>{context.page_title}</strong>
+            <Icon name="pin" inline /> {copy.from} <strong>{context.page_title}</strong>
           </p>
           {context.target_kind && (
             <p className="report-context-target">
@@ -224,7 +305,7 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
         {context.selected_text && (
           <div className="report-selection">
             <p className="report-selection-head">
-              You had this selected — it'll be sent with the report so the exact wording can be found:
+              {copy.selection}
               <button
                 type="button"
                 className="report-chip-clear"
@@ -238,28 +319,30 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
         )}
 
         <form className="report-form" onSubmit={handleSubmit}>
-          <label className="report-field">
-            <span className="report-field-label">What kind of thing is it?</span>
-            <select value={category} onChange={(e) => setCategory(e.target.value)} required disabled={!categories}>
-              <option value="">{categories ? "Choose one…" : "Loading…"}</option>
-              {(categories ?? []).map((c) => (
-                <option key={c.key} value={c.key}>
-                  {c.label}
-                </option>
-              ))}
-            </select>
-            {selectedCategory?.description && (
-              <span className="report-field-hint">{selectedCategory.description}</span>
-            )}
-          </label>
+          {!suggesting && (
+            <label className="report-field">
+              <span className="report-field-label">Category</span>
+              <select value={category} onChange={(e) => setCategory(e.target.value)} required disabled={!categories}>
+                <option value="">{categories ? "Choose one…" : "Loading…"}</option>
+                {problemCategories.map((c) => (
+                  <option key={c.key} value={c.key}>
+                    {c.label}
+                  </option>
+                ))}
+              </select>
+              {selectedCategory?.description && (
+                <span className="report-field-hint">{selectedCategory.description}</span>
+              )}
+            </label>
+          )}
 
           <label className="report-field">
-            <span className="report-field-label">In one line, what's wrong?</span>
+            <span className="report-field-label">{copy.titleLabel}</span>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value.slice(0, TITLE_MAX))}
-              placeholder="e.g. Nazareth article says Galilee is a city"
+              placeholder={copy.titlePlaceholder}
               maxLength={TITLE_MAX}
               required
             />
@@ -271,12 +354,12 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
           </label>
 
           <label className="report-field">
-            <span className="report-field-label">Tell us more</span>
+            <span className="report-field-label">{copy.bodyLabel}</span>
             <textarea
               value={body}
               onChange={(e) => setBody(e.target.value.slice(0, BODY_MAX))}
               rows={6}
-              placeholder="What did you expect, and what happened instead? If it's about wording or a fact, quoting the bit that's wrong helps most."
+              placeholder={copy.bodyPlaceholder}
               maxLength={BODY_MAX}
               required
             />
@@ -285,20 +368,22 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
             </span>
           </label>
 
-          <label className="report-field">
-            <span className="report-field-label">How much does it matter? (optional)</span>
-            <select value={severity} onChange={(e) => setSeverity(e.target.value as Severity | "")}>
-              <option value="">Not sure / no view</option>
-              {SEVERITY_ORDER.map((s) => (
-                <option key={s} value={s}>
-                  {SEVERITY_LABELS[s]}
-                </option>
-              ))}
-            </select>
-            <span className="report-field-hint">
-              Your view, not a final answer — advisors vote on priority separately.
-            </span>
-          </label>
+          {!suggesting && (
+            <label className="report-field">
+              <span className="report-field-label">How much does it matter? (optional)</span>
+              <select value={severity} onChange={(e) => setSeverity(e.target.value as Severity | "")}>
+                <option value="">Not sure / no view</option>
+                {SEVERITY_ORDER.map((s) => (
+                  <option key={s} value={s}>
+                    {SEVERITY_LABELS[s]}
+                  </option>
+                ))}
+              </select>
+              <span className="report-field-hint">
+                Your view helps the team decide what to look at first.
+              </span>
+            </label>
+          )}
 
           {/* Every field on CapturedContext, verbatim. Collapsed by default because it is long and
               dull, present because sending someone's browser string without showing it to them is
@@ -310,7 +395,7 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
               aria-expanded={showCaptured}
               onClick={() => setShowCaptured((v) => !v)}
             >
-              What gets sent with this report
+              {copy.captured}
               <Chevron open={showCaptured} />
             </button>
             {showCaptured && (
@@ -342,15 +427,15 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
             )}
           </div>
 
-          {error && (
+          {(error || (!suggesting && categoriesError)) && (
             <p className="auth-status auth-error" role="alert">
-              {error}
+              {error ?? categoriesError}
             </p>
           )}
 
           <div className="report-actions">
             <button type="submit" className="report-btn report-btn-primary" disabled={!canSend}>
-              {sending ? "Sending…" : "Send report"}
+              {sending ? "Sending…" : copy.send}
             </button>
             <button type="button" className="report-btn" onClick={onClose}>
               Cancel

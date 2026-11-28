@@ -48,7 +48,8 @@ export default async function (h) {
   h.backend.setRpc("start_game_room", () => Object.assign(room(), { status: "active", current_question_index: 0, current_question_started_at: new Date().toISOString() }));
   h.backend.setRpc("leave_game_room", () => { h.backend.setTable("game_rooms", []); return null; });
 
-  const openTrivia = async () => {
+  /** The topic and difficulty screen behind "Play solo" or "Create multiplayer game". */
+  const openTrivia = async (entry = "Play solo") => {
     await h.reload(); await h.sleep(900);
     await h.evaluate(() => sessionStorage.removeItem("bible-atlas-active-game-room"));
     if (phone) await h.click({ css: ".mobile-tab", text: "Games" });
@@ -58,6 +59,7 @@ export default async function (h) {
     }
     await h.waitFor(".game-center-card");
     await h.click({ css: ".game-center-card", text: "Bible Trivia" });
+    await h.click({ css: ".game-entry-card", text: entry });
     await h.waitFor(".games-difficulty");
   };
   const pickTopic = async (value) => {
@@ -77,8 +79,7 @@ export default async function (h) {
       checked: document.querySelector(".games-difficulty input:checked")?.value,
       disabled: [...document.querySelectorAll(".games-difficulty input:disabled")].map((i) => i.value),
       summary: document.querySelector(".games-topic-count").textContent.trim(),
-      solo: !document.querySelector(".games-panel-actions .games-primary-button").disabled,
-      multi: !document.querySelector(".games-panel-actions .games-secondary-button").disabled,
+      start: !document.querySelector(".game-start-button").disabled,
     }));
   /** Nothing sticks out sideways, tiles do not clip their text, and each tile can really be clicked. */
   const sound = async (name) => {
@@ -119,13 +120,14 @@ export default async function (h) {
   const options = await h.evaluate(() => [...document.querySelectorAll(".games-topic-select option")].map((o) => o.textContent));
   h.assert(options[0] === "All topics" && options.at(-1) === "Custom…" && options.length === topics.length + 1, `topics: ${options.join(" / ")}`);
   let s = await ui();
-  h.assert(s.checked === "mixed" && !s.disabled.length && s.solo && s.multi, `defaults to All topics, Mixed, both start buttons on — "${s.summary}"`);
+  h.assert(s.checked === "mixed" && !s.disabled.length && s.start && (await h.count(".game-start-button")) === 1, `defaults to All topics, Mixed, one start button, on — "${s.summary}"`);
   await sound("trivia-entry-default");
 
   h.section("Every preset × difficulty the screen offers");
   for (const topic of topics) {
     for (const difficulty of difficulties) {
-      await openTrivia();
+      const solo = difficulties.indexOf(difficulty) % 2 === 0;
+      await openTrivia(solo ? "Play solo" : "Create multiplayer game");
       await pickTopic(topic);
       const available = q.countAvailableQuestions({ preset: topic, difficulty });
       s = await ui();
@@ -135,8 +137,7 @@ export default async function (h) {
       }
       await pickDifficulty(difficulty);
       const before = created.length;
-      const solo = difficulties.indexOf(difficulty) % 2 === 0;
-      await h.click({ css: solo ? ".games-primary-button" : ".games-secondary-button", text: solo ? "Play Solo" : "Create Multiplayer Game" });
+      await h.click({ css: ".game-start-button", text: solo ? "Start game" : "Create game" });
       await h.waitFor(solo ? ".game-choice-button" : ".game-lobby-code");
       const ids = created[before] ?? [];
       const want = Math.min(q.ROUND_QUESTION_COUNT, available);
@@ -162,7 +163,7 @@ export default async function (h) {
   await pickDifficulty("impossible");
   await pickTopic("places");
   s = await ui();
-  h.assert(s.checked === "mixed" && s.disabled.join() === "impossible" && s.solo, `back to Mixed, Nearly Impossible disabled`);
+  h.assert(s.checked === "mixed" && s.disabled.join() === "impossible" && s.start, `back to Mixed, Nearly Impossible disabled`);
   const note = await h.evaluate(() => [...document.querySelectorAll(".games-topic-card [role=status]")].map((e) => e.textContent).join(" | "));
   h.assert(/difficulty is back to Mixed/.test(note), `says so: ${note}`);
   await sound("trivia-places-note");
@@ -181,25 +182,25 @@ export default async function (h) {
   await pickDifficulty("mixed");
   await pickTopic("custom");
   s = await ui();
-  h.assert(!s.solo && !s.multi && /Type a topic/.test(s.summary), `empty: cannot start — "${s.summary}"`);
+  h.assert(!s.start && /Type a topic/.test(s.summary), `empty: cannot start — "${s.summary}"`);
   await h.type(".games-topic-custom-input", "zzzz");
   s = await ui();
-  h.assert(!s.solo && !s.multi && s.disabled.length === 5 && /No .*questions match/.test(s.summary), `no match: cannot start — "${s.summary}"`);
+  h.assert(!s.start && s.disabled.length === 5 && /No .*questions match/.test(s.summary), `no match: cannot start — "${s.summary}"`);
   await sound("trivia-custom-none");
   await h.type(".games-topic-custom-input", "Melchizedek");
   s = await ui();
-  h.assert(!s.solo && !s.multi && /Only 4/.test(s.summary), `too few: cannot start — "${s.summary}"`);
+  h.assert(!s.start && /Only 4/.test(s.summary), `too few: cannot start — "${s.summary}"`);
   await h.type(".games-topic-custom-input", "Paul");
   await pickDifficulty("difficult");
   s = await ui();
-  h.assert(s.solo && s.checked === "difficult", `Paul / difficult can start — "${s.summary}"`);
+  h.assert(s.start && s.checked === "difficult", `Paul / difficult can start — "${s.summary}"`);
   await sound("trivia-custom-match");
   await h.type(".games-topic-custom-input", "baptism");
   s = await ui();
-  h.assert(!s.solo && !s.multi && s.checked === "difficult" && /Only 1 Difficult question matches/.test(s.summary), `choice kept, start withheld — "${s.summary}"`);
+  h.assert(!s.start && s.checked === "difficult" && /Only 1 Difficult question matches/.test(s.summary), `choice kept, start withheld — "${s.summary}"`);
   await h.type(".games-topic-custom-input", "Paul");
   let before = created.length;
-  await h.click({ css: ".games-primary-button", text: "Play Solo" });
+  await h.click(".game-start-button");
   await h.waitFor(".game-choice-button");
   const paul = created[before].map(q.getQuestionById);
   h.assert(paul.every((x) => x.difficulty === "difficult" && /(?<![a-z0-9])paul/.test(`${x.keywords} ${x.prompt.toLowerCase()}`)), `${paul.length} ids: all difficult, all mention Paul`);
@@ -214,18 +215,20 @@ export default async function (h) {
   await openTrivia();
   await pickTopic("theology");
   await pickDifficulty("impossible");
-  await h.click({ css: ".games-primary-button", text: "Play Solo" });
+  await h.click(".game-start-button");
   await h.waitFor(".game-choice-button");
   await sound("trivia-question");
   await h.click(".game-choice-button");
   h.assert(await h.exists(".game-question-reveal"), "answering locks the answer in");
-  Object.assign(room(), { status: "finished", current_question_index: 8, winner_id: h.backend.persona.id });
-  await openTriviaResume();
+  // The last Continue ends the game, with no reload, so the step behind the room is still known.
+  h.backend.setRpc("check_and_advance", () => Object.assign(room(), { status: "finished", current_question_index: 8, winner_id: h.backend.persona.id }));
+  await h.click({ css: ".game-action-button", text: "Continue" });
+  await h.waitFor(".game-results-banner");
   h.assert(/wins!/.test(await h.text(".game-results-banner h2")), "solo result names the player");
   await sound("trivia-results");
   await h.click({ css: ".games-primary-button", text: "Play Again" });
   await h.waitFor(".games-difficulty");
-  h.assert(true, "Play Again returns to the topic and difficulty screen");
+  h.assert((await h.text(".games-panel-intro h2")) === "Play solo", "Play Again returns to the solo topic and difficulty screen");
 
   h.section("A tied finish is not given to either player");
   const me = h.backend.persona;
@@ -238,6 +241,9 @@ export default async function (h) {
   await openTriviaResume();
   h.assert((await h.text(".game-results-banner h2")) === "It's a tie!", "tie banner");
   await shot("trivia-tie");
+  await h.click({ css: ".games-primary-button", text: "Play Again" });
+  await h.waitFor(".game-entry-card");
+  h.assert((await h.count(".game-entry-card")) === 3, "a rejoined room has no step behind it: Play Again goes to the first screen");
 
   h.section("Dark theme and large text");
   await h.evaluate(() => localStorage.setItem("app-theme", "dark"));

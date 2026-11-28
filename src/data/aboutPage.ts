@@ -4,6 +4,10 @@
  * THESE ARE ROBBIE'S OWN WORDS, SIGNED WITH HIS NAME. Do not rewrite, shorten, soften, add to or
  * "tidy" them, including punctuation, without his say-so.
  *
+ * These are the BUILT-IN words. Once sql/051 is applied the owner can replace them from Admin Console ->
+ * About page, and readers then see the saved text instead (lib/aboutContent.ts, and the loader on /about);
+ * these stay the fallback, and "the original text" the editor can always restore.
+ *
  * This module has no imports on purpose: `scripts/seo/loadData.mjs` bundles it for the public-page
  * generator, exactly as it bundles the legal documents, so there is one copy of the words.
  */

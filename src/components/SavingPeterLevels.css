@@ -1,24 +1,8 @@
-/* Saving Peter's difficulty picker. */
+/* Saving Peter's difficulty screen. The choices themselves are LevelSetup (GameEntry.tsx). */
 .level-picker {
   width: 100%;
   max-width: 640px;
   display: flex;
   flex-direction: column;
   gap: 24px;
-}
-
-.level-card {
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.level-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
-}
-
-.level-card .game-center-card-icon {
-  font-size: calc(30px * var(--tsz, 1));
 }

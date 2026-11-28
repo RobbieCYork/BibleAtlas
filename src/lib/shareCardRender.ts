@@ -238,12 +238,19 @@ export async function composeShareCard(opts: {
 
   // Rasterise the text at exactly the scale that fills the export width, so glyph edges are as sharp
   // as the device can draw them rather than being upscaled from the preview's size.
-  const inkWidth = inkEl.getBoundingClientRect().width || 1;
+  // The layout width, and the clone un-scaled: on phones the preview card is shrunk with a transform
+  // (see ShareCardModal), which html2canvas must not see — it would place the text by the painted
+  // boxes and size it by the unpainted font.
+  const inkWidth = inkEl.offsetWidth || 1;
   const ink = await html2canvas(inkEl, {
     backgroundColor: null,
     scale: width / inkWidth,
     logging: false,
     useCORS: true,
+    onclone: (_doc, el) => {
+      const card = el.closest<HTMLElement>(".share-card-preview");
+      if (card) card.style.transform = "none";
+    },
   });
   ctx.drawImage(ink, 0, 0, width, height);
 

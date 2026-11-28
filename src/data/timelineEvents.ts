@@ -17,6 +17,7 @@ export const timelineEvents: TimelineEvent[] = [
     startYear: -4004,
     dateLabel: "c. 4004 BC",
     dateCertainty: "traditional",
+    youngEarthDate: true,
     summary:
       "In six days, God spoke the universe, the earth, and humanity into being, crowning His work with Adam and Eve made in His own image.",
     article: `In the beginning, before there was a single star to name or a shoreline to trace, God simply spoke, and the universe leapt into being. Genesis opens not with an argument for God's existence but with the plain, majestic assumption of it: "In the beginning, God created the heavens and the earth." Over six days He shaped light and darkness, sky and sea, dry land and every plant, sun, moon, and stars, and swarms of living creatures, pronouncing each stage of His work "good."
@@ -26,7 +27,7 @@ Christians who hold Genesis 1-2 as real, historical revelation still disagree am
 The crown of that week came on the sixth day, when God formed Adam from the dust of the ground and breathed into him the breath of life, then fashioned Eve from Adam's side to be his suitable helper and wife. Alone among all that God made, man and woman were formed in God's own image, given dominion over the earth, and placed in the Garden of Eden to work it and keep it. God rested on the seventh day, not because He was weary, but to set the pattern of Sabbath rest that echoes through the rest of Scripture.
 
 Bible-believing Christians hold Creation as a real, historical event, not a borrowed myth or a poetic metaphor for an evolutionary process — Genesis presents itself as sober history, and the rest of Scripture, from the Ten Commandments' Sabbath rationale to Jesus' own references to "the beginning of creation," treats it the same way. Believers do differ, often warmly, over exactly how the six days and the genealogies that follow map onto a precise calendar date, but that debate is about timing, not about whether God truly created. On this, historic Christian confidence has never wavered: God made the heavens and the earth, and He made us for Himself.`,
-    datingNotes: `The 4004 BC date follows Archbishop James Ussher's 17th-century chronology, built by summing the ages given in Genesis' genealogies in the Hebrew (Masoretic) text; it is a traditional reference point rather than a scientifically or textually certain figure. Note that the ancient Greek Septuagint gives larger numbers in the same genealogies, yielding a creation date near 5500 BC — the basis of the historic Eastern Orthodox reckoning, and a reading some evangelical researchers today argue preserves the original figures. Young-earth evangelicals generally hold to a Creation date in roughly this range (some thousands of years ago); old-earth evangelicals (day-age, framework, and similar views) hold that the genealogies were not intended as a tight unbroken chain and that Creation occurred far earlier. Both camps affirm Genesis 1-2 as real historical revelation about a real, purposeful act of God, and hold the dating question as a secondary matter among believers who share the same confidence in Scripture's authority.`,
+    datingNotes: `The 4004 BC date follows Archbishop James Ussher's 17th-century chronology, built by summing the ages given in Genesis' genealogies in the Hebrew (Masoretic) text; it is a traditional reference point rather than a scientifically or textually certain figure. Note that the ancient Greek Septuagint gives larger numbers in the same genealogies, yielding a creation date near 5500 BC — the basis of the historic Eastern Orthodox reckoning, and a reading some evangelical researchers today argue preserves the original figures. Young-earth evangelicals generally hold to a Creation date in roughly this range (some thousands of years ago); old-earth evangelicals (day-age, framework, and similar views) hold that the genealogies were not intended as a tight unbroken chain and that Creation occurred far earlier. Both camps affirm Genesis 1-2 as real historical revelation about a real, purposeful act of God, and hold the dating question as a secondary matter among believers who share the same confidence in Scripture's authority. Young Earth and Old Earth Creationism sets out the reasoning on each side, including where Ussher's numbers come from.`,
     scriptureRefs: ["Genesis 1:1-2:25"],
     externalRefs: [],
     primaryEntityIds: ["adam", "eve", "eden", "young-earth-old-earth-creationism"],
@@ -39,6 +40,7 @@ Bible-believing Christians hold Creation as a real, historical event, not a borr
     startYear: -4004,
     dateLabel: "c. 4004 BC",
     dateCertainty: "traditional",
+    youngEarthDate: true,
     summary:
       "Tempted by the serpent, Adam and Eve disobeyed God's command, bringing sin and death into the world along with the Bible's first promise of a coming Redeemer.",
     article: `Eden did not stay unbroken for long. A serpent, "more crafty than any other beast of the field," approached Eve with a question that has echoed through every temptation since: "Did God actually say...?" He twisted God's one prohibition into a picture of a stingy, threatened deity, and Eve, then Adam standing right beside her, ate the forbidden fruit of the tree of the knowledge of good and evil.
@@ -59,6 +61,7 @@ This is the hinge on which the rest of the Bible's story turns. Every subsequent
     startYear: -3875,
     dateLabel: "c. 3875 BC",
     dateCertainty: "traditional",
+    youngEarthDate: true,
     summary:
       "The first children born to Adam and Eve became the first murder victim and the first murderer, as Cain's jealousy over a rejected offering led him to kill his brother Abel.",
     article: `Adam and Eve's firstborn sons could not have chosen more different paths. Cain worked the soil; Abel kept flocks. When the time came to bring an offering to the Lord, Abel brought the best portions of his firstborn flock in faith, while Cain brought "some of the fruit of the ground" — and God looked with favor on Abel's offering but not on Cain's. Rather than examine his own heart, Cain let resentment curdle into rage.
@@ -79,6 +82,7 @@ God's judgment on Cain was severe but not without mercy: cursed to wander as a f
     startYear: -3017,
     dateLabel: "c. 3017 BC (taken by God; traditional)",
     dateCertainty: "traditional",
+    youngEarthDate: true,
     summary:
       "After walking faithfully with God for centuries, Enoch was taken from the earth without dying, becoming one of only two men in Scripture never to see death.",
     article: `Tucked into the genealogy of Genesis 5 — an otherwise repetitive list ending again and again in "and he died" — one name breaks the pattern entirely. Enoch, seventh from Adam, "walked with God, and he was not, for God took him." No death notice follows his name, no burial, nothing but a quiet, extraordinary exception: after 365 years of walking in close fellowship with the Lord, Enoch simply was not on earth anymore, because God took him.
@@ -100,6 +104,7 @@ Enoch's life is a quiet encouragement tucked between two much louder stories —
     endYear: -2348,
     dateLabel: "c. 2468-2348 BC",
     dateCertainty: "traditional",
+    youngEarthDate: true,
     summary:
       'As humanity multiplied, wickedness spread across the earth until "the Lord was sorry that he had made man" — yet Noah found grace in His eyes.',
     article: `By the time we reach Genesis 6, the world Adam and Eve's descendants had built was in ruins morally, even as it multiplied numerically. "The Lord saw that the wickedness of man was great in the earth, and that every intention of the thoughts of his heart was only evil continually." It is one of the starkest verses in the whole Bible, and it sets the stage for the Flood account that follows.
@@ -121,6 +126,7 @@ In the middle of that bleak picture, one line stands out like a candle in the da
     endYear: -2347,
     dateLabel: "c. 2348-2347 BC",
     dateCertainty: "disputed",
+    youngEarthDate: true,
     summary:
       "God judged a corrupt world with a great flood, preserving Noah, his family, and representative animals aboard the ark to repopulate the earth.",
     article: `God gave Noah remarkably specific instructions: build an ark of gopher wood, seal it with pitch, three stories tall, with a single door and a window — dimensions large enough to carry Noah's family and pairs of every kind of land animal and bird (sevens, in the case of clean animals). For decades, tradition holds, Noah built in plain view of a world that mocked him, while the apostle Peter would later call him "a herald of righteousness" for the patience of his witness (2 Peter 2:5).
@@ -129,7 +135,9 @@ When the day came, Noah, his wife, his three sons — Shem, Ham, and Japheth —
 
 God did not forget Noah in the ark. The waters receded, and the ark came to rest on the mountains of Ararat; Noah sent out a raven, then a dove — twice — until the dove finally returned no more, a sign the earth was dry. Noah, his family, and every creature walked out onto a washed, silent, waiting world, and Noah's first act was to build an altar and offer sacrifices to the Lord who had preserved them.
 
-Christians have long affirmed the Flood as a real, catastrophic, historical judgment — Jesus Himself compared "the days of Noah" to the suddenness of His own return (Matthew 24:37-39), and Peter treats Noah's flood and the final judgment by fire as parallel historical realities (2 Peter 3:5-7). Faithful evangelicals do debate its precise date and extent, but young-earth and old-earth believers alike share the same core conviction: God really judged a real, wicked world, and really saved Noah's family through it.`,
+Christians have long affirmed the Flood as a real, catastrophic, historical judgment — Jesus Himself compared "the days of Noah" to the suddenness of His own return (Matthew 24:37-39), and Peter treats Noah's flood and the final judgment by fire as parallel historical realities (2 Peter 3:5-7). Faithful evangelicals do debate its precise date and extent, but young-earth and old-earth believers alike share the same core conviction: God really judged a real, wicked world, and really saved Noah's family through it.
+
+The date shown here, c. 2348 BC, is the young-earth one, reached by adding up the ages in the genealogies from Adam to Noah. Young-earth creationists read the Flood as global, covering every mountain on the planet (Genesis 7:19), and see much of the earth's fossil-bearing rock as its deposit — the "flood geology" that John Whitcomb and Henry Morris set out in The Genesis Flood (1961). Many old-earth creationists instead hold that the Flood was universal in its judgment on humanity but regional in its geography, centred on Mesopotamia: they note that "all the earth" can mean the whole known world, as when "all countries came into Egypt" to buy Joseph's grain (Genesis 41:57), and they place the Flood far earlier than 2348 BC. Hugh Ross of Reasons to Believe holds this view; Answers in Genesis argues against it from the same verses. The reasoning on each side is set out in Young Earth and Old Earth Creationism.`,
     datingNotes: `2348 BC is Ussher's traditional figure, derived from the Hebrew (Masoretic) text's genealogies and Noah's stated age (600) at the Flood's onset, with the family leaving the ark about a year later. Young-earth evangelicals generally affirm a Flood in roughly this era, though a notable group of young-earth researchers argues the Septuagint preserves the original genealogy numbers, which would place the Flood around 3300 BC — in part because ancient Near Eastern archaeology attests continuous civilization in Egypt and Mesopotamia through the mid-2300s BC. Old-earth evangelicals who see gaps in the genealogies would place it earlier still. Evangelicals also differ on the Flood's geographic extent — whether it covered the entire globe or the whole of the then-known inhabited world — a secondary debate; both views affirm the Flood as a real, historical, judicial act of God.`,
     scriptureRefs: ["Genesis 6:9-8:22", "Matthew 24:37-39", "2 Peter 2:5", "2 Peter 3:5-7"],
     externalRefs: [],
@@ -143,6 +151,7 @@ Christians have long affirmed the Flood as a real, catastrophic, historical judg
     startYear: -2347,
     dateLabel: "c. 2347 BC",
     dateCertainty: "traditional",
+    youngEarthDate: true,
     summary:
       "God established His covenant with Noah and every living creature, setting the rainbow in the clouds as a promise never again to destroy the earth by flood.",
     article: `Fresh off the ark and standing before Noah's altar, God did something He had never done before: He made a covenant, not just with Noah but with "every living creature," and not just for Noah's lifetime but "for all future generations" — a promise that never again would a flood destroy all life on earth. He renewed to Noah the same commission He had given Adam — be fruitful, multiply, fill the earth — added a new permission to eat meat, and issued a solemn new command: because man is made in God's image, whoever sheds human blood must answer for it, the foundational text behind capital justice and the sanctity of human life throughout Scripture.
@@ -163,6 +172,7 @@ This covenant with Noah is the first of the great covenants that structure the w
     startYear: -2300,
     dateLabel: "c. 2300 BC (approximate)",
     dateCertainty: "traditional",
+    youngEarthDate: true,
     summary:
       "After the Flood, Noah's drunkenness exposed a family shame that led him to bless Shem and Japheth but pronounce a curse on Canaan, Ham's son.",
     article: `Noah's story doesn't end with the covenant and the rainbow. Some time afterward — Scripture doesn't say exactly when, only that Noah lived 350 more years after the Flood — Noah planted a vineyard, made wine, and became drunk in the privacy of his own tent. His son Ham saw his father's nakedness and, instead of covering him respectfully, went and told his brothers Shem and Japheth, who walked in backward and covered Noah without looking.
@@ -184,6 +194,7 @@ It's worth saying plainly: this passage has, at ugly points in history, been twi
     endYear: -2247,
     dateLabel: "c. 2347-2247 BC",
     dateCertainty: "traditional",
+    youngEarthDate: true,
     summary:
       "Genesis 10 catalogs the nations descended from Noah's three sons — Shem, Ham, and Japheth — mapping how the whole earth was repopulated after the Flood.",
     article: `Genesis 10 does something no other ancient text attempted: it traces every nation of the known world back to a single family. Noah's three sons — Japheth, Ham, and Shem — father the peoples who will fill the earth: Japheth's line spreads north and west into the coastlands, Ham's line includes Egypt, Cush, and Canaan (and the mighty warrior-king Nimrod, founder of Babel and Nineveh), and Shem's line runs through Eber, eventually leading toward Abraham himself.
@@ -204,6 +215,7 @@ The theological weight of this chapter is easy to miss but hard to overstate: ev
     startYear: -2247,
     dateLabel: "c. 2247 BC",
     dateCertainty: "disputed",
+    youngEarthDate: true,
     summary:
       "United by one language, humanity built a great tower at Babel to make a name for themselves, so God confused their speech and scattered the nations across the earth.",
     article: `"Now the whole earth had one language and the same words." In the region of Shinar, humanity's descendants decided to settle rather than obey God's command to spread out and fill the earth, and they set about building a city and a tower "with its top in the heavens," determined to "make a name" for themselves. It was ambition dressed up as achievement: unity turned toward self-glory instead of God's glory.
@@ -782,6 +794,9 @@ The event produced one of the oldest pieces of poetry in the Bible, the Song of 
     scriptureRefs: ["Exodus 14:1-31", "Exodus 15:1-21", "Psalm 106:9-11"],
     externalRefs: [],
     primaryEntityIds: ["moses", "red-sea"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-wilderness-provision-testing",
@@ -802,6 +817,9 @@ It was also at Rephidim that Israel fought its first battle as a free nation, ag
     scriptureRefs: ["Exodus 16:1-36", "Exodus 17:1-16"],
     externalRefs: [],
     primaryEntityIds: ["moses", "aaron"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-giving-of-the-law",
@@ -842,6 +860,9 @@ Moses' own reaction on descending the mountain was fierce: he shattered the ston
     scriptureRefs: ["Exodus 32:1-35", "Deuteronomy 9:7-21"],
     externalRefs: [],
     primaryEntityIds: ["aaron", "moses"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-tabernacle-completed",
@@ -882,6 +903,9 @@ God's judgment matched the crime: the generation twenty years old and up who had
     scriptureRefs: ["Numbers 13:1-14:45", "Deuteronomy 1:19-46"],
     externalRefs: [],
     primaryEntityIds: ["moses", "joshua", "caleb", "kadesh-barnea"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-wilderness-wandering",
@@ -923,6 +947,9 @@ The episode settles, in the most forceful way possible, the question of who God 
     scriptureRefs: ["Numbers 16:1-50", "Numbers 26:9-10", "Jude 1:11"],
     externalRefs: [],
     primaryEntityIds: ["moses", "aaron"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-death-of-aaron",

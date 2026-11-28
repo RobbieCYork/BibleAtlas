@@ -5,9 +5,14 @@ import GameLobby from "./GameLobby";
 import GameRoomPlay from "./GameRoomPlay";
 import GameResults from "./GameResults";
 import GameVideoStrip from "./GameVideoStrip";
+import GameMediaChoice from "./GameMediaChoice";
+import GameRemoteAudio from "./GameRemoteAudio";
+import { GameMediaBar } from "./GameMediaControls";
 import BackButton from "./BackButton";
 import { useGameWebRTC } from "../hooks/useGameWebRTC";
 import Icon from "./Icon";
+import { GameEntryChoices } from "./GameEntry";
+import { useScrollTop } from "../lib/useScrollTop";
 import {
   fetchRoom,
   fetchPlayers,
@@ -23,8 +28,7 @@ const ACTIVE_ROOM_KEY = "bible-atlas-active-game-room";
 
 interface BibleTriviaViewProps {
   session: Session;
-  /** Returns to GameCenter — called directly from the entry screen's Back, or after leaving a room
-   * first if one's currently joined (see handleBack below). */
+  /** Returns to GameCenter — the first screen's Back (see handleBack below). */
   onBack: () => void;
   /** False when this game's stage hides it from this viewer (GameView decides, via useFeature).
    * A room already joined carries on; once there is no room, this view hands back to Game Center
@@ -38,12 +42,17 @@ interface BibleTriviaViewProps {
  * game_buzzes over one shared realtime channel (see subscribeToRoom). */
 export default function BibleTriviaView({ session, onBack, available }: BibleTriviaViewProps) {
   const userId = session.user.id;
+  // The first-screen choice this player took, or null on the first screen itself. It stays put while
+  // they are in a room, so leaving one lands on the step they came from; a room rejoined after a
+  // reload has no step behind it and leaves to the first screen.
+  const [entry, setEntry] = useState<"solo" | "create" | "join" | null>(null);
   const [roomId, setRoomId] = useState<string | null>(() => sessionStorage.getItem(ACTIVE_ROOM_KEY));
   const [room, setRoom] = useState<GameRoom | null>(null);
   const [players, setPlayers] = useState<GamePlayer[]>([]);
   const [answersVersion, setAnswersVersion] = useState(0);
   const [starting, setStarting] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const bodyRef = useScrollTop(`${entry} ${room?.id} ${room?.status}`);
 
   const setActiveRoom = (id: string | null) => {
     setRoomId(id);
@@ -71,6 +80,12 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
     fetchPlayers(roomId).then(setPlayers).catch(() => {});
   };
 
+  /** The room check_and_advance() handed back. Never steps back to an earlier question. */
+  const applyAdvancedRoom = (next: GameRoom) => {
+    setRoom((prev) => (prev && prev.id === next.id && next.current_question_index >= prev.current_question_index ? next : prev));
+    refetchPlayers();
+  };
+
   useEffect(() => {
     if (!roomId) {
       setRoom(null);
@@ -94,14 +109,13 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [available, roomId]);
 
-  // Solo play has no one to video-chat with — <= 1 rather than === 1 so this also covers the moment
-  // right after a room's created, before its player list has loaded, avoiding a camera-permission
-  // flash for a solo game that would otherwise briefly look like it needed video for an instant.
-  const isSolo = players.length <= 1;
+  // Video chat belongs to a multiplayer room: any lobby (so players can choose before the start)
+  // and any game with someone else in it. A solo game never gets it. The status check covers the
+  // moment before a room's player list has loaded.
+  const isSolo = !room || (room.status !== "lobby" && players.length <= 1);
 
-  // Video chat spans the whole room lifetime (lobby through results) so players don't have to
-  // re-grant camera/mic permission when the game starts — only torn down once there's no active room.
-  // Passing null instead of roomId when solo means the hook never requests camera/mic access at all.
+  // Spans the whole room lifetime (lobby through results) so a choice made in the lobby carries into
+  // the game. Camera and mic are only ever requested when the player taps for them.
   const webrtc = useGameWebRTC(isSolo ? null : roomId, userId);
 
   const handleStart = async () => {
@@ -128,12 +142,15 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
     if (leavingRoomId) await leaveGameRoom(leavingRoomId).catch(() => {});
   };
 
-  /** The header's "← Back" button — leaves any joined room first (so the player doesn't linger in
-   * the roster after their screen has already moved on to GameCenter), then always hands off to
-   * GameCenter via onBack. */
-  const handleBack = async () => {
-    if (roomId) await handleLeave();
-    onBack();
+  /** The header's Back, one level at a time: out of a room (leaving it, so the player doesn't linger
+   * in the roster) to the step it came from, then to the first screen, then to GameCenter. */
+  const handleBack = () => {
+    // A room that failed to load is already showing the screen behind it, so Back also steps off it.
+    const roomOnScreen = !!roomId && !(loadError && !room);
+    if (roomId) handleLeave();
+    if (roomOnScreen) return;
+    if (entry) setEntry(null);
+    else onBack();
   };
 
   const handleKick = async (targetUserId: string) => {
@@ -151,12 +168,7 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
         players={players}
         userId={userId}
         hostId={room.host_id}
-        localStream={webrtc.localStream}
-        remoteStreams={webrtc.remoteStreams}
-        micOn={webrtc.micOn}
-        cameraOn={webrtc.cameraOn}
-        onToggleMic={webrtc.toggleMic}
-        onToggleCamera={webrtc.toggleCamera}
+        media={webrtc}
         onLeave={handleLeave}
         onKick={handleKick}
         round={round}
@@ -164,19 +176,34 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
       />
     ) : null;
 
+  const inRoom = !!(roomId && room);
+  const showEntry = !inRoom && available && (!roomId || !!loadError);
+
   return (
-    <div className="game-root">
+    // The first screen and the code entry are bare enough for the photograph; the topic and
+    // difficulty screen and the room itself stay plain.
+    <div className="game-root" data-page-bg={showEntry && (!entry || entry === "join") ? "game-setup" : undefined}>
       <header className="game-header">
-        <BackButton onClick={handleBack} ariaLabel="Back to Game Center" />
+        <BackButton onClick={handleBack} ariaLabel={inRoom || entry ? "Back" : "Back to Game Center"} />
         <h2 className="games-inline-icon">
           <Icon name="trivia" />
           Bible Trivia
         </h2>
       </header>
-      <div className="game-body">
+      <div ref={bodyRef} className={`game-body${inRoom ? " game-in-room" : ""}`}>
         {loadError && <p className="games-error">{loadError}</p>}
+        {!isSolo && <GameRemoteAudio streams={webrtc.remoteStreams} />}
         {!roomId || !room ? (
-          available ? <GamesPanel onRoomReady={setActiveRoom} /> : <p className="games-high-scores-empty">Loading…</p>
+          !showEntry ? (
+            <p className="games-high-scores-empty">Loading…</p>
+          ) : entry ? (
+            <GamesPanel entry={entry} onRoomReady={setActiveRoom} />
+          ) : (
+            <GameEntryChoices
+              onSolo={() => setEntry("solo")}
+              multiplayer={{ onCreate: () => setEntry("create"), onJoin: () => setEntry("join") }}
+            />
+          )
         ) : room.status === "lobby" ? (
           <GameLobby
             room={room}
@@ -186,12 +213,28 @@ export default function BibleTriviaView({ session, onBack, available }: BibleTri
             onLeave={handleLeave}
             onKick={handleKick}
             starting={starting}
-            videoStrip={renderVideoStrip()}
+            videoStrip={
+              <>
+                <GameMediaChoice media={webrtc} />
+                {renderVideoStrip()}
+              </>
+            }
           />
         ) : room.status === "active" ? (
-          <GameRoomPlay room={room} players={players} userId={userId} answersVersion={answersVersion} renderVideoStrip={renderVideoStrip} />
+          <GameRoomPlay
+            room={room}
+            players={players}
+            userId={userId}
+            answersVersion={answersVersion}
+            onRoomAdvanced={applyAdvancedRoom}
+            onScored={refetchPlayers}
+            renderVideoStrip={renderVideoStrip}
+          />
         ) : (
-          <GameResults room={room} players={players} onPlayAgain={handleLeave} />
+          <>
+            {!isSolo && <GameMediaBar media={webrtc} />}
+            <GameResults room={room} players={players} onPlayAgain={handleLeave} />
+          </>
         )}
       </div>
     </div>

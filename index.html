@@ -18,8 +18,8 @@
     <meta name="apple-mobile-web-app-title" content="Capstone Bible" />
     <!-- Page-level pinch-zoom disabled: on iOS it visually detaches the fixed bottom tab bar from
          the rest of the layout mid-zoom (a native viewport quirk, not something CSS can prevent).
-         Map (MapLibre) and Timeline each implement their own independent pinch/wheel zoom directly on
-         their own canvas, so this doesn't affect either of those. Text size has its own dedicated
+         The Map (MapLibre) implements its own pinch/wheel zoom on its canvas, so this doesn't affect
+         it; the Timeline has one fixed scale and swallows pinches. Text size has its own dedicated
          accessibility control in Settings (the A-/A+ toggle) as the alternative to page pinch-zoom. -->
     <!-- interactive-widget=resizes-visual: when the on-screen keyboard opens it must NOT resize the
          layout viewport. The app shell is a fixed-height flex column with the bottom tab bar as its
@@ -42,7 +42,7 @@
     <title>Capstone Bible — Bible Map, Timeline &amp; Study Library</title>
     <meta
       name="description"
-      content="A free interactive Bible study app: a map of every place in Scripture, a zoomable timeline of biblical and church history, the Bible text with every name linked to its article and personal notes."
+      content="A free interactive Bible study app: a map of every place in Scripture, a timeline of biblical and church history, the Bible text with every name linked to its article and personal notes."
     />
     <link rel="canonical" href="https://www.capstonebible.com/" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -51,7 +51,7 @@
     <meta property="og:title" content="Capstone Bible — Bible Map, Timeline &amp; Study Library" />
     <meta
       property="og:description"
-      content="A free interactive Bible study app: a map of every place in Scripture, a zoomable timeline of biblical and church history, the Bible text with every name linked to its article and personal notes."
+      content="A free interactive Bible study app: a map of every place in Scripture, a timeline of biblical and church history, the Bible text with every name linked to its article and personal notes."
     />
     <meta property="og:url" content="https://www.capstonebible.com/" />
     <meta property="og:image" content="https://www.capstonebible.com/og-default.png" />
@@ -63,7 +63,7 @@
     <meta name="twitter:title" content="Capstone Bible — Bible Map, Timeline &amp; Study Library" />
     <meta
       name="twitter:description"
-      content="A free interactive Bible study app: a map of every place in Scripture, a zoomable timeline of biblical and church history and personal notes."
+      content="A free interactive Bible study app: a map of every place in Scripture, a timeline of biblical and church history and personal notes."
     />
     <meta name="twitter:image" content="https://www.capstonebible.com/og-default.png" />
     <script type="application/ld+json">

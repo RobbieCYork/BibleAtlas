@@ -78,7 +78,16 @@ export function buildIndex(d: SourceData): IndexEntry[] {
     });
   }
   for (const t of d.topics) {
-    const label = t.category === "discovery" ? "Discovery" : t.category === "manuscript" ? "Manuscript" : "Topic";
+    const label =
+      t.category === "discovery"
+        ? "Discovery"
+        : t.category === "manuscript"
+          ? "Manuscript"
+          : t.category === "world-religion"
+            ? "World religion"
+            : t.category === "christian-tradition"
+              ? "Christian tradition"
+              : "Topic";
     out.push({
       section: "articles",
       kind: "topic",

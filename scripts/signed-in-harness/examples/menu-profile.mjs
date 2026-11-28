@@ -108,7 +108,6 @@ export default async function (h) {
     h.assert(acct.some((i) => /Admin Console/.test(i)) === isAdminPersona, `${skin}: account menu Admin Console ${isAdminPersona ? "present" : "absent"} for ${h.persona} (${acct.join(" | ")})`);
     if (h.persona === "owner" && skin === skins[0]) {
       await h.click("text=Admin Console"); await h.waitFor('[aria-label="Admin sections"]');
-      h.assert((await h.count(".skin-picker")) === 1, "owner: skin picker present in Admin Console");
       h.assert((await h.count(".release-view-switch")) === 1, "owner: Live/Test switch present in Admin Console");
       await shot(skin, "admin");
       await h.reload(); await h.sleep(1500);

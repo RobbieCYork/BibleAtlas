@@ -6,6 +6,8 @@ import {
   type SavingPeterHighScore,
 } from "../lib/savingPeterMultiplayer";
 import Icon from "./Icon";
+import { ResultsScoreList, ResultsWinnerPictures } from "./GameResultsStandings";
+import { useFinalStandings } from "../hooks/useFinalStandings";
 
 interface SavingPeterMultiplayerResultsProps {
   room: SavingPeterRoom;
@@ -16,8 +18,7 @@ interface SavingPeterMultiplayerResultsProps {
 /** End-of-game screen — mirrors GameResults.tsx (Bible Trivia). */
 export default function SavingPeterMultiplayerResults({ room, players, onPlayAgain }: SavingPeterMultiplayerResultsProps) {
   const [highScores, setHighScores] = useState<SavingPeterHighScore[] | null>(null);
-  const ranked = [...players].sort((a, b) => b.score - a.score);
-  const winner = room.winner_id ? players.find((p) => p.user_id === room.winner_id) : ranked[0];
+  const { ranked, multiplayer, tied, winner, winners, pictures } = useFinalStandings(players, room.winner_id);
 
   useEffect(() => {
     fetchTopSavingPeterHighScores(5)
@@ -28,22 +29,17 @@ export default function SavingPeterMultiplayerResults({ room, players, onPlayAga
   return (
     <div className="game-results">
       <div className="game-results-banner">
-        <p className="game-results-trophy"><Icon name="trophy" /></p>
-        <h2>{winner ? `${winner.display_name} saved Peter!` : "Game over"}</h2>
+        {multiplayer && winners.length > 0 ? (
+          <ResultsWinnerPictures winners={winners} pictures={pictures} />
+        ) : (
+          <p className="game-results-trophy"><Icon name="trophy" /></p>
+        )}
+        <h2>{winner ? `${winner.display_name} saved Peter!` : tied ? "It's a tie!" : "Game over"}</h2>
         {winner && <p className="game-results-score">{winner.score} points</p>}
+        {tied && <p className="game-results-score">{ranked[0].score} points each</p>}
       </div>
 
-      <div className="game-results-scores">
-        <h3>Final Scores</h3>
-        <ol>
-          {ranked.map((p) => (
-            <li key={p.user_id} className={p.user_id === room.winner_id ? "game-results-winner-row" : ""}>
-              <span>{p.display_name}</span>
-              <span>{p.score}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
+      <ResultsScoreList ranked={ranked} winners={winners} pictures={pictures} showPictures={multiplayer} />
 
       <div className="games-high-scores">
         <h3><Icon name="trophy" inline /> Top 5 High Scores</h3>

@@ -16,7 +16,7 @@ import { rolldown } from "rolldown";
 import { MENU_BUTTON } from "../lib/app.mjs";
 
 const DATA = join(dirname(fileURLToPath(import.meta.url)), "../../../src/data");
-const TITLES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Chronology"];
+const TITLES = ["Bible Trivia", "Saving Peter", "Fill in the Blank", "Scripture Memorization Challenge", "Chronology", "Daily Name", "20 Questions"];
 
 async function loadData(name) {
   const dir = mkdtempSync(join(tmpdir(), "games-data."));
@@ -75,6 +75,16 @@ export default async function (h) {
   };
   const back = () => h.click(".game-header button");
   const header = () => h.text(".game-header h2");
+  const choose = (title) => h.click({ css: ".game-entry-card", text: title });
+  const start = () => h.click(".game-start-button");
+  /** Pick a difficulty and press the start button. Only a game with multiplayer asks Play solo
+   * first; the others open on their difficulty screen. */
+  const startLevel = async (title, key) => {
+    await openGame(title);
+    if (title === "Saving Peter") await choose("Play solo");
+    await h.click(`.game-level-option input[value="${key}"]`);
+    await start();
+  };
 
   /** Nothing sticks out sideways, every image loaded, and every enabled control can really be clicked
    * (scrolled into view, it is the element under its own centre: not under the tab bar or an overlay). */
@@ -114,8 +124,7 @@ export default async function (h) {
 
   h.section("Fill in the Blank");
   for (const level of blank.DIFFICULTY_LEVELS) {
-    await openGame("Fill in the Blank");
-    await h.click({ css: ".game-center-card", text: level.label });
+    await startLevel("Fill in the Blank", level.key);
     await h.waitFor(".fillblank-input");
     await sound(`fillblank-${level.key}`);
     const ref = await h.evaluate(() => document.querySelector(".fillblank-reference").childNodes[0].textContent.trim());
@@ -163,8 +172,7 @@ export default async function (h) {
 
   h.section("Chronology");
   for (const level of chrono.CHRONOLOGY_LEVELS) {
-    await openGame("Chronology");
-    await h.click({ css: ".game-center-card", text: level.label });
+    await startLevel("Chronology", level.key);
     await h.waitFor(".chronology-card");
     await sound(`chronology-${level.key}`);
     const titles = () => h.evaluate(() => [...document.querySelectorAll(".chronology-card-title")].map((e) => e.textContent));
@@ -181,9 +189,7 @@ export default async function (h) {
 
   h.section("Saving Peter — solo");
   for (const level of peter.SAVING_PETER_LEVELS) {
-    await openGame("Saving Peter");
-    await h.click({ css: ".game-center-card", text: "Solo" });
-    await h.click({ css: ".level-card", text: level.label });
+    await startLevel("Saving Peter", level.key);
     await h.waitFor(".saving-peter-keyboard");
     await sound(`savingpeter-${level.key}`);
     const clue = await h.text(".saving-peter-clue");
@@ -205,9 +211,11 @@ export default async function (h) {
   h.section("Bible Trivia — solo");
   const trivia = fakeRooms(h, { rooms: "game_rooms", players: "game_players", answers: "game_buzzes", create: "create_game_room", start: "start_game_room", submit: "submit_answer", advance: "check_and_advance", leave: "leave_game_room", ids: "question_ids", index: "current_question_index", startedAt: "current_question_started_at", roundKey: "question_index" });
   await openGame("Bible Trivia");
+  await sound("trivia-first");
+  await choose("Play solo");
   await h.waitFor(".games-topic-select");
-  await sound("trivia-entry");
-  await h.click({ css: ".games-primary-button", text: "Play Solo" });
+  await sound("trivia-setup");
+  await start();
   await h.waitFor(".game-choice-button");
   await sound("trivia-question");
   h.assert((await h.count(".game-choice-button")) >= 2, `a question with ${await h.count(".game-choice-button")} choices: ${(await h.text(".game-question-prompt")).slice(0, 70)}`);
@@ -221,9 +229,13 @@ export default async function (h) {
   await h.waitFor({ css: ".game-question-index", text: "Question 2" });
   h.assert(true, "the room resumes on question 2 after a reload");
   await back();
-  h.assert((await header()) === "Game Center", "Back leaves the room and returns to Game Center");
+  await h.waitFor(".game-entry-card");
+  h.assert(true, "Back leaves a rejoined room for the first screen");
+  await back();
+  h.assert((await header()) === "Game Center", "and Back again returns to Game Center");
   await h.click({ css: ".game-center-card", text: "Bible Trivia" });
-  await h.click({ css: ".games-secondary-button", text: "Create Multiplayer Game" });
+  await choose("Create multiplayer game");
+  await start();
   await h.waitFor(".game-lobby-code");
   await sound("trivia-lobby");
   await h.click({ css: ".games-primary-button", text: "Start Solo Game" });
@@ -233,9 +245,10 @@ export default async function (h) {
   h.section("Saving Peter — multiplayer");
   const spm = fakeRooms(h, { rooms: "saving_peter_rooms", players: "saving_peter_players", answers: "saving_peter_guesses", create: "create_saving_peter_room", start: "start_saving_peter_room", submit: "submit_saving_peter_guess", advance: "check_and_advance_saving_peter", leave: "leave_saving_peter_room", ids: "round_ids", index: "current_round_index", startedAt: "current_round_started_at", roundKey: "round_index" });
   await openGame("Saving Peter");
-  await h.click({ css: ".game-center-card", text: "Multiplayer" });
-  await sound("peter-multi-entry");
-  await h.click({ css: ".games-primary-button", text: "Create Room" });
+  await sound("peter-first");
+  await choose("Create multiplayer game");
+  await sound("peter-multi-create");
+  await start();
   await h.waitFor(".game-lobby-code");
   await sound("peter-multi-lobby");
   await h.click({ css: ".games-primary-button", text: "Start Solo Game" });
@@ -243,7 +256,6 @@ export default async function (h) {
   await h.reload(); await h.sleep(900);
   await openCenter();
   await h.click({ css: ".game-center-card", text: "Saving Peter" });
-  await h.click({ css: ".game-center-card", text: "Multiplayer" });
   await h.waitFor(".saving-peter-guess-input");
   await sound("peter-multi-round");
   const round = peter.resolveSavingPeterRound(spm().round_ids[0]);

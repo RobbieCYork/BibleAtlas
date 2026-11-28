@@ -1,0 +1,120 @@
+/* --- "How to play" (HowToPlay.tsx), used by Daily Name and 20 Questions --- */
+
+/* A game's header while its board is up: shorter than usual so the board gets the height, with the
+ * How to play button at the far end. Sizes are capped so the largest text setting still leaves the
+ * header one row on a 375px phone. */
+.game-header.how-header {
+  gap: 8px;
+  padding: 4px 12px;
+  min-height: 48px;
+}
+
+.game-header.how-header h2 {
+  margin: 0;
+  font-size: min(calc(17px * var(--tsz, 1)), 21px);
+  line-height: 1.15;
+}
+
+.game-header.how-header .back-btn {
+  font-size: min(calc(13px * var(--tsz, 1)), 17px);
+}
+
+.how-open {
+  flex-shrink: 0;
+  margin-left: auto;
+  min-height: 38px;
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  font-size: min(calc(13px * var(--tsz, 1)), 16px);
+  font-weight: 700;
+  line-height: 1.15;
+  cursor: pointer;
+}
+
+.how-open:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.how-open:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.game-body.how-body {
+  padding: 0;
+}
+
+.how-panel {
+  width: 100%;
+  max-width: 480px;
+  box-sizing: border-box;
+  padding: 10px 16px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  font-size: min(calc(15px * var(--tsz, 1)), 22px);
+  line-height: 1.35;
+}
+
+.how-panel h3 {
+  margin: 0;
+  font-size: min(calc(20px * var(--tsz, 1)), 26px);
+  color: var(--text-h);
+}
+
+.how-panel h3:focus {
+  outline: none;
+}
+
+.how-panel p {
+  margin: 0;
+}
+
+.how-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.how-marks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.how-marks li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Pinned to the bottom of the screen, so "Start playing" never has to be scrolled to. */
+.how-foot {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: auto;
+  padding: 6px 16px 8px;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--bg);
+}
+
+.how-close {
+  width: 100%;
+  max-width: 448px;
+  min-height: 46px;
+}

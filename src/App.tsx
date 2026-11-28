@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import type maplibregl from "maplibre-gl";
 import type { Session } from "@supabase/supabase-js";
 import MapView from "./components/MapView";
@@ -19,12 +19,13 @@ import ArticlesPanel from "./components/ArticlesPanel";
 import FriendsPanel from "./components/FriendsPanel";
 import { SOCIAL_CONNECTIONS_ENABLED, READING_PLANS_ENABLED } from "./lib/features";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
-import PanelMenu, { type PanelKey } from "./components/PanelMenu";
+import PanelMenu, { type DestinationKey, type PanelKey } from "./components/PanelMenu";
 import type { FriendsView } from "./components/ViewSwitcher";
 import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
 import SocialLinks from "./components/SocialLinks";
+import HeaderReportButton from "./components/HeaderReportButton";
 import MyProfileView from "./components/MyProfileView";
 import SettingsView from "./components/SettingsView";
 import AboutView from "./components/AboutView";
@@ -34,6 +35,7 @@ import PeopleSearchBar from "./components/PeopleSearchBar";
 import UnifiedSearchBar from "./components/UnifiedSearchBar";
 import NotificationToasts from "./components/NotificationToasts";
 import GameView from "./components/GameView";
+import type { GameArticleTarget } from "./lib/gameArticles";
 import BackButton from "./components/BackButton";
 import DisplayNameGate from "./components/DisplayNameGate";
 import ResetPasswordGate from "./components/ResetPasswordGate";
@@ -56,13 +58,25 @@ import { startAnalytics, track, noteAuthChange } from "./lib/analytics";
 import { locations } from "./data/locations";
 import { pois } from "./data/pois";
 import { people } from "./data/people";
-import { topics } from "./data/topics";
+import { topics as baseTopics } from "./data/topics";
+import { beliefTopics } from "./data/beliefs";
 import { timelineEvents } from "./data/timelineEvents";
 import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } from "./data/seasonalWalks";
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import { TestViewStrip } from "./components/FeatureRelease";
-import { useFeature } from "./lib/features";
+import { useFeature, useFeatureAdmin } from "./lib/features";
+import { useCustomMapAccess } from "./lib/customMapAccess";
+import CustomMapButton from "./components/customMap/CustomMapButton";
+import CustomMapBuilder from "./components/customMap/LazyCustomMapBuilder";
+import WelcomeTour from "./components/WelcomeTour";
+import { useWelcomeTourFirstRun } from "./lib/welcomeTourSeen";
+import { TOUR_ANCHORS } from "./data/welcomeTour";
 import "./App.css";
+
+/** The topics the app opens and lists: topics.ts plus the Religions and Denominations articles.
+ * Only the app sees this union. The name linker imports topics.ts directly, so the belief records
+ * never become link targets in Scripture or prose. */
+const topics = [...baseTopics, ...beliefTopics];
 
 const MIN_PANEL_WIDTH = 240;
 const MAX_PANEL_WIDTH = 800;
@@ -70,7 +84,7 @@ const MOBILE_QUERY = "(max-width: 768px)";
 
 /** One entry in the details "back" trail — enough to restore a prior selection without re-deriving it.
  * The "timeline" variant is different from the rest: it doesn't restore a *selection*, it restores
- * Timeline mode itself (the full-screen takeover) at the exact pan/zoom view the reader left behind
+ * Timeline mode itself (the full-screen takeover) at the exact view the reader left behind
  * when they followed a cross-link out of it (event article, Lifespans bar, or Books band). */
 type DetailsSelection =
   | { kind: "location"; id: string }
@@ -612,8 +626,9 @@ function App() {
   // --- My Profile mode ----------------------------------------------------------------------------
   // Full-screen "My Profile" (MyProfileView), same top-level takeover pattern as Timeline mode below:
   // a boolean here renders it over the whole app-body, with its own header and Back button, entered
-  // from the desktop account menu or the mobile "More" sheet's "My Profile" entry (both via AuthButton)
-  // and left via its own Back button — replaces the small anchored dropdown this used to be.
+  // from the desktop account menu or main menu, or the phone's "My Profile" tab and menu row (see
+  // goToMyProfile), and left via its own Back button — replaces the small anchored dropdown this used
+  // to be.
   const [showMyProfile, setShowMyProfile] = useState(false);
   // Someone picked out of My Profile mode's header people-search (see PeopleSearchBar / searchMode
   // below): their read-only profile takes over the same area, with its own Back button returning to
@@ -693,6 +708,8 @@ function App() {
   // set one — checked once per session, not re-fetched after DisplayNameGate reports success (it
   // updates this state directly instead).
   const [needsDisplayName, setNeedsDisplayName] = useState(false);
+  /** The account that check has answered for, so nothing else opens over a prompt still on its way. */
+  const [displayNameCheckedFor, setDisplayNameCheckedFor] = useState<string | null>(null);
   useEffect(() => {
     if (!session || session.user.is_anonymous) {
       setNeedsDisplayName(false);
@@ -712,9 +729,32 @@ function App() {
         // behind a prompt they have already answered. maybeSingle() keeps the two apart: 0 rows is
         // data:null with error:null, a failed request has error set. On a failed request, leave the
         // app alone rather than blocking it on a guess.
-        if (error) return;
-        setNeedsDisplayName(!(data as { display_name: string | null } | null)?.display_name);
+        if (!error) setNeedsDisplayName(!(data as { display_name: string | null } | null)?.display_name);
+        setDisplayNameCheckedFor(session.user.id);
       });
+  }, [session]);
+
+  // --- Welcome tour -------------------------------------------------------------------------------
+  // Opens by itself once for a new account (lib/welcomeTourSeen.ts), and from the main menu or
+  // Settings at any time. It waits for the password and display-name prompts, so it never covers them.
+  const [tourOpen, setTourOpen] = useState(false);
+  const openTour = () => setTourOpen(true);
+  const { loaded: featureStagesLoaded } = useFeatureAdmin();
+  const customMap = useCustomMapAccess();
+  const [customMapOpen, setCustomMapOpen] = useState(false);
+  const tourReady =
+    authResolved &&
+    !exchangingRecoveryCode &&
+    !passwordRecovery &&
+    featureStagesLoaded &&
+    !needsDisplayName &&
+    !!session &&
+    !session.user.is_anonymous &&
+    displayNameCheckedFor === session.user.id;
+  useWelcomeTourFirstRun(tourReady ? session.user : null, openTour);
+  // Signing out closes it, so it cannot reappear for whoever signs in next.
+  useEffect(() => {
+    if (!session) setTourOpen(false);
   }, [session]);
 
   // Once per signed-in user, fetch their saved reading position and jump the Bible panel there.
@@ -934,6 +974,17 @@ function App() {
     handleSelectTopic(id);
   };
 
+  // A game's reveal ("Read about Moses") — leave Games mode and open the article as a fresh starting
+  // point, the same way a search result does.
+  const openArticleFromGame = ({ kind, id }: GameArticleTarget) => {
+    closeGame();
+    setDetailsHistory([]);
+    if (kind === "person") handleSelectPerson(id);
+    else if (kind === "place") handleSelect(id);
+    else if (kind === "site") handleSelectPoi(id);
+    else handleSelectTopic(id);
+  };
+
   // Map pins and search results are also fresh starting points, not a continuation of an in-panel
   // link chain — clear the back trail so a stale "Back" button doesn't linger.
   const handleSelectFromMap = (id: string) => {
@@ -981,7 +1032,7 @@ function App() {
   };
 
   // --- Timeline mode -----------------------------------------------------------------------------
-  // Full-screen zoomable timeline (TimelineView) rendered over the normal map/bible/panels layout.
+  // Full-screen timeline (TimelineView) rendered over the normal map/bible/panels layout.
   // Entered from the desktop footer strip, the mobile Timeline tab, or a link-choice popup's "View
   // in Timeline"; left via the view's Back button (or, on mobile, by picking another tab).
   const [showTimeline, setShowTimeline] = useState(false);
@@ -990,14 +1041,14 @@ function App() {
   // to this viewer — the owner switching from Test view back to Live view while inside it.
   const timelineFeatureVisible = useFeature("timeline").visible;
   const gamesFeatureVisible = useFeature("games_trivia").visible;
-  // The live pan/zoom view inside Timeline mode, lifted up here so it survives Timeline unmounting —
+  // The live view inside Timeline mode, lifted up here so it survives Timeline unmounting —
   // TimelineView reports every change via onViewChange, and reads it back via initialView so
   // reopening (however it's reached) resumes the last view instead of resetting to the cold-start
   // default. Also what gets snapshotted into a `{ kind: "timeline" }` detailsHistory entry (see
   // exitTimelineThen/goBackInDetails below) so a cross-link away from Timeline can restore this exact
   // view later via "Back", rather than wherever Timeline happens to be when it's reopened.
   const [savedTimelineView, setSavedTimelineView] = useState<TimelineViewState | null>(null);
-  // When Timeline mode was opened for a specific entity (link-choice popup), the view opens zoomed
+  // When Timeline mode was opened for a specific entity (link-choice popup), the view pans
   // to that entity's events/lifespan with a brief highlight. Null for plain entries.
   const [timelineFocusEntityId, setTimelineFocusEntityId] = useState<string | null>(null);
   // Event selected *inside* Timeline mode — its TimelineEventPanel slides in as an overlay on top
@@ -1065,7 +1116,7 @@ function App() {
    * Timeline mode is open (the Lifespans bar, the Books band, and every cross-link inside the
    * in-mode TimelineEventPanel article overlay), so following a person/place/book link lands the
    * reader back in the regular app on that entity's page. Before closing, it snapshots the exact
-   * pan/zoom view being left onto detailsHistory as a `{ kind: "timeline" }` entry (skipped if
+   * view being left onto detailsHistory as a `{ kind: "timeline" }` entry (skipped if
    * there's no view yet to snapshot — practically never, since the cold-start/default view lands
    * within one render of mount) — see goBackInDetails for the other half of this round trip. */
   const exitTimelineThen = (navigate: () => void) => {
@@ -1093,7 +1144,7 @@ function App() {
     else if (prev.kind === "timelineEvent") handleSelectTimelineEvent(prev.id);
     else if (prev.kind === "timeline") {
       // Restore Timeline mode at the exact view it was left at, rather than wherever openTimeline()
-      // would otherwise land (the resumed/cold-start default) or the full-dataset Fit view.
+      // would otherwise land (the resumed view or the cold-start default).
       setSavedTimelineView(prev.view);
       openTimeline();
     } else handleSelectPerson(prev.id);
@@ -1353,13 +1404,24 @@ function App() {
    * Social opens My Profile — those three don't touch setMobileActivePanel at all. Every branch
    * first leaves whichever takeover is currently up, since all three sit at the same z-index and
    * would otherwise stay painted over the destination. */
-  /** The two full-area takeovers both platforms can navigate to. Shared by the mobile router below
+  /** The way into My Profile from the account menu and desktop's PanelMenu. Leaves Timeline and Games
+   * first: all three sit at the same z-index and Games is rendered after My Profile, so opening the
+   * profile over a game changed nothing on screen. */
+  const goToMyProfile = () => {
+    closeTimeline();
+    closeGame();
+    openMyProfile();
+  };
+
+  /** The full-area takeovers the menus can navigate to. Shared by the mobile router below
    * and by desktop's PanelMenu "Go to" group, which replaced the old footer strip: the routing is
    * identical on both (leave whichever other takeover is up, then open this one), even though the
    * rest of `goToMobileDestination` is mobile-specific — Social/panel tabs have no desktop analogue.
    * Kept as one function so the two entry points can't drift apart. */
-  const goToTakeover = (key: "timeline" | "games") => {
-    if (key === "timeline") {
+  const goToTakeover = (key: DestinationKey) => {
+    if (key === "profile") {
+      goToMyProfile();
+    } else if (key === "timeline") {
       closeGame();
       closeMyProfile();
       openTimeline();
@@ -1375,6 +1437,7 @@ function App() {
   const leaveTakeover = () => {
     closeTimeline();
     closeGame();
+    closeMyProfile();
   };
 
   /** The Archaeology entry, from either menu (PanelMenu's "Go to" group on desktop, MobileNavMenu's
@@ -1595,6 +1658,7 @@ function App() {
             onGoToArchaeology={openArchaeology}
             aboutOpen={showAbout}
             onGoToAbout={openAbout}
+            onOpenTour={openTour}
           />
         )}
         <PanelMenu
@@ -1602,12 +1666,16 @@ function App() {
           onToggle={toggleMenuPanel}
           lastAutoClosed={lastAutoClosed}
           friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount}
-          activeDestination={overlayPage ? null : showTimeline ? "timeline" : showGame ? "games" : null}
+          activeDestination={
+            overlayPage ? null : showGame ? "games" : myProfileMode ? "profile" : showTimeline ? "timeline" : null
+          }
           onNavigate={goToTakeover}
           onLeaveDestination={leaveTakeover}
           onGoToArchaeology={openArchaeology}
           aboutOpen={showAbout}
           onToggleAbout={showAbout ? closeOverlayPage : openAbout}
+          onOpenTour={openTour}
+          hasProfile={!!session && !session.user.is_anonymous}
         />
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
@@ -1622,7 +1690,7 @@ function App() {
           <p className="brand-tagline">God&rsquo;s Word. Every day.</p>
         </div>
         {searchMode === "all" && (
-          <div className="header-search-group">
+          <div className="header-search-group" data-tour={TOUR_ANCHORS.search}>
             <UnifiedSearchBar
               locations={locations}
               pois={pois}
@@ -1670,16 +1738,22 @@ function App() {
             before the account avatar. Same component and same SOCIAL_LINKS array as the signed-out
             front door (see SocialLinks/AuthGate) — a second placement was exactly what its
             `className` prop was built for, and neither the paths nor the hrefs are repeated here.
-            Desktop only, and rendered rather than merely hidden: the mobile header is already down
-            to logo + search + avatar (see the max-width:768px block in App.css), and the marks go
-            in the account menu there instead — see .auth-social in AuthButton. */}
+            Desktop only, and rendered rather than merely hidden: the mobile header is short of
+            room (see the max-width:768px block in App.css), so the marks go in the account menu
+            there instead — see .auth-social in AuthButton. */}
         {!isMobile && <SocialLinks className="header-social" />}
+        {/* Report a Problem, between the social marks and the avatar at every width. The account menu
+            keeps its own entry. Real accounts only; anyone else is on AuthGate and never sees this
+            header. */}
+        {session && !session.user.is_anonymous && (
+          <HeaderReportButton userId={session.user.id} surface={reportSurface} />
+        )}
         <AuthButton
           session={session}
           openProfileNonce={openProfileNonce}
           onOpenReadingPlans={READING_PLANS_ENABLED ? openReadingPlans : undefined}
-          onOpenMyProfile={openMyProfile}
-          profileHeaderLink={!isMobile}
+          onOpenMyProfile={goToMyProfile}
+          desktopProfileEntry={!isMobile}
           onOpenSettings={openSettings}
           profileVersion={profileVersion}
           reportSurface={reportSurface}
@@ -1690,7 +1764,7 @@ function App() {
       {/* Seasonal walk banner — a slim pill strip under the header (not a modal; see the walk state
           block above). Hidden while the walk view itself is open to avoid saying it twice. */}
       {activeWalk && !walkBannerDismissed && !walkOpen && (
-        <div className="walk-banner">
+        <div className="walk-banner" data-tour={TOUR_ANCHORS.walkBanner}>
           <button type="button" className="walk-banner-pill" onClick={openWalk}>
             {activeWalk.emoji} <strong>{activeWalk.title}</strong>
             <span className="walk-banner-tagline"> — {activeWalk.tagline.toLowerCase()}</span>
@@ -1742,7 +1816,7 @@ function App() {
           />
         )}
         {mapMounted && (
-          <div className={`map-area${mapHiddenOnMobile ? " map-area-hidden" : ""}`}>
+          <div className={`map-area${mapHiddenOnMobile ? " map-area-hidden" : ""}`} data-tour={TOUR_ANCHORS.map}>
             <MapView
               locations={locations}
               selectedId={selectedId}
@@ -1766,6 +1840,7 @@ function App() {
               defaultMinimized
             />
             <ThenNowToggle mode={mapMode} onChange={setMapMode} />
+            {customMap.visible && <CustomMapButton inTesting={customMap.inTesting} onClick={() => setCustomMapOpen(true)} />}
             {hasSelection && (
               <button type="button" className="clear-selection-button" onClick={clearSelection}>
                 × Show All Pins
@@ -1948,7 +2023,7 @@ function App() {
             />
             {/* Selecting an event opens its article as a slide-in overlay on top of the timeline —
                 same panel component the Details column uses, so it feels native. Back returns to
-                the timeline (Timeline itself never unmounts for this case, so its pan/zoom view is
+                the timeline (Timeline itself never unmounts for this case, so its view is
                 untouched underneath); any cross-link inside the article exits the mode into the
                 normal app, first snapshotting the live view via exitTimelineThen so "Back" from
                 wherever the cross-link lands can restore this exact timeline view later. */}
@@ -2011,7 +2086,7 @@ function App() {
         {showGame && (
           <div className="game-mode">
             {session ? (
-              <GameView session={session} onClose={closeGame} gameCenterNonce={gameCenterNonce} />
+              <GameView session={session} onClose={closeGame} gameCenterNonce={gameCenterNonce} onOpenArticle={openArticleFromGame} />
             ) : (
               <div className="game-signin-prompt">
                 <BackButton onClick={closeGame} ariaLabel="Close Games" />
@@ -2034,7 +2109,7 @@ function App() {
             z-index). */}
         {showSettings && session && !session.user.is_anonymous && (
           <div className="myprofile-mode">
-            <SettingsView userId={session.user.id} onClose={closeOverlayPage} />
+            <SettingsView userId={session.user.id} onClose={closeOverlayPage} onOpenTour={openTour} />
           </div>
         )}
         {showAbout && session && !session.user.is_anonymous && (
@@ -2083,6 +2158,18 @@ function App() {
             closeTimeline();
             closeGame();
           }}
+        />
+      )}
+      {customMapOpen && customMap.canUse && session && (
+        <Suspense fallback={null}>
+          <CustomMapBuilder userId={session.user.id} onClose={() => setCustomMapOpen(false)} />
+        </Suspense>
+      )}
+      {tourOpen && (
+        <WelcomeTour
+          isMobile={isMobile}
+          walkTitle={activeWalk && !walkBannerDismissed && !walkOpen ? activeWalk.title : null}
+          onClose={() => setTourOpen(false)}
         />
       )}
     </div>
