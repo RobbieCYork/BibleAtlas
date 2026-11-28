@@ -151,16 +151,19 @@ function OfflineBibleList() {
 
 const offered = (downloaded: number) => PACKS.length > 0 || downloaded > 0;
 
-/** My Profile's section. */
+/** My Profile's section, with the divider that follows it, so that hiding it leaves no double line. */
 export default function OfflineBiblesSection() {
   const { ids } = useDownloadSummary();
   if (!offered(ids.length)) return null;
   return (
-    <div className="auth-settings-section auth-settings-section-stacked offline-bibles">
-      <span className="auth-settings-label">Offline Bibles</span>
-      <p className="auth-benefits auth-benefits-inline">Download a translation to read it with no connection.</p>
-      <OfflineBibleList />
-    </div>
+    <>
+      <div className="auth-settings-section auth-settings-section-stacked offline-bibles">
+        <span className="auth-settings-label">Offline Bibles</span>
+        <p className="auth-benefits auth-benefits-inline">Download a translation to read it with no connection.</p>
+        <OfflineBibleList />
+      </div>
+      <div className="auth-settings-divider" />
+    </>
   );
 }
 

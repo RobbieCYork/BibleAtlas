@@ -719,7 +719,6 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
           <div className="auth-settings-divider" />
           <BibleVersionSetting />
-          <OfflineBiblesSection />
           <div className="auth-settings-divider" />
           <SkinPicker />
           <div className="auth-settings-divider" />
@@ -761,6 +760,7 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           </>
           )}
           <div className="auth-settings-divider" />
+          <OfflineBiblesSection />
           <DataExportControl userId={userId} />
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
