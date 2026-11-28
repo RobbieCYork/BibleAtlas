@@ -9,15 +9,19 @@
  * TWO PHASES, and the split is the point.
  *
  * 1. `beginScreenCapture()` is SYNCHRONOUS and must be called inside the tap handler, before any
- *    state change opens the report sheet. It freezes what is on screen right now: a deep clone of
- *    the document (so an open menu is still open in it), every scroll position, every form field's
- *    current value, and a pixel copy of every <canvas> and <video>. MapLibre's WebGL canvas is
- *    cleared after each frame is presented, so the map registers a redraw hook
- *    (`registerCanvasRedraw`) and is redrawn synchronously immediately before its pixels are copied.
+ *    state change opens the report sheet. It freezes what is on screen right now, as cheaply as it
+ *    can (measured 4-16 ms in WebKit and Chrome): a deep clone of the document (so an open menu is
+ *    still open in it), every scroll position, every form field's current value, the visual
+ *    viewport, and a pixel copy of every 2D <canvas> and <video>.
  *
- * 2. The returned promise does the slow part afterwards, while the report sheet is already open:
- *    fetching fonts and images as data: URLs, serialising, rasterising and encoding. Nothing in it
- *    reads the live page again, so whatever the reader does next cannot leak into the picture.
+ * 2. The returned promise does everything else AFTER the report sheet has painted: reading the
+ *    stylesheets, measuring safe areas and viewport units, copying the map, fetching fonts and
+ *    images as data: URLs, serialising, rasterising and encoding. It reads the live page only for
+ *    things a tap does not change (stylesheets, insets) and for the map: MapLibre's WebGL canvas is
+ *    cleared after each frame is presented, so the map registers a redraw hook
+ *    (`registerCanvasRedraw`) and is redrawn and copied here, a frame or two after the tap. Doing that
+ *    at the tap cost up to 127 ms on an iPhone Simulator; the map does not move in between unless it
+ *    was mid-fling.
  *
  * WHY THE STYLESHEETS ARE INLINED, NOT EVERY ELEMENT'S COMPUTED STYLE (the usual library approach):
  * reading getComputedStyle for each of several thousand nodes costs hundreds of milliseconds on a
@@ -61,6 +65,7 @@ export interface PendingCapture {
 
 const XHTML = "http://www.w3.org/1999/xhtml";
 const MAX_SCALE = 2;
+const MAX_BYTES = 2.5 * 1024 * 1024;
 const FETCH_TIMEOUT_MS = 4000;
 const TRANSPARENT_PIXEL = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
@@ -101,14 +106,19 @@ function wasLoaded(abs: string): boolean {
 /* ------------------------------------------------------------------------------------------------ */
 /* Canvas redraw hooks (MapLibre).                                                                   */
 
-const redrawHooks = new Set<() => void>();
+const redrawHooks = new Map<HTMLCanvasElement, () => void>();
 
 /** A WebGL canvas without preserveDrawingBuffer is blank to drawImage once its frame has been
- * presented. Register a function that redraws it synchronously (MapLibre: `map.redraw()`); it runs
- * immediately before the canvas is copied. Returns the unregister function. */
-export function registerCanvasRedraw(fn: () => void): () => void {
-  redrawHooks.add(fn);
-  return () => redrawHooks.delete(fn);
+ * presented. Register the canvas with a function that redraws it synchronously (MapLibre:
+ * `map.redraw()`). Its pixels are then copied AFTER the tap, once the report sheet has painted,
+ * immediately after that redraw: a map redraw costs tens of milliseconds on a phone and must not sit
+ * between the tap and the sheet. The map has not moved in between unless it was mid-fling, in which
+ * case the picture is at most a frame or two later than the tap. Returns the unregister function. */
+export function registerCanvasRedraw(canvas: HTMLCanvasElement, fn: () => void): () => void {
+  redrawHooks.set(canvas, fn);
+  return () => {
+    if (redrawHooks.get(canvas) === fn) redrawHooks.delete(canvas);
+  };
 }
 
 /* ------------------------------------------------------------------------------------------------ */
@@ -135,6 +145,35 @@ function replaceEnv(css: string, safe: Record<string, number>): string {
   return css.replace(ENV_RE, (_m, side: string) => `${safe[side] ?? 0}px`);
 }
 
+type ViewportUnits = Record<string, number>;
+const VP_UNITS = ["vw", "vh", "dvw", "dvh", "svw", "svh", "lvw", "lvh", "vmin", "vmax"] as const;
+
+/** What 1 of each viewport unit is on the LIVE page, in px. The picture is rendered with CSS zoom
+ * (see render()), and inside a zoomed SVG image these units would resolve against the image, not the
+ * screen; WebKit also has no toolbar there, so dvh/svh/lvh collapse into one. Measuring them here and
+ * writing px into the copy keeps every vh-sized panel the height the reader saw. */
+function measureViewportUnits(): ViewportUnits {
+  const probe = document.createElement("div");
+  probe.style.cssText = "position:fixed;top:0;left:0;visibility:hidden;pointer-events:none;width:0;height:0";
+  document.body.appendChild(probe);
+  const out: ViewportUnits = {};
+  for (const u of VP_UNITS) {
+    probe.style.height = `100${u}`;
+    out[u] = (parseFloat(getComputedStyle(probe).height) || 0) / 100;
+  }
+  probe.remove();
+  return out;
+}
+
+// No lookbehind: older iOS Safari cannot parse it, and this module is in the main bundle.
+const VP_RE = /(^|[^\w-])(-?(?:\d+\.?\d*|\.\d+))(dvw|dvh|svw|svh|lvw|lvh|vmin|vmax|vw|vh)\b/g;
+function replaceViewportUnits(css: string, units: ViewportUnits): string {
+  return css.replace(VP_RE, (m, pre: string, n: string, u: string) => {
+    const per = units[u];
+    return per ? `${pre}${+(parseFloat(n) * per).toFixed(3)}px` : m;
+  });
+}
+
 type Frozen = {
   clone: HTMLElement;
   vw: number;
@@ -144,12 +183,20 @@ type Frozen = {
   scrollY: number;
   scale: number;
   safe: Record<string, number>;
+  units: ViewportUnits;
   cssChunks: { text: string; base: string }[];
   scrolled: { el: HTMLElement; x: number; y: number }[];
   remove: Element[];
   syncPhases: Record<string, number>;
   images: { el: Element; url: string; attr: "src" | "href" }[];
-  canvases: { el: Element; copy: HTMLCanvasElement | null; w: number; h: number }[];
+  canvases: {
+    el: Element;
+    copy: HTMLCanvasElement | null;
+    w: number;
+    h: number;
+    /** A registered WebGL canvas, copied in phase 2 right after its redraw. */
+    deferred?: { live: HTMLCanvasElement; redraw: () => void };
+  }[];
   bodyBg: string;
   notes: string[];
 };
@@ -205,18 +252,8 @@ function freeze(): Frozen {
   const vv = vvp
     ? { x: vvp.offsetLeft, y: vvp.offsetTop, w: vvp.width, h: vvp.height }
     : { x: 0, y: 0, w: vw, h: vh };
-  const safe = measureSafeArea();
+  const safe = { top: 0, right: 0, bottom: 0, left: 0 }; // measured in prepare(), off the tap
 
-  // Redraw WebGL canvases so their buffers hold the current frame, then copy pixels right away.
-  for (const fn of redrawHooks) {
-    try {
-      fn();
-    } catch {
-      notes.push("a map could not be redrawn for the capture");
-    }
-  }
-
-  mark("redrawn");
   const liveRoot = document.documentElement;
   const clone = liveRoot.cloneNode(true) as HTMLElement;
   mark("cloned");
@@ -247,6 +284,11 @@ function freeze(): Frozen {
       case "video": {
         const r = L.getBoundingClientRect();
         let pix: HTMLCanvasElement | null = null;
+        const redraw = tag === "canvas" ? redrawHooks.get(L as HTMLCanvasElement) : undefined;
+        if (redraw) {
+          canvases.push({ el: C, copy: null, w: r.width, h: r.height, deferred: { live: L as HTMLCanvasElement, redraw } });
+          break;
+        }
         if (r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < vh && r.right > 0 && r.left < vw) {
           try {
             const src = L as HTMLCanvasElement | HTMLVideoElement;
@@ -336,10 +378,6 @@ function freeze(): Frozen {
       }
     }
     if (L.scrollTop || L.scrollLeft) scrolled.push({ el: C, x: L.scrollLeft, y: L.scrollTop });
-    if (C.hasAttribute("style")) {
-      const s = C.getAttribute("style")!;
-      if (s.includes("env(") || s.includes("constant(")) C.setAttribute("style", replaceEnv(s, safe));
-    }
   }
 
   mark("walked");
@@ -353,6 +391,7 @@ function freeze(): Frozen {
     scrollY: window.scrollY,
     scale: Math.min(window.devicePixelRatio || 1, MAX_SCALE),
     safe,
+    units: {},
     cssChunks: [],
     scrolled,
     remove,
@@ -369,6 +408,13 @@ function freeze(): Frozen {
  * of the freeze on WebKit, and nothing a tap does changes them in a way the picture can show: the
  * report sheet's own CSS may arrive, but the sheet is not in the copy. */
 function prepare(f: Frozen): void {
+  f.safe = measureSafeArea();
+  f.units = measureViewportUnits();
+  // Inline styles written by the app (rarely) use env() or viewport units too.
+  for (const el of Array.from(f.clone.querySelectorAll("[style]"))) {
+    const st = el.getAttribute("style")!;
+    if (/env\(|constant\(|v[wh]|vmin|vmax/.test(st)) el.setAttribute("style", replaceViewportUnits(replaceEnv(st, f.safe), f.units));
+  }
   // A scroll position does not survive cloning, and an SVG image cannot scroll. Shift each scrolled
   // container's content by its offset instead (the individual `translate` property composes with any
   // existing transform, so it does not overwrite one).
@@ -456,7 +502,12 @@ function fetchAsDataUrl(url: string): Promise<string | null> {
 
 const URL_RE = /url\(\s*(['"]?)([^'")]+)\1\s*\)/g;
 
-async function inlineCss(chunks: Frozen["cssChunks"], safe: Record<string, number>, notes: string[]): Promise<string> {
+async function inlineCss(
+  chunks: Frozen["cssChunks"],
+  safe: Record<string, number>,
+  units: ViewportUnits,
+  notes: string[],
+): Promise<string> {
   const wanted = new Map<string, string>(); // raw -> absolute, per chunk handled below
   const jobs: Promise<void>[] = [];
   const resolved = new Map<string, string>(); // absolute -> replacement
@@ -495,6 +546,7 @@ async function inlineCss(chunks: Frozen["cssChunks"], safe: Record<string, numbe
   // Inside <foreignObject>, :root is the <svg>. The app hangs its theme variables off :root.
   css = css.replace(/:root\b/g, "html");
   css = replaceEnv(css, safe);
+  css = replaceViewportUnits(css, units);
   // Frame zero of an animation is not what the reader saw; the end state usually is.
   css +=
     "\n*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}" +
@@ -535,7 +587,22 @@ async function render(f: Frozen, t0: number, phases: Record<string, number>): Pr
     if (!d) f.notes.push(`an image from ${new URL(url, location.href).host} could not be embedded`);
     el.setAttribute(attr, d ?? TRANSPARENT_PIXEL);
   });
-  for (const { el, copy, w, h } of f.canvases) {
+  for (const entry of f.canvases) {
+    const { el, w, h, deferred } = entry;
+    let copy = entry.copy;
+    if (deferred && deferred.live.isConnected && w > 0 && h > 0) {
+      // Redraw, then copy in the same task, before the buffer is presented and cleared.
+      try {
+        deferred.redraw();
+        copy = document.createElement("canvas");
+        copy.width = deferred.live.width;
+        copy.height = deferred.live.height;
+        copy.getContext("2d")!.drawImage(deferred.live, 0, 0);
+      } catch {
+        copy = null;
+        f.notes.push("the map could not be copied");
+      }
+    }
     const img = document.createElementNS(XHTML, "img") as HTMLImageElement;
     for (const a of Array.from(el.attributes)) if (a.name !== "width" && a.name !== "height") img.setAttribute(a.name, a.value);
     let src = TRANSPARENT_PIXEL;
@@ -551,7 +618,7 @@ async function render(f: Frozen, t0: number, phases: Record<string, number>): Pr
     img.style.setProperty("height", `${h}px`);
     el.replaceWith(img);
   }
-  const [css] = await Promise.all([inlineCss(f.cssChunks, f.safe, f.notes), Promise.all(imgJobs)]);
+  const [css] = await Promise.all([inlineCss(f.cssChunks, f.safe, f.units, f.notes), Promise.all(imgJobs)]);
   mark("embedded");
 
   // Build the document.
@@ -566,11 +633,19 @@ async function render(f: Frozen, t0: number, phases: Record<string, number>): Pr
   f.clone.style.setProperty("width", `${f.vw}px`);
   f.clone.style.setProperty("height", `${f.vh}px`);
   f.clone.style.setProperty("overflow", "hidden");
+  // Resolution comes from CSS zoom on the copy, NOT from scaling the image when it is drawn. WebKit
+  // draws box-shadows with an offset trick that breaks under a scaled drawing transform: every
+  // shadow became a hard-edged grey slab beside its element (map badges, the search dropdown, the
+  // Options button). Media queries are already resolved and viewport units are px by now, so zoom
+  // changes nothing but the pixel density.
+  f.clone.style.setProperty("zoom", String(f.scale));
   const xhtml = new XMLSerializer().serializeToString(f.clone);
   mark("serialised");
 
+  const sw = Math.round(f.vw * f.scale);
+  const sh = Math.round(f.vh * f.scale);
   const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${f.vw}" height="${f.vh}" viewBox="0 0 ${f.vw} ${f.vh}">` +
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${sw}" height="${sh}" viewBox="0 0 ${sw} ${sh}">` +
     `<foreignObject x="0" y="0" width="100%" height="100%">${xhtml}</foreignObject></svg>`;
   let img: HTMLImageElement;
   try {
@@ -594,7 +669,8 @@ async function render(f: Frozen, t0: number, phases: Record<string, number>): Pr
   const ctx = out.getContext("2d")!;
   ctx.fillStyle = f.bodyBg && f.bodyBg !== "rgba(0, 0, 0, 0)" ? f.bodyBg : "#fff";
   ctx.fillRect(0, 0, out.width, out.height);
-  const draw = () => ctx.drawImage(img, -f.vv.x * s, -f.vv.y * s, f.vw * s, f.vh * s);
+  // Drawn 1:1: no scaling transform (see the zoom comment above).
+  const draw = () => ctx.drawImage(img, Math.round(-f.vv.x * s), Math.round(-f.vv.y * s));
   draw();
   // WebKit can rasterise an SVG image before the data: images inside it have decoded; the second
   // draw a frame later picks them up. Harmless elsewhere.
@@ -602,7 +678,12 @@ async function render(f: Frozen, t0: number, phases: Record<string, number>): Pr
   draw();
   mark("drawn");
 
-  const blob = await canvasToBlob(out, "image/jpeg", 0.88);
+  // Stay well under the bucket's 3 MB limit (sql/055): a big desktop screen at 2x can exceed it.
+  let blob = await canvasToBlob(out, "image/jpeg", 0.88);
+  for (const q of [0.75, 0.6]) {
+    if (blob.size <= MAX_BYTES) break;
+    blob = await canvasToBlob(out, "image/jpeg", q);
+  }
   mark("encoded");
   return {
     blob,
@@ -612,6 +693,21 @@ async function render(f: Frozen, t0: number, phases: Record<string, number>): Pr
     pixelHeight: out.height,
     notes: f.notes,
   };
+}
+
+function afterNextPaint(fn: () => void): void {
+  let done = false;
+  const go = () => {
+    if (done) return;
+    done = true;
+    setTimeout(fn, 0);
+  };
+  try {
+    requestAnimationFrame(() => setTimeout(go, 0));
+  } catch {
+    /* no rAF */
+  }
+  setTimeout(go, 150);
 }
 
 /** Freeze the screen now (synchronously) and render it in the background. Call from the tap
@@ -629,8 +725,9 @@ export function beginScreenCapture(timeoutMs = 10000): PendingCapture {
   const phases: Record<string, number> = { ...Object.fromEntries(Object.entries(frozen.syncPhases).map(([k, v]) => [`sync.${k}`, v])), frozen: Math.round(syncMs) };
   const result = new Promise<ScreenCapture>((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error("the screenshot took too long")), timeoutMs);
-    // Yield first, so the report sheet's render is not queued behind any of this.
-    setTimeout(() => {
+    // Wait until the report sheet has been painted, so none of this sits between the tap and the
+    // sheet. A hidden tab paints nothing, so the frame wait is capped.
+    afterNextPaint(() => {
       render(frozen, t0, phases).then(
         (r) => {
           clearTimeout(timer);
@@ -641,7 +738,7 @@ export function beginScreenCapture(timeoutMs = 10000): PendingCapture {
           reject(e instanceof Error ? e : new Error(String(e)));
         },
       );
-    }, 0);
+    });
   });
   return { result, syncMs };
 }

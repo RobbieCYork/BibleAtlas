@@ -127,7 +127,7 @@ const ANONYMISE: Array<{ table: string; column: string }> = [
  * convention every storage policy in sql/027 matches on. Deleting the folder deletes the files;
  * nothing here removes them on its own, because `storage.objects.owner` is ON DELETE SET NULL and
  * an ownerless avatar is still a photograph of somebody. */
-const BUCKETS = ["avatars", "post-media", "sermon-note-images"];
+const BUCKETS = ["avatars", "post-media", "sermon-note-images", "report-screenshots"];
 
 async function purgeBucket(admin: SupabaseClient, bucket: string, uid: string, failures: StepFailure[]) {
   for (let page = 0; page < 50; page++) {

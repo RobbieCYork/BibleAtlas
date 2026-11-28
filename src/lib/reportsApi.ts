@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
+import { removeReportScreenshot } from "./reportScreenshots";
 
 /* ============================================================================
  * The issue reporter's data layer — the client half of sql/025_roles_and_reports.sql.
@@ -178,6 +179,9 @@ export interface ReportRow {
   viewport_w: number | null;
   viewport_h: number | null;
   platform: string | null;
+  /** sql/055: the attached screenshot's path in the private `report-screenshots` bucket, or null.
+   * ABSENT on a database without 055. Only the reporter and administrators can open the image. */
+  screenshot_path?: string | null;
   /** sql/025's size-capped escape hatch, and `{}` on every row this app files: the reporter is shown
    * every field before they send, and a payload they cannot see is exactly what that rule exists to
    * prevent. Typed because it is really there, not because anything should start filling it. */
@@ -243,6 +247,10 @@ export interface NewReport {
   viewport_w: number | null;
   viewport_h: number | null;
   platform: string | null;
+  /** sql/055. Sent ONLY when the reporter ticked "Include this screenshot" and the image is already
+   * uploaded to their own folder; the key is absent otherwise, so a database without 055 receives the
+   * same insert as before. The trigger in 055 checks the path is theirs and the object exists. */
+  screenshot_path?: string;
 }
 
 /** A reporter's own report, read straight from the table through reports_select_own_or_staff. This
@@ -358,6 +366,14 @@ export function humanizeReportError(err: unknown, suggestion = false): string {
       return "The team has already picked this suggestion up, so it can't be changed or withdrawn now. Send a new one if there's something to add.";
     }
     return "The team has already picked this report up, so it can't be changed or withdrawn now. File a new one if there's something to add.";
+  }
+  // Screenshots (sql/055, lib/reportScreenshots.ts). Checked before the RLS case below: a Storage
+  // refusal of the upload reads "new row violates row-level security policy" too.
+  if (raw.startsWith("screenshot_too_large")) {
+    return "The screenshot is too large to send. Untick “Include this screenshot” to send the report without it.";
+  }
+  if (raw.startsWith("screenshot_upload:") || raw.startsWith("screenshot_missing:") || raw.startsWith("screenshot_not_yours:")) {
+    return "The screenshot couldn't be uploaded. Try again, or untick “Include this screenshot” to send the report without it.";
   }
   if (raw.startsWith("self_assignment:")) {
     return "You can't change your own role. Ask the other owner to do it.";
@@ -576,11 +592,17 @@ export async function updateMyReport(
 /** Same zero-rows-is-a-refusal reasoning as updateMyReport — reports_delete_own_untriaged filters
  * rather than denies, so a delete of a triaged report is a silent no-op without this check. */
 export async function deleteMyReport(reportId: string): Promise<void> {
-  const { data, error } = await supabase.from("reports").delete().eq("id", reportId).select("id");
+  // `*`, not a column list: `screenshot_path` exists only once sql/055 is applied, and naming it
+  // before then would make every delete fail.
+  const { data, error } = await supabase.from("reports").delete().eq("id", reportId).select("*");
   if (error) throw new Error(error.message);
   if (!data || data.length === 0) {
     throw new Error("report_locked: this report has been triaged and can no longer be deleted");
   }
+  // The report is gone; its screenshot goes with it. Storage cannot be emptied from SQL, so this is
+  // the app's job (sql/055, DELETION). A failure leaves an orphan that report_screenshot_orphans() lists.
+  const path = (data[0] as { screenshot_path?: string | null }).screenshot_path;
+  if (path) await removeReportScreenshot(path);
 }
 
 /* --------------------------------------------------------------------------

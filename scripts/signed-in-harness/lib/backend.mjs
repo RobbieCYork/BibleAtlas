@@ -262,6 +262,9 @@ export function createBackend({ persona, overrides = {} }) {
   /** Edge Function handlers registered by a check script with setFunction(). Unregistered functions
    * still answer `{}` and are listed as a gap. */
   const functions = {};
+  /** A Storage handler registered by a check script with setStorage(): every /storage/v1/* request
+   * goes to it. Without one, storage answers 404 and is listed as a gap, as before. */
+  let storage = null;
 
   /** Entry point. `req` = { method, url, headers (lower-cased), body }. */
   function handle(req) {
@@ -275,6 +278,10 @@ export function createBackend({ persona, overrides = {} }) {
     if (fnName && functions[fnName]) {
       rec.how = "function";
       return functions[fnName](req);
+    }
+    if (storage && u.pathname.startsWith("/storage/v1/")) {
+      rec.how = "storage";
+      return storage(req);
     }
     log.gaps.push(`${req.method} ${u.pathname}`);
     return u.pathname.startsWith("/storage/v1/") ? json(404, { error: "not_found", message: "harness: no storage" }) : json(200, {});
@@ -317,6 +324,9 @@ export function createBackend({ persona, overrides = {} }) {
     /** Answer /functions/v1/<name> with `fn(req)` -> { status, headers, body } (may be async). Lets a
      * check run an Edge Function's real handler (see examples/admin-add-user.mjs) instead of `{}`. */
     setFunction: (name, fn) => { functions[name] = fn; },
+    /** `fn(req)` answers every /storage/v1/* request ({ status, headers, body }; body may be a Buffer).
+     * See examples/report-screenshots.mjs for a minimal in-memory bucket. null restores the 404s. */
+    setStorage: (fn) => { storage = fn; },
     featureKeys: FEATURE_KEYS,
   };
 }

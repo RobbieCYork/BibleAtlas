@@ -759,8 +759,9 @@ export default function MapView({
     map.addControl(new maplibregl.NavigationControl(), "top-right");
     mapRef.current = map;
     // Report a Problem screenshots: the WebGL buffer is cleared once a frame is shown, so the capture
-    // redraws the map synchronously right before copying its pixels (lib/screenCapture.ts).
-    const unregisterCapture = registerCanvasRedraw(() => map.redraw());
+    // redraws the map synchronously right before copying its pixels, after the report sheet has
+    // painted (lib/screenCapture.ts).
+    const unregisterCapture = registerCanvasRedraw(map.getCanvas(), () => map.redraw());
 
     map.on("styledata", () => forceEnglishLabels(map));
 

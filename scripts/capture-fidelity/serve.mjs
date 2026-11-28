@@ -46,6 +46,23 @@ if (!dist) {
 }
 
 const backend = createBackend({ persona });
+// --screenshots-on: behave as if sql/055 were applied — the probe rpc answers true and Storage is a
+// small in-memory bucket — so the report form's screenshot UI can be looked at on a real WebKit.
+if (process.argv.includes("--screenshots-on")) {
+  backend.setRpc("report_screenshots_enabled", true);
+  const objects = new Map();
+  backend.setStorage((req) => {
+    const p = new URL(req.url).pathname.replace(/^\/storage\/v1/, "");
+    const j = (status, body) => ({ status, headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+    if (req.method === "POST" && p.startsWith("/object/report-screenshots/")) {
+      objects.set(p.slice("/object/report-screenshots/".length), true);
+      console.log(`storage: upload ${p}`);
+      return j(200, { Key: p.slice("/object/".length), Id: "fake" });
+    }
+    if (req.method === "DELETE") return j(200, []);
+    return j(404, { error: "not_found" });
+  });
+}
 const STORAGE_KEY = `sb-${new URL(origin).hostname.split(".")[0]}-auth-token`;
 const seed = `<script>(function(){try{if(!localStorage.getItem(${JSON.stringify(STORAGE_KEY)})){localStorage.setItem('bible-atlas-remember-me','true');localStorage.setItem(${JSON.stringify(STORAGE_KEY)},${JSON.stringify(JSON.stringify(backend.session))});}}catch(e){}})()</script>`;
 const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".woff2": "font/woff2", ".mp3": "audio/mpeg", ".ico": "image/x-icon", ".webmanifest": "application/manifest+json", ".txt": "text/plain" };

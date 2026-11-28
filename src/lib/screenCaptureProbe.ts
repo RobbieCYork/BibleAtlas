@@ -58,9 +58,9 @@ export function installCaptureProbe() {
     "click",
     (ev) => {
       const t = ev.target as Element | null;
-      const hit = t?.closest?.('[aria-label="Report a Problem"], .about-report, button, [role="menuitem"]');
+      const hit = t?.closest?.('.header-report, .about-report, button, [role="menuitem"]');
       if (!hit) return;
-      if (hit.getAttribute("aria-label") !== "Report a Problem" && !/Report a Problem/.test(hit.textContent ?? "")) return;
+      if (!/^report a problem/i.test(hit.getAttribute("aria-label") ?? "") && !/Report a Problem/i.test(hit.textContent ?? "")) return;
       const label = (document.querySelector("[data-capture-label]") as HTMLElement | null)?.dataset.captureLabel ?? location.hash ?? "tap";
       window.__cbLast = send(label || "tap", "tap");
     },
