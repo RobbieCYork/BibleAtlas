@@ -3,6 +3,8 @@
 interface ImportMetaEnv {
   readonly VITE_SUPABASE_URL: string;
   readonly VITE_SUPABASE_ANON_KEY: string;
+  /** "1" only in local screenshot-fidelity builds (lib/screenCaptureProbe.ts). */
+  readonly VITE_CAPTURE_PROBE?: string;
 }
 
 interface ImportMeta {
