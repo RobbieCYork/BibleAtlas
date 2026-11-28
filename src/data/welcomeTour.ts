@@ -108,6 +108,19 @@ export const TOUR_STEPS = [
     ],
   },
   {
+    id: "offline",
+    icon: "phone",
+    title: "Read with no connection",
+    body: "Download a translation to read and search it with no connection. Open the version list and choose Download for offline reading, or use Offline Bibles in My Profile.",
+    phone: { path: [{ icon: "bible", label: "Version list" }], hint: "above the chapter" },
+    desktop: { path: [{ icon: "bible", label: "Version list" }], hint: "above the chapter" },
+    anchors: { phone: ["bible-controls", "tab-bible"], desktop: ["bible-controls"] },
+    names: [
+      { file: "components/BiblePanel.tsx", text: "Download for offline reading…" },
+      { file: "components/OfflineBibles.tsx", text: '<span className="auth-settings-label">Offline Bibles</span>' },
+    ],
+  },
+  {
     id: "verses",
     icon: "pencil",
     title: "Highlight, note, tag and share",

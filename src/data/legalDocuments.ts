@@ -40,7 +40,7 @@ export const LEGAL_ENTITY: { name: string | null; mailingAddress: string | null 
 };
 
 export const LEGAL_CONTACT_EMAIL = "admin@capstonebible.com";
-export const LEGAL_EFFECTIVE_DATE = "November 9, 2026";
+export const LEGAL_EFFECTIVE_DATE = "November 28, 2026";
 
 export interface LegalSection {
   heading: string;
@@ -171,7 +171,7 @@ export const TERMS_OF_SERVICE: LegalDocument = {
     {
       heading: "8. Bible text, sources and other people's websites",
       body: [
-        "Bible text in the app is provided in translations that are in the public domain in the United States: the World English Bible (WEB), the King James Version (KJV), the American Standard Version (ASV) and the Berean Standard Bible (BSB). Passages come from our own copies of these texts, with the free service bible-api.com as a stand-in for the WEB, KJV and ASV. You can download a translation to your device and read it without a connection. Bible search results come from bolls.life, or from the copy on your device for a translation you have downloaded. Chapter audio of the World English Bible is streamed from the Internet Archive.",
+        "Bible text in the app is provided in translations that are in the public domain in the United States: the World English Bible (WEB), the King James Version (KJV) and the American Standard Version (ASV). Passages come from our own copies of these texts, with the free service bible-api.com as a stand-in. You can download a translation to your device and read it without a connection. Bible search results come from bolls.life, or from the copy on your device for a translation you have downloaded. Chapter audio of the World English Bible is streamed from the Internet Archive.",
         "Historical source texts reproduced in the app come from public-domain editions, such as those published on Wikisource. Other works are cited and linked, not reproduced. Images are used under the licences stated by their owners, most of them from Wikimedia Commons, and are credited to their sources. Map data is © OpenStreetMap contributors (available under the Open Database License) and © OpenMapTiles, served by OpenFreeMap, with Natural Earth for low-zoom relief; satellite imagery is provided by Esri, Vantor, Earthstar Geographics and the GIS User Community.",
         "The Service links to many websites we do not control — museums, libraries, publishers, reference works and others. Those sites are their owners' responsibility, not ours, and their own terms and privacy policies apply when you visit them.",
       ],

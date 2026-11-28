@@ -3,6 +3,7 @@
 // the same request the app makes. Existing highlights stay in place only if the text is identical.
 //
 //   node scripts/bible-packs/verify-online.mjs [--sample 40] [--all] [--packs bible-packs]
+//   node scripts/bible-packs/verify-online.mjs --chapters "Luke 17,Esther 10"     (just those)
 //
 // bible-api.com allows 15 requests per 30 seconds: 40 chapters x 3 takes about 4 minutes, --all about
 // 2 hours. Writes nothing.
@@ -20,7 +21,10 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const chapters = BOOKS.flatMap((b, i) => Array.from({ length: b.chapters }, (_, c) => ({ book: i + 1, name: b.name, chapter: c + 1, single: b.chapters === 1 })));
 // An even spread through the canon, plus chapters that mix poetry, supplied words and superscriptions.
 const fixed = ["Genesis 1", "Exodus 20", "Psalms 3", "Psalms 119", "Isaiah 53", "Matthew 5", "John 3", "Romans 8", "Revelation 22"];
-const picked = all
+const only = arg("--chapters", "").split(",").map((s) => s.trim()).filter(Boolean);
+const named = chapters.filter((c) => only.includes(`${c.name} ${c.chapter}`));
+if (named.length !== only.length) { console.error("unknown chapter in --chapters"); process.exit(2); }
+const picked = only.length ? named : all
   ? chapters
   : [...new Set([...chapters.filter((c) => fixed.includes(`${c.name} ${c.chapter}`)), ...chapters.filter((_, i) => i % Math.ceil(chapters.length / Math.max(sample - fixed.length, 1)) === 7)])];
 

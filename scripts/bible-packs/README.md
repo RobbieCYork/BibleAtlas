@@ -7,9 +7,20 @@ app offers no downloads and no BSB, and reads from bible-api.com as before.
 
 **Never edit a file in `bible-packs/`.** Rebuild it from the source.
 
-## Adding the files (the final step)
+## What ships
 
-Each download needs Robbie's approval first. `sources.json` names the exact files.
+WEB, KJV and ASV. **The BSB is held:** the app has the wiring, but adding the translation has not been
+approved, so it has no pack, the app does not list it and the legal pages do not name it. Adding it
+means Robbie's yes, then step 2 with `--only bsb`, steps 4 and 5, and putting it back in section 8 of
+the Terms. Licence statements for every source are recorded in `sources.json`.
+
+The KJV source also carries the Apocrypha. Only the 66 books are packed; bible-api.com serves the
+same 66.
+
+## Adding or rebuilding the files
+
+Each download needs Robbie's approval first. `sources.json` names the exact files. WEB, KJV and ASV
+are outside the Wikisource-only rule by Robbie's approval of 2026-11-28.
 
 1. Put the approved files, unrenamed, in one empty folder outside the repository.
 2. `node scripts/bible-packs/build.mjs --from <that folder>`

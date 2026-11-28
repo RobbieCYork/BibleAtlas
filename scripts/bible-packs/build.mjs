@@ -15,7 +15,8 @@ const from = arg("--from");
 if (!from) { console.error("usage: build.mjs --from <folder> [--only web,kjv,asv,bsb] [--out bible-packs]"); process.exit(2); }
 const out = resolve(arg("--out", join(REPO, "bible-packs")));
 const sources = JSON.parse(readFileSync(join(REPO, "scripts/bible-packs/sources.json"), "utf8"));
-const wanted = arg("--only", Object.keys(sources).join(",")).split(",");
+// A source marked "held" is not approved to ship, so it is built only when named.
+const wanted = arg("--only", Object.keys(sources).filter((id) => !sources[id].held).join(",")).split(",");
 
 for (const id of wanted) {
   const source = sources[id];

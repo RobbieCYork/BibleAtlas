@@ -5,7 +5,14 @@
     "url": "https://raw.githubusercontent.com/seven1m/open-bibles/8b330654ade69f7c96268c761da18dc83a1f49b7/eng-web.usfx.xml",
     "publisher": "seven1m/open-bibles (the files bible-api.com is built from), pinned commit",
     "bytes": 6210746,
-    "gitBlobSha1": "c898213b278127896f583501b29ae09b89f3d009"
+    "gitBlobSha1": "c898213b278127896f583501b29ae09b89f3d009",
+    "licence": {
+      "status": "Public domain. \"World English Bible\" is a trademark of eBible.org: changed text may not use the name.",
+      "inFile": "Preface: \"Because the World English Bible is in the Public Domain (not copyrighted), it can be freely copied, distributed, and redistributed\"",
+      "repository": "open-bibles README at the pinned commit lists this file as \"Public Domain\".",
+      "publisherPage": "https://ebible.org/eng-web/copyright.htm : \"The World English Bible is in the Public Domain.\"",
+      "checked": "2026-11-28"
+    }
   },
   "kjv": {
     "file": "eng-kjv.osis.xml",
@@ -13,7 +20,14 @@
     "url": "https://raw.githubusercontent.com/seven1m/open-bibles/8b330654ade69f7c96268c761da18dc83a1f49b7/eng-kjv.osis.xml",
     "publisher": "seven1m/open-bibles (the files bible-api.com is built from), pinned commit",
     "bytes": 10096487,
-    "gitBlobSha1": "78eaf2001baca0c1dfa94dec8eaff2bf1bfa6132"
+    "gitBlobSha1": "78eaf2001baca0c1dfa94dec8eaff2bf1bfa6132",
+    "licence": {
+      "status": "Public domain outside the United Kingdom. In the UK, printing rights rest on Crown letters patent.",
+      "inFile": "OSIS header: \"This work is in the Public Domain. That means that it is not copyrighted.\" and \"This Crown Copyright has no effect outside of the UK\"",
+      "repository": "open-bibles README at the pinned commit lists this file as \"Public Domain\".",
+      "publisherPage": "https://ebible.org/eng-kjv/copyright.htm : \"This royal decree has no effect outside of the UK\"",
+      "checked": "2026-11-28"
+    }
   },
   "asv": {
     "file": "eng-asv.zefania.xml",
@@ -21,13 +35,27 @@
     "url": "https://raw.githubusercontent.com/seven1m/open-bibles/8b330654ade69f7c96268c761da18dc83a1f49b7/eng-asv.zefania.xml",
     "publisher": "seven1m/open-bibles (the files bible-api.com is built from), pinned commit",
     "bytes": 5239191,
-    "gitBlobSha1": "11ebc6beebb496702ff47e6959fb4e43655c7507"
+    "gitBlobSha1": "11ebc6beebb496702ff47e6959fb4e43655c7507",
+    "licence": {
+      "status": "Public domain (published 1901).",
+      "inFile": "No statement: the file's <rights> element is empty. Its header names FREE BIBLE SOFTWARE GROUP as publisher and unboundftp.biola.edu as source.",
+      "repository": "open-bibles README at the pinned commit lists this file as \"Public Domain\".",
+      "publisherPage": "https://ebible.org/eng-asv/copyright.htm : \"The American Standard Version of the Holy Bible is in the Public Domain.\" (eBible's edition, not necessarily this file)",
+      "checked": "2026-11-28"
+    }
   },
   "bsb": {
     "file": "bsb.txt",
     "format": "bsb-txt",
     "url": "https://bereanbible.com/bsb.txt",
     "publisher": "Berean Bible (the translation's publisher), linked from https://berean.bible/downloads.htm",
-    "bytes": 4331393
+    "bytes": 4331393,
+    "held": "Not approved to ship (Robbie approved the download, not adding the translation). build.mjs skips it unless named with --only.",
+    "licence": {
+      "status": "Publisher states the text was dedicated to the public domain on 2023-04-30; attribution appreciated, not required.",
+      "publisherPage": "https://berean.bible/terms.htm",
+      "inFile": "Not checked: the file has not been downloaded.",
+      "checked": "2026-11-28"
+    }
   }
 }

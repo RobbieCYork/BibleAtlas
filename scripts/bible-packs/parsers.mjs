@@ -159,7 +159,9 @@ export function osis(source) {
       if (name === "div") {
         if (mode === "verse") endVerse();
         if (a.type === "book") {
-          bookId = OSIS_MAP[a.osisID] ?? String(a.osisID).toUpperCase().slice(0, 3);
+          // Only the 66 books. The importer cuts an unknown id to three letters, which turns the
+          // KJV file's Apocrypha "EsthGr" into Esther; bible-api.com does not serve those verses.
+          bookId = OSIS_MAP[a.osisID] ?? null;
           mode = "book";
         }
       } else if (name === "chapter") {

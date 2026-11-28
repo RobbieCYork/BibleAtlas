@@ -254,7 +254,7 @@ export default async function (h) {
   h.assert(JSON.stringify(ids.filter((i) => i !== "walk")) === JSON.stringify(everyStep), `all steps in order (${ids.length}): ${ids.join(", ")}`);
   h.assert(all.every((s, i) => s.count === `Step ${i + 1} of ${all.length}`), "progress counts up");
   const text = all.map((s) => s.text).join(" ");
-  h.assert(!/friend|\bgroups?\b|\bmessages?\b|offline|reading plan/i.test(text), `nothing switched off or unbuilt is mentioned ${text.match(/friend|\bgroups?\b|\bmessages?\b|offline|reading plan/i)?.[0] ?? ""}`);
+  h.assert(!/friend|\bgroups?\b|\bmessages?\b|reading plan/i.test(text), `nothing switched off or unbuilt is mentioned ${text.match(/friend|\bgroups?\b|\bmessages?\b|reading plan/i)?.[0] ?? ""}`);
   console.log("  COPY:\n" + all.map((s) => `    [${s.id}] ${s.title}: ${s.body}`).join("\n"));
   h.assert((await h.text(".welcome-tour-next")) === "Done", "last step says Done");
   await h.click(".welcome-tour-next");

@@ -26,6 +26,13 @@ test("osis: milestone and wrapping verses, notes left out", () => {
   assert.deepEqual(at(osis(xml)), ['19 1:1 "Alpha is beta."', '19 1:2 "Gamma Delta."']);
 });
 
+test("osis: apocryphal books are left out, including the one whose id starts like Esther", () => {
+  const xml = `<?xml version="1.0"?><osis><osisText><div type="book" osisID="Esth"><chapter osisID="Esth.10">
+<verse osisID="Esth.10.3">Alpha.</verse></chapter></div><div type="book" osisID="EsthGr"><chapter osisID="EsthGr.10">
+<verse osisID="EsthGr.10.4">skip</verse></chapter></div></osisText></osis>`;
+  assert.deepEqual(at(osis(xml)), ['17 10:3 "Alpha."']);
+});
+
 test("zefania: text inside nested tags is kept, books numbered", () => {
   const xml = `<?xml version="1.0"?><XMLBIBLE><INFORMATION><format>Zefania XML Bible Markup Language</format></INFORMATION>
 <BIBLEBOOK bnumber="66" bname="Revelation"><CHAPTER cnumber="1"><VERS vnumber="1">  Alpha <STYLE css="i">beta</STYLE>&#8217;s. </VERS></CHAPTER></BIBLEBOOK></XMLBIBLE>`;
