@@ -25,13 +25,11 @@
  */
 
 // ── THE ONE PLACE THE OPERATOR'S LEGAL IDENTITY GOES ─────────────────────────────────────────────
-// When the company that operates Capstone Bible is formed, put its exact registered name (e.g.
-// "Example Name LLC, a Washington limited liability company") and its mailing address here. Both
-// documents read them from here and nowhere else. Never put a person's own name, home address or
-// personal email in this file.
-export const LEGAL_ENTITY: { name: string | null; mailingAddress: string | null } = {
-  name: null,
-  mailingAddress: null,
+// Both documents read the operator's name from here and nowhere else. Robbie decided on 2026-11-28
+// that NO mailing address is published: contact is by email only. Never put a person's own name,
+// home address or personal email in this file.
+export const LEGAL_ENTITY: { name: string } = {
+  name: "CAPSTONE DIGITAL LLC, a Washington limited liability company",
 };
 
 export const LEGAL_CONTACT_EMAIL = "admin@capstonebible.com";
@@ -56,9 +54,7 @@ export interface LegalDocument {
 
 const EMAIL = `[${LEGAL_CONTACT_EMAIL}](mailto:${LEGAL_CONTACT_EMAIL})`;
 
-const OPERATOR_SENTENCE = LEGAL_ENTITY.name
-  ? `Capstone Bible is operated by ${LEGAL_ENTITY.name}${LEGAL_ENTITY.mailingAddress ? `, ${LEGAL_ENTITY.mailingAddress}` : ""}.`
-  : "The legal name and mailing address of the business that operates Capstone Bible will be published here once it has been formed.";
+const OPERATOR_SENTENCE = `Capstone Bible is operated by ${LEGAL_ENTITY.name}.`;
 
 // ================================================================================================
 // TERMS OF SERVICE
