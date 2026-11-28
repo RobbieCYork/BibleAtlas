@@ -11,12 +11,17 @@
 //      and case-sensitive, in the WEB, the KJV and the ASV (so "Judea", which the KJV spells
 //      "Judaea", is never an answer);
 //   3. has a reveal verse taken from that record's OWN verse list in which the name occurs in all
-//      three translations. The verse text shipped is the WEB's, verbatim from the corpus.
-// Answers are ordered most-familiar first, measured as the number of WEB verses that use the name.
+//      three translations (or, where that list has none, the verse REF_OVERRIDES names for it,
+//      checked the same way). The verse text shipped is the WEB's, verbatim from the corpus.
+//   4. is on the recognition list in daily-name-curation.mjs (KEEP): a person or place an ordinary
+//      Bible reader would know. Every eligible record must be decided there, kept or removed.
+// Answers are ordered most-familiar first, measured as the number of WEB verses that use the name,
+// except that the puzzles already issued (PINNED) lead in their issued order.
 
 import { loadLinker } from "../name-linker/loadLinker.mjs";
 import fs from "node:fs";
 import path from "node:path";
+import { KEEP, PINNED, REF_OVERRIDES, REMOVE, WORD_OVERRIDES } from "./daily-name-curation.mjs";
 import { REPO_ROOT, expandReference, hasWord, loadCorpora, verseHasWordInAll, verseText, wordCounts } from "./lib.mjs";
 
 const OUT = path.join(REPO_ROOT, "src/data/dailyName.ts");
@@ -70,7 +75,7 @@ const claim = (word, key) => {
 // the same place, drawn on the map a second time.
 for (const [kind, list] of [["person", m.people], ["place", m.locations]]) {
   for (const r of list) {
-    const core = coreName(r.name);
+    const core = WORD_OVERRIDES[r.id] ?? coreName(r.name);
     if (core) claim(core, `${kind}:${r.id}`);
     for (const alt of r.alternateNames ?? []) {
       const c = coreName(alt);
@@ -80,12 +85,12 @@ for (const [kind, list] of [["person", m.people], ["place", m.locations]]) {
 }
 
 const RANK = { major: 0, significant: 1, notable: 2 };
-const answers = [];
+const eligible = [];
 const rejected = [];
 for (const r of [...people, ...places]) {
   // The answer word is the record's own display name when it is one word, else its first word when
   // that word is itself the familiar name (e.g. "Moses"); compound names are left out.
-  const w = coreName(r.name);
+  const w = WORD_OVERRIDES[r.id] ?? coreName(r.name);
   if (!w) {
     rejected.push(`${r.id}: no one-word name in "${r.name}"`);
     continue;
@@ -122,7 +127,8 @@ for (const r of [...people, ...places]) {
     continue;
   }
   let key = null;
-  for (const ref of r.verses) {
+  const ownRefs = REF_OVERRIDES[r.id] ? [REF_OVERRIDES[r.id]] : r.verses;
+  for (const ref of ownRefs) {
     const keys = expandReference(ref);
     key = keys.find((k) => verseHasWordInAll(k, w)) ?? null;
     if (key) break;
@@ -133,12 +139,34 @@ for (const r of [...people, ...places]) {
   }
   // Familiarity band: a person's own tier; a place by how often Scripture names it.
   const band = r.kind === "person" ? RANK[r.raw.tier] : web.total >= 40 ? 0 : web.total >= 10 ? 1 : 2;
-  answers.push({ word: W, kind: r.kind, id: r.id, label: r.name, ref: key, text: verseText(key, "web"), freq: web.total, band });
+  eligible.push({ word: W, kind: r.kind, id: r.id, label: r.name, ref: key, text: verseText(key, "web"), freq: web.total, band });
+}
+
+// ---------------------------------------------------------------- recognition list
+const problems = [];
+for (const id of Object.keys(KEEP)) if (id in REMOVE) problems.push(`${id} is in both KEEP and REMOVE`);
+const eligibleIds = new Set(eligible.map((a) => a.id));
+for (const id of Object.keys(KEEP)) if (!eligibleIds.has(id)) problems.push(`KEEP ${id} is no longer eligible — fix the record or move it to REMOVE with a reason`);
+for (const id of [...Object.keys(WORD_OVERRIDES), ...Object.keys(REF_OVERRIDES)]) if (!(id in KEEP)) problems.push(`override for ${id}, which is not in KEEP`);
+const answers = [];
+for (const a of eligible) {
+  if (a.id in KEEP) answers.push(a);
+  else if (a.id in REMOVE) rejected.push(`${a.id}: not recognised enough — ${REMOVE[a.id]}`);
+  else problems.push(`${a.id} ("${a.word}") is eligible but undecided — add it to KEEP or REMOVE in daily-name-curation.mjs`);
 }
 
 // Most familiar first: by band (a person's tier; a place by how often it is named), then by how
 // many verses use the name, then alphabetically, so the order never depends on data-file order.
 answers.sort((a, b) => a.band - b.band || b.freq - a.freq || a.word.localeCompare(b.word));
+// Puzzles already issued keep their numbers: PINNED leads, in order.
+{
+  const pinned = PINNED.map((w) => answers.find((a) => a.word === w));
+  PINNED.forEach((w, i) => {
+    if (!pinned[i]) problems.push(`PINNED ${w} (puzzle #${i + 1}) is not an answer — an issued day would change`);
+  });
+  const rest = answers.filter((a) => !PINNED.includes(a.word));
+  answers.splice(0, answers.length, ...pinned.filter(Boolean), ...rest);
+}
 
 // Guesses. Three sources, all names:
 //   - every word of every person's and place's name and alternate names in the app's data (church
@@ -174,24 +202,27 @@ for (const r of [...m.people, ...m.locations]) for (const w of nameWords(r)) gue
 const guesses = [...guessSet].sort();
 
 // ---------------------------------------------------------------- checks
-const problems = [];
 const seen = new Set();
 for (const a of answers) {
   if (seen.has(a.word)) problems.push(`duplicate answer ${a.word}`);
   seen.add(a.word);
   if (!hasWord(a.text, a.word[0] + a.word.slice(1).toLowerCase())) problems.push(`${a.word}: verse ${a.ref} does not contain it`);
 }
-// A full year without a repeat needs 365. The app's records give fewer one-word, identically
-// spelled, unambiguous names than that, so the schedule cycles (in a fresh order each cycle — see
-// dailyNameFor() in lib/dailyName.ts). Fail only if the pool shrinks noticeably.
-if (answers.length < 200) problems.push(`only ${answers.length} answers`);
+// A full year without a repeat needs 365. The app's records give fewer recognisable, one-word,
+// identically spelled, unambiguous names than that, so the schedule cycles (in a fresh order each
+// cycle — see answerForPuzzle() in lib/dailyName.ts). Fail only if the pool shrinks noticeably, or
+// if either kind drops so low that the game stops feeling varied.
+const nPeople = answers.filter((a) => a.kind === "person").length;
+if (answers.length < 140) problems.push(`only ${answers.length} answers`);
+if (nPeople < 80) problems.push(`only ${nPeople} people`);
 
 const banner = `/* GENERATED by scripts/games-data/daily-name.mjs — do not edit by hand; rerun the script.
  *
  * ${answers.length} answers (${answers.filter((a) => a.kind === "person").length} people, ${answers.filter((a) => a.kind === "place").length} places), ${MIN_LEN}-${MAX_LEN} letters, most familiar first.
  * ${guesses.length} accepted guesses. Every answer is spelled identically in the WEB, KJV and ASV,
- * belongs to exactly one person or place record, and its verse (WEB text, public domain) comes
- * from that record's own verse list and names it in all three translations. */
+ * belongs to exactly one person or place record, is on the recognition list in
+ * scripts/games-data/daily-name-curation.mjs, and its verse (WEB text, public domain) names it in
+ * all three translations. */
 `;
 const body = `${banner}
 export interface DailyNameAnswer {

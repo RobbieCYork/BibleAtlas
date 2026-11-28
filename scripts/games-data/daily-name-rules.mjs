@@ -60,6 +60,8 @@ eq(first, data.DAILY_NAME_ANSWERS.map((a) => a.word), "the first cycle runs in t
 const second = Array.from({ length: N }, (_, i) => dn.answerForPuzzle(N + i + 1).word);
 eq(new Set(second).size, N, "the second cycle also uses every name exactly once");
 eq(second.join() !== first.join(), true, "the second cycle is in a different order");
+// Issued puzzles never change (PINNED in daily-name-curation.mjs). #1-#3 were played 2026-11-26..28.
+eq([1, 2, 3, 4].map((n) => dn.answerForPuzzle(n).word), ["DAVID", "JESUS", "MOSES", "JERUSALEM"], "issued puzzles #1-#4 keep their answers");
 eq(dn.answerForPuzzle(N + 7).word, dn.answerForPuzzle(N + 7).word, "the schedule is deterministic");
 eq(data.DAILY_NAME_ANSWERS.every((a) => /^[A-Z]{4,9}$/.test(a.word)), true, "every answer is 4-9 capital letters");
 eq(data.DAILY_NAME_ANSWERS.every((a) => dn.isAcceptedGuess(a.word)), true, "every answer is an accepted guess");
