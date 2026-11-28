@@ -14828,6 +14828,104 @@ img.sn-image,
   color: var(--text);
 }
 
+/* The Users tab's growth line (RegisteredGrowthCard + GrowthLineChart). Chart chrome is the
+ * .growth-* rules; only what a line and two date boxes add is here. */
+.admin-growth-card {
+  min-width: 0;
+}
+
+.admin-growth-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.admin-growth-dates label {
+  display: flex;
+  flex: 1 1 140px;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 220px;
+  min-width: 0;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+/* 16px at least, or iOS Safari zooms the page when the box takes focus. */
+.admin-growth-dates input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 6px 8px;
+  font-family: var(--sans);
+  font-size: max(16px, calc(14px * var(--tsz, 1)));
+  color: var(--text-h);
+  background: var(--panel-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+}
+
+.admin-growth-dates input[aria-invalid="true"] {
+  border-style: dashed;
+  border-width: 2px;
+}
+
+.admin-growth-retry {
+  align-self: flex-start;
+  min-height: 32px;
+  padding: 4px 14px;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-h);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.growth-line {
+  fill: none;
+  stroke: var(--growth-series);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.growth-dot {
+  fill: var(--growth-series);
+  stroke: var(--panel-bg);
+  stroke-width: 2;
+}
+
+.growth-dot-active {
+  fill: var(--growth-series-hover);
+}
+
+.growth-crosshair {
+  stroke: var(--growth-axis);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+/* A sideways drag reads along the line; an up-and-down one still scrolls the page. On the <svg>
+ * itself: browsers ignore touch-action on the shapes inside one. */
+.growth-line-svg {
+  touch-action: pan-y;
+}
+
+.growth-line-hit {
+  cursor: crosshair;
+}
+
+/* No browser ring around the whole plot after a tap or click; the keyboard still gets .growth-hit's. */
+.growth-line-hit:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.growth-line-tooltip {
+  transform: none;
+}
+
 /* A verse sheet lifted above the on-screen keyboard (lib/onScreenKeyboard.ts sets the attribute, its
  * bottom and its max-height). It no longer touches the bottom of the screen, so the home-indicator
  * padding goes, and the note editor's quote and box give up height so Save stays on screen. */

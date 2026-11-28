@@ -11,6 +11,7 @@ import {
 } from "./adminApi";
 import { countReports, fetchAllCategories } from "./reportsApi";
 import type { GrowthBucket, GrowthPoint } from "./growthApi";
+import { addDays, type RegisteredHistory } from "./registeredGrowth";
 
 /* ============================================================================
  * USAGE REPORTS — the data behind the Admin Console's "Usage reports" graphs and the Users tab's
@@ -376,6 +377,50 @@ export async function fetchUsageReport(range: UsageRange, filters: UsageFilters,
     if (isMissingFunction(message)) return fromFallback(range, gameLabel);
     throw err;
   }
+}
+
+/* ----------------------------------------------------------------------------
+ * The Users tab's growth line: registered accounts over time.
+ *
+ * admin_usage_report's "accounts" running total with the team INCLUDED and guests left out — the same
+ * population admin_registered_summary() counts, so the newest total equals the card's number. One
+ * daily "since the first account" call answers every range on the client. No fallback: without 054
+ * there is no honest per-day history of the same definition.
+ * -------------------------------------------------------------------------- */
+async function accountRows(bucket: "day" | "week"): Promise<RawUsageRow[]> {
+  const { data, error } = await supabase
+    .rpc("admin_usage_report", {
+      p_bucket: bucket,
+      p_periods: 0,
+      p_tz: viewerTimeZone(),
+      p_exclude_team: false,
+      p_include_guests: false,
+    })
+    // Only these rows are wanted, and asking for them alone keeps the answer under PostgREST's row cap.
+    .eq("metric", "accounts");
+  if (error) {
+    const message = `${error.code ? `${error.code}: ` : ""}${error.message}`;
+    throw new Error(isMissingFunction(message) ? NEEDS_DB_STEP : message);
+  }
+  return ((data ?? []) as RawUsageRow[])
+    .filter((r) => r.metric === "accounts")
+    .sort((a, b) => a.period_start.localeCompare(b.period_start));
+}
+
+export async function fetchRegisteredHistory(): Promise<RegisteredHistory> {
+  const daily = await accountRows("day");
+  const last = daily[daily.length - 1];
+  if (!last) throw new Error("The database sent no account counts.");
+  const firstDate = last.history_from?.slice(0, 10) ?? null;
+  let counts = daily.map((r) => ({ through: r.period_start, total: toNum(r.cumulative) }));
+  // The function answers at most 730 buckets. Once the app is older than that, weeks fill in the start.
+  if (firstDate && daily[0].period_start > firstDate) {
+    const older = (await accountRows("week"))
+      .map((r) => ({ through: addDays(r.period_start, 6), total: toNum(r.cumulative) }))
+      .filter((c) => c.through < daily[0].period_start);
+    counts = [...older, ...counts];
+  }
+  return { counts, firstDate, today: last.period_start };
 }
 
 /* ----------------------------------------------------------------------------

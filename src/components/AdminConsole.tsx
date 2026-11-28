@@ -30,6 +30,7 @@ import AdminAddUser from "./AdminAddUser";
 import GrowthPanel from "./GrowthPanel";
 import UsageReportsPanel from "./UsageReportsPanel";
 import RegisteredAccountsCard from "./RegisteredAccountsCard";
+import RegisteredGrowthCard from "./RegisteredGrowthCard";
 import ModerationQueuePanel from "./ModerationQueuePanel";
 import ReportsDashboard from "./ReportsDashboard";
 import type { Role } from "../lib/reportsApi";
@@ -358,6 +359,7 @@ export default function AdminConsole({ reports }: { reports?: AdminConsoleReport
               "Continue as Guest" is retired and an anonymous session only ever reaches the sign-in gate
               (showAuthGate in App.tsx). Their old rows stay in the database, untouched, and are left out. */}
           <RegisteredAccountsCard overview={overview} guests={guests} />
+          <RegisteredGrowthCard />
           {/* Above the search box: an invitation, never a password (see AdminAddUser). On success the
               list is re-searched for the new address so the row is right there. */}
           <AdminAddUser

@@ -37,10 +37,10 @@ import { formatDuration } from "../lib/adminApi";
  * so 60 columns don't become 60 tab stops.
  * ========================================================================== */
 
-const H = 220;
-const PAD_T = 18;
+export const H = 220;
+export const PAD_T = 18;
 const PAD_B = 26;
-const PLOT_H = H - PAD_T - PAD_B;
+export const PLOT_H = H - PAD_T - PAD_B;
 const MAX_BAR = 24; // never fill the slot — the leftover band is air, per the mark spec
 const GAP = 2; // the surface gap that separates neighbours instead of a border
 
@@ -131,7 +131,7 @@ export function chartLayout(width: number, values: number[]) {
 /** The rendered width of the chart, so the SVG can draw at 1:1. Starts at a
  *  sensible desktop width so the first paint isn't a 0-wide chart, then tracks
  *  the container — including the admin sheet being resized or rotated. */
-function useMeasuredWidth(initial = 640) {
+export function useMeasuredWidth(initial = 640) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState(initial);
   useLayoutEffect(() => {
