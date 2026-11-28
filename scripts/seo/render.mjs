@@ -107,6 +107,7 @@ blockquote cite{display:block;margin-top:4px;font-size:14px;font-style:normal;co
 .cite-tier{display:inline-block;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:1px 6px;border:1px solid var(--rule);border-radius:4px;color:var(--muted);margin-right:6px;font-family:Archivo,sans-serif}
 .cite-supports{display:block;font-size:13.5px;font-style:italic;color:var(--muted)}
 figure{margin:16px 0}
+figure.likeness{margin:28px auto 0}
 figure img{width:100%;height:auto;border-radius:10px;display:block;background:var(--rule)}
 figcaption{font-size:13.5px;color:var(--muted);margin-top:6px;font-family:Archivo,sans-serif}
 .cta{margin:44px 0 0;padding:18px 20px;border:1px solid var(--rule);background:var(--card);border-radius:14px;box-shadow:var(--shadow)}
@@ -430,6 +431,19 @@ const manuscriptFacts = (m) =>
     ["Facsimile", m.facsimileUrl ? extLink(m.facsimileUrl, "View the manuscript") : ""],
   ]);
 
+/** A person's likeness, below Dig Deeper: the same allow-list the app reads (data/personLikeness.ts).
+ * Fills the column up to the file's own pixel width and a height limit, centred, never cropped. The
+ * page's social preview image is not affected. */
+const likenessFigure = (img) => {
+  if (!img) return "";
+  const ratio = img.width / img.height;
+  return `<figure class="likeness" style="max-width:min(100%,${img.width}px,calc(${ratio.toFixed(4)} * min(600px,75vh)))"><img src="${esc(
+    img.src
+  )}" alt="${esc(img.alt)}" width="${img.width}" height="${img.height}" loading="lazy" decoding="async"><figcaption>${esc(
+    img.caption
+  )} ${extLink(img.sourceUrl, img.credit)}</figcaption></figure>`;
+};
+
 const heading = (title, kicker, sub) =>
   `${kicker ? `<p class="kicker">${esc(kicker)}</p>` : ""}<h1>${esc(title)}</h1>${
     sub ? `<p class="sub">${sub}</p>` : ""
@@ -663,6 +677,7 @@ export function personPage(person, ctx) {
         ? subsection("Questions and debates", paras(person.controversies, person.id, ctx))
         : ""
     ),
+    likenessFigure(ctx.personLikeness.likenessImage(person.id)),
     // Never for a modern person, and never a default sentence: data/personEvidence.ts, the same rule
     // the app applies.
     !ctx.personEvidence.showsHistoricalEvidence(person)

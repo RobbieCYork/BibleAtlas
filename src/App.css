@@ -13638,21 +13638,15 @@ img.sn-image,
 .profile-view-toggle,
 .legend-toggle { padding-top: 0; padding-bottom: 0; }
 
-/* --- Person portrait / artwork figure (PersonPanel) ---
-   Portrait and square images float to the right of the summary so the text wraps around them
-   (no dead strip beside a tall icon); landscape images go full width under the summary. Width
-   is derived from the image's own aspect ratio (--img-ratio) and a height cap, so the box is
-   reserved before the file loads (no layout shift), nothing is upscaled past its real pixels
-   (--img-native), and a very tall picture cannot push the text off a phone. */
-.person-lead {
-  display: flow-root;
-  container-type: inline-size;
-  --fig-max-h: min(300px, 42svh);
+/* --- A person's likeness (PersonPanel), below Dig Deeper ---
+   Fills the article's width, up to the file's own pixel width (never stretched past it) and a height
+   limit that keeps a tall portrait on one screen. Width follows from the image's aspect ratio
+   (--img-ratio), so nothing is cropped or distorted; a narrower picture is centred. */
+.person-likeness {
+  width: min(100%, var(--img-native), calc(var(--img-ratio) * min(600px, 75svh)));
+  margin: 22px auto 0;
 }
-.person-figure {
-  margin: 12px 0 4px;
-}
-.person-figure img {
+.person-likeness img {
   display: block;
   width: 100%;
   height: auto;
@@ -13661,24 +13655,14 @@ img.sn-image,
   border: 1px solid var(--border);
   box-sizing: border-box;
 }
-.person-figure--beside {
-  float: right;
-  clear: right;
-  margin: 12px 0 8px 14px;
-  width: min(clamp(118px, 40cqw, 230px), calc(var(--img-ratio) * var(--fig-max-h)), var(--img-native));
-}
-.person-figure--wide {
-  width: min(100%, calc(var(--img-ratio) * var(--fig-max-h)), var(--img-native));
-}
-.person-figure figcaption {
+.person-likeness figcaption {
   margin-top: 6px;
   font-size: calc(11.5px * var(--tsz, 1));
   line-height: 1.4;
   color: var(--text-muted, var(--text));
-  opacity: 0.85;
   overflow-wrap: anywhere;
 }
-.person-figure figcaption a {
+.person-likeness figcaption a {
   display: inline-block;
   padding: 6px 0;
   color: inherit;

@@ -32,6 +32,7 @@ export * as legalDocuments from ${JSON.stringify(path.join(REPO_ROOT, "src/data/
 export * as aboutContent from ${JSON.stringify(path.join(REPO_ROOT, "src/data/aboutPage"))};
 export * as datingDebate from ${JSON.stringify(path.join(REPO_ROOT, "src/data/datingDebate"))};
 export * as personEvidence from ${JSON.stringify(path.join(REPO_ROOT, "src/data/personEvidence"))};
+export * as personLikeness from ${JSON.stringify(path.join(REPO_ROOT, "src/data/personLikeness"))};
 `;
 
 let cached = null;

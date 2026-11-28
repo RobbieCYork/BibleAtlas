@@ -9,7 +9,10 @@
  * Every image is self-hosted (public/people/<id>.webp, max 800px, lazy-loaded) and came from
  * Wikimedia Commons under a licence verified on the file's own page: public domain, PD-US,
  * PD-Art / PD-old, or CC0. Nothing under CC BY-SA, NC or ND. `verified` is the date the licence
- * was checked. A person absent from this map simply renders with no image.
+ * was checked.
+ *
+ * Being listed here does NOT put a picture on an article: only the ids in personLikeness.ts are
+ * shown, below the article's body. Everyone else renders with no image.
  */
 export interface PersonImage {
   /** Site-relative path of the self-hosted WebP. */
