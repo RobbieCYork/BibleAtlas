@@ -17,8 +17,9 @@
    *     to standalone, and why it is `svh` and not `lvh`/`vh`/`%` that is safe unconditionally.
    *     When the toolbar collapses, --app-height (dvh, tracked live) grows past this and `height`
    *     wins, so db2f52d's toolbar tracking is untouched.
-   *   • In an installed standalone app there is no retractable UI at all, so svh, lvh and dvh are
-   *     all the same number: the whole screen. The floor is therefore exactly the full window.
+   *   • In an installed standalone app there is no retractable UI at all, so this floor can never
+   *     be too tall. It is not always the whole screen: the iPhone home-screen app can report svh
+   *     short by the top safe-area inset, which index.css corrects at the root element.
    *
    * And it is inert against the keyboard: index.html declares interactive-widget=resizes-visual, so
    * the on-screen keyboard resizes only the VISUAL viewport, never the layout viewport that svh is

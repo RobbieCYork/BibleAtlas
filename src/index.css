@@ -283,6 +283,38 @@ body {
   width: 100%;
 }
 
+/* The empty band below the bottom tab bar in the iPhone home-screen app.
+ *
+ * Measured in the installed app (iOS 27.2, 402x874 screen, status bar `black-translucent` with
+ * viewport-fit=cover): the page is drawn from the very top of the screen, but the viewport it is laid
+ * out in is 812 tall, short by exactly the 62px top safe-area inset. innerHeight, clientHeight,
+ * visualViewport, 100%, svh and dvh all said 812, so nothing built from them could reach the bottom;
+ * only 100vh / lvh and screen.height said 874. Making the root element taller than that short viewport
+ * by the missing inset makes WebKit lay everything out at 874, fixed-position sheets included.
+ *
+ * Opened while the phone is held sideways, the same app laid out 340 tall on a 402 screen: short by
+ * the same 62, which by then is reported on the left and right edges and not the top. Hence the
+ * largest of those three insets: it is the sensor-housing measurement wherever that currently sits.
+ *
+ * Each term guards the other. `100% + inset` adds nothing where there is no such inset (portrait
+ * with a status bar that is not translucent), and `100vh` stops it growing past the screen where the
+ * viewport is already the full height. -webkit-touch-callout exists only on iOS WebKit, and
+ * display-mode: standalone excludes Safari tabs, so nothing else reads this. `:root` outranks the
+ * `html { height: 100% }` above wherever the two files land in the bundle. */
+@supports (-webkit-touch-callout: none) {
+  @media (display-mode: standalone) {
+    :root {
+      height: min(
+        100vh,
+        calc(
+          100% +
+            max(env(safe-area-inset-top, 0px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px))
+        )
+      );
+    }
+  }
+}
+
 /* Headings are the display face. Cormorant Garamond runs optically small and light for its nominal
  * size, so it takes a slightly heavier weight and a tighter line than the sans it replaces. */
 h1,
