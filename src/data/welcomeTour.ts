@@ -308,6 +308,22 @@ export const TOUR_STEPS = [
     ],
   },
   {
+    id: "social",
+    icon: "players",
+    title: "Friends, Groups and Messages",
+    body: "Add friends, start a group, and send messages, all from your profile. Every message, post and profile has a flag control to report it or block the person. Safety & Contact, in the account menu, explains how.",
+    phone: { path: [{ tab: "social" }, { icon: "players", label: "Friends" }] },
+    desktop: { path: [MENU_CHIP, { icon: "players", label: "Social" }], hint: "starting at the top left" },
+    anchors: { phone: ["tab-social", "menu"], desktop: ["menu"] },
+    names: [
+      { file: "components/MyProfileView.tsx", text: '<Icon name="players" inline /> Friends' },
+      { file: "components/MyProfileView.tsx", text: '<Icon name="groups" inline /> Groups' },
+      { file: "components/MyProfileView.tsx", text: '<Icon name="messages" inline /> Messages' },
+      { file: "components/PanelMenu.tsx", text: 'friends: "Social"' },
+      { file: "components/AuthButton.tsx", text: '<Icon name="shield" inline /> Safety &amp; Contact' },
+    ],
+  },
+  {
     id: "reading",
     icon: "check",
     title: "Track your reading",
@@ -429,7 +445,7 @@ type CodeSwitch = {
 export const SWITCH_COVERAGE: {
   [K in CodeSwitch]: (typeof Features)[K] extends false ? { off: string } : TourCoverage;
 } = {
-  SOCIAL_CONNECTIONS_ENABLED: { off: "Friends, Groups and Messages are switched off." },
+  SOCIAL_CONNECTIONS_ENABLED: "social",
   ARCHAEOLOGY_MENU_ROW_VISIBLE: { off: "No menu row; Archaeology is named in the Articles step." },
   READING_PLANS_ENABLED: { off: "Reading Plans are switched off." },
   CUSTOM_MAP_FOR_EVERYONE: { off: "The Custom Map builder is shown to the owner only until it is released, so the tour does not mention it." },
@@ -459,7 +475,7 @@ export const MENU_COVERAGE: Record<
   notes: "notes",
   articles: "articles",
   social: "profile",
-  friends: { skip: "Switched off (SOCIAL_CONNECTIONS_ENABLED)." },
+  friends: "social",
   games: "games",
   archaeology: "articles",
   tour: "done",
@@ -470,7 +486,7 @@ export const MENU_COVERAGE: Record<
   admin: { skip: "Administrators only." },
   "reading-plans": { skip: "Switched off (READING_PLANS_ENABLED)." },
   report: "report",
-  safety: { skip: "Switched off (SOCIAL_CONNECTIONS_ENABLED)." },
+  safety: "social",
   "sign-out": { skip: "Needs no explaining." },
 };
 

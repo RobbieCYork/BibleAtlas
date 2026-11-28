@@ -18,6 +18,13 @@ import BackButton from "./BackButton";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 
+/** add_group_member() and create_group() refuse anyone who is not the caller's accepted friend, or
+ * who is blocked either way (sql/056), with an exception whose message starts "not_friend:". A group
+ * reaches everyone else only through the invite link, which an admin still has to approve. */
+const NOT_FRIEND_MESSAGE =
+  "You can only add your friends to a group. To bring in someone else, send them a friend request, or copy the invite link above and send it to them so they can ask to join.";
+const isNotFriendError = (e: { message?: string } | null | undefined): boolean => !!e?.message?.includes("not_friend");
+
 type Screen = "list" | "create" | "detail";
 type DetailTab = "chat" | "members";
 
@@ -304,7 +311,11 @@ export default function GroupsPanel({
     }
     setCreating(false);
     if (error || !data) {
-      setCreateError("Couldn't create the group — try again.");
+      setCreateError(
+        error && isNotFriendError(error)
+          ? "You can only add your friends to a group. Remove anyone who isn't your friend any more, then try again."
+          : "Couldn't create the group — try again.",
+      );
       return;
     }
     await fetchGroups();
@@ -363,7 +374,7 @@ export default function GroupsPanel({
     const { error: addErr } = await supabase.rpc("add_group_member", { p_group_id: activeGroupId, p_member_id: foundId });
     setAddingMember(false);
     if (addErr) {
-      setAddMemberStatus("Couldn't add them — they may already be a member.");
+      setAddMemberStatus(isNotFriendError(addErr) ? NOT_FRIEND_MESSAGE : "Couldn't add them — they may already be a member.");
       return;
     }
     setAddMemberStatus("Added!");
@@ -380,7 +391,7 @@ export default function GroupsPanel({
     const { error: addErr } = await supabase.rpc("add_group_member", { p_group_id: activeGroupId, p_member_id: friendId });
     setAddingMember(false);
     if (addErr) {
-      setAddMemberStatus("Couldn't add them — they may already be a member.");
+      setAddMemberStatus(isNotFriendError(addErr) ? NOT_FRIEND_MESSAGE : "Couldn't add them — they may already be a member.");
       return;
     }
     setAddMemberStatus("Added!");
@@ -633,7 +644,7 @@ export default function GroupsPanel({
                     type="text"
                     value={addMemberContact}
                     onChange={(e) => setAddMemberContact(e.target.value)}
-                    placeholder="Add by email or phone"
+                    placeholder="Add a friend by email or phone"
                     required
                   />
                   <button type="submit" disabled={addingMember || !addMemberContact.trim()}>

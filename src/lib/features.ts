@@ -42,25 +42,30 @@ import { supabase } from "./supabase";
 /* ============================================================================
  * SOCIAL CONNECTIONS — Friends, Groups, Messages (and the Church tab that lives beside them)
  * ----------------------------------------------------------------------------
- * ONE code-level switch, deliberately NOT a feature_release row: there is no database change, no
- * migration and nothing to apply to production. Robbie, 2026-11-15: remove Friends, Groups and
- * Messages for everyone, owner included, in Live AND Test view, but keep all the code; "not going to
- * build it out right this moment".
+ * ONE code-level switch, deliberately NOT a feature_release row. Robbie, 2026-11-15: remove Friends,
+ * Groups and Messages for everyone, owner included, in Live AND Test view, but keep all the code; "not
+ * going to build it out right this moment". Robbie, 2026-11-28: switch them back on.
  *
- *   false (today): every entry point is gone, and none of the feature's side effects run — no
+ * 🚨 Do not ship `true` to a database without sql/056 applied. Before 056, add_group_member() and
+ * create_group() put ANY account id into a group with no friendship or block check — a block did not
+ * stop someone forcing the person who blocked them into a group they named, again and again.
+ *
+ *   false:         every entry point is gone, and none of the feature's side effects run — no
  *                  Social panel, no Friends/Groups/Messages links, no Message button on a profile,
  *                  no friend-request/message toasts, badges or unread counts, no Realtime
  *                  subscriptions or count queries, no "?invite=" / "?joinGroup=" / "?joinChurch="
  *                  handling (those query strings are simply stripped), no header people-search
  *                  (its only job was finding people to open in the Friends profile view).
- *   true:          everything returns exactly as it was. Flip this one constant and rebuild.
+ *   true (today):  everything returns exactly as it was, plus "Add member" on a group refuses anyone
+ *                  who is not your friend (sql/056; GroupsPanel says why). When flipping, also revisit
+ *                  data/legalDocuments.ts (Terms §3/§5, Privacy §1/§2/§4/§8) and the welcome tour.
  *
  * The friends / messages / group tables and every row in them are untouched either way. Posts,
  * Newsfeed, notes, the prayer list, My Profile, account deletion and the Admin Console do not depend
  * on this switch. (Newsfeed still reads the accepted friend rows it always has, so existing friends'
  * public posts keep showing there; that is Posts, not Friends.)
  * ========================================================================== */
-export const SOCIAL_CONNECTIONS_ENABLED = false;
+export const SOCIAL_CONNECTIONS_ENABLED = true;
 
 /** Archaeology's row in the two hamburger menus (MobileNavMenu on a phone, PanelMenu's "Go to" group on
  * desktop). Robbie, 2026-11-15: hide it. HIDE ONLY — the Archaeology screen, its data, `openArchaeology`

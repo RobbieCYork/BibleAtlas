@@ -254,7 +254,12 @@ export default async function (h) {
   h.assert(JSON.stringify(ids.filter((i) => i !== "walk")) === JSON.stringify(everyStep), `all steps in order (${ids.length}): ${ids.join(", ")}`);
   h.assert(all.every((s, i) => s.count === `Step ${i + 1} of ${all.length}`), "progress counts up");
   const text = all.map((s) => s.text).join(" ");
-  h.assert(!/friend|\bgroups?\b|\bmessages?\b|reading plan/i.test(text), `nothing switched off or unbuilt is mentioned ${text.match(/friend|\bgroups?\b|\bmessages?\b|reading plan/i)?.[0] ?? ""}`);
+  h.assert(!/reading plan/i.test(text), `nothing switched off or unbuilt is mentioned ${text.match(/reading plan/i)?.[0] ?? ""}`);
+  // SOCIAL_CONNECTIONS_ENABLED is on: Friends / Groups / Messages have their own step, and only that step names them.
+  const social = all.find((s) => s.id === "social");
+  h.assert(!!social && /Friends, Groups and Messages/.test(social.text), "the Friends, Groups and Messages step is shown");
+  const rest = all.filter((s) => s.id !== "social").map((s) => s.text).join(" ");
+  h.assert(!/friend|\bgroups?\b|\bmessages?\b/i.test(rest), `no other step names Friends / Groups / Messages ${rest.match(/friend|\bgroups?\b|\bmessages?\b/i)?.[0] ?? ""}`);
   console.log("  COPY:\n" + all.map((s) => `    [${s.id}] ${s.title}: ${s.body}`).join("\n"));
   h.assert((await h.text(".welcome-tour-next")) === "Done", "last step says Done");
   await h.click(".welcome-tour-next");
