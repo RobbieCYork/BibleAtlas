@@ -1,5 +1,5 @@
 import type { Topic, TopicSection } from "../types";
-import type { BeliefRecord, BeliefSourceKind } from "./types";
+import type { BeliefPoint, BeliefRecord, BeliefSourceKind } from "./types";
 import { christianTraditions } from "./denominations";
 import { worldReligions } from "./religions";
 
@@ -24,6 +24,14 @@ export const SOURCE_KIND_LABELS: Record<BeliefSourceKind, string> = {
   encyclopedic: "Encyclopedia",
 };
 
+/** The inline "Scripture cited by ..." sentence after a belief, or nothing. The references are
+ * written out in full so LinkedVerseText (app) and ctx.linkify (public pages) turn each one into a
+ * verse link, the same as a reference anywhere else in an article. */
+const scriptureNote = (p: BeliefPoint): string =>
+  p.scripture && p.scripture.refs.length > 0
+    ? ` Scripture cited by ${p.scripture.citedIn}: ${p.scripture.refs.join("; ")}.`
+    : "";
+
 const section = (heading: string, paragraphs: string[] | undefined): TopicSection[] =>
   paragraphs && paragraphs.length > 0 ? [{ heading, paragraphs }] : [];
 
@@ -44,7 +52,7 @@ export function beliefToTopic(b: BeliefRecord): Topic {
     ...section("What makes it distinctive", b.distinctives),
     ...section(
       "Basic beliefs",
-      b.beliefs.map((p) => `${p.label}: ${p.statement}`),
+      b.beliefs.map((p) => `${p.label}: ${p.statement}${scriptureNote(p)}`),
     ),
     ...section("How it understands Jesus", b.viewOfJesus),
     ...section("Worship and practice", b.practices),

@@ -99,6 +99,24 @@ export interface BeliefPoint {
   label: string;
   /** Stated as the tradition states it. */
   statement: string;
+  /**
+   * Scripture the body ITSELF cites for this belief (Robbie, 2026-11-28: "add biblical references
+   * in next to beliefs for different denominations"), shown inline after the statement as
+   * "Scripture cited by <citedIn>: ..." so the verses link like any other reference in the app.
+   *
+   * Never the app's own choice of proof texts: every reference must appear in `url` — the body's
+   * confession, catechism, articles or official site — against this belief, and is logged with that
+   * source in automation/manager/denomination-references.md. Where a body's own citation for a
+   * belief cannot be verified, leave this out. Write each reference with its full book name
+   * ("Romans 3:24; Romans 8:30", not "Romans 3:24; 8:30") or the linker will miss it. Christian
+   * traditions only; never on a `noBibleLinks` record.
+   */
+  scripture?: {
+    refs: string[];
+    /** Names the source as a reader should see it: "the Baptist Faith and Message 2000 (Article I)". */
+    citedIn: string;
+    url: string;
+  };
 }
 
 export interface BeliefRecord {

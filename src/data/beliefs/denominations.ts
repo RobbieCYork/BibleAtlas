@@ -56,36 +56,43 @@ export const christianTraditions: BeliefRecord[] = [
         label: "God",
         statement:
           "One God in three Persons, Father, Son and Holy Spirit, as confessed in the Nicene Creed and defined by the early ecumenical councils.",
+        scripture: { refs: ["Matthew 28:19"], citedIn: "the Catechism of the Catholic Church (232)", url: "https://www.vatican.va/archive/ENG0015/__P17.HTM" },
       },
       {
         label: "Christ",
         statement:
           "Jesus Christ is true God and true man, one Person in two natures (Council of Chalcedon, 451), who died for the sins of the world and rose bodily from the dead.",
+        scripture: { refs: ["John 1:14", "Philippians 2:5-8"], citedIn: "the Catechism of the Catholic Church (461)", url: "https://www.vatican.va/archive/ENG0015/__P1J.HTM" },
       },
       {
         label: "Authority",
         statement:
           "Scripture and Tradition form one sacred deposit of the word of God, entrusted to the Church and authentically interpreted by the Magisterium.",
+        scripture: { refs: ["1 Timothy 6:20", "2 Timothy 1:12-14"], citedIn: "the Catechism of the Catholic Church (84)", url: "https://www.vatican.va/archive/ENG0015/__PM.HTM" },
       },
       {
         label: "Justification",
         statement:
           "Justification is God's free gift, received first in baptism, by which grace is not merely credited but poured into the soul, making the person truly righteous. The Council of Trent (Session VI, 1547) taught that no one can merit the grace of justification, and that by grace the justified grow in holiness and can merit the increase of grace and eternal life. The Catechism treats this at paragraphs 1987-2029.",
+        scripture: { refs: ["Romans 3:21-26", "Romans 6:3-4"], citedIn: "the Catechism of the Catholic Church (1987, 1992)", url: "https://www.vatican.va/archive/ENG0015/__P6Y.HTM" },
       },
       {
         label: "Sacraments",
         statement:
           "Seven sacraments instituted by Christ confer the grace they signify. In the Eucharist the bread and wine become the Body and Blood of Christ, a change the Church calls transubstantiation, and the Mass makes present the one sacrifice of Christ on the cross.",
+        scripture: { refs: ["Matthew 26:26", "Mark 14:22", "Luke 22:19", "1 Corinthians 11:23", "Hebrews 7:24", "Hebrews 7:27"], citedIn: "the Catechism of the Catholic Church (1366, 1376)", url: "https://www.vatican.va/archive/ENG0015/__P41.HTM" },
       },
       {
         label: "Mary and the saints",
         statement:
           "Mary is honoured as Mother of God (Council of Ephesus, 431), ever-virgin, conceived without original sin (defined 1854) and assumed body and soul into heavenly glory (defined 1950). The Church distinguishes the worship given to God alone (latria) from the honour given to the saints (dulia) and the special honour given to Mary (hyperdulia), and asks the saints' prayers.",
+        scripture: { refs: ["Luke 1:28", "Luke 1:43"], citedIn: "the Catechism of the Catholic Church (491, 495)", url: "https://www.vatican.va/archive/ENG0015/__P1K.HTM" },
       },
       {
         label: "Last things",
         statement:
           "After death comes judgment. Those who die in God's grace but are still imperfectly purified undergo purification, called purgatory, before entering heaven. Christ will return, the dead will be raised, and God's kingdom will be fulfilled.",
+        scripture: { refs: ["1 Corinthians 3:15", "1 Peter 1:7", "2 Maccabees 12:46"], citedIn: "the Catechism of the Catholic Church (1031-1032)", url: "https://www.vatican.va/archive/ENG0015/__P2N.HTM" },
       },
     ],
     practices: [
@@ -169,13 +176,13 @@ export const christianTraditions: BeliefRecord[] = [
       "Salvation is described as theosis, or deification: by grace, through union with Christ in the Church and the sacraments, human beings come to share in the life of God, becoming by grace what God is by nature. Orthodox writers use the language of healing and transformation more than the legal language that shaped Western debates.",
     ],
     beliefs: [
-      { label: "God", statement: "One God in three Persons. Orthodox theology stresses the Father as the one source of the Son and the Spirit, and rejects the Western addition of filioque (and the Son) to the Nicene Creed." },
-      { label: "Christ", statement: "The eternal Son became fully human without ceasing to be God, as defined by the ecumenical councils, so that humanity might be united to God." },
-      { label: "Authority", statement: "Holy Tradition, the life of the Holy Spirit in the Church, includes Scripture as its supreme written expression, together with the creeds, the councils, the Fathers and the liturgy. The seven ecumenical councils (325-787) are authoritative." },
-      { label: "Salvation", statement: "Salvation is the healing and deification of the whole person by God's grace, received in faith and worked out in a life of repentance, prayer and the sacraments." },
-      { label: "Sacraments", statement: "The holy mysteries, commonly counted as seven, include baptism by triple immersion, chrismation (anointing) given immediately after baptism, and the Eucharist, in which the bread and wine truly become the Body and Blood of Christ." },
+      { label: "God", statement: "One God in three Persons. Orthodox theology stresses the Father as the one source of the Son and the Spirit, and rejects the Western addition of filioque (and the Son) to the Nicene Creed.", scripture: { refs: ["John 15:26"], citedIn: "the Orthodox Church in America's The Orthodox Faith", url: "https://www.oca.org/orthodoxy/the-orthodox-faith/doctrine-scripture/the-symbol-of-faith/holy-spirit" } },
+      { label: "Christ", statement: "The eternal Son became fully human without ceasing to be God, as defined by the ecumenical councils, so that humanity might be united to God.", scripture: { refs: ["John 1:14", "Philippians 2:6-8", "Hebrews 2:14-17"], citedIn: "the Orthodox Church in America's The Orthodox Faith", url: "https://www.oca.org/orthodoxy/the-orthodox-faith/doctrine-scripture/the-symbol-of-faith/incarnation" } },
+      { label: "Authority", statement: "Holy Tradition, the life of the Holy Spirit in the Church, includes Scripture as its supreme written expression, together with the creeds, the councils, the Fathers and the liturgy. The seven ecumenical councils (325-787) are authoritative.", scripture: { refs: ["2 Timothy 3:16", "2 Peter 1:20"], citedIn: "the Orthodox Church in America's The Orthodox Faith", url: "https://www.oca.org/orthodoxy/the-orthodox-faith/doctrine-scripture/sources-of-christian-doctrine/bible1" } },
+      { label: "Salvation", statement: "Salvation is the healing and deification of the whole person by God's grace, received in faith and worked out in a life of repentance, prayer and the sacraments.", scripture: { refs: ["2 Peter 1:4"], citedIn: "the Orthodox Church in America (a reflection on deification published on oca.org)", url: "https://www.oca.org/reflections/berzonsky/his-most-precious-promise" } },
+      { label: "Sacraments", statement: "The holy mysteries, commonly counted as seven, include baptism by triple immersion, chrismation (anointing) given immediately after baptism, and the Eucharist, in which the bread and wine truly become the Body and Blood of Christ.", scripture: { refs: ["Galatians 3:27", "2 Corinthians 1:21-22", "John 6:51"], citedIn: "the Orthodox Church in America's The Orthodox Faith", url: "https://www.oca.org/orthodoxy/the-orthodox-faith/worship/the-sacraments" } },
       { label: "Mary and the saints", statement: "Mary is honoured as Theotokos (God-bearer) and ever-virgin, and the saints are venerated and asked to pray. The Orthodox do not accept the Catholic dogma of the Immaculate Conception, though they honour Mary as all-holy." },
-      { label: "Last things", statement: "Christ will return to judge the living and the dead; the dead will be raised. The Orthodox pray for the departed but do not teach purgatory as the Catholic Church defines it." },
+      { label: "Last things", statement: "Christ will return to judge the living and the dead; the dead will be raised. The Orthodox pray for the departed but do not teach purgatory as the Catholic Church defines it.", scripture: { refs: ["Acts 1:11", "Hebrews 9:28", "1 Thessalonians 4:16-17"], citedIn: "the Orthodox Church in America's The Orthodox Faith", url: "https://www.oca.org/orthodoxy/the-orthodox-faith/doctrine-scripture/the-symbol-of-faith/judgment" } },
     ],
     practices: [
       "Orthodox Christians keep a demanding cycle of fasts, including Great Lent before Pascha (Easter), and mark the year by twelve great feasts. Several churches still calculate Pascha by the Julian calendar, so it often falls on a different date from Western Easter.",
@@ -417,11 +424,11 @@ export const christianTraditions: BeliefRecord[] = [
     ],
     beliefs: [
       { label: "God and Christ", statement: "The Trinity and the person of Christ as confessed in the Apostles', Nicene and Athanasian creeds." },
-      { label: "Scripture", statement: "The prophetic and apostolic Scriptures are the only rule and norm by which all teachers and teachings are to be judged (Formula of Concord)." },
-      { label: "Justification", statement: "Human beings cannot be justified before God by their own strength or works, but are freely justified for Christ's sake through faith (Augsburg Confession, Article IV). Lutherans have long called it the article on which the church stands or falls." },
-      { label: "Baptism", statement: "Baptism is necessary and is given to infants, in whom God works faith and new birth." },
-      { label: "The Lord's Supper", statement: "The true body and blood of Christ are truly present and distributed to those who eat (Augsburg Confession, Article X)." },
-      { label: "Vocation", statement: "Every Christian serves God in ordinary callings of family, work and citizenship, and all the baptised share the priesthood of believers." },
+      { label: "Scripture", statement: "The prophetic and apostolic Scriptures are the only rule and norm by which all teachers and teachings are to be judged (Formula of Concord).", scripture: { refs: ["Psalms 119:105", "Galatians 1:8"], citedIn: "the Formula of Concord (Epitome, Rule and Norm)", url: "https://bookofconcord.org/epitome/" } },
+      { label: "Justification", statement: "Human beings cannot be justified before God by their own strength or works, but are freely justified for Christ's sake through faith (Augsburg Confession, Article IV). Lutherans have long called it the article on which the church stands or falls.", scripture: { refs: ["Romans 3", "Romans 4"], citedIn: "the Augsburg Confession (Article IV)", url: "https://bookofconcord.org/augsburg-confession/" } },
+      { label: "Baptism", statement: "Baptism is necessary and is given to infants, in whom God works faith and new birth.", scripture: { refs: ["Matthew 28:19", "Mark 16:16", "Titus 3:5-8", "Romans 6:4"], citedIn: "Luther's Small Catechism (Baptism)", url: "https://bookofconcord.org/small-catechism/" } },
+      { label: "The Lord's Supper", statement: "The true body and blood of Christ are truly present and distributed to those who eat (Augsburg Confession, Article X).", scripture: { refs: ["Mark 14:23", "1 Corinthians 10:16"], citedIn: "the Formula of Concord (Epitome, Article VII)", url: "https://bookofconcord.org/epitome/" } },
+      { label: "Vocation", statement: "Every Christian serves God in ordinary callings of family, work and citizenship, and all the baptised share the priesthood of believers.", scripture: { refs: ["Romans 13:1-4", "Ephesians 6:1-4", "Colossians 3:22"], citedIn: "Luther's Small Catechism (Table of Duties)", url: "https://bookofconcord.org/small-catechism/" } },
     ],
     practices: [
       "Lutheran worship keeps the historic liturgy, the church year, vestments and frequently weekly communion, with preaching of law and gospel at its centre. Congregational hymn singing, from Luther's own hymns to the chorales of J. S. Bach, is one of the tradition's great gifts.",
@@ -499,12 +506,12 @@ export const christianTraditions: BeliefRecord[] = [
       "Presbyterians read Scripture through the covenants God has made with his people. This covenant theology shapes their practice of baptising the children of believers as members of the covenant community, as circumcision marked the children of Israel.",
     ],
     beliefs: [
-      { label: "God and Christ", statement: "The Trinity and the person of Christ as confessed in the creeds and the Reformed confessions." },
-      { label: "Scripture", statement: "The books of the Old and New Testaments are the Word of God, given by inspiration of God to be the rule of faith and life (Westminster Confession 1.2)." },
-      { label: "Salvation", statement: "Salvation is by grace alone through faith alone in Christ alone; those whom God effectually calls he justifies, adopts, sanctifies and keeps to the end." },
-      { label: "Sacraments", statement: "Two sacraments, baptism and the Lord's Supper. Infants of believers are baptised. In the Supper Christ is spiritually present and received by faith." },
-      { label: "The church", statement: "Christ alone is head of the church, governing it through presbyters chosen by the people." },
-      { label: "The Christian life", statement: "All of life is lived to the glory of God; the Westminster Shorter Catechism's first answer says that man's chief end is to glorify God and to enjoy him forever." },
+      { label: "God and Christ", statement: "The Trinity and the person of Christ as confessed in the creeds and the Reformed confessions.", scripture: { refs: ["Matthew 3:16-17", "Matthew 28:19", "2 Corinthians 13:14", "John 1:14", "Colossians 2:9"], citedIn: "the Westminster Confession (2.3, 8.2) in the PCA's edition with Scripture proofs", url: "https://www.pcaac.org/wp-content/uploads/2022/04/WCFScripureProofs2022.pdf" } },
+      { label: "Scripture", statement: "The books of the Old and New Testaments are the Word of God, given by inspiration of God to be the rule of faith and life (Westminster Confession 1.2).", scripture: { refs: ["Luke 24:27", "Luke 24:44", "2 Timothy 3:15-16"], citedIn: "the Westminster Confession (1.2) in the PCA's edition with Scripture proofs", url: "https://www.pcaac.org/wp-content/uploads/2022/04/WCFScripureProofs2022.pdf" } },
+      { label: "Salvation", statement: "Salvation is by grace alone through faith alone in Christ alone; those whom God effectually calls he justifies, adopts, sanctifies and keeps to the end.", scripture: { refs: ["Romans 8:30", "Romans 3:24", "John 10:28-29", "Philippians 1:6"], citedIn: "the Westminster Confession (11.1, 17.1) in the PCA's edition with Scripture proofs", url: "https://www.pcaac.org/wp-content/uploads/2022/04/WCFScripureProofs2022.pdf" } },
+      { label: "Sacraments", statement: "Two sacraments, baptism and the Lord's Supper. Infants of believers are baptised. In the Supper Christ is spiritually present and received by faith.", scripture: { refs: ["Matthew 28:19", "1 Corinthians 11:23", "Acts 2:38-39", "Colossians 2:11-12", "1 Corinthians 10:16"], citedIn: "the Westminster Confession (27.4, 28.4, 29.7) in the PCA's edition with Scripture proofs", url: "https://www.pcaac.org/wp-content/uploads/2022/04/WCFScripureProofs2022.pdf" } },
+      { label: "The church", statement: "Christ alone is head of the church, governing it through presbyters chosen by the people.", scripture: { refs: ["Colossians 1:18", "Ephesians 1:22"], citedIn: "the Westminster Confession (25.6) in the PCA's edition with Scripture proofs", url: "https://www.pcaac.org/wp-content/uploads/2022/04/WCFScripureProofs2022.pdf" } },
+      { label: "The Christian life", statement: "All of life is lived to the glory of God; the Westminster Shorter Catechism's first answer says that man's chief end is to glorify God and to enjoy him forever.", scripture: { refs: ["1 Corinthians 10:31", "Romans 11:36", "Psalms 16:5-11"], citedIn: "the Westminster Shorter Catechism (Question 1) in the PCA's edition with Scripture proofs", url: "https://www.pcaac.org/wp-content/uploads/2026/09/ShorterCatechismwithScriptureProofs.pdf" } },
     ],
     practices: [
       "Worship centres on the reading and preaching of Scripture, with prayer, psalms and hymns and the regular celebration of the Lord's Supper. Traditional Presbyterian worship is shaped by the regulative principle, the conviction that worship should include only what Scripture commands or warrants; some churches sing only psalms.",
@@ -579,11 +586,11 @@ export const christianTraditions: BeliefRecord[] = [
       "The church has ordained women since its founding, and its early leaders combined holiness preaching with ministry among the poor of American cities.",
     ],
     beliefs: [
-      { label: "God and Christ", statement: "One God, Father, Son and Holy Spirit; Jesus Christ fully God and fully man." },
-      { label: "Scripture", statement: "The Holy Scriptures are given by divine inspiration, inerrantly revealing the will of God concerning us in all things necessary to our salvation." },
-      { label: "Salvation", statement: "Justification, regeneration and adoption are received by faith in Christ, made possible by prevenient grace offered to all." },
-      { label: "Entire sanctification", statement: "A second, definite work of grace in which the heart is cleansed from original sin and filled with perfect love (1 Thessalonians 5:23)." },
-      { label: "Sacraments", statement: "Baptism, which may be by sprinkling, pouring or immersion and may be given to infants, and the Lord's Supper." },
+      { label: "God and Christ", statement: "One God, Father, Son and Holy Spirit; Jesus Christ fully God and fully man.", scripture: { refs: ["Deuteronomy 6:4-5", "Matthew 28:19-20", "John 1:1-18", "Philippians 2:5-11"], citedIn: "the Articles of Faith in the church's Manual (I, II)", url: "https://web.archive.org/web/20250326154658/https://nazarene.org/sites/default/files/2024-10/ArticlesOfFaith(English).pdf" } },
+      { label: "Scripture", statement: "The Holy Scriptures are given by divine inspiration, inerrantly revealing the will of God concerning us in all things necessary to our salvation.", scripture: { refs: ["Luke 24:44-47", "2 Timothy 3:15-17", "2 Peter 1:20-21"], citedIn: "the Articles of Faith in the church's Manual (IV)", url: "https://web.archive.org/web/20250326154658/https://nazarene.org/sites/default/files/2024-10/ArticlesOfFaith(English).pdf" } },
+      { label: "Salvation", statement: "Justification, regeneration and adoption are received by faith in Christ, made possible by prevenient grace offered to all.", scripture: { refs: ["Romans 3:21-26", "Romans 5:1", "Ephesians 2:8-10", "Titus 2:11-14"], citedIn: "the Articles of Faith in the church's Manual (VII, IX)", url: "https://web.archive.org/web/20250326154658/https://nazarene.org/sites/default/files/2024-10/ArticlesOfFaith(English).pdf" } },
+      { label: "Entire sanctification", statement: "A second, definite work of grace in which the heart is cleansed from original sin and filled with perfect love (1 Thessalonians 5:23).", scripture: { refs: ["Acts 15:8-9", "Romans 12:1-2", "1 John 1:7"], citedIn: "the Articles of Faith in the church's Manual (X)", url: "https://web.archive.org/web/20250326154658/https://nazarene.org/sites/default/files/2024-10/ArticlesOfFaith(English).pdf" } },
+      { label: "Sacraments", statement: "Baptism, which may be by sprinkling, pouring or immersion and may be given to infants, and the Lord's Supper.", scripture: { refs: ["Matthew 28:16-20", "Acts 2:37-41", "Matthew 26:26-29", "1 Corinthians 11:23-32"], citedIn: "the Articles of Faith in the church's Manual (XII, XIII)", url: "https://web.archive.org/web/20250326154658/https://nazarene.org/sites/default/files/2024-10/ArticlesOfFaith(English).pdf" } },
       { label: "Holy living", statement: "Members commit to a covenant of Christian character and conduct, historically including abstinence from alcohol and tobacco." },
     ],
     practices: [
@@ -661,13 +668,13 @@ export const christianTraditions: BeliefRecord[] = [
       "Cooperation is funded mainly through the Cooperative Program, begun in 1925, which supports the International Mission Board, the North American Mission Board, six seminaries and other ministries.",
     ],
     beliefs: [
-      { label: "Scripture", statement: "The Holy Bible was written by men divinely inspired and is God's revelation of himself to man; it has truth, without any mixture of error, for its matter (Baptist Faith and Message 2000, Article I)." },
-      { label: "God and Christ", statement: "One God, eternally existing as Father, Son and Holy Spirit; Jesus Christ the eternal Son, fully God and fully man, who died for sin and rose bodily." },
-      { label: "Salvation", statement: "Salvation is offered freely to all who accept Jesus Christ as Lord and Saviour, and is by grace through faith (Ephesians 2:8-9). Southern Baptists hold that genuine believers will never fall away." },
-      { label: "The church", statement: "A New Testament church is an autonomous local congregation of baptised believers. The office of pastor is limited to men as qualified by Scripture." },
-      { label: "Ordinances", statement: "Believer's baptism by immersion and the Lord's Supper as a memorial of Christ's death." },
-      { label: "Family and life", statement: "Marriage is the union of one man and one woman in covenant commitment for a lifetime; human life is sacred from conception." },
-      { label: "Mission", statement: "It is the duty of every Christian and every church to make disciples of all nations (Matthew 28:19-20)." },
+      { label: "Scripture", statement: "The Holy Bible was written by men divinely inspired and is God's revelation of himself to man; it has truth, without any mixture of error, for its matter (Baptist Faith and Message 2000, Article I).", scripture: { refs: ["2 Timothy 3:15-17", "2 Peter 1:19-21", "John 17:17"], citedIn: "the Baptist Faith and Message 2000 (Article I)", url: "https://bfm.sbc.net/bfm2000/" } },
+      { label: "God and Christ", statement: "One God, eternally existing as Father, Son and Holy Spirit; Jesus Christ the eternal Son, fully God and fully man, who died for sin and rose bodily.", scripture: { refs: ["Deuteronomy 6:4", "Matthew 28:19", "John 1:1-18", "Philippians 2:5-11", "1 Corinthians 15:1-8"], citedIn: "the Baptist Faith and Message 2000 (Article II)", url: "https://bfm.sbc.net/bfm2000/" } },
+      { label: "Salvation", statement: "Salvation is offered freely to all who accept Jesus Christ as Lord and Saviour, and is by grace through faith (Ephesians 2:8-9). Southern Baptists hold that genuine believers will never fall away.", scripture: { refs: ["John 3:3-21", "Acts 4:12", "Romans 10:9-10"], citedIn: "the Baptist Faith and Message 2000 (Article IV)", url: "https://bfm.sbc.net/bfm2000/" } },
+      { label: "The church", statement: "A New Testament church is an autonomous local congregation of baptised believers. The office of pastor is limited to men as qualified by Scripture.", scripture: { refs: ["Acts 2:41-42", "Acts 14:23", "1 Timothy 2:9-14", "1 Timothy 3:1-15"], citedIn: "the Baptist Faith and Message 2000 (Article VI)", url: "https://bfm.sbc.net/bfm2000/" } },
+      { label: "Ordinances", statement: "Believer's baptism by immersion and the Lord's Supper as a memorial of Christ's death.", scripture: { refs: ["Matthew 28:19-20", "Romans 6:3-5", "Colossians 2:12", "1 Corinthians 11:23-29"], citedIn: "the Baptist Faith and Message 2000 (Article VII)", url: "https://bfm.sbc.net/bfm2000/" } },
+      { label: "Family and life", statement: "Marriage is the union of one man and one woman in covenant commitment for a lifetime; human life is sacred from conception.", scripture: { refs: ["Genesis 2:15-25", "Matthew 19:3-9", "Psalms 139:13-16"], citedIn: "the Baptist Faith and Message 2000 (Article XVIII)", url: "https://bfm.sbc.net/bfm2000/" } },
+      { label: "Mission", statement: "It is the duty of every Christian and every church to make disciples of all nations (Matthew 28:19-20).", scripture: { refs: ["Acts 1:8", "Romans 10:13-15"], citedIn: "the Baptist Faith and Message 2000 (Article XI)", url: "https://bfm.sbc.net/bfm2000/" } },
     ],
     practices: [
       "Worship is centred on preaching, congregational singing and prayer, often closing with an invitation to respond to the gospel. Many churches celebrate the Lord's Supper monthly or quarterly. Sunday school and small-group Bible study are traditional strengths.",
@@ -742,10 +749,10 @@ export const christianTraditions: BeliefRecord[] = [
     beliefs: [
       { label: "God and Christ", statement: "The Trinity and the person of Christ as confessed in the historic creeds and in the church's Articles of Religion and Confession of Faith." },
       { label: "Scripture", statement: "Scripture contains all things necessary to salvation and is the primary source and criterion for Christian doctrine, read with tradition, experience and reason (often called the Wesleyan Quadrilateral)." },
-      { label: "Salvation", statement: "Salvation is by grace through faith, offered to all; Christ died for all people, and grace can be resisted." },
-      { label: "Sacraments", statement: "Two sacraments, baptism (given to infants and adults) and Holy Communion, with Christ really present in Communion; the table is open to all who seek Christ." },
-      { label: "Sanctification", statement: "Believers are called to grow in grace toward perfection in love in this life." },
-      { label: "Social holiness", statement: "Faith is expressed in works of mercy and justice." },
+      { label: "Salvation", statement: "Salvation is by grace through faith, offered to all; Christ died for all people, and grace can be resisted.", scripture: { refs: ["Romans 5:8", "Ephesians 2:8"], citedIn: "the United Methodist Church (Our Wesleyan Heritage, umc.org)", url: "https://www.umc.org/en/content/our-wesleyan-heritage" } },
+      { label: "Sacraments", statement: "Two sacraments, baptism (given to infants and adults) and Holy Communion, with Christ really present in Communion; the table is open to all who seek Christ.", scripture: { refs: ["Matthew 28:19", "Acts 16:15", "Acts 16:33", "Luke 24:30"], citedIn: "the United Methodist Church's official statements By Water and the Spirit and This Holy Mystery", url: "https://www.umc.org/en/content/by-water-and-the-spirit-a-united-methodist-understanding-of-baptism" } },
+      { label: "Sanctification", statement: "Believers are called to grow in grace toward perfection in love in this life.", scripture: { refs: ["Matthew 5:48"], citedIn: "the United Methodist Church (Ask The UMC, umc.org)", url: "https://www.umc.org/content/what-did-john-wesley-mean-by-moving-on-to-perfection" } },
+      { label: "Social holiness", statement: "Faith is expressed in works of mercy and justice.", scripture: { refs: ["Matthew 7:15-20", "James 2:17"], citedIn: "the United Methodist Church (Our Wesleyan Heritage, umc.org)", url: "https://www.umc.org/en/content/our-wesleyan-heritage" } },
     ],
     practices: [
       "Worship ranges from liturgical services using the United Methodist Hymnal and Book of Worship to contemporary styles. Hymn singing is central. Many congregations run food pantries and support disaster relief through the United Methodist Committee on Relief, and Methodists founded many schools, colleges and hospitals.",
@@ -816,13 +823,13 @@ export const christianTraditions: BeliefRecord[] = [
       "Expectant, expressive worship, with raised hands, spontaneous prayer and openness to the gifts, is characteristic, though styles vary widely. The fellowship has credentialed women as ministers from its early years.",
     ],
     beliefs: [
-      { label: "Scripture", statement: "The Scriptures, Old and New Testaments, are verbally inspired of God and are the revelation of God to man, the infallible, authoritative rule of faith and conduct." },
-      { label: "God and Christ", statement: "One true God revealed as Father, Son and Holy Spirit; the deity of Jesus Christ, his virgin birth, sinless life, miracles, atoning death and bodily resurrection." },
-      { label: "Salvation", statement: "Salvation is received through repentance toward God and faith toward the Lord Jesus Christ, by grace." },
-      { label: "Ordinances", statement: "Water baptism by immersion of believers, and the Lord's Supper." },
-      { label: "Baptism in the Holy Spirit", statement: "A distinct experience available to all believers, evidenced initially by speaking in tongues." },
-      { label: "Healing", statement: "Deliverance from sickness is provided for in the atonement and is the privilege of all believers." },
-      { label: "Last things", statement: "The imminent return of Christ to gather the church (the rapture), followed by his visible return and millennial reign; eternal judgment." },
+      { label: "Scripture", statement: "The Scriptures, Old and New Testaments, are verbally inspired of God and are the revelation of God to man, the infallible, authoritative rule of faith and conduct.", scripture: { refs: ["2 Timothy 3:15-17", "1 Thessalonians 2:13", "2 Peter 1:21"], citedIn: "the Statement of Fundamental Truths (1)", url: "https://ag.org/beliefs/statement-of-fundamental-truths" } },
+      { label: "God and Christ", statement: "One true God revealed as Father, Son and Holy Spirit; the deity of Jesus Christ, his virgin birth, sinless life, miracles, atoning death and bodily resurrection.", scripture: { refs: ["Deuteronomy 6:4", "Matthew 28:19", "Matthew 1:23", "1 Corinthians 15:3-4"], citedIn: "the Statement of Fundamental Truths (2, 3)", url: "https://ag.org/beliefs/statement-of-fundamental-truths" } },
+      { label: "Salvation", statement: "Salvation is received through repentance toward God and faith toward the Lord Jesus Christ, by grace.", scripture: { refs: ["Luke 24:47", "John 3:3", "Ephesians 2:8", "Titus 3:5-7"], citedIn: "the Statement of Fundamental Truths (5)", url: "https://ag.org/beliefs/statement-of-fundamental-truths" } },
+      { label: "Ordinances", statement: "Water baptism by immersion of believers, and the Lord's Supper.", scripture: { refs: ["Matthew 28:19", "Romans 6:4", "1 Corinthians 11:26"], citedIn: "the Statement of Fundamental Truths (6)", url: "https://ag.org/beliefs/statement-of-fundamental-truths" } },
+      { label: "Baptism in the Holy Spirit", statement: "A distinct experience available to all believers, evidenced initially by speaking in tongues.", scripture: { refs: ["Acts 1:8", "Acts 8:12-17", "Acts 2:4"], citedIn: "the Statement of Fundamental Truths (7, 8)", url: "https://ag.org/beliefs/statement-of-fundamental-truths" } },
+      { label: "Healing", statement: "Deliverance from sickness is provided for in the atonement and is the privilege of all believers.", scripture: { refs: ["Isaiah 53:4-5", "Matthew 8:16-17", "James 5:14-16"], citedIn: "the Statement of Fundamental Truths (12)", url: "https://ag.org/beliefs/statement-of-fundamental-truths" } },
+      { label: "Last things", statement: "The imminent return of Christ to gather the church (the rapture), followed by his visible return and millennial reign; eternal judgment.", scripture: { refs: ["1 Thessalonians 4:16-17", "Revelation 20:1-6", "Revelation 20:11-15"], citedIn: "the Statement of Fundamental Truths (13, 14, 15)", url: "https://ag.org/beliefs/statement-of-fundamental-truths" } },
     ],
     practices: [
       "Services combine contemporary worship, preaching and altar times for prayer, where people seek salvation, Spirit baptism and healing. Missions are a defining priority: the US fellowship has sent missionaries since its first years, and most of its worldwide adherents are outside North America.",
@@ -974,13 +981,13 @@ export const christianTraditions: BeliefRecord[] = [
       "Health is part of discipleship. Adventists avoid alcohol, tobacco and the meats Leviticus calls unclean, and many are vegetarian; the church runs one of the largest Protestant health care and education systems in the world.",
     ],
     beliefs: [
-      { label: "Scripture", statement: "The Holy Scriptures are the infallible revelation of God's will and the standard by which all teaching and experience must be tested." },
-      { label: "God and Christ", statement: "One God, a unity of three co-eternal Persons; Jesus Christ is fully God and fully human." },
-      { label: "Salvation", statement: "Salvation is by grace through faith in Christ alone, whose life and death are the only means of atonement." },
-      { label: "The Sabbath", statement: "The seventh-day Sabbath is God's perpetual sign of his covenant, to be kept by all Christians." },
-      { label: "The gift of prophecy", statement: "The gift of prophecy was manifested in the ministry of Ellen G. White, whose writings Adventists regard as an authoritative source of counsel, while holding that the Bible is the standard by which all teaching is tested." },
-      { label: "Death and resurrection", statement: "The dead are unconscious until they are raised at Christ's return; the wicked will ultimately be destroyed." },
-      { label: "The second coming", statement: "The literal, personal, visible return of Christ is near." },
+      { label: "Scripture", statement: "The Holy Scriptures are the infallible revelation of God's will and the standard by which all teaching and experience must be tested.", scripture: { refs: ["Psalms 119:105", "John 17:17", "2 Timothy 3:16-17", "2 Peter 1:20-21"], citedIn: "the 28 Fundamental Beliefs (1)", url: "https://www.adventist.org/beliefs/official/holy-scriptures" } },
+      { label: "God and Christ", statement: "One God, a unity of three co-eternal Persons; Jesus Christ is fully God and fully human.", scripture: { refs: ["Deuteronomy 6:4", "Matthew 28:19", "John 1:1-3", "John 1:14", "Philippians 2:5-11"], citedIn: "the 28 Fundamental Beliefs (2, 4)", url: "https://www.adventist.org/beliefs/official/son" } },
+      { label: "Salvation", statement: "Salvation is by grace through faith in Christ alone, whose life and death are the only means of atonement.", scripture: { refs: ["Romans 3:21-26", "Ephesians 2:4-10", "1 John 2:2"], citedIn: "the 28 Fundamental Beliefs (9, 10)", url: "https://www.adventist.org/beliefs/official/experience-of-salvation" } },
+      { label: "The Sabbath", statement: "The seventh-day Sabbath is God's perpetual sign of his covenant, to be kept by all Christians.", scripture: { refs: ["Genesis 2:1-3", "Exodus 20:8-11", "Exodus 31:13-17"], citedIn: "the 28 Fundamental Beliefs (20)", url: "https://www.adventist.org/beliefs/official/the-sabbath" } },
+      { label: "The gift of prophecy", statement: "The gift of prophecy was manifested in the ministry of Ellen G. White, whose writings Adventists regard as an authoritative source of counsel, while holding that the Bible is the standard by which all teaching is tested.", scripture: { refs: ["Joel 2:28-29", "Revelation 12:17", "Revelation 19:10"], citedIn: "the 28 Fundamental Beliefs (18)", url: "https://www.adventist.org/beliefs/official/gift-of-prophecy" } },
+      { label: "Death and resurrection", statement: "The dead are unconscious until they are raised at Christ's return; the wicked will ultimately be destroyed.", scripture: { refs: ["Ecclesiastes 9:5-6", "John 5:28-29", "1 Thessalonians 4:13-17", "Revelation 20:1-10"], citedIn: "the 28 Fundamental Beliefs (26)", url: "https://www.adventist.org/beliefs/official/death-and-resurrection" } },
+      { label: "The second coming", statement: "The literal, personal, visible return of Christ is near.", scripture: { refs: ["John 14:1-3", "Acts 1:9-11", "Titus 2:13", "Revelation 1:7"], citedIn: "the 28 Fundamental Beliefs (25)", url: "https://www.adventist.org/beliefs/official/second-coming" } },
     ],
     practices: [
       "Sabbath begins with worship at sunset on Friday; Saturday includes Sabbath School (Bible study) and a worship service. Baptism is by immersion of believers. Communion is held quarterly and includes foot washing, following John 13.",
