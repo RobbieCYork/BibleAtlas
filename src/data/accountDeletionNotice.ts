@@ -73,7 +73,7 @@ export const DELETED_FOR_GOOD: DeletionNoticeLine[] = [
   },
   {
     label: "Any issue reports you filed",
-    detail: "The reports you sent us about a mistake in the app, and any votes you cast on other people's reports.",
+    detail: "The reports you sent us about a mistake in the app, any screenshots you attached to them, and any votes you cast on other people's reports.",
   },
 ];
 
