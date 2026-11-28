@@ -233,6 +233,7 @@ try {
     if (phone) await p.h.click({ css: ".mobile-tab", text: "Games" });
     else { await p.h.click(MENU_BUTTON); await p.h.click({ css: ".panel-menu-link", text: "Games" }); }
     await p.h.waitFor(".game-center-card");
+    p.tagline = await p.h.evaluate(() => [...document.querySelectorAll(".game-center-card")].find((c) => c.textContent.includes("20 Questions"))?.querySelector(".game-center-card-tagline")?.textContent ?? null);
     await p.h.click({ css: ".game-center-card", text: "20 Questions" });
   };
   /** Selects the guess-list option whose name is exactly `name` (scrolled into view first). */
@@ -263,6 +264,7 @@ try {
   await A.h.waitFor('input[name="tq-category"]');
   assert(!(await A.h.exists(".game-entry-card")), "20 Questions opens on its solo category screen, no Play solo / Create / Join");
   assert(!rpcLog.length, "no room rpc was called");
+  assert(A.tagline && !/friends|multiplayer/i.test(A.tagline), `Game Center tagline stays solo before 057 (${A.tagline})`);
 
   multiplayerOn = true;
   const B = await player("advisor");
@@ -274,6 +276,7 @@ try {
   await openGames(A);
   await A.h.waitFor(".game-entry-card");
   const choices = await A.h.evaluate(() => [...document.querySelectorAll(".game-entry-card .game-center-card-title")].map((e) => e.textContent.trim()));
+  assert(/taking turns with friends/.test(A.tagline ?? ""), `Game Center tagline mentions multiplayer after 057 (${A.tagline})`);
   assert(choices.join("|") === "Play solo|Create multiplayer game|Join multiplayer game", `first screen: ${choices.join(" / ")}`);
   await A.h.click({ css: ".game-entry-card", text: "Play solo" });
   await A.h.waitFor('input[name="tq-category"]');

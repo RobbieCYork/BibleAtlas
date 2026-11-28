@@ -1,6 +1,7 @@
 import { track } from "../lib/analytics";
 import { useFeatures, type GameFeatureKey } from "../lib/features";
 import Icon, { type IconName } from "./Icon";
+import { useTwentyQMultiplayerEnabled } from "../lib/twentyQuestionsMultiplayer";
 import { TestingMarker } from "./FeatureRelease";
 
 export interface GameDef {
@@ -12,6 +13,9 @@ export interface GameDef {
   icon: IconName;
   title: string;
   tagline: string;
+  /** Shown instead of `tagline` once this game's multiplayer database step is applied (20 Questions:
+   * sql/057, asked through lib/twentyQuestionsMultiplayer.ts). Until then the solo wording stands. */
+  multiplayerTagline?: string;
 }
 
 /** The list of playable games — structured as a list from the start so adding another is just
@@ -65,6 +69,7 @@ export const GAMES: GameDef[] = [
     icon: "twentyQuestions",
     title: "20 Questions",
     tagline: "A secret person, place or thing from the Bible — find it in twenty yes-or-no questions.",
+    multiplayerTagline: "A secret person, place or thing from the Bible — find it in twenty yes-or-no questions, solo or taking turns with friends.",
   },
 ];
 
@@ -80,6 +85,7 @@ const GAME_FEATURE_KEYS = GAMES.map((g) => g.feature);
 export default function GameCenter({ onSelectGame }: GameCenterProps) {
   const stages = useFeatures(GAME_FEATURE_KEYS);
   const shown = GAMES.filter((g) => stages[g.feature].visible);
+  const tqMultiplayer = useTwentyQMultiplayerEnabled();
   return (
     <div className="game-center">
       <div className="game-center-list">
@@ -103,7 +109,7 @@ export default function GameCenter({ onSelectGame }: GameCenterProps) {
                 {g.title}
                 <TestingMarker show={stages[g.feature].inTesting} />
               </span>
-              <span className="game-center-card-tagline">{g.tagline}</span>
+              <span className="game-center-card-tagline">{g.multiplayerTagline && tqMultiplayer ? g.multiplayerTagline : g.tagline}</span>
             </span>
             <span className="game-center-card-chevron" aria-hidden="true">
               ›
