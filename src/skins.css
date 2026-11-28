@@ -685,7 +685,8 @@ html[data-skin="skyreader"] button { font-family: var(--sans); }
 }
 :where(html[data-skin] .myprofile-body button:not([class]):disabled) { opacity: 0.55; }
 html[data-skin] .bible-panel-header h3,
-html[data-skin] .myprofile-title { line-height: 1.5; padding-block: 0.12em; }
+html[data-skin] .myprofile-title,
+html[data-skin] .social-title { line-height: 1.5; padding-block: 0.12em; }
 
 /* ---------------------------------------------------------------- TRAILHEAD
  * Warm cream ground, forest green, sunny yellow. Lexend everywhere (designed for reading fluency),

@@ -330,9 +330,9 @@ export const TOUR_STEPS = [
     desktop: { path: [MENU_CHIP, { icon: "players", label: "Social" }], hint: "starting at the top left" },
     anchors: { phone: ["tab-social", "menu"], desktop: ["menu"] },
     names: [
-      { file: "components/MyProfileView.tsx", text: '<Icon name="players" inline /> Friends' },
-      { file: "components/MyProfileView.tsx", text: '<Icon name="groups" inline /> Groups' },
-      { file: "components/MyProfileView.tsx", text: '<Icon name="messages" inline /> Messages' },
+      { file: "components/ViewSwitcher.tsx", text: 'icon: "players", label: "Friends"' },
+      { file: "components/ViewSwitcher.tsx", text: 'icon: "groups", label: "Groups"' },
+      { file: "components/ViewSwitcher.tsx", text: 'icon: "messages", label: "Messages"' },
       { file: "components/PanelMenu.tsx", text: 'friends: "Social"' },
       { file: "components/AuthButton.tsx", text: '<Icon name="shield" inline /> Safety &amp; Contact' },
     ],

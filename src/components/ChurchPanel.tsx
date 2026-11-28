@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
-import BackButton from "./BackButton";
+import SocialHeader from "./SocialHeader";
 import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import { useFeature } from "../lib/features";
@@ -588,10 +588,11 @@ export default function ChurchPanel({
     const alreadyForked = activeSermon ? forkedIds.has(activeSermon.id) : false;
     return (
       <div className={panelClass} style={expand ? undefined : style}>
-        <div className="bible-panel-header no-print">
-          <BackButton onClick={() => setScreen("detail")} ariaLabel="Back to the church" />
-          <h3>{activeSermon?.title || "Sermon outline"}</h3>
-        </div>
+        <SocialHeader
+          title={activeSermon?.title || "Sermon outline"}
+          onBack={() => setScreen("detail")}
+          backLabel="Back to the church"
+        />
         <div className="church-sermon-read">
           <p className="comment-status">
             {[activeChurch?.name, activeSermon?.speaker_name, formatServiceDate(activeSermon?.service_date ?? null)]
@@ -626,16 +627,14 @@ export default function ChurchPanel({
     const pending = joinRequests.length;
     return (
       <div className={panelClass} style={expand ? undefined : style}>
-        <div className="bible-panel-header no-print">
-          <BackButton
-            onClick={() => {
-              setScreen("list");
-              setActiveChurchId(null);
-            }}
-            ariaLabel="Back to churches"
-          />
-          <h3>{activeChurch?.name ?? summary.name}</h3>
-        </div>
+        <SocialHeader
+          title={activeChurch?.name ?? summary.name}
+          onBack={() => {
+            setScreen("list");
+            setActiveChurchId(null);
+          }}
+          backLabel="Back to churches"
+        />
 
         <div className="group-detail-tabs">
           <button type="button" className={detailTab === "sermons" ? "active" : ""} onClick={() => setDetailTab("sermons")}>
@@ -994,10 +993,7 @@ export default function ChurchPanel({
   if (screen === "create") {
     return (
       <div className={panelClass} style={expand ? undefined : style}>
-        <div className="bible-panel-header no-print">
-          <BackButton onClick={() => setScreen("list")} ariaLabel="Back to churches" />
-          <h3>Register a Church</h3>
-        </div>
+        <SocialHeader title="Register a Church" onBack={() => setScreen("list")} backLabel="Back to churches" />
         <form className="group-create-form" onSubmit={handleCreate}>
           <input
             type="text"
@@ -1074,9 +1070,7 @@ export default function ChurchPanel({
 
   return (
     <div className={panelClass} style={expand ? undefined : style}>
-      <div className="bible-panel-header no-print">
-        <h3>Church</h3>
-      </div>
+      <SocialHeader title="Church" />
       <ViewSwitcher
         active="church"
         onSelectView={onSelectView}

@@ -14,7 +14,7 @@ import {
 } from "../lib/supabase";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import { useChurchesAvailable } from "../lib/churchApi";
-import BackButton from "./BackButton";
+import SocialHeader from "./SocialHeader";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 
@@ -469,16 +469,14 @@ export default function GroupsPanel({
   if (screen === "detail" && activeGroup) {
     return (
       <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
-        <div className="bible-panel-header no-print">
-          <BackButton
-            onClick={() => {
-              setScreen("list");
-              setActiveGroupId(null);
-            }}
-            ariaLabel="Back to groups list"
-          />
-          <h3>{activeGroup.name}</h3>
-        </div>
+        <SocialHeader
+          title={activeGroup.name}
+          onBack={() => {
+            setScreen("list");
+            setActiveGroupId(null);
+          }}
+          backLabel="Back to groups list"
+        />
 
         <div className="group-detail-tabs">
           <button type="button" className={detailTab === "chat" ? "active" : ""} onClick={() => setDetailTab("chat")}>
@@ -734,10 +732,7 @@ export default function GroupsPanel({
   if (screen === "create") {
     return (
       <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
-        <div className="bible-panel-header no-print">
-          <BackButton onClick={() => setScreen("list")} ariaLabel="Back to groups list" />
-          <h3>New Group</h3>
-        </div>
+        <SocialHeader title="New Group" onBack={() => setScreen("list")} backLabel="Back to groups list" />
         <form className="group-create-form" onSubmit={handleCreateGroup}>
           <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Group name" required maxLength={80} autoFocus />
           <textarea
@@ -778,9 +773,7 @@ export default function GroupsPanel({
   // --- List screen ---
   return (
     <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
-      <div className="bible-panel-header no-print">
-        <h3>Groups</h3>
-      </div>
+      <SocialHeader title="Groups" />
       <ViewSwitcher
         active="groups"
         onSelectView={onSelectView}

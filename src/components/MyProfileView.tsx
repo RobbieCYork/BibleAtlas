@@ -8,6 +8,7 @@ import Newsfeed from "./Newsfeed";
 import AvatarCropModal from "./AvatarCropModal";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
+import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
 import { ProfileLinksEditor, ProfileLinksList, type LinkDrafts } from "./ProfileLinks";
 import {
   DEFAULT_LINK_VISIBILITY,
@@ -678,7 +679,7 @@ interface MyProfileViewProps {
   onGoToVerse: (reference: string) => void;
   /** Opens the Friends panel to a specific list (Friends/Messages/Groups), closing My Profile first —
    * same "leave this full-screen mode to enter another surface" shape as onGoToVerse above. */
-  onOpenFriends: (view: "friends" | "messages" | "groups") => void;
+  onOpenFriends: (view: FriendsView) => void;
   /** Where the reader was standing before opening My Profile — only needed so a report started from
    * "My Reports" ("report something") carries context. Falls back to a generic surface. */
   reportSurface?: ReportSurface;
@@ -710,17 +711,7 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           {SOCIAL_CONNECTIONS_ENABLED && (
             <>
             <div className="auth-settings-section auth-settings-section-stacked">
-              <div className="myprofile-social-links">
-                <button type="button" onClick={() => onOpenFriends("friends")}>
-                  <Icon name="players" inline /> Friends
-                </button>
-                <button type="button" onClick={() => onOpenFriends("groups")}>
-                  <Icon name="groups" inline /> Groups
-                </button>
-                <button type="button" onClick={() => onOpenFriends("messages")}>
-                  <Icon name="messages" inline /> Messages
-                </button>
-              </div>
+              <ViewSwitcher onSelectView={onOpenFriends} />
             </div>
             <div className="auth-settings-divider" />
             </>

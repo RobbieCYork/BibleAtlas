@@ -21,6 +21,7 @@ import { SOCIAL_CONNECTIONS_ENABLED, READING_PLANS_ENABLED } from "./lib/feature
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
 import PanelMenu, { type DestinationKey, type PanelKey } from "./components/PanelMenu";
 import type { FriendsView } from "./components/ViewSwitcher";
+import { SocialNavContext } from "./lib/socialNav";
 import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
 import AuthButton from "./components/AuthButton";
@@ -93,6 +94,25 @@ type DetailsSelection =
   | { kind: "topic"; id: string }
   | { kind: "timelineEvent"; id: string }
   | { kind: "timeline"; view: TimelineViewState };
+
+/** Where Back on a social screen returns to. */
+interface SocialOrigin {
+  /** The full-screen mode that was up, if any, and what it was showing. */
+  takeover: "profile" | "timeline" | "game" | null;
+  viewedPersonId: string | null;
+  overlay: "settings" | "about" | null;
+  /** Phone: the tab underneath. */
+  panel: PanelKey;
+  /** Desktop: the panel that was closed to make room for Social. */
+  evicted: PanelKey | null;
+}
+const SOCIAL_DEFAULT_ORIGIN: SocialOrigin = {
+  takeover: "profile",
+  viewedPersonId: null,
+  overlay: null,
+  panel: "bible",
+  evicted: null,
+};
 
 function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -489,6 +509,7 @@ function App() {
         localStorage.removeItem("pending-join-church");
         if (cancelled) return;
         setOpenChurchId(churchId);
+        socialOriginRef.current = null;
         if (isMobile) setMobileActivePanel("friends");
         else openPanel("friends");
         handleSelectFriendsView("church");
@@ -691,10 +712,26 @@ function App() {
     setFriendsView(targetView);
     setFriendsViewNonce((n) => n + 1);
   };
+  // Where the reader was when they went to the social screens, for their Back. null means they did
+  // not come from anywhere in particular (an invite link), and Back goes to My Profile.
+  const socialOriginRef = useRef<SocialOrigin | null>(null);
   /** My Profile's Friends/Messages/Groups links (and tapping a NotificationToasts banner) — leave
    * whatever full-screen mode is showing, same as the mobile tab bar's own panel-switching does, then
    * open Friends to the requested list. */
   const openFriendsFromProfile = (targetView: FriendsView) => {
+    // Already looking at a social screen (a notification arriving there): the way back is unchanged.
+    if (!friendsOnScreen) {
+      const open = panelsRef.current;
+      const under = mobilePanelOf(open);
+      const full = !open.friends && Object.values(open).filter(Boolean).length >= MAX_OPEN_PANELS;
+      socialOriginRef.current = {
+        takeover: showGame ? "game" : myProfileMode ? "profile" : showTimeline ? "timeline" : null,
+        viewedPersonId,
+        overlay: overlayPage,
+        panel: under === "friends" ? (socialOriginRef.current?.panel ?? "bible") : under,
+        evicted: full ? (panelOrderRef.current.find((k) => k !== "friends" && open[k]) ?? null) : null,
+      };
+    }
     closeMyProfile();
     closeTimeline();
     closeGame();
@@ -1286,7 +1323,21 @@ function App() {
   // longer evict the Bible panel just to show a write-up.
   const showArticle = panels.articles && hasSelection;
   const noPanelsOpen = !panels.bible && !panels.map && !panels.notes && !panels.friends && !panels.articles;
-  const toggleMenuPanel = (key: PanelKey) => (panels[key] ? closePanel(key) : openPanel(key));
+  const toggleMenuPanel = (key: PanelKey) => {
+    if (panels[key]) return closePanel(key);
+    // Social opened from the menu: the reader came from the panels, so Back just closes it again.
+    if (key === "friends") {
+      const full = Object.values(panels).filter(Boolean).length >= MAX_OPEN_PANELS;
+      socialOriginRef.current = {
+        takeover: null,
+        viewedPersonId: null,
+        overlay: null,
+        panel: "bible",
+        evicted: full ? (panelOrderRef.current.find((k) => k !== "friends" && panels[k]) ?? null) : null,
+      };
+    }
+    openPanel(key);
+  };
   const sideExpand = !panels.map;
   const activeMobilePanel: PanelKey = mobilePanelOf(panels);
 
@@ -1360,6 +1411,31 @@ function App() {
   // The guard mirrors the render condition — for a guest the takeover isn't rendered at all, so the
   // panel underneath is what's actually on screen and should keep its own search.
   const myProfileMode = showMyProfile && !!session && !session.user.is_anonymous;
+
+  // --- Leaving the social screens ------------------------------------------------------------------
+  const friendsOnScreen = panels.friends && !showTimeline && !showGame && !myProfileMode && !overlayPage;
+  /** Back on a top-level social list: return to where the reader was (see socialOriginRef). */
+  const exitSocial = () => {
+    const origin = socialOriginRef.current ?? SOCIAL_DEFAULT_ORIGIN;
+    socialOriginRef.current = null;
+    if (isMobile) {
+      setMobileActivePanel(origin.panel);
+    } else {
+      closePanel("friends");
+      if (origin.evicted) openPanel(origin.evicted);
+      if (!Object.values(panelsRef.current).some(Boolean)) openPanel("bible");
+    }
+    if (origin.takeover === "profile") {
+      setViewedPersonId(origin.viewedPersonId);
+      setShowMyProfile(true);
+    } else if (origin.takeover === "timeline") {
+      setShowTimeline(true);
+    } else if (origin.takeover === "game") {
+      setShowGame(true);
+    }
+    setOverlayPage(origin.overlay);
+  };
+
   // The whole app requires a real account (owner's decision — see AuthGate.tsx). Gate on:
   //   - auth not resolved yet, or a `?code=` recovery link still being exchanged: render nothing
   //     rather than flashing the gate on top of what turns out to be a mid-recovery visitor.
@@ -1863,27 +1939,29 @@ function App() {
           />
         )}
         {friendsMounted && (
-          <FriendsPanel
-            session={session}
-            expand={sideExpand}
-            style={{ width: friendsWidth }}
-            hidden={friendsHiddenOnMobile}
-            openView={friendsView}
-            openViewNonce={friendsViewNonce}
-            onSelectView={handleSelectFriendsView}
-            friendsBadgeCount={pendingFriendRequests}
-            messagesBadgeCount={unreadMessages}
-            groupsBadgeCount={groupsBadgeCount}
-            openChurchId={openChurchId}
-            onOpenedChurch={() => setOpenChurchId(null)}
-            onOpenSermonNote={(noteId) => {
-              // A fork belongs in My Notes → Sermon Notes with everything else the reader has
-              // written, not in a church-shaped corner of its own. So the panel changes.
-              setOpenSermonNoteId(noteId);
-              if (isMobile) setMobileActivePanel("notes");
-              else openPanel("notes");
-            }}
-          />
+          <SocialNavContext.Provider value={{ onScreen: friendsOnScreen, exit: exitSocial }}>
+            <FriendsPanel
+              session={session}
+              expand={sideExpand}
+              style={{ width: friendsWidth }}
+              hidden={friendsHiddenOnMobile}
+              openView={friendsView}
+              openViewNonce={friendsViewNonce}
+              onSelectView={handleSelectFriendsView}
+              friendsBadgeCount={pendingFriendRequests}
+              messagesBadgeCount={unreadMessages}
+              groupsBadgeCount={groupsBadgeCount}
+              openChurchId={openChurchId}
+              onOpenedChurch={() => setOpenChurchId(null)}
+              onOpenSermonNote={(noteId) => {
+                // A fork belongs in My Notes → Sermon Notes with everything else the reader has
+                // written, not in a church-shaped corner of its own. So the panel changes.
+                setOpenSermonNoteId(noteId);
+                if (isMobile) setMobileActivePanel("notes");
+                else openPanel("notes");
+              }}
+            />
+          </SocialNavContext.Provider>
         )}
         {/* --- The Articles slot ------------------------------------------------------------------
             One position in the layout, two states. ArticlesPanel (the browse/search list) stays
@@ -2057,13 +2135,18 @@ function App() {
               /* Someone found through the header's people search — the same read-only profile the
                  Friends list opens, shown in place of the reader's own until Back clears it, so a
                  search result leads somewhere instead of just naming a person. */
-              <FriendProfileView
-                friendId={viewedPersonId}
-                viewerId={session.user.id}
-                onBack={() => setViewedPersonId(null)}
-                onMessage={() => openFriendsFromProfile("messages")}
-                expand
-              />
+              <SocialNavContext.Provider
+                value={{ onScreen: !showGame && !overlayPage, exit: () => setViewedPersonId(null) }}
+              >
+                <FriendProfileView
+                  friendId={viewedPersonId}
+                  viewerId={session.user.id}
+                  onBack={() => setViewedPersonId(null)}
+                  backLabel="Back to My Profile"
+                  onMessage={() => openFriendsFromProfile("messages")}
+                  expand
+                />
+              </SocialNavContext.Provider>
             ) : (
               <MyProfileView
                 userId={session.user.id}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { displayFor, fetchProfileCards, formatJoinDate, type Profile } from "../lib/supabase";
 import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
-import BackButton from "./BackButton";
+import SocialHeader from "./SocialHeader";
 import { PROFILE_FIELD_CONFIGS, PROFILE_SECTION_LABELS, ensureUrlProtocol } from "./MyProfileView";
 import { ProfileLinksList } from "./ProfileLinks";
 import { fetchProfileLinks, type ProfileLink } from "../lib/profileLinks";
@@ -16,6 +16,8 @@ interface FriendProfileViewProps {
   /** The signed-in account's own id — needed to post a comment as someone. */
   viewerId?: string;
   onBack: () => void;
+  /** What a screen reader hears on Back; where it leads depends on who opened the profile. */
+  backLabel?: string;
   onMessage: () => void;
   expand?: boolean;
   style?: React.CSSProperties;
@@ -25,7 +27,7 @@ interface FriendProfileViewProps {
 /** A friend's read-only profile page — photo/church/bio/favorite verse, reading progress, and their
  * public notes as posts with comments. Reachable from the Friends list ("View Profile"), separate
  * from jumping straight into Messages. */
-export default function FriendProfileView({ friendId, viewerId, onBack, onMessage, expand, style, hidden }: FriendProfileViewProps) {
+export default function FriendProfileView({ friendId, viewerId, onBack, backLabel = "Back to friends list", onMessage, expand, style, hidden }: FriendProfileViewProps) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loaded, setLoaded] = useState(false);
   const postsFeature = useFeature("posts_newsfeed");
@@ -50,10 +52,7 @@ export default function FriendProfileView({ friendId, viewerId, onBack, onMessag
 
   return (
     <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
-      <div className="bible-panel-header no-print">
-        <BackButton onClick={onBack} ariaLabel="Back to friends list" />
-        <h3>{profile ? displayFor(profile) : "Profile"}</h3>
-      </div>
+      <SocialHeader title={profile ? displayFor(profile) : "Profile"} onBack={onBack} backLabel={backLabel} />
 
       {!loaded && <p className="comment-status">Loading…</p>}
 

@@ -18,7 +18,7 @@ import ChurchPanel from "./ChurchPanel";
 import { useChurchesAvailable } from "../lib/churchApi";
 import FriendProfileView from "./FriendProfileView";
 import ViewSwitcher, { type FriendsView } from "./ViewSwitcher";
-import BackButton from "./BackButton";
+import SocialHeader from "./SocialHeader";
 import ModerationMenu from "./ModerationMenu";
 import Icon from "./Icon";
 
@@ -418,6 +418,12 @@ export default function FriendsPanel({
     }
   };
 
+  /** After a block, both the conversation and the profile under it are gone. */
+  const leaveBlocked = () => {
+    setActiveFriendId(null);
+    setActiveProfileFriendId(null);
+  };
+
   if (view === "church" && churchesAvailable) {
     return (
       <ChurchPanel
@@ -453,32 +459,16 @@ export default function FriendsPanel({
     );
   }
 
-  if (activeProfileFriendId) {
-    return (
-      <FriendProfileView
-        friendId={activeProfileFriendId}
-        viewerId={userId}
-        onBack={() => setActiveProfileFriendId(null)}
-        onMessage={() => {
-          const fid = activeProfileFriendId;
-          setActiveProfileFriendId(null);
-          setActiveFriendId(fid);
-        }}
-        expand={expand}
-        style={style}
-        hidden={hidden}
-      />
-    );
-  }
-
   if (activeFriendId) {
     const friendProfile = profiles[activeFriendId];
     const pinnedMessage = messages.find((m) => m.pinned);
     return (
       <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
-        <div className="bible-panel-header no-print">
-          <BackButton onClick={() => setActiveFriendId(null)} ariaLabel="Back to friends list" />
-          <h3>{friendProfile ? displayFor(friendProfile) : "Conversation"}</h3>
+        <SocialHeader
+          title={friendProfile ? displayFor(friendProfile) : "Conversation"}
+          onBack={() => setActiveFriendId(null)}
+          backLabel={activeProfileFriendId ? "Back to profile" : view === "messages" ? "Back to messages" : "Back to friends list"}
+        >
           {/* Conversation-level, on the header, because "block this person" is about the person and
             * not about one line they sent. Leaves the thread on success: sql/028's restrictive
             * policy on `messages` hides every message in both directions the moment the block
@@ -491,11 +481,11 @@ export default function FriendsPanel({
               authorId={activeFriendId}
               authorName={friendProfile ? displayFor(friendProfile) : null}
               context="Direct messages"
-              onBlocked={() => setActiveFriendId(null)}
+              onBlocked={leaveBlocked}
               className="mod-menu-header"
             />
           )}
-        </div>
+        </SocialHeader>
         {pinnedMessage && (
           <div className="pinned-message-banner">
             <span className="pinned-message-icon"><Icon name="pin" /></span>
@@ -531,7 +521,7 @@ export default function FriendsPanel({
                     authorName={friendProfile ? displayFor(friendProfile) : null}
                     excerpt={m.body}
                     context="Direct message"
-                    onBlocked={() => setActiveFriendId(null)}
+                    onBlocked={leaveBlocked}
                     className="mod-menu-inline"
                   />
                 )}
@@ -556,11 +546,24 @@ export default function FriendsPanel({
     );
   }
 
+  if (activeProfileFriendId) {
+    return (
+      <FriendProfileView
+        friendId={activeProfileFriendId}
+        viewerId={userId}
+        onBack={() => setActiveProfileFriendId(null)}
+        // The profile stays underneath, so Back from the conversation returns to it.
+        onMessage={() => setActiveFriendId(activeProfileFriendId)}
+        expand={expand}
+        style={style}
+        hidden={hidden}
+      />
+    );
+  }
+
   return (
     <div className={`friends-panel ${expand ? "panel-expand" : ""} ${hidden ? "bible-panel-hidden" : ""}`} style={expand ? undefined : style}>
-      <div className="bible-panel-header no-print">
-        <h3>{view === "messages" ? "Messages" : "Friends"}</h3>
-      </div>
+      <SocialHeader title={view === "messages" ? "Messages" : "Friends"} />
       <ViewSwitcher
         active={view === "church" ? "friends" : view}
         onSelectView={onSelectView}
