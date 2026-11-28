@@ -66,7 +66,7 @@ export default async function (h) {
   await openArticle(h, "Noah's Flood");
   await h.click({ css: `${NOTE} button`, text: "Young Earth and Old Earth Creationism" });
   await h.sleep(500);
-  const heads = await h.evaluate(() => [...document.querySelectorAll("h1, h2, h3, h4")].map((e) => e.textContent.trim()));
+  const heads = await h.evaluate(() => [...document.querySelectorAll("h1, h2, h3, h4, h5")].map((e) => e.textContent.trim()));
   h.assert(heads.includes("Young Earth and Old Earth Creationism"), `link opens the topic`);
   for (const s of ["Where the App's Dates Come From", "The Case for a Young Earth", "The Case for an Old Earth", "Other Views", "A Secondary Issue Among Believers"]) {
     h.assert(heads.includes(s), `topic has section "${s}"`);
