@@ -143,7 +143,7 @@ location	cyrene	cyrene	reader	4
 location	cyrene	cyrene	reader:asv	4
 location	cyrene	cyrene	reader:kjv	4
 location	damascus	damascus	panel	61
-location	damascus	damascus	prose	38
+location	damascus	damascus	prose	39
 location	damascus	damascus	reader	61
 location	damascus	damascus	reader:asv	60
 location	damascus	damascus	reader:kjv	60
@@ -172,7 +172,7 @@ location	edom	edom	reader	81
 location	edom	edom	reader:asv	83
 location	edom	edom	reader:kjv	76
 location	egypt	egypt	panel	618
-location	egypt	egypt	prose	346
+location	egypt	egypt	prose	348
 location	egypt	egypt	reader	618
 location	egypt	egypt	reader:asv	623
 location	egypt	egypt	reader:kjv	612
@@ -286,7 +286,7 @@ location	iconium	iconium	reader:kjv	6
 location	idumea	edom	prose	4
 location	idumea	edom	reader:kjv	4
 location	jerusalem	jerusalem	panel	813
-location	jerusalem	jerusalem	prose	630
+location	jerusalem	jerusalem	prose	633
 location	jerusalem	jerusalem	reader	813
 location	jerusalem	jerusalem	reader:asv	811
 location	jerusalem	jerusalem	reader:kjv	816
@@ -305,7 +305,7 @@ location	judaea	judea	prose	2
 location	judaea	judea	reader:asv	42
 location	judaea	judea	reader:kjv	43
 location	judea	judea	panel	43
-location	judea	judea	prose	113
+location	judea	judea	prose	114
 location	judea	judea	reader	43
 location	judea	judea	reader:asv	3
 location	judea	judea	reader:kjv	2
@@ -674,7 +674,7 @@ person	abiud	abiud	reader	2
 person	abiud	abiud	reader:asv	2
 person	abiud	abiud	reader:kjv	2
 person	abraham	abraham	panel	249
-person	abraham	abraham	prose	140
+person	abraham	abraham	prose	141
 person	abraham	abraham	reader	249
 person	abraham	abraham	reader:asv	248
 person	abraham	abraham	reader:kjv	249
@@ -956,7 +956,7 @@ person	eliakim	eliakim-son-of-abiud	reader	2
 person	eliakim	eliakim-son-of-abiud	reader:asv	2
 person	eliakim	eliakim-son-of-abiud	reader:kjv	2
 person	elijah	elijah	panel	101
-person	elijah	elijah	prose	84
+person	elijah	elijah	prose	86
 person	elijah	elijah	reader	101
 person	elijah	elijah	reader:asv	100
 person	elijah	elijah	reader:kjv	69
@@ -1025,7 +1025,7 @@ person	festus	porcius-festus	reader:asv	12
 person	festus	porcius-festus	reader:kjv	12
 person	francis of assisi	francis-of-assisi	prose	1
 person	gabriel	gabriel-archangel	panel	4
-person	gabriel	gabriel-archangel	prose	11
+person	gabriel	gabriel-archangel	prose	12
 person	gabriel	gabriel-archangel	reader	4
 person	gabriel	gabriel-archangel	reader:asv	4
 person	gabriel	gabriel-archangel	reader:kjv	4
@@ -1046,7 +1046,7 @@ person	gideon	gideon	reader	40
 person	gideon	gideon	reader:asv	40
 person	gideon	gideon	reader:kjv	39
 person	god the father	god-the-father	panel	14
-person	god the father	god-the-father	prose	4
+person	god the father	god-the-father	prose	5
 person	god the father	god-the-father	reader	14
 person	god the father	god-the-father	reader:asv	15
 person	god the father	god-the-father	reader:kjv	12
@@ -1205,13 +1205,13 @@ person	jesse	jesse	reader	47
 person	jesse	jesse	reader:asv	47
 person	jesse	jesse	reader:kjv	47
 person	jesus	jesus-of-nazareth	panel	716
-person	jesus	jesus-of-nazareth	prose	848
+person	jesus	jesus-of-nazareth	prose	852
 person	jesus	jesus-of-nazareth	reader	715
 person	jesus	jesus-of-nazareth	reader:asv	679
 person	jesus	jesus-of-nazareth	reader:kjv	706
 person	jesus	joshua	reader:kjv	2
 person	jesus christ	jesus-of-nazareth	panel	165
-person	jesus christ	jesus-of-nazareth	prose	21
+person	jesus christ	jesus-of-nazareth	prose	25
 person	jesus christ	jesus-of-nazareth	reader	165
 person	jesus christ	jesus-of-nazareth	reader:asv	142
 person	jesus christ	jesus-of-nazareth	reader:kjv	198
@@ -1474,7 +1474,7 @@ person	mordecai	mordecai	reader	60
 person	mordecai	mordecai	reader:asv	60
 person	mordecai	mordecai	reader:kjv	60
 person	moses	moses	panel	830
-person	moses	moses	prose	189
+person	moses	moses	prose	191
 person	moses	moses	reader	830
 person	moses	moses	reader:asv	827
 person	moses	moses	reader:kjv	827
@@ -1862,7 +1862,7 @@ person	uzziah	uzziah	prose	17
 person	uzziah	uzziah	reader	29
 person	uzziah	uzziah	reader:asv	29
 person	uzziah	uzziah	reader:kjv	27
-person	william carey	william-carey	prose	1
+person	william carey	william-carey	prose	2
 person	william j. seymour	william-seymour	prose	1
 person	william wilberforce	william-wilberforce	prose	2
 person	yeshua	jesus-of-nazareth	prose	1
@@ -2148,6 +2148,7 @@ timeline	temptation in the wilderness	bib-loc-temptation-wilderness	prose	1
 timeline	temptation in the wilderness	bib-loc-temptation-wilderness	reader:kjv	2
 timeline	the ascension	bib-loc-ascension	prose	7
 timeline	the battle of actium	wld-rom-battle-of-actium	prose	1
+timeline	the bhagavad gita	rel-hindu-bhagavad-gita	prose	3
 timeline	the binding of isaac	bib-pat-binding-isaac	prose	1
 timeline	the birth of jacob and esau	bib-pat-birth-jacob-esau	prose	1
 timeline	the burial of jesus	bib-loc-burial-of-jesus	prose	1
@@ -2183,6 +2184,7 @@ timeline	the resurrection	bib-loc-resurrection	prose	52
 timeline	the resurrection	bib-loc-resurrection	reader	26
 timeline	the resurrection	bib-loc-resurrection	reader:asv	26
 timeline	the resurrection	bib-loc-resurrection	reader:kjv	25
+timeline	the second great awakening	second-great-awakening-c1800	prose	1
 timeline	the table of nations	bib-prim-table-of-nations	prose	1
 timeline	the tower of babel	bib-prim-tower-of-babel	prose	5
 timeline	the transfiguration	bib-loc-transfiguration	prose	5
@@ -2205,7 +2207,7 @@ topic	ammonites	moabites-and-ammonites	reader	8
 topic	ammonites	moabites-and-ammonites	reader:asv	8
 topic	ammonites	moabites-and-ammonites	reader:kjv	22
 topic	an angel	angels	panel	36
-topic	an angel	angels	prose	30
+topic	an angel	angels	prose	31
 topic	an angel	angels	reader	36
 topic	an angel	angels	reader:asv	35
 topic	an angel	angels	reader:kjv	35
@@ -2389,7 +2391,7 @@ topic	gospel of thomas	gospel-of-thomas	prose	3
 topic	great isaiah scroll	great-isaiah-scroll	prose	5
 topic	great psalms scroll	great-psalms-scroll	prose	1
 topic	greek	greeks	panel	15
-topic	greek	greeks	prose	396
+topic	greek	greeks	prose	400
 topic	greek	greeks	reader	15
 topic	greek	greeks	reader:asv	14
 topic	greek	greeks	reader:kjv	12
@@ -2420,7 +2422,7 @@ topic	hinnom	gehenna	reader	1
 topic	hinnom	gehenna	reader:asv	1
 topic	hinnom	gehenna	reader:kjv	1
 topic	holy of holies	holy-of-holies	panel	1
-topic	holy of holies	holy-of-holies	prose	3
+topic	holy of holies	holy-of-holies	prose	4
 topic	holy of holies	holy-of-holies	reader	1
 topic	holy of holies	holy-of-holies	reader:asv	1
 topic	ipuwer papyrus	ipuwer-papyrus	prose	2
@@ -2437,7 +2439,7 @@ topic	jehoash inscription	jehoash-inscription	prose	1
 topic	jehoiachin's rations tablets	jehoiachin-ration-tablets	prose	1
 topic	jesus boat	galilee-boat	prose	3
 topic	jewish	jews	panel	7
-topic	jewish	jews	prose	388
+topic	jewish	jews	prose	391
 topic	jewish	jews	reader	7
 topic	jewish	jews	reader:asv	1
 topic	jewish	jews	reader:kjv	1
@@ -2473,7 +2475,7 @@ topic	masoretic text	masoretic-text	prose	44
 topic	merneptah stele	merneptah-stele	prose	8
 topic	mesha stele	mesha-stele	prose	8
 topic	messiah	the-christ	panel	2
-topic	messiah	the-christ	prose	37
+topic	messiah	the-christ	prose	38
 topic	messiah	the-christ	reader	2
 topic	messiah	the-christ	reader:asv	2
 topic	messiah	the-christ	reader:kjv	2
@@ -2504,7 +2506,7 @@ topic	new covenant	new-covenant	prose	7
 topic	new covenant	new-covenant	reader	10
 topic	new covenant	new-covenant	reader:asv	8
 topic	new covenant	new-covenant	reader:kjv	4
-topic	nicene creed	nicene-creed	prose	6
+topic	nicene creed	nicene-creed	prose	7
 topic	nicene-constantinopolitan creed	nicene-creed	prose	1
 topic	nuzi tablets	nuzi-tablets	prose	3
 topic	oriental institute prism	sennacherib-prism	prose	1
@@ -2528,7 +2530,7 @@ topic	passover	passover	reader	12
 topic	passover	passover	reader:asv	12
 topic	passover	passover	reader:kjv	14
 topic	persian	persians	panel	2
-topic	persian	persians	prose	140
+topic	persian	persians	prose	142
 topic	persian	persians	reader	2
 topic	persian	persians	reader:asv	2
 topic	persian	persians	reader:kjv	3
@@ -2567,7 +2569,7 @@ topic	preparation day	day-of-preparation	reader	1
 topic	preparation day	day-of-preparation	reader:kjv	1
 topic	qumran scrolls	dead-sea-scrolls	prose	2
 topic	roman	romans	panel	8
-topic	roman	romans	prose	485
+topic	roman	romans	prose	486
 topic	roman	romans	reader	8
 topic	roman	romans	reader:asv	7
 topic	roman	romans	reader:kjv	5
@@ -2649,7 +2651,7 @@ topic	tent of meeting	tabernacle	prose	1
 topic	tent of meeting	tabernacle	reader	146
 topic	tent of meeting	tabernacle	reader:asv	146
 topic	the angel	angels	panel	67
-topic	the angel	angels	prose	23
+topic	the angel	angels	prose	24
 topic	the angel	angels	reader	67
 topic	the angel	angels	reader:asv	123
 topic	the angel	angels	reader:kjv	128
@@ -2706,19 +2708,19 @@ topic	the search for mount sinai	mount-sinai-candidates	prose	1
 topic	the search for noah's ark	noahs-ark-claims	prose	1
 topic	the syriac peshitta	peshitta	prose	1
 topic	the temple	the-temple	panel	150
-topic	the temple	the-temple	prose	263
+topic	the temple	the-temple	prose	264
 topic	the temple	the-temple	reader	150
 topic	the temple	the-temple	reader:asv	158
 topic	the temple	the-temple	reader:kjv	174
 topic	the temple scroll	temple-scroll	prose	1
-topic	the trinity	the-trinity	prose	16
+topic	the trinity	the-trinity	prose	17
 topic	theodotus inscription	theodotus-inscription	prose	1
 topic	topheth	gehenna	panel	9
 topic	topheth	gehenna	reader	9
 topic	topheth	gehenna	reader:asv	10
 topic	topheth	gehenna	reader:kjv	1
 topic	torah	torah	prose	38
-topic	trinitarian	the-trinity	prose	6
+topic	trinitarian	the-trinity	prose	7
 topic	ugaritic texts	ugarit-tablets	prose	1
 topic	unclean spirit	demons	panel	13
 topic	unclean spirit	demons	prose	1
@@ -2789,6 +2791,7 @@ verse	1 corinthians 6:19	-	prose	1
 verse	1 corinthians 8	-	prose	1
 verse	1 corinthians 9	-	prose	1
 verse	1 john 2:22	-	prose	1
+verse	1 john 4:15	-	prose	1
 verse	1 john 5	-	prose	1
 verse	1 john 5:7	-	prose	4
 verse	1 kings 1	-	prose	3
@@ -3137,7 +3140,7 @@ verse	2 kings 9	-	prose	4
 verse	2 kings 9:14-26	-	prose	1
 verse	2 kings 9:30-37	-	prose	3
 verse	2 peter 1:16	-	prose	1
-verse	2 peter 1:21	-	prose	1
+verse	2 peter 1:21	-	prose	2
 verse	2 peter 2:15-16	-	prose	1
 verse	2 peter 2:4	-	prose	1
 verse	2 peter 2:5	-	prose	2
@@ -3444,6 +3447,7 @@ verse	acts 3:22	-	prose	3
 verse	acts 4	-	prose	1
 verse	acts 4:1-2	-	prose	3
 verse	acts 4:1-3	-	prose	1
+verse	acts 4:12	-	prose	1
 verse	acts 4:27	-	prose	1
 verse	acts 4:31	-	prose	1
 verse	acts 4:32-35	-	prose	1
@@ -3602,7 +3606,7 @@ verse	deuteronomy 3:16	-	prose	1
 verse	deuteronomy 5	-	prose	1
 verse	deuteronomy 5:12-15	-	prose	2
 verse	deuteronomy 6:20-23	-	prose	1
-verse	deuteronomy 6:4	-	prose	3
+verse	deuteronomy 6:4	-	prose	4
 verse	deuteronomy 6:4-5	-	prose	1
 verse	deuteronomy 7:6-8	-	prose	1
 verse	deuteronomy 7:9	-	prose	1
@@ -3874,7 +3878,7 @@ verse	genesis 19	-	prose	5
 verse	genesis 19:30-38	-	prose	1
 verse	genesis 19:37	-	prose	1
 verse	genesis 19:38	-	prose	1
-verse	genesis 1:1	-	prose	2
+verse	genesis 1:1	-	prose	3
 verse	genesis 1:1-2	-	prose	1
 verse	genesis 1:14-16	-	prose	1
 verse	genesis 1:2	-	prose	2
@@ -4100,6 +4104,7 @@ verse	hebrews 11:5	-	prose	3
 verse	hebrews 11:8	-	prose	1
 verse	hebrews 12:16-17	-	prose	2
 verse	hebrews 13:12	-	prose	1
+verse	hebrews 1:1-2	-	prose	2
 verse	hebrews 1:14	-	prose	1
 verse	hebrews 1:5	-	prose	1
 verse	hebrews 3:7-19	-	prose	1
@@ -4120,6 +4125,7 @@ verse	hebrews 9:14	-	prose	1
 verse	hebrews 9:15	-	prose	1
 verse	hebrews 9:2-3	-	prose	1
 verse	hebrews 9:24	-	prose	1
+verse	hebrews 9:26	-	prose	1
 verse	hebrews 9:8	-	prose	1
 verse	hosea 10:15	-	prose	1
 verse	hosea 10:9	-	prose	1
@@ -4143,6 +4149,7 @@ verse	isaiah 42	-	prose	1
 verse	isaiah 44:28	-	prose	3
 verse	isaiah 44:6	-	prose	1
 verse	isaiah 45:1	-	prose	2
+verse	isaiah 45:18	-	prose	1
 verse	isaiah 45:23	-	prose	1
 verse	isaiah 45:5	-	prose	1
 verse	isaiah 46:10	-	prose	1
@@ -4168,6 +4175,7 @@ verse	isaiah 7:3	-	prose	1
 verse	isaiah 8:19	-	prose	1
 verse	isaiah 9:1	-	prose	1
 verse	isaiah 9:6	-	prose	1
+verse	james 1:5	-	prose	1
 verse	james 2:17	-	prose	1
 verse	james 2:19	-	prose	1
 verse	james 2:2	-	prose	1
@@ -4296,7 +4304,7 @@ verse	john 19:42	-	prose	1
 verse	john 19:5	-	prose	1
 verse	john 1:1	-	prose	8
 verse	john 1:1-11	-	prose	1
-verse	john 1:14	-	prose	2
+verse	john 1:14	-	prose	4
 verse	john 1:28	-	prose	1
 verse	john 1:29	-	prose	1
 verse	john 1:35-40	-	prose	1
@@ -4773,6 +4781,7 @@ verse	matthew 16:1-6	-	prose	1
 verse	matthew 16:13-19	-	prose	1
 verse	matthew 16:13-20	-	prose	1
 verse	matthew 16:16	-	prose	1
+verse	matthew 16:18	-	prose	1
 verse	matthew 16:21	-	prose	2
 verse	matthew 17:1-8	-	prose	1
 verse	matthew 18:10	-	prose	1

@@ -6312,6 +6312,652 @@ This effort to fix a founder's teaching accurately in the memory of a community 
     scriptureRefs: ["Luke 1:1-4", "2 Peter 1:16", "2 Timothy 3:16", "2 Peter 1:21"],
     externalRefs: [],
   },
+  // ---- Other Religions, 479 BC to the present: Buddhism, Hinduism, Islam and the Latter-day
+  // Saints (added 2026-11-28). Major events only. Ordered by tradition, then by startYear.
+  {
+    id: "rel-buddhism-second-council",
+    title: "The Second Buddhist Council at Vaishali",
+    category: "religion",
+    era: "Second Temple Period",
+    startYear: -383,
+    dateLabel: "c. 383 BC, a century after the Buddha's death (disputed)",
+    dateCertainty: "disputed",
+    summary: `About a century after the Buddha's death, monks met at Vaishali to settle a dispute over monastic discipline, the episode Buddhist tradition links to the first great division of the Buddhist community.`,
+    article: `By Buddhist tradition, roughly a hundred years after the Buddha's death a dispute broke out over how strictly the monastic rules (the Vinaya) should be kept. Monks at Vaishali, in northern India, were accused of relaxing them on ten points, the most serious being that they accepted gold and silver from lay supporters. A council of senior monks met at Vaishali, said by tradition to have been held under the patronage of King Kalashoka, and ruled against the relaxed practices.
+
+Traditional accounts connect this quarrel with the first lasting split in the Buddhist community, between the Sthaviras, the party of the senior monks, and the Mahasanghikas ("Great Community"). Most of the many later Buddhist schools trace their descent from one side or the other of that division, and the Theravada Buddhism of Sri Lanka, Burma, Thailand, Laos and Cambodia descends from the Sthavira line.
+
+The episode shows a pattern familiar from church history: a movement's first major division arising not over its central doctrine but over discipline and practice, a generation or more after the founder's death.`,
+    datingNotes: `The sources place the council "100 years" after the parinirvana, so its date moves with whichever date is used for the Buddha's death: c. 383 BC on the conventional chronology this timeline uses (death c. 483 BC), or roughly 320-280 BC on the later dating most modern specialists now favor. The link between this council and the first schism is itself disputed. The Vinaya accounts tie the schism to the Vaishali dispute; the Sri Lankan chronicles and some other sources describe a later assembly at Pataliputra over five points of doctrine attributed to the monk Mahadeva, and many scholars think the split came later than the council.`,
+    externalRefs: ["Vinaya Pitaka, Cullavagga 12", "Dipavamsa and Mahavamsa (Sri Lankan chronicles)"],
+  },
+  {
+    id: "rel-buddhism-ashoka",
+    title: "Emperor Ashoka Turns to Buddhism",
+    category: "religion",
+    era: "Intertestamental Period",
+    startYear: -260,
+    dateLabel: "c. 260 BC (Kalinga war); reigned c. 268-232 BC",
+    dateCertainty: "traditional",
+    summary: `After the bloody conquest of Kalinga, the Mauryan emperor Ashoka declared his remorse, became a Buddhist lay follower, and promoted the dharma across the largest empire India had yet seen.`,
+    article: `Ashoka ruled the Mauryan Empire, which covered most of the Indian subcontinent, from about 268 to 232 BC. In the eighth year of his reign he conquered the eastern kingdom of Kalinga. In his own Rock Edict 13, carved on stone for his subjects to read, he records the deportation and death of hundreds of thousands of people and states his deep regret for the suffering the war caused.
+
+Ashoka became a Buddhist lay follower and set out to govern by dharma (righteousness). His edicts, inscribed on rocks and polished stone pillars across the empire, some of them in Greek and Aramaic in the far northwest, urge non-violence toward living things, respect for parents and teachers, and tolerance among religious groups. Rock Edict 13 also claims that his envoys reached the Greek kingdoms of the Hellenistic world that succeeded Alexander's empire, the same kingdoms whose wars shaped Judea in this period.
+
+Buddhist tradition remembers Ashoka as the model of a righteous Buddhist ruler, a patron of monasteries and stupas, and the sponsor of missions that carried Buddhism beyond India. His edicts are the earliest datable written records of Indian history and one of the main fixed points from which the dates of early Buddhism are worked out.`,
+    datingNotes: `Ashoka's edicts date events by his regnal years, not by an era, so absolute dates come from synchronisms: Rock Edict 13 names five Hellenistic kings whose reigns are known from Greek sources. That puts his reign at about 268-232 BC and the Kalinga war at about 260 BC, give or take a few years. When he became a Buddhist is less certain. A minor rock edict says he had been a lay follower for more than two and a half years, and Sri Lankan tradition places his conversion earlier in the reign than most historians accept.`,
+    externalRefs: ["Ashoka, Major Rock Edict 13", "Ashoka, Minor Rock Edicts"],
+  },
+  {
+    id: "rel-buddhism-reaches-sri-lanka",
+    title: "Buddhism Reaches Sri Lanka",
+    category: "religion",
+    era: "Intertestamental Period",
+    startYear: -250,
+    dateLabel: "c. 250 BC (traditional)",
+    dateCertainty: "traditional",
+    summary: `By Sri Lankan tradition, the monk Mahinda, a son of the emperor Ashoka, brought Buddhism to Sri Lanka and converted its king, making the island the lasting home of Theravada Buddhism.`,
+    article: `The Sri Lankan chronicles tell how the monk Mahinda, whom they identify as a son of the emperor Ashoka, arrived on the island in the mid-third century BC and met King Devanampiya Tissa on a hunting trip in the hills of Mihintale, near the capital Anuradhapura. The king accepted the Buddha's teaching, and a monastic community was founded at the capital. Tradition adds that Mahinda's sister, the nun Sanghamitta, brought a cutting of the tree under which the Buddha was enlightened; a tree at Anuradhapura venerated as that cutting's descendant is still a place of pilgrimage.
+
+Sri Lanka became the great stronghold of Theravada Buddhism, whose name means the teaching of the theras, the senior monks. Its monasteries preserved the Pali scriptures and commentaries, and from the island Theravada later spread to Burma (Myanmar), Thailand, Laos and Cambodia, where it remains the majority religion.`,
+    datingNotes: `The date comes from the Sri Lankan chronicles, the Dipavamsa (4th century AD) and Mahavamsa (5th-6th century AD), which were written many centuries later and place the mission in Devanampiya Tissa's reign, conventionally c. 247-207 BC. Ashoka's own edicts mention missions to the south but do not name Mahinda. Historians accept that Buddhism reached the island in the third century BC; the details of the story are traditional.`,
+    externalRefs: ["Dipavamsa", "Mahavamsa"],
+  },
+  {
+    id: "rel-buddhism-pali-canon-written",
+    title: "The Pali Canon Is Written Down",
+    category: "religion",
+    era: "Intertestamental Period",
+    startYear: -29,
+    dateLabel: "1st century BC (often given as c. 29 BC; traditional)",
+    dateCertainty: "traditional",
+    summary: `After centuries of oral recitation, monks in Sri Lanka committed the Buddhist scriptures to writing on palm leaves, producing the Pali Canon, the scripture of Theravada Buddhism.`,
+    article: `For several hundred years after the Buddha's death his teaching was preserved by memory, recited communally by monks who specialized in particular collections. According to the Sri Lankan chronicles, during the reign of King Vattagamani Abhaya, at a time of famine and war that threatened the survival of the reciting monks, the scriptures were written down on palm leaves. Tradition places this at the Aluvihara (Alu Viharaya) monastery near Matale.
+
+The collection is called the Tipitaka ("Three Baskets"): the Vinaya (monastic discipline), the Suttas (the Buddha's discourses), and the Abhidhamma (systematic analysis of the teaching). Written in Pali, a Middle Indo-Aryan language, it is the most complete early Buddhist canon to survive in an Indian language, and it remains the authoritative scripture of Theravada Buddhism.
+
+The canon is far larger than the Bible. Unlike the books of the Bible, which were written by named or identifiable authors within a few generations of the events they describe, the Pali texts were transmitted orally for centuries before being written, and scholars debate how much of them goes back to the Buddha himself.`,
+    datingNotes: `The Dipavamsa and Mahavamsa place the writing down of the canon in the reign of Vattagamani Abhaya in the first century BC. The date often quoted, 29 BC, depends on one reconstruction of that king's reign; other reckonings put it some decades earlier. The surviving Pali manuscripts are far later than this, since palm leaf decays in the tropics, and the canon continued to be edited after it was first written.`,
+    externalRefs: ["Dipavamsa 20", "Mahavamsa 33"],
+  },
+  {
+    id: "rel-buddhism-mahayana-emerges",
+    title: "Mahayana Buddhism Emerges",
+    category: "religion",
+    era: "Intertestamental Period",
+    startYear: -100,
+    endYear: 100,
+    dateLabel: "c. 1st century BC-1st century AD (gradual; dating disputed)",
+    dateCertainty: "disputed",
+    summary: `A new body of scriptures, including the Perfection of Wisdom sutras and the Lotus Sutra, gave rise to Mahayana ("Great Vehicle") Buddhism, which centered on the bodhisattva who seeks enlightenment for the sake of all beings.`,
+    article: `Around the turn of the era, new Buddhist scriptures began to circulate in India that claimed to record teachings of the Buddha not found in the older collections. Among the earliest and most influential were the Perfection of Wisdom (Prajnaparamita) sutras and the Lotus Sutra. Their followers called their path the Mahayana, the "Great Vehicle."
+
+The Mahayana ideal is the bodhisattva, a being who postpones final release in order to help all living beings reach enlightenment, rather than seeking liberation chiefly for oneself. Mahayana texts also developed teachings on emptiness (shunyata), on the Buddha as a cosmic and many-formed reality, and on heavenly buddhas and bodhisattvas, such as Amitabha and Avalokiteshvara, who could be called on for help.
+
+Mahayana became the dominant form of Buddhism in China, Korea, Japan, Vietnam and, in its Vajrayana form, Tibet and Mongolia. It includes schools as different as Zen and Pure Land. Today the two great branches of Buddhism are usually described as Theravada, in Sri Lanka, Burma, Thailand, Laos and Cambodia, and Mahayana, in China, Korea, Japan, Vietnam and the Himalayas.`,
+    datingNotes: `Mahayana did not begin at a single moment or with a single founder, and its origins are debated. Its earliest surviving texts are Chinese translations made by the monk Lokaksema in the later second century AD and Gandharan manuscript fragments of about the same period or somewhat earlier, from which scholars infer that the first Mahayana sutras were composed around the 1st century BC or 1st century AD. The earliest inscription naming Amitabha, from Mathura, dates to about AD 150-180. For several centuries Mahayana monks appear to have lived in the same monasteries as other Buddhists rather than as a separate sect.`,
+    externalRefs: ["Lotus Sutra (Saddharmapundarika Sutra)", "Perfection of Wisdom in Eight Thousand Lines (Astasahasrika Prajnaparamita)"],
+  },
+  {
+    id: "rel-buddhism-reaches-china",
+    title: "Buddhism Reaches China",
+    category: "religion",
+    era: "Acts & Early Church",
+    startYear: 65,
+    dateLabel: "1st century AD (first dated reference AD 65)",
+    dateCertainty: "traditional",
+    summary: `Buddhism entered Han dynasty China along the Silk Road trade routes in the first century AD, beginning a long process that would make it one of China's three great teachings alongside Confucianism and Daoism.`,
+    article: `Buddhism came to China with merchants and monks travelling the Silk Road from the Central Asian kingdoms. The first securely dated Chinese reference is an imperial edict of AD 65, preserved in the Book of the Later Han, which mentions that Liu Ying, Prince of Chu and half-brother of the Han emperor Ming, combined reverence for the Buddha with Huang-Lao Daoist practice and supported Buddhist monks and laymen at his court. A later and much-loved legend says Emperor Ming saw a golden figure in a dream, sent envoys west to find it, and founded the White Horse Temple at Luoyang when they returned with monks and scriptures.
+
+Translation work began in earnest in the mid-second century AD, when the Parthian monk An Shigao and the Kushan monk Lokaksema arrived in Luoyang. Over the following centuries Buddhism adapted to Chinese culture, which valued family duty and practical ethics, and China became the center from which Mahayana Buddhism spread to Korea, Japan and Vietnam.
+
+The arrival of Buddhism in China came in the same generation that the apostles were carrying the gospel west across the Roman Empire.`,
+    datingNotes: `The AD 65 edict concerning Liu Ying in the Book of the Later Han (Hou Hanshu) is the earliest dated evidence of Buddhist practice in China. Buddhism probably reached merchant communities somewhat earlier. The story of Emperor Ming's dream and the founding of the White Horse Temple (traditionally AD 67-68) is recorded in later sources and is generally regarded as legend.`,
+    externalRefs: ["Book of the Later Han (Hou Hanshu), biography of Liu Ying, Prince of Chu"],
+  },
+  {
+    id: "rel-buddhism-reaches-japan",
+    title: "Buddhism Is Introduced to Japan",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 538,
+    dateLabel: "AD 538 or 552 (sources disagree)",
+    dateCertainty: "disputed",
+    summary: `King Seong of the Korean kingdom of Baekje sent a Buddha image and scriptures to the Japanese court, the traditional starting point of Japanese Buddhism.`,
+    article: `In the sixth century the king of Baekje, one of the kingdoms of the Korean peninsula, sent Emperor Kinmei of Japan a gilt bronze image of the Buddha, ritual banners and sutras, commending the new teaching as the finest of all doctrines. The gift divided the Japanese court. The powerful Soga clan championed Buddhism, while the Mononobe and Nakatomi clans opposed it as an offence to Japan's own native gods (the kami).
+
+The Soga prevailed by the end of the century, and under Prince Shotoku, regent in the early seventh century, Buddhism received royal patronage and its first great temples were built. Over the centuries Buddhism and the native kami worship that later came to be called Shinto grew closely intertwined in Japanese religious life. In the Kamakura period (1185-1333) new popular schools arose, among them Pure Land, Nichiren and Zen, which remain the largest forms of Japanese Buddhism today.`,
+    datingNotes: `The Nihon Shoki (Chronicles of Japan, AD 720) dates the Baekje gift to 552. Other early Japanese records give 538, which many historians prefer, though neither date is fully secure. This entry is placed at 538. Buddhism was probably known to Korean and Chinese immigrants in Japan before either date; the date marks its formal presentation to the court.`,
+    externalRefs: ["Nihon Shoki (Chronicles of Japan), reign of Emperor Kinmei"],
+  },
+  {
+    id: "rel-buddhism-samye-tibet",
+    title: "Samye, Tibet's First Buddhist Monastery",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 779,
+    dateLabel: "c. AD 779 (dates in the sources vary)",
+    dateCertainty: "traditional",
+    summary: `Under King Trisong Detsen, Indian teachers founded Samye, the first Buddhist monastery in Tibet, and ordained the first Tibetan monks, establishing Buddhism as the religion of the Tibetan court.`,
+    article: `Buddhism had reached the Tibetan court in the seventh century, but it was under King Trisong Detsen, in the second half of the eighth century, that it became established. The king invited the Indian scholar Shantarakshita, and Tibetan tradition holds that when construction of a monastery met with obstacles, the tantric master Padmasambhava was summoned to subdue the hostile local spirits. The monastery of Samye, south-east of Lhasa, was completed and the first Tibetan monks were ordained there.
+
+Tibetan tradition also remembers a debate at Samye, or held under the king's patronage, between the Indian monk Kamalashila and a Chinese Chan (Zen) master. Tradition says the Indian side won and that Tibet thereafter followed Indian rather than Chinese Buddhism. Tibetan Buddhism developed as a form of Mahayana with a strong tantric (Vajrayana) element, and later spread to Mongolia and the Himalayan regions.`,
+    datingNotes: `The Tibetan sources disagree. The Testament of Ba dates the founding to a hare year (763 or 775) and the consecration to a sheep year (767 or 779); the Blue Annals give still later years. The ordination of the first Tibetan monks is commonly dated 779, the date used here. The role of Padmasambhava is described mainly in later hagiography, and historians treat it as traditional.`,
+    externalRefs: ["The Testament of Ba (sBa bzhed)", "The Blue Annals"],
+  },
+  {
+    id: "rel-buddhism-nalanda-decline-india",
+    title: "Nalanda Is Sacked and Buddhism Fades in India",
+    category: "religion",
+    era: "High Medieval",
+    startYear: 1200,
+    dateLabel: "c. AD 1200",
+    dateCertainty: "traditional",
+    summary: `Around 1200, forces of the Turkic commander Muhammad Bakhtiyar Khalji sacked the great monastic universities of northern India, including Nalanda, a blow from which Buddhism in its homeland never recovered.`,
+    article: `Nalanda, in what is now Bihar, had for centuries been the most famous center of Buddhist learning in the Buddhist world, drawing students and scholars from China, Korea, Tibet and the Southeast Asian kingdoms. Around 1200, during the Turkic conquest of northern India, the forces of Muhammad Bakhtiyar Khalji attacked the monasteries of the region. Excavations at Nalanda found a thick layer of ash over many of its buildings, and the Tibetan pilgrim Dharmasvamin, who visited in the 1230s, found it largely damaged and deserted.
+
+The destruction of the monastic centers is often treated as the end of Buddhism in India, though historians see it as the last blow to a religion already in long decline there. Buddhism had come to depend on large monasteries and royal patrons, and it was losing ground to Hindu devotional movements, which absorbed much of its following. A small community lingered at Nalanda into the fourteenth century. By then Buddhism survived in India mainly in the Himalayan regions, while it flourished elsewhere in the Buddhist world.`,
+    datingNotes: `The date of the attack on Nalanda is given variously as c. 1193, c. 1200 and c. 1202. The best-known chronicle account, by Minhaj-i-Siraj, describes the sack of a nearby monastery, Odantapura, and is often wrongly cited for Nalanda itself; the evidence for Nalanda comes chiefly from archaeology and from Dharmasvamin's account. The broader causes of Buddhism's decline in India are debated, and few historians attribute it to the conquest alone.`,
+    externalRefs: ["Dharmasvamin, account of travels in India (c. 1234-1236)", "Minhaj-i-Siraj, Tabaqat-i Nasiri"],
+  },
+  {
+    id: "rel-buddhism-ambedkar-conversion",
+    title: "Ambedkar Leads a Mass Conversion to Buddhism",
+    category: "religion",
+    era: "20th Century",
+    startYear: 1956,
+    dateLabel: "14 October 1956",
+    dateCertainty: "firm",
+    summary: `B. R. Ambedkar, principal architect of India's constitution and the leading champion of India's lowest castes, embraced Buddhism at Nagpur with hundreds of thousands of followers, reviving Buddhism in the land of its birth.`,
+    article: `Bhimrao Ramji Ambedkar was born into the Mahar community, treated as "untouchable" under the Hindu caste system. He rose to earn doctorates from Columbia University and the London School of Economics, chaired the committee that drafted the Constitution of India, and spent his life campaigning against caste discrimination. In 1935 he declared that although he had been born a Hindu, he would not die one.
+
+On 14 October 1956 at Nagpur, Ambedkar and his wife took the Buddhist refuges and precepts and then administered them to a vast crowd of his followers, most of them Dalits (members of the former "untouchable" castes). He gave them twenty-two vows, which included renouncing the Hindu gods and the caste order. Ambedkar died less than two months later, but the movement he began, often called Navayana or Ambedkarite Buddhism, continued to grow, and most of India's Buddhists today belong to it.
+
+His choice was a deliberate rejection of caste. He had considered other religions, Christianity among them, before choosing Buddhism as an Indian tradition that taught human equality.`,
+    datingNotes: `The date and place are firmly documented. Estimates of the number who converted with him at Nagpur vary, but are usually given as several hundred thousand.`,
+    externalRefs: ["B. R. Ambedkar, The Buddha and His Dhamma (1957)"],
+  },
+  {
+    id: "rel-buddhism-dalai-lama-exile",
+    title: "The Dalai Lama Flees Tibet",
+    category: "religion",
+    era: "20th Century",
+    startYear: 1959,
+    dateLabel: "March 1959",
+    dateCertainty: "firm",
+    summary: `After a failed uprising against Chinese rule in Lhasa, the fourteenth Dalai Lama escaped to India, where he established a government in exile and Tibetan Buddhism began to spread worldwide.`,
+    article: `China's People's Liberation Army entered Tibet in 1950, and Tibet was brought under the control of the People's Republic. Tensions grew through the 1950s, and in March 1959 an uprising broke out in Lhasa amid fears for the safety of the Dalai Lama, the spiritual and political leader of Tibetan Buddhism. On the night of 17 March 1959 the twenty-three-year-old Dalai Lama, Tenzin Gyatso, slipped out of the city in disguise and, after a two-week journey over the Himalayas, crossed into India.
+
+India granted him asylum, and he set up the Central Tibetan Administration, a government in exile, eventually based at Dharamsala. Tens of thousands of Tibetans followed him into exile, re-founding monasteries in India and Nepal. Tibetan teachers in exile carried Tibetan Buddhism to Europe and North America, and the Dalai Lama, awarded the Nobel Peace Prize in 1989, became one of the world's best-known religious figures. Religious life inside Tibet has remained under tight state control.`,
+    datingNotes: `The dates of the Lhasa uprising (beginning 10 March 1959) and of the Dalai Lama's escape (night of 17 March 1959) are firmly documented; he reached India at the end of that month.`,
+    externalRefs: ["Dalai Lama, My Land and My People (1962)"],
+  },
+  {
+    id: "rel-hindu-sanskrit-epics",
+    title: "The Mahabharata and Ramayana Take Shape",
+    category: "religion",
+    era: "Second Temple Period",
+    startYear: -400,
+    endYear: 400,
+    dateLabel: "c. 400 BC-AD 400 (main period of composition; disputed)",
+    dateCertainty: "disputed",
+    summary: `India's two great Sanskrit epics, the Mahabharata and the Ramayana, grew over many centuries into the foundational stories of Hindu tradition, still told, performed and revered across India and the Southeast Asian lands.`,
+    article: `The Mahabharata, traditionally attributed to the sage Vyasa, tells of a dynastic war between two branches of one royal family, the Pandavas and the Kauravas, culminating in a great battle at Kurukshetra. Into that frame it gathers a vast range of myth, law, philosophy and moral teaching, which makes it one of the longest poems ever composed. It contains the Bhagavad Gita.
+
+The Ramayana, traditionally attributed to the poet Valmiki, tells of Prince Rama of Ayodhya, his exile, the abduction of his wife Sita by Ravana, the ten-headed king of Lanka, and her rescue with the help of the monkey hero Hanuman. Rama came to be honored as an incarnation (avatar) of the god Vishnu, and the poem's picture of the righteous king and faithful wife became a lasting ideal.
+
+Both epics were retold in nearly every language of India and in Thailand, Cambodia, Indonesia and beyond, and they remain the stories through which most Hindus first learn their faith. They are to Hindu tradition somewhat what the great narratives of Scripture are to Christians, though Hindus generally regard them as smriti ("remembered" tradition) rather than as revelation on the level of the Vedas.`,
+    datingNotes: `Neither epic was written at one time. Both grew through long oral transmission and expansion, and scholars disagree about when their cores were composed and when they reached their present form. A common estimate places the main growth of the Mahabharata between about 400 BC and AD 400, with the Ramayana's core somewhat earlier or overlapping and its later books added afterward. Hindu tradition places the events they describe in a far more distant past.`,
+    externalRefs: ["Mahabharata (Critical Edition, Bhandarkar Oriental Research Institute)", "Valmiki Ramayana"],
+  },
+  {
+    id: "rel-hindu-bhagavad-gita",
+    title: "The Bhagavad Gita",
+    category: "religion",
+    era: "Intertestamental Period",
+    startYear: -200,
+    dateLabel: "c. 2nd-1st century BC (most often cited; range disputed)",
+    dateCertainty: "disputed",
+    summary: `Set on the battlefield of the Mahabharata, the Bhagavad Gita records the god Krishna's teaching to the warrior Arjuna on duty, devotion and liberation, and became the most widely read Hindu scripture.`,
+    article: `The Bhagavad Gita ("Song of the Lord") is a 700-verse dialogue in eighteen chapters, set in the sixth book of the Mahabharata. On the eve of battle the warrior Arjuna, seeing his kinsmen and teachers in the opposing army, lays down his bow in despair. His charioteer Krishna, who reveals himself as the supreme God, persuades him to fight. He teaches that Arjuna must do the duty (dharma) of his station without attachment to its results, and that liberation can be reached through right action, through knowledge, and above all through loving devotion (bhakti) to God.
+
+The Gita drew together strands of earlier Hindu thought, including the Upanishads' teaching on the eternal self, into a devotional theism that shaped much of later Hinduism. Nearly every major Hindu teacher wrote a commentary on it, and in modern times it became the Hindu text best known outside India, read by figures as different as Mohandas Gandhi and the American writer Thoreau.
+
+Its teaching on avatars, God taking a form in the world age after age to restore righteousness, is often compared with the Christian doctrine of the incarnation. The two differ sharply: the Gita describes repeated appearances within an endless cycle of ages, while the New Testament proclaims one unrepeatable incarnation, in which the eternal Word became flesh in history once for all (John 1:14; Hebrews 9:26).`,
+    datingNotes: `Scholarly estimates range from about the 5th century BC to the 2nd or 3rd century AD, depending partly on whether the Gita is thought to have belonged to early versions of the Mahabharata or to have been added later. The 2nd or 1st century BC is the estimate most often given. Hindu tradition dates Krishna's teaching to the beginning of the present world age, thousands of years earlier.`,
+    scriptureRefs: ["John 1:14", "Hebrews 9:26"],
+    externalRefs: ["Mahabharata, Bhishma Parva (Book 6), chapters 23-40"],
+  },
+  {
+    id: "rel-hindu-gupta-puranas-temples",
+    title: "The Puranas and Temple Hinduism in the Gupta Age",
+    category: "religion",
+    era: "Patristic Era",
+    startYear: 320,
+    endYear: 550,
+    dateLabel: "c. AD 320-550 (Gupta Empire)",
+    dateCertainty: "traditional",
+    summary: `Under the Gupta Empire, worship of Vishnu, Shiva and the Goddess, the Purana literature, and the first stone Hindu temples took shape, giving Hinduism much of the form it has today.`,
+    article: `The Gupta Empire, which ruled much of northern India from about AD 320 to 550, is often called a classical age of Indian civilization. Its kings patronized Sanskrit learning and presented themselves as devotees of Vishnu. In this period the older Vedic religion of fire sacrifice gave way more and more to devotional worship (puja) of images of the great gods in temples, and the earliest surviving free-standing stone Hindu temples date from this era.
+
+This is also the period in which the major Puranas ("ancient tales") began to be compiled. These long Sanskrit works collected the myths, genealogies, cosmology and rites of the great deities, especially Vishnu and his avatars, Shiva, and the Goddess (Devi). The traditions centered on them, Vaishnavism, Shaivism and Shaktism, remain the main streams of Hindu devotion.
+
+The image-centered temple worship of this era is the form of Hinduism that most outsiders picture today, and it is the kind of religious world the Bible addresses when it contrasts the living God with gods made by human hands (Psalm 115:3-8).`,
+    datingNotes: `The Gupta dynasty's dates rest on inscriptions and coins and are reasonably secure, though the empire's end was gradual. The Puranas are much harder to date: they were compiled and revised over many centuries, from about the Gupta period to roughly AD 1000 and later, so the Gupta age marks the beginning of their formation rather than its completion.`,
+    scriptureRefs: ["Psalm 115:3-8"],
+    externalRefs: ["Vishnu Purana", "Gupta inscriptions (Corpus Inscriptionum Indicarum, vol. 3)"],
+  },
+  {
+    id: "rel-hindu-shankara-advaita",
+    title: "Shankara and Advaita Vedanta",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 700,
+    endYear: 750,
+    dateLabel: "First half of the 8th century AD (modern estimate; disputed)",
+    dateCertainty: "disputed",
+    summary: `The philosopher Shankara taught Advaita ("non-dual") Vedanta, the doctrine that the individual self is identical with the one ultimate reality, Brahman, and became the most influential thinker in Hindu philosophy.`,
+    article: `Adi Shankara, by tradition born at Kaladi in Kerala, wrote commentaries on the Upanishads, the Brahma Sutras and the Bhagavad Gita, the three foundational texts of the Vedanta schools. In them he argued for Advaita, "non-duality": that ultimate reality, Brahman, is one, without parts or qualities, and that the true self (atman) of each person is identical with it. The world of many separate things is not ultimately real but an appearance produced by ignorance (avidya), and liberation (moksha) comes through knowledge that sees through it.
+
+Tradition holds that Shankara travelled across India debating rival schools and founded monasteries (mathas) whose heads, the Shankaracharyas, still carry great authority. His thought became for many in the modern West the best-known face of Hindu philosophy, though it was only one of several Vedanta schools, and later teachers such as Ramanuja argued against it.
+
+Advaita stands at the opposite pole from biblical faith in a personal Creator distinct from his creation, who calls human beings into a relationship of love and worship rather than into absorption into himself (Genesis 1:1; Isaiah 45:18).`,
+    datingNotes: `Shankara's dates are much debated. An older scholarly date of 788-820, still widely repeated, has been questioned; most recent scholarship places his life in the first half of the 8th century, the range used here. The monastic traditions descended from him give far earlier dates, some placing him in the 5th century BC. The works attributed to him also include many that scholars think were written by later followers.`,
+    scriptureRefs: ["Genesis 1:1", "Isaiah 45:18"],
+    externalRefs: ["Shankara, Brahmasutra-bhashya (commentary on the Brahma Sutras)"],
+  },
+  {
+    id: "rel-hindu-ramanuja",
+    title: "Ramanuja and Devotional Vedanta",
+    category: "religion",
+    era: "High Medieval",
+    startYear: 1077,
+    endYear: 1157,
+    dateLabel: "c. 1077-1157 (modern estimate; tradition gives 1017-1137)",
+    dateCertainty: "disputed",
+    summary: `The South Indian teacher Ramanuja gave philosophical grounding to devotion to a personal God, Vishnu, and became the leading theologian of the Sri Vaishnava tradition.`,
+    article: `From about the sixth to the ninth centuries, Tamil poet-saints in South India, the Alvars (devotees of Vishnu) and the Nayanars (devotees of Shiva), composed hymns of passionate personal love for God. Their bhakti (devotion) movement spread over the following centuries throughout India and transformed popular Hinduism.
+
+Ramanuja, a teacher based at the great Vishnu temple of Srirangam in Tamil Nadu, gave that devotion a philosophical foundation. Against Shankara's non-dualism he taught Vishishtadvaita, "qualified non-dualism": God, identified as Vishnu (Narayana), is the one ultimate reality, but souls and the world are real and distinct, related to God as a body is to its soul. Liberation is not the dissolving of the self into an impersonal absolute but eternal loving service of a personal Lord, reached by devotion and by surrender to his grace.
+
+Ramanuja's school, the Sri Vaishnava tradition, remains strong in South India, and his work prepared the way for later devotional movements, including those devoted to Krishna in the north. Christian readers often notice in this tradition an emphasis on grace and surrender to God that has real points of contact with Christian prayer, alongside basic differences over who God is and how he has made himself known.`,
+    datingNotes: `Ramanuja's traditional dates, 1017-1137, would give him a lifespan of 120 years. Modern scholars, working from temple inscriptions and regional literature of the 11th and 12th centuries, generally place him at about 1077-1157, the range used here.`,
+    externalRefs: ["Ramanuja, Sri Bhashya (commentary on the Brahma Sutras)"],
+  },
+  {
+    id: "rel-hindu-brahmo-samaj",
+    title: "Rammohun Roy Founds the Brahmo Samaj",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1828,
+    dateLabel: "1828",
+    dateCertainty: "firm",
+    summary: `In Calcutta, the reformer Rammohun Roy founded the Brahmo Samaj, a monotheistic Hindu reform society that opposed image worship and practices such as sati, and began the modern Hindu renaissance.`,
+    article: `Rammohun Roy, a Bengali scholar who read Sanskrit, Persian, Arabic, Hebrew and Greek, argued that the Upanishads taught the worship of one formless God and that later image worship and many social customs were corruptions. In August 1828 he and Dwarkanath Tagore founded in Calcutta the society that became known as the Brahmo Samaj, which met for congregational worship of the one God without images. He campaigned against sati, the burning of widows on their husbands' funeral pyres, which the British administration of Bengal outlawed in 1829.
+
+Roy had close and contentious dealings with Christianity. He admired the moral teaching of Jesus and published The Precepts of Jesus (1820), but rejected the Trinity and the deity of Christ, which drew him into public controversy with the Baptist missionaries at Serampore, the mission of William Carey and his colleagues.
+
+The Brahmo Samaj was followed by other reform movements, notably the Arya Samaj founded by Dayananda Saraswati in 1875, which called Hindus back to the Vedas alone. Together they began a modern Hindu revival that responded to Christian missions and Western ideas while reasserting Hindu identity.`,
+    datingNotes: `The society first met in Calcutta on 20 August 1828, originally as the Brahmo Sabha. The ban on sati in the Bengal Presidency followed in December 1829.`,
+    externalRefs: ["Rammohun Roy, The Precepts of Jesus, the Guide to Peace and Happiness (1820)"],
+  },
+  {
+    id: "rel-hindu-vivekananda-chicago",
+    title: "Vivekananda at the World's Parliament of Religions",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1893,
+    dateLabel: "11 September 1893",
+    dateCertainty: "firm",
+    summary: `Swami Vivekananda's addresses to the World's Parliament of Religions in Chicago introduced Hindu Vedanta to a Western audience and made Hinduism a missionary religion in the West.`,
+    article: `The World's Parliament of Religions, held in Chicago alongside the 1893 World's Columbian Exposition, was the first large formal gathering of representatives of the world's religions. Its most celebrated speaker was a young Bengali monk, Swami Vivekananda, a disciple of the mystic Ramakrishna. His opening address on 11 September, beginning "Sisters and Brothers of America," drew a standing ovation.
+
+Vivekananda presented Hinduism, interpreted through Advaita Vedanta, as a universal religion that accepted all religions as true paths to the same goal. He lectured widely in America and Britain, founded the Vedanta Society of New York in 1894, and on returning to India founded the Ramakrishna Mission in 1897, combining monastic life with social service. He became a hero of Indian national pride.
+
+His message that all religions lead to the same goal shaped much later Western thinking about religion. It is also the point where the gospel parts company with it: the apostles proclaimed that salvation is found in Christ alone (Acts 4:12).`,
+    datingNotes: `The Parliament opened on 11 September 1893, the date of Vivekananda's first and best-known address. The dates of his later foundations are well documented.`,
+    scriptureRefs: ["Acts 4:12"],
+    externalRefs: ["John Henry Barrows, ed., The World's Parliament of Religions (1893)"],
+  },
+  {
+    id: "rel-hindu-iskcon-founded",
+    title: "ISKCON (the Hare Krishna Movement) Is Founded",
+    category: "religion",
+    era: "20th Century",
+    startYear: 1966,
+    dateLabel: "July 1966",
+    dateCertainty: "firm",
+    summary: `In New York, the Bengali monk A. C. Bhaktivedanta Swami Prabhupada founded the International Society for Krishna Consciousness, carrying devotion to Krishna to the West.`,
+    article: `A. C. Bhaktivedanta Swami Prabhupada arrived in New York in 1965, at the age of sixty-nine, as a missionary of the Gaudiya Vaishnava tradition, which goes back to the Bengali saint Chaitanya (1486-1534) and centers on loving devotion to Krishna as the supreme God. In July 1966 he incorporated the International Society for Krishna Consciousness (ISKCON). Its members, recognizable by their saffron robes and public chanting of the Hare Krishna mantra, drew many young Westerners in the counterculture of the late 1960s.
+
+ISKCON spread temples, vegetarian restaurants and Prabhupada's translations of the Bhagavad Gita and other scriptures around the world. After his death in 1977 the movement went through serious leadership crises, but it has become an established part of Hinduism in both India and the diaspora. It is the best-known example of a Hindu tradition actively seeking converts outside India.`,
+    datingNotes: `ISKCON was incorporated in New York in July 1966. Prabhupada's arrival in America in September 1965 and his death in November 1977 are well documented.`,
+    externalRefs: ["A. C. Bhaktivedanta Swami Prabhupada, Bhagavad-gita As It Is (1968)"],
+  },
+  {
+    id: "rel-islam-first-revelation",
+    title: "Muhammad's First Revelation",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 610,
+    dateLabel: "AD 610 (traditional)",
+    dateCertainty: "traditional",
+    summary: `By Muslim tradition, Muhammad of Mecca, about forty years old, received his first revelation from the angel Gabriel in a cave on Mount Hira, the beginning of the Qur'an and of Islam.`,
+    article: `Muhammad ibn Abdullah was born in Mecca, a trading and pilgrimage town in western Arabia, around AD 570, and was orphaned young. By Muslim tradition, he was in the habit of withdrawing to a cave on Mount Hira near Mecca for prayer, and there, in the month of Ramadan, the angel Gabriel (Jibril) appeared to him and commanded him to "Recite!" The words he received are traditionally identified with the opening verses of Sura 96 of the Qur'an. Shaken, he returned home to his wife Khadija, who became the first to believe in his message.
+
+Over the following years, by Muslim belief, revelations continued to come to him until his death about twenty-three years later. These were memorized and recited by his followers and later collected as the Qur'an. His preaching in Mecca called its people to worship the one God, Allah, to abandon idols, to care for the poor, and to prepare for the coming Day of Judgment. It met growing opposition from Mecca's leading clans, whose wealth was tied to the pilgrimage shrine of the Kaaba.
+
+Muslims regard Muhammad as the last of a line of prophets that includes Abraham, Moses and Jesus. Christians, holding that God's final word was spoken in his Son (Hebrews 1:1-2), do not accept Muhammad as a prophet or the Qur'an as revelation, though the two faiths share belief in one Creator God.`,
+    datingNotes: `The traditional date of 610 derives from the early Muslim biographies of Muhammad, the oldest surviving being Ibn Hisham's edition of Ibn Ishaq (8th century), written more than a century after the events. The year of Muhammad's birth, traditionally the "Year of the Elephant," is usually given as c. 570 but is uncertain by several years. Some historians are sceptical of details in the early biographies, but the broad outline of Muhammad's career in Mecca and Medina in the early seventh century is widely accepted.`,
+    scriptureRefs: ["Hebrews 1:1-2"],
+    externalRefs: ["Qur'an 96:1-5", "Ibn Ishaq, Sirat Rasul Allah, as edited by Ibn Hisham"],
+  },
+  {
+    id: "rel-islam-hijra",
+    title: "The Hijra: Muhammad Moves to Medina",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 622,
+    dateLabel: "AD 622",
+    dateCertainty: "firm",
+    summary: `Facing persecution in Mecca, Muhammad and his followers emigrated to Yathrib, afterward called Medina, where he became leader of a community; the year became year one of the Islamic calendar.`,
+    article: `As opposition in Mecca grew, Muhammad accepted an invitation from the feuding tribes of Yathrib, an oasis town a little over 200 miles to the north, to come and act as arbiter. In 622 his followers left Mecca in small groups, and Muhammad himself followed. This emigration, the Hijra, transformed Muhammad from a persecuted preacher into the political, military and religious leader of a community, the umma.
+
+In Medina ("the City [of the Prophet]") Muhammad established a body of rules governing relations among the town's groups, including its Jewish tribes, a document later known as the Constitution of Medina. The years that followed brought warfare with Mecca, the expulsion or killing of the Jewish tribes of Medina, and the growth of the Muslim community into the strongest power in Arabia. In 630 Mecca surrendered, and Muhammad cleared the Kaaba of its idols.
+
+A few years after Muhammad's death the caliph Umar adopted the year of the Hijra as the starting point of the Islamic calendar, which Muslims still use; its years are marked AH (Anno Hegirae).`,
+    datingNotes: `The year 622 is fixed by the Islamic calendar, which counts from the beginning of the lunar year in which the Hijra took place (AH 1 began in July 622). Muhammad's arrival in Medina is traditionally placed in September 622.`,
+    externalRefs: ["Ibn Ishaq, Sirat Rasul Allah, as edited by Ibn Hisham", "The Constitution of Medina (as preserved by Ibn Ishaq)"],
+  },
+  {
+    id: "rel-islam-death-of-muhammad-succession",
+    title: "Muhammad Dies and the Succession Is Disputed",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 632,
+    dateLabel: "AD 632",
+    dateCertainty: "firm",
+    summary: `Muhammad died in Medina without a universally accepted successor. The choice of Abu Bakr as the first caliph, rather than Muhammad's cousin and son-in-law Ali, became the root of the division between Sunni and Shi'a Islam.`,
+    article: `Muhammad died in Medina in June 632, having brought most of Arabia under Muslim rule. His companions chose his close friend and father-in-law Abu Bakr as caliph (khalifa, "successor"), to lead the community, though not as a prophet. Abu Bakr was followed by Umar (634-644), Uthman (644-656) and Ali (656-661). Under them Arab armies conquered the Persian Empire and the Byzantine provinces of Syria, Palestine and Egypt, including Jerusalem, within a generation.
+
+A minority held that Muhammad had designated Ali, his cousin and the husband of his daughter Fatima, as his successor, citing his words at a place called Ghadir Khumm on his last pilgrimage. These partisans of Ali (shi'at Ali) became the Shi'a, who hold that leadership of the community belongs to Ali and his descendants, the Imams. The majority, who accepted the first four caliphs in turn, became the Sunnis ("people of the Sunna"). The division, sharpened by civil wars over the following decades, remains the deepest in Islam: by Pew Research Center estimates about 87-90 percent of Muslims today are Sunni and 10-13 percent Shi'a.`,
+    datingNotes: `Muhammad's death in 632 (AH 11) is not in doubt; Muslim tradition places it on 8 June 632. The dates of the first four caliphs are well established. What Muhammad said at Ghadir Khumm, and what he meant by it, is the central point of dispute between Sunni and Shi'a historians.`,
+    externalRefs: ["al-Tabari, History of the Prophets and Kings"],
+  },
+  {
+    id: "rel-islam-uthmanic-codex",
+    title: "The Qur'an Is Standardized Under Uthman",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 650,
+    dateLabel: "c. AD 650 (during Uthman's caliphate, 644-656; traditional)",
+    dateCertainty: "traditional",
+    summary: `By Muslim tradition, the third caliph, Uthman, had a single authoritative written text of the Qur'an prepared and sent to the main cities of the empire, ordering other versions destroyed.`,
+    article: `During Muhammad's lifetime the revelations he proclaimed were memorized by his followers and written on whatever materials came to hand. Muslim tradition reports that after many Qur'an reciters were killed in battle, the first caliph, Abu Bakr, had Muhammad's secretary Zayd ibn Thabit gather the text into a written collection. Some years later, as reports came in of disagreements over the recitation in different regions, the caliph Uthman had Zayd and others prepare a standard copy. Copies were sent to the main garrison cities, and other written versions were ordered burned.
+
+The Uthmanic text is the basis of every Qur'an in use today. Its 114 suras are arranged roughly from longest to shortest rather than in the order they were revealed. Because early Arabic script did not mark vowels and some consonants, a small number of variant readings survived, and later scholars recognized several authorized traditions of recitation.
+
+Muslims regard the Qur'an as the uncreated, literal word of God, preserved without change. Christians, by contrast, receive the Bible as God's word given through human authors who wrote in their own styles and settings (2 Peter 1:21), a different understanding of how revelation works.`,
+    datingNotes: `The account of Abu Bakr's collection and Uthman's standardization comes from hadith collections compiled about two centuries later. Most scholars accept that the text was fixed in its consonantal form in the seventh century, a view supported by early manuscripts: radiocarbon tests on some Qur'an fragments, such as the Birmingham leaves, give date ranges reaching from the late sixth to the mid-seventh century. A minority of scholars have argued for a later standardization. The Sana'a palimpsest, whose lower text differs from the Uthmanic text, shows that other versions did circulate early.`,
+    scriptureRefs: ["2 Peter 1:21"],
+    externalRefs: ["Sahih al-Bukhari, Book of the Virtues of the Qur'an (Fada'il al-Qur'an)"],
+  },
+  {
+    id: "rel-islam-karbala",
+    title: "The Battle of Karbala",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 680,
+    dateLabel: "10 October 680 (10 Muharram AH 61)",
+    dateCertainty: "firm",
+    summary: `Husayn, grandson of Muhammad and son of Ali, was killed with a small band of family and followers by the army of the Umayyad caliph Yazid at Karbala in Iraq, the defining event of Shi'a Islam.`,
+    article: `After Ali's assassination in 661, the caliphate passed to the Umayyad family, ruling from Damascus. When the caliph Muawiya died in 680 and his son Yazid succeeded him, Husayn, Ali's son and Muhammad's grandson, refused to give his allegiance and set out for Kufa in Iraq, where supporters had invited him to lead a revolt. On the plain of Karbala his small party was surrounded by a much larger Umayyad army. On 10 Muharram, Husayn and most of the men with him were killed, and the women and children taken captive.
+
+For Shi'a Muslims Karbala became the supreme story of righteous suffering and martyrdom in the face of tyranny. Its anniversary, Ashura, is the most solemn day of the Shi'a year, marked by mourning processions and passion plays, and Husayn's shrine at Karbala is one of the great pilgrimage sites of the Muslim world. Sunni Muslims also honor Husayn, but Karbala hardened the political division over the succession into a lasting religious one.`,
+    datingNotes: `The battle took place on 10 Muharram AH 61, which corresponds to 10 October 680. The main narrative sources, chiefly the account preserved by al-Tabari, are later and partly shaped by devotion, but the event and its date are not in doubt.`,
+    externalRefs: ["al-Tabari, History of the Prophets and Kings (account of Abu Mikhnaf)"],
+  },
+  {
+    id: "rel-islam-dome-of-the-rock",
+    title: "The Dome of the Rock Is Built in Jerusalem",
+    category: "religion",
+    era: "Fall of Rome and Early Medieval",
+    startYear: 691,
+    dateLabel: "AD 691/692 (AH 72)",
+    dateCertainty: "firm",
+    summary: `The Umayyad caliph Abd al-Malik built the Dome of the Rock on Jerusalem's Temple Mount, the oldest surviving major Islamic monument, its inscriptions addressed in part to Christians about Jesus.`,
+    article: `About half a century after Jerusalem surrendered to the caliph Umar, the Umayyad caliph Abd al-Malik built a domed octagonal shrine over the great rock at the summit of the Temple Mount, the platform where Herod's temple had stood until AD 70. Muslims call the site the Haram al-Sharif ("Noble Sanctuary"). Later Muslim tradition associates the rock with Muhammad's Night Journey and ascent to heaven, and Jewish tradition holds it to be near the site of the Holy of Holies.
+
+A mosaic inscription inside the building gives the year AH 72 (AD 691/692). Its long Qur'anic texts are among the earliest dated quotations of the Qur'an. Many are addressed to Christians, the "People of the Book": they honor Jesus as the Messiah and a messenger of God but deny that God has a son and warn against saying "three." Built in a city still largely Christian, and in a style that drew on Byzantine church architecture, the shrine announced the arrival of a new faith that claimed to complete and correct the earlier ones.
+
+Its inscriptions put in stone the point on which Christianity and Islam most deeply differ, the identity of Jesus. Christians confess him as the eternal Son of God made flesh (John 1:14; 1 John 4:15).`,
+    datingNotes: `The date AH 72 (AD 691/692) is given by the building's own dedicatory inscription. The name of the later Abbasid caliph al-Ma'mun was substituted for Abd al-Malik's in that inscription in the ninth century, but the original date was left in place.`,
+    scriptureRefs: ["John 1:14", "1 John 4:15"],
+    externalRefs: ["Dome of the Rock, inner octagon mosaic inscription (AH 72)"],
+    sources: [
+      { label: "Christian History Magazine 74: Christians and Muslims", url: "https://christianhistoryinstitute.org/magazine/issue/christians-and-muslims", note: "free full issue" },
+    ],
+  },
+  {
+    id: "rel-islam-sahih-bukhari",
+    title: "Al-Bukhari Compiles His Collection of Hadith",
+    category: "religion",
+    era: "High Medieval",
+    startYear: 846,
+    dateLabel: "c. AD 846 (traditional)",
+    dateCertainty: "traditional",
+    summary: `The scholar Muhammad al-Bukhari completed his Sahih, a collection of reports of Muhammad's sayings and deeds that Sunni Muslims regard as the most reliable book after the Qur'an.`,
+    article: `Alongside the Qur'an, Muslims look to the Sunna, the example of Muhammad, as a guide for belief and conduct. It is known through hadith: reports of what Muhammad said and did, each passed down through a chain of named narrators (isnad). By the ninth century enormous numbers of hadith were circulating, many of them recognized by Muslim scholars themselves as fabricated.
+
+Muhammad ibn Ismail al-Bukhari (810-870), from Bukhara in present-day Uzbekistan, travelled widely to gather hadith and examined the reliability of their chains of transmission. His Sahih ("Sound") selects several thousand reports, arranged by topic. Together with the Sahih of his student Muslim ibn al-Hajjaj, it became the most authoritative hadith collection in Sunni Islam, and with four other collections it forms the Sunni "Six Books." Hadith shape much of Islamic law (sharia), from prayer and fasting to marriage and inheritance.
+
+Shi'a Muslims rely on their own hadith collections, transmitted through the Imams of Ali's family, chief among them al-Kafi of al-Kulayni (10th century). Modern Western scholars have debated how much of the hadith literature preserves authentic early material.`,
+    datingNotes: `Al-Bukhari's life dates (810-870) are well established. The completion of the Sahih is traditionally placed around AD 846 (AH 232), though he is reported to have continued revising and teaching it for years afterward.`,
+    externalRefs: ["Muhammad al-Bukhari, al-Jami al-Sahih"],
+  },
+  {
+    id: "rel-islam-safavid-shiism",
+    title: "Shi'a Islam Becomes the State Religion of Iran",
+    category: "religion",
+    era: "Late Medieval",
+    startYear: 1501,
+    dateLabel: "1501",
+    dateCertainty: "firm",
+    summary: `On taking Tabriz and proclaiming himself shah, Ismail I, founder of the Safavid dynasty, declared Twelver Shi'ism the official religion of his realm, turning a mostly Sunni Iran into the center of Shi'a Islam.`,
+    article: `For most of Islamic history Shi'a Muslims had been a minority under Sunni rulers. In 1501 the young Ismail, leader of the Safavid religious order, captured Tabriz in north-western Iran, was crowned shah, and proclaimed Twelver Shi'ism, the main branch of Shi'a Islam, which venerates twelve Imams descended from Ali, the religion of the state.
+
+Iran's population was then largely Sunni, and the Safavids imposed the new faith over the following generations, bringing in Shi'a scholars from Arab lands and suppressing Sunni practice. Their long rivalry with the Sunni Ottoman Empire gave the Sunni-Shi'a divide a geopolitical shape that still marks the Middle East. Iran remains the largest Shi'a-majority country, and since the revolution of 1979 it has been governed as an Islamic republic led by Shi'a clergy.`,
+    datingNotes: `Ismail's capture of Tabriz and coronation in 1501 are well documented. The conversion of Iran's population to Shi'ism was a gradual process that took well over a century.`,
+    externalRefs: [],
+  },
+  {
+    id: "rel-islam-wahhabi-saudi-pact",
+    title: "Ibn Abd al-Wahhab and Ibn Saud Form an Alliance",
+    category: "religion",
+    era: "Great Awakenings and Revivalism",
+    startYear: 1744,
+    dateLabel: "1744 (some sources 1745)",
+    dateCertainty: "traditional",
+    summary: `In central Arabia, the reforming preacher Muhammad ibn Abd al-Wahhab and the local ruler Muhammad ibn Saud swore an alliance that founded the first Saudi state and the strict reform movement outsiders call Wahhabism.`,
+    article: `Muhammad ibn Abd al-Wahhab (1703-1792), a scholar of the Hanbali school of law, preached a return to what he held to be the pure monotheism (tawhid) of early Islam. He condemned the veneration of saints and tombs, popular among many Muslims of his day, as idolatry. Expelled from his home town, he found refuge at Diriyah, where its ruler, Muhammad ibn Saud, swore an oath of alliance with him: the Saud family would hold political power, and Ibn Abd al-Wahhab's teaching would be the religion of the state.
+
+The alliance produced the first Saudi state, which conquered much of Arabia before being crushed in 1818 by an army sent from Egypt on behalf of the Ottoman sultan. The partnership was revived by later Saudi rulers and underlies the modern Kingdom of Saudi Arabia, founded in 1932. With the kingdom's oil wealth in the twentieth century, its form of Islam was promoted around the world. Its followers generally reject the name "Wahhabi," preferring to describe themselves as Salafis, followers of the earliest Muslim generations, or simply as Muslims.`,
+    datingNotes: `Sources date the oath at Diriyah to 1744 or 1745 (AH 1157-1158). Ibn Abd al-Wahhab's dates, 1703-1792, are well established.`,
+    externalRefs: [],
+  },
+  {
+    id: "rel-islam-caliphate-abolished",
+    title: "The Caliphate Is Abolished",
+    category: "religion",
+    era: "20th Century",
+    startYear: 1924,
+    dateLabel: "3 March 1924",
+    dateCertainty: "firm",
+    summary: `The Grand National Assembly of the new Turkish Republic abolished the Ottoman caliphate, ending an office that had claimed leadership of the Muslim world since the death of Muhammad.`,
+    article: `The Ottoman sultans had claimed the title of caliph, successor to Muhammad as leader of the Muslim community, and from the late nineteenth century they stressed it to rally Muslims worldwide. After the Ottoman Empire's defeat in the First World War, Turkish nationalists under Mustafa Kemal (later Atatürk) abolished the sultanate in 1922 and proclaimed the Republic of Turkey in 1923. On 3 March 1924 the Grand National Assembly abolished the caliphate itself and sent the last caliph, Abdulmejid II, and the Ottoman family into exile.
+
+The abolition shocked many Muslims, especially in British India, where the Khilafat movement had campaigned to preserve it. Attempts to revive the caliphate elsewhere failed, and for the first time in Islamic history there was no widely recognized caliph. The question of how Islam should relate to the modern nation-state, and the longing of some for a restored caliphate, became central themes of twentieth-century Islamic thought and politics.`,
+    datingNotes: `The law abolishing the caliphate was passed by the Turkish Grand National Assembly on 3 March 1924.`,
+    externalRefs: [],
+  },
+  {
+    id: "rel-lds-first-vision",
+    title: "Joseph Smith's First Vision",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1820,
+    dateLabel: "Spring 1820 (by Joseph Smith's 1838 account)",
+    dateCertainty: "traditional",
+    summary: `Joseph Smith later taught that, as a teenager troubled by the rival churches of western New York, he prayed in a grove near his home and saw God the Father and Jesus Christ, the founding event of the Latter-day Saint movement.`,
+    article: `Western New York in the early nineteenth century was swept by revivals of the Second Great Awakening, so often that it became known as the "burned-over district." Joseph Smith, the son of a farming family near Palmyra, later wrote that the competing claims of Methodists, Presbyterians and Baptists left him unsure which church to join. Reading James 1:5, he resolved to ask God, and went to pray in a grove of trees near his family's farm.
+
+In the account he dictated in 1838, now canonized by the Church of Jesus Christ of Latter-day Saints, he described a pillar of light and two personages, God the Father and his Son, Jesus Christ, who told him to join none of the churches, for they were all wrong. Latter-day Saints regard this First Vision as the opening of the "Restoration," the return of the true church after centuries of apostasy, and as evidence that the Father and the Son are distinct, embodied beings.
+
+Evangelical, Catholic and Orthodox Christians reject the claim that the historic church fell into total apostasy, holding that Christ promised his church would endure (Matthew 16:18), and they reject the vision's teaching on the nature of God as contrary to the biblical revelation of one God (Deuteronomy 6:4).`,
+    datingNotes: `The date "early in the spring of 1820" comes from Joseph Smith's 1838 account (Joseph Smith-History 1:14). Several accounts survive. The earliest, written in 1832, describes a vision of the Lord alone, and later accounts differ in detail; the Church has published and discussed them in its Gospel Topics essay "First Vision Accounts." Critics have pointed to the differences and to the absence of a documented revival in Palmyra in 1820 itself, while Latter-day Saint historians argue the accounts are consistent in substance.`,
+    scriptureRefs: ["James 1:5", "Matthew 16:18", "Deuteronomy 6:4"],
+    externalRefs: ["Joseph Smith-History 1:14-20 (Pearl of Great Price)", "Joseph Smith, 1832 history (Joseph Smith Papers)"],
+  },
+  {
+    id: "rel-lds-book-of-mormon",
+    title: "The Book of Mormon Is Published",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1830,
+    dateLabel: "March 1830",
+    dateCertainty: "firm",
+    summary: `Joseph Smith published the Book of Mormon in Palmyra, New York, presenting it as a translation of ancient records engraved on golden plates and as a second witness to Jesus Christ alongside the Bible.`,
+    article: `Joseph Smith taught that in 1823 an angel named Moroni directed him to a hill near his home, where gold plates were buried, and that in 1827 he was allowed to take them. Between 1827 and 1829 he dictated a translation to assistants who wrote it down, among them Oliver Cowdery, by what he described as the gift and power of God. The book was printed by E. B. Grandin of Palmyra and went on sale in March 1830, with the testimonies of three and then eight witnesses who said they had seen the plates.
+
+The Book of Mormon tells the story of peoples who, it says, migrated to the Americas, chief among them a family that left Jerusalem around 600 BC, and of the risen Christ's visit to them after his resurrection. Latter-day Saints regard it as scripture alongside the Bible, "another testament of Jesus Christ." It has been translated into more than a hundred languages.
+
+Other Christian traditions do not accept it as scripture. They hold that the biblical canon is complete and that God's final revelation is in his Son (Hebrews 1:1-2), and archaeologists and historians outside the Church have found no support for the civilizations it describes. Latter-day Saint scholars dispute that assessment.`,
+    datingNotes: `The book was advertised as on sale in the Wayne Sentinel of Palmyra on 26 March 1830. The dates of the translation (1827-1829) come from Joseph Smith's accounts and those of the people who wrote for him.`,
+    scriptureRefs: ["Hebrews 1:1-2"],
+    externalRefs: ["The Book of Mormon (Palmyra: E. B. Grandin, 1830)", "Wayne Sentinel, 26 March 1830"],
+  },
+  {
+    id: "rel-lds-church-organized",
+    title: "The Church of Jesus Christ of Latter-day Saints Is Organized",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1830,
+    dateLabel: "6 April 1830",
+    dateCertainty: "firm",
+    summary: `Joseph Smith and a handful of followers formally organized the Church of Christ in western New York, the body known since 1838 as the Church of Jesus Christ of Latter-day Saints.`,
+    article: `On 6 April 1830, by the Church's account at the Whitmer family farmhouse in Fayette, New York, Joseph Smith and a small group of believers formally organized a church, with six men listed as its members to meet the legal requirements of the time. Originally called the Church of Christ, it took the name the Church of Jesus Christ of Latter-day Saints in 1838.
+
+Early missionaries spread the new faith rapidly, and within a year the church's center moved west to Kirtland, Ohio, with a second gathering place in Missouri. The church grew from those six men to the body that today reports nearly eighteen million members worldwide. It asks to be called by its full name, and its members Latter-day Saints, rather than "Mormons" or "LDS."
+
+The Latter-day Saints regard themselves as Christians and their church as the restored church of Jesus Christ. Catholic, Orthodox and Protestant churches do not, because it does not confess the Trinitarian doctrine of God set out in the Nicene Creed.`,
+    datingNotes: `The date of 6 April 1830 is not in doubt. The place is given as Fayette, New York, in the Church's own accounts; some early sources point to Manchester, New York.`,
+    externalRefs: ["Doctrine and Covenants 20:1", "Joseph Smith-History (Pearl of Great Price)"],
+  },
+  {
+    id: "rel-lds-kirtland-temple",
+    title: "The Kirtland Temple Is Dedicated",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1836,
+    dateLabel: "27 March 1836",
+    dateCertainty: "firm",
+    summary: `In Kirtland, Ohio, the Latter-day Saints dedicated their first temple, where Joseph Smith later recorded visions that underpin the church's temple ordinances.`,
+    article: `The Latter-day Saints gathered at Kirtland, Ohio, from 1831 and, at great sacrifice, built a temple there, dedicated on 27 March 1836. A week later, on 3 April, Joseph Smith and Oliver Cowdery recorded a series of visions in the building, in which they said Jesus Christ accepted the building and Moses and Elijah, among others, appeared and conferred priesthood "keys." The account is now Doctrine and Covenants section 110.
+
+Latter-day Saints link Elijah's appearance with the doctrine of sealing families for eternity and of ordinances for the dead, which later became central to their temple worship. Kirtland itself was abandoned as a gathering place in 1838, after a banking failure and internal dissent, and the church moved to Missouri and then to Nauvoo, Illinois.`,
+    datingNotes: `The dedication on 27 March 1836 and the visions recorded on 3 April 1836 are documented in contemporary church records.`,
+    externalRefs: ["Doctrine and Covenants 109-110"],
+  },
+  {
+    id: "rel-lds-death-of-joseph-smith",
+    title: "Joseph Smith Is Killed at Carthage Jail",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1844,
+    dateLabel: "27 June 1844",
+    dateCertainty: "firm",
+    summary: `Joseph Smith and his brother Hyrum were shot by a mob while held in jail at Carthage, Illinois, leaving the movement without its founding prophet and splitting it over who should succeed him.`,
+    article: `By 1844 the Latter-day Saints' city of Nauvoo, Illinois, was one of the largest in the state, and its political power, its militia, and rumors of the secret practice of plural marriage alarmed its neighbors. When dissenters published a newspaper, the Nauvoo Expositor, attacking Joseph Smith, the city council under his leadership had its press destroyed. Smith and his brother Hyrum surrendered to state authorities and were held in the jail at Carthage. On 27 June 1844 a mob with blackened faces stormed the jail and shot both men dead.
+
+Latter-day Saints honor Joseph Smith as a martyred prophet. His death set off a succession crisis. Most of his followers accepted the leadership of the Quorum of the Twelve Apostles under Brigham Young, but others followed Sidney Rigdon, James Strang, or later Smith's son Joseph Smith III, and several separate churches trace their origin to that division.`,
+    datingNotes: `The date and circumstances of the killings are well documented. Five men were tried for the murders in 1845 and acquitted.`,
+    externalRefs: ["Doctrine and Covenants 135", "Nauvoo Expositor, 7 June 1844"],
+  },
+  {
+    id: "rel-lds-salt-lake-valley",
+    title: "The Latter-day Saints Reach the Salt Lake Valley",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1847,
+    dateLabel: "24 July 1847",
+    dateCertainty: "firm",
+    summary: `Driven from Illinois, the Latter-day Saints under Brigham Young trekked west and settled the valley of the Great Salt Lake, which became the lasting headquarters of the church.`,
+    article: `Under pressure from their neighbors after Joseph Smith's death, the Latter-day Saints began leaving Nauvoo in February 1846, crossing Iowa to winter quarters on the Missouri River. In 1847 Brigham Young led a vanguard company across the plains and the Rocky Mountains, and on 24 July 1847 he entered the Salt Lake Valley, then in Mexican territory. The day is still celebrated in Utah as Pioneer Day.
+
+Tens of thousands of converts followed over the next two decades, some pulling handcarts, many of them emigrants from Britain and Scandinavia. Brigham Young, sustained as President of the Church in December 1847, directed the founding of hundreds of settlements across the Great Basin. Salt Lake City has been the church's headquarters ever since.`,
+    datingNotes: `Brigham Young's arrival on 24 July 1847 is recorded in pioneer journals; the first members of the advance company had entered the valley a few days earlier.`,
+    externalRefs: ["Journals of the 1847 pioneer company (e.g., William Clayton, Wilford Woodruff)"],
+  },
+  {
+    id: "rel-lds-plural-marriage-announced",
+    title: "Plural Marriage Is Publicly Announced",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1852,
+    dateLabel: "29 August 1852",
+    dateCertainty: "firm",
+    summary: `At a conference in Salt Lake City, the apostle Orson Pratt publicly announced that the church practiced plural marriage, a teaching Joseph Smith had introduced privately in Nauvoo.`,
+    article: `Joseph Smith had taught and practiced plural marriage privately in the early 1840s, as the church now acknowledges in its Gospel Topics essays, while church leaders publicly denied it. In Utah, on 29 August 1852, the apostle Orson Pratt announced it openly at a special conference, and the revelation on which it rested was published; it is now Doctrine and Covenants section 132.
+
+The practice brought the church into decades of conflict with the United States government. Congress passed laws against polygamy from 1862 onward, and in the 1880s hundreds of Latter-day Saint men were imprisoned and church property was seized. Only a minority of families practiced it, but it became the defining public image of the faith in the nineteenth century.`,
+    datingNotes: `Orson Pratt's announcement on 29 August 1852 is recorded in the church's published conference reports. Joseph Smith's revelation on plural marriage is dated 12 July 1843.`,
+    externalRefs: ["Doctrine and Covenants 132"],
+  },
+  {
+    id: "rel-lds-reorganized-church",
+    title: "The Reorganized Church (Community of Christ) Forms",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1860,
+    dateLabel: "6 April 1860",
+    dateCertainty: "firm",
+    summary: `Latter-day Saints who had not followed Brigham Young west accepted Joseph Smith's son, Joseph Smith III, as their prophet-president, forming the second-largest church of the movement, now called Community of Christ.`,
+    article: `Many of Joseph Smith's followers, including his widow Emma, never went to Utah. Through the 1850s groups of them in the Midwest, rejecting Brigham Young's leadership and the practice of plural marriage, looked to Joseph Smith's eldest son to lead them. On 6 April 1860, at Amboy, Illinois, Joseph Smith III accepted the presidency of what became the Reorganized Church of Jesus Christ of Latter Day Saints.
+
+The Reorganized Church, later headquartered in Independence, Missouri, rejected plural marriage and taught that Joseph Smith had never practiced it. Over the twentieth century it moved closer to mainline Protestantism in theology and worship, opened its priesthood to women in 1984, and in 2001 changed its name to Community of Christ. It is the largest of the churches that trace themselves to Joseph Smith but not to Brigham Young.`,
+    datingNotes: `The conference at Amboy, Illinois, on 6 April 1860 is well documented. The church had been organizing since 1852-1853 and counts that period as part of its reorganization.`,
+    externalRefs: [],
+  },
+  {
+    id: "rel-lds-manifesto-1890",
+    title: "The Manifesto Ends Official Plural Marriage",
+    category: "religion",
+    era: "19th Century Missions and Reform",
+    startYear: 1890,
+    dateLabel: "September 1890",
+    dateCertainty: "firm",
+    summary: `Under heavy federal pressure, church president Wilford Woodruff issued the Manifesto, announcing that the church would no longer sanction new plural marriages, which opened the way to Utah statehood.`,
+    article: `By 1890 federal anti-polygamy laws had disincorporated the church, seized much of its property, and threatened its temples. On 25 September 1890 church president Wilford Woodruff published a declaration that he would submit to the laws of the land and advise members to refrain from contracting new plural marriages. It was sustained by a general conference in October 1890 and is now Official Declaration 1 in the Doctrine and Covenants.
+
+New plural marriages continued quietly for some years, and a second statement by president Joseph F. Smith in 1904 made violation grounds for church discipline. The Manifesto cleared the way for Utah's admission as a state in 1896. Groups that rejected it and kept the practice became separate fundamentalist churches, which the Church of Jesus Christ of Latter-day Saints does not recognize.`,
+    datingNotes: `The Manifesto was published in the church's Deseret Weekly on 25 September 1890 and sustained by the church's general conference on 6 October 1890.`,
+    externalRefs: ["Doctrine and Covenants, Official Declaration 1"],
+  },
+  {
+    id: "rel-lds-1978-priesthood-revelation",
+    title: "The Priesthood Is Opened to Black Members",
+    category: "religion",
+    era: "20th Century",
+    startYear: 1978,
+    dateLabel: "June 1978",
+    dateCertainty: "firm",
+    summary: `The church's First Presidency announced a revelation extending the priesthood and temple ordinances to all worthy members regardless of race, ending a restriction on members of Black African descent dating from the 1850s.`,
+    article: `From the early 1850s, under Brigham Young, men of Black African descent were barred from the church's priesthood, which is otherwise open to all worthy male members, and Black members were barred from temple ordinances. On 8 June 1978 the First Presidency, under president Spencer W. Kimball, announced in a letter to church leaders that a revelation had been received extending the priesthood to "all worthy male members of the Church... without regard for race or color." The letter is now Official Declaration 2 in the Doctrine and Covenants.
+
+The change opened the way for rapid growth in Africa, Brazil and the Caribbean. In 2013 the church published a Gospel Topics essay, "Race and the Priesthood," that disavowed the theories once advanced to explain the restriction, including that black skin was a sign of divine disfavor.`,
+    datingNotes: `The First Presidency letter announcing the revelation is dated 8 June 1978 and was sustained at the church's general conference on 30 September 1978.`,
+    externalRefs: ["Doctrine and Covenants, Official Declaration 2", "Gospel Topics essay, \"Race and the Priesthood\" (2013)"],
+  },
   {
     id: "bib-dki-jeroboam-golden-calves",
     title: "Jeroboam's Golden Calves at Bethel and Dan",

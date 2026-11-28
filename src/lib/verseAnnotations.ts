@@ -2822,6 +2822,9 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // Ussher (the 4004 BC chronology), Hoffmeier and Sanders (modern scholars, cited as
     // authorities). Interim; records would change the answer.
     { after: /^\s+(?:Hoffmeier|Sanders|Ussher)\b/, to: null },
+    // James J. Strang, a rival claimant to Joseph Smith's succession in 1844 (Other Religions
+    // timeline, 2026-11-28). Interim; a record would change the answer.
+    { after: /^\s+Strang\b/, to: null },
     // The book. All three of these were pointing at James SON OF ZEBEDEE, who is not a candidate
     // for the letter on anybody's account — he was executed by Herod Agrippa in AD 44 (Acts 12:2).
     // The traditional attribution is to James the brother of Jesus and the app carries a record
@@ -3523,10 +3526,20 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   // is left resolving to Jesus of Nazareth. What is disputed about that object is whether the
   // words are ancient, not who they would mean if they are — which is the opposite of the Talpiot
   // case, where the referent is precisely what is in question.
+  // A church's own name, not the person: "the Church of Jesus Christ of Latter-day Saints" and "the
+  // Reorganized Church of Jesus Christ of Latter Day Saints", in the Other Religions timeline
+  // entries added 2026-11-28. Same ruling as MODERN INSTITUTIONS THAT CARRY A BIBLICAL NAME, and the
+  // same answer the latter-day-saints beliefs record already gets from its whole-record rule.
+  // Keyed on the preceding "Church of", which is what makes the words a name; every other "Jesus
+  // Christ" in those entries (the First Vision, the Kirtland visions) keeps its link.
+  "jesus christ": [{ before: /\bChurch of\s+$/, to: null }],
   jesus: [
     { phrase: "Jesus son of Joseph", to: null },
     { phrase: "Judah son of Jesus", to: null },
     { phrase: "The Lost Tomb of Jesus", to: null },
+    // MODERN WORK TITLES: Rammohun Roy's 1820 book, named in the Brahmo Samaj timeline entry
+    // (2026-11-28). The sentence's other "Jesus" ("the moral teaching of Jesus") keeps its link.
+    { phrase: "The Precepts of Jesus", to: null },
     // Acts 13:6 — "a certain sorcerer, a false prophet, a Jew, whose name was Bar-jesus". Elymas
     // the magician, whom Paul strikes blind three verses later, and the app was linking the second
     // half of his name to Jesus of Nazareth. Every translation a reader can select writes it
@@ -3537,6 +3550,11 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
   ],
   joseph: [
     { phrase: "Jesus son of Joseph", to: null },
+    // Joseph Smith (1805-1844), founder of the Latter-day Saint movement, his son Joseph Smith III,
+    // and his nephew Joseph F. Smith — named throughout the Other Religions timeline entries added
+    // 2026-11-28, and in "Joseph Smith-History", the canonized account. Bare "Joseph" was sending
+    // every one of them to the patriarch. Interim suppression; a record would change this.
+    { after: /^\s+(?:F\.\s+)?Smith\b/, to: null },
 
     // ── ONE RECORD, ONE NAME: old-syriac-gospels ────────────────────────────────────────────
     //

@@ -143,3 +143,15 @@ ok	topic.section	passover	hezekiah	Hezekiah	inside-capitalised-run
 ok	topic.section	passover	josiah	Josiah	inside-capitalised-run
 ok	topic.section	the-trinity	jesus-of-nazareth	Jesus Christ	inside-capitalised-run
 ok	topic.section	herodian-dynasty	luke-evangelist	Luke	initial-before
+ok	seo:timelineEvent.summary	rel-lds-book-of-mormon	jesus-of-nazareth	Jesus Christ	biblical-in-modern-article
+ok	seo:timelineEvent.summary	rel-lds-first-vision	god-the-father	God the Father	biblical-in-modern-article
+ok	seo:timelineEvent.summary	rel-lds-first-vision	jesus-of-nazareth	Jesus Christ	biblical-in-modern-article
+ok	timelineEvent.article	rel-hindu-brahmo-samaj	jesus-of-nazareth	Jesus	biblical-in-modern-article
+ok	timelineEvent.article	rel-lds-book-of-mormon	jesus-of-nazareth	Jesus Christ	biblical-in-modern-article
+ok	timelineEvent.article	rel-lds-church-organized	jesus-of-nazareth	Jesus Christ	biblical-in-modern-article
+ok	timelineEvent.article	rel-lds-first-vision	god-the-father	God the Father	biblical-in-modern-article
+ok	timelineEvent.article	rel-lds-first-vision	jesus-of-nazareth	Jesus Christ	biblical-in-modern-article
+ok	timelineEvent.article	rel-lds-kirtland-temple	elijah	Elijah	biblical-in-modern-article
+ok	timelineEvent.article	rel-lds-kirtland-temple	elijah	Elijah	biblical-in-modern-article
+ok	timelineEvent.article	rel-lds-kirtland-temple	jesus-of-nazareth	Jesus Christ	biblical-in-modern-article
+ok	timelineEvent.article	rel-lds-kirtland-temple	moses	Moses	biblical-in-modern-article
