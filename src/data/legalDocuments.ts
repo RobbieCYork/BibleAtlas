@@ -2,7 +2,7 @@
  * The Terms of Service and Privacy Policy, published at /terms and /privacy.
  *
  * WHERE THESE WORDS COME FROM. Every statement in the Privacy Policy is a claim about what the app
- * and its database actually do, audited from the code on the effective date below: the tables and
+ * and its database actually do, audited from the code on its effective date below: the tables and
  * row-level-security policies in `sql/000_baseline.sql` and the applied migrations, the analytics
  * client in `src/lib/analytics.ts`, the deletion Edge Function in
  * `supabase/functions/delete-account/index.ts`, and the hosts the browser contacts. If one of those
@@ -40,7 +40,10 @@ export const LEGAL_ENTITY: { name: string | null; mailingAddress: string | null 
 };
 
 export const LEGAL_CONTACT_EMAIL = "admin@capstonebible.com";
-export const LEGAL_EFFECTIVE_DATE = "November 9, 2026";
+// Each document carries its own date: a change to one must not re-date the other. The Privacy Policy
+// moved on 2026-11-28 (report screenshots, sql/055); the Terms did not.
+export const TERMS_EFFECTIVE_DATE = "November 9, 2026";
+export const PRIVACY_EFFECTIVE_DATE = "November 28, 2026";
 
 export interface LegalSection {
   heading: string;
