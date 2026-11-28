@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Icon, { type IconName } from "./Icon";
 
 interface GameEntryChoicesProps {
@@ -45,11 +46,13 @@ interface LevelSetupProps<K extends string> {
   value: K;
   onChange: (level: K) => void;
   onStart: () => void;
+  /** Choices drawn above the difficulty in the same card, e.g. Chronology's category. */
+  children?: ReactNode;
 }
 
 /** Difficulty choice and the one button that starts a solo game. Native radios drawn as cards, so
  * arrow keys and screen readers work unchanged. */
-export function LevelSetup<K extends string>({ name, levels, value, onChange, onStart }: LevelSetupProps<K>) {
+export function LevelSetup<K extends string>({ name, levels, value, onChange, onStart, children }: LevelSetupProps<K>) {
   return (
     <form
       className="games-panel-card game-level-setup"
@@ -58,6 +61,7 @@ export function LevelSetup<K extends string>({ name, levels, value, onChange, on
         onStart();
       }}
     >
+      {children}
       <fieldset className="games-difficulty">
         <legend>Choose a difficulty</legend>
         <div className="game-center-list">

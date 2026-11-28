@@ -310,3 +310,18 @@
     margin-bottom: 8px;
   }
 }
+
+/* Category, above the difficulty in the same setup card — the Bible Trivia topic picker's look. */
+.chronology-category {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chronology-category h3 {
+  color: var(--text-h);
+  font-family: var(--display);
+  font-size: calc(15px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.2;
+}

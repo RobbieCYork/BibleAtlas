@@ -1,10 +1,12 @@
 import { useState } from "react";
 import {
+  CHRONOLOGY_CATEGORIES,
   CHRONOLOGY_LEVELS,
   correctPositions,
   dealRound,
   isOrdered,
   type ChronologyCard,
+  type ChronologyCategory,
   type ChronologyLevel,
   type ChronologyLevelDef,
 } from "../data/chronologyRounds";
@@ -38,6 +40,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
   const [screen, setScreen] = useState<Screen>("home");
   const [level, setLevel] = useState<ChronologyLevelDef | null>(null);
   const [choice, setChoice] = useState<ChronologyLevel>(CHRONOLOGY_LEVELS[0].key);
+  const [category, setCategory] = useState<ChronologyCategory>("all");
   const [cards, setCards] = useState<ChronologyCard[]>([]);
   const [checked, setChecked] = useState(false);
   const [lives, setLives] = useState(STARTING_LIVES);
@@ -50,7 +53,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
     const def = CHRONOLOGY_LEVELS.find((l) => l.key === key);
     if (!def) return;
     setLevel(def);
-    setCards(dealRound(def));
+    setCards(dealRound(def, category));
     setChecked(false);
     setLives(STARTING_LIVES);
     setScore(0);
@@ -95,7 +98,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
       setScreen("gameover");
       return;
     }
-    setCards(dealRound(level));
+    setCards(dealRound(level, category));
     setChecked(false);
   };
 
@@ -118,10 +121,27 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
                 <h2>Play solo</h2>
                 <p>
                   Put the events back in the order they happened, earliest first. Higher levels deal more
-                  cards, closer together in time. Three lives.
+                  cards, less famous events, and events closer together. Three lives.
                 </p>
               </div>
-              <LevelSetup name="chronology-level" levels={CHRONOLOGY_LEVELS} value={choice} onChange={setChoice} onStart={() => startGame(choice)} />
+              <LevelSetup name="chronology-level" levels={CHRONOLOGY_LEVELS} value={choice} onChange={setChoice} onStart={() => startGame(choice)}>
+                <div className="games-topic-card chronology-category">
+                  <h3 id="chronology-category-heading">Choose a category</h3>
+                  <select
+                    className="games-topic-select"
+                    aria-labelledby="chronology-category-heading"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value as ChronologyCategory)}
+                  >
+                    {CHRONOLOGY_CATEGORIES.map((c) => (
+                      <option key={c.key} value={c.key}>
+                        {c.label}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="games-topic-description">{CHRONOLOGY_CATEGORIES.find((c) => c.key === category)?.description}</p>
+                </div>
+              </LevelSetup>
             </div>
           )}
         </div>
@@ -248,7 +268,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
             <h4>Correct order</h4>
             <ol>
               {[...cards]
-                .sort((a, b) => a.startYear - b.startYear)
+                .sort((a, b) => a.order - b.order)
                 .map((c) => (
                   <li key={c.id}>
                     <span className="chronology-solution-title">{c.title}</span>

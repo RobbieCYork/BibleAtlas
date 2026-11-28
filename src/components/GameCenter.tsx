@@ -50,7 +50,7 @@ export const GAMES: GameDef[] = [
     feature: "game_chronology",
     icon: "chronology",
     title: "Chronology",
-    tagline: "Put events from the timeline back in the order they happened — Beginner to Expert.",
+    tagline: "Put events back in the order they happened. Pick a category, Beginner to Expert.",
   },
   {
     key: "daily-name",

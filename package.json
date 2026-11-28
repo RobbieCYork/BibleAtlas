@@ -13,6 +13,7 @@
     "validate:archaeology": "node scripts/archaeology-validate/run.mjs",
     "validate:games": "node scripts/games-data/daily-name.mjs --check && node scripts/games-data/daily-name-rules.mjs && node scripts/games-data/twenty-questions.mjs --check",
     "validate:welcome-tour": "node scripts/welcome-tour-validate/run.mjs",
+    "validate:chronology": "node scripts/chronology-validate/run.mjs",
     "verify:signed-in": "node scripts/signed-in-harness/run.mjs"
   },
   "dependencies": {
