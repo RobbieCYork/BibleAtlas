@@ -10,6 +10,7 @@ import {
   type ChronologyLevel,
   type ChronologyLevelDef,
 } from "../data/chronologyRounds";
+import { AGE_OF_EARTH_TOPIC_NAME, YOUNG_EARTH_DATE_LABEL, YOUNG_EARTH_DATE_NOTE } from "../data/datingDebate";
 import BackButton from "./BackButton";
 import "./Chronology.css";
 import Icon from "./Icon";
@@ -229,6 +230,11 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
                   {checked && (
                     <span className="chronology-card-meta">
                       {card.dateLabel}
+                      {card.youngEarthDate && (
+                        <span className="chronology-card-young-earth" title={YOUNG_EARTH_DATE_NOTE}>
+                          {YOUNG_EARTH_DATE_LABEL}*
+                        </span>
+                      )}
                       <span className="chronology-card-category">{CATEGORY_LABELS[card.category]}</span>
                     </span>
                   )}
@@ -269,11 +275,20 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
                 .map((c) => (
                   <li key={c.id}>
                     <span className="chronology-solution-title">{c.title}</span>
-                    <span className="chronology-solution-date">{c.dateLabel}</span>
+                    <span className="chronology-solution-date">
+                      {c.dateLabel}
+                      {c.youngEarthDate && "*"}
+                    </span>
                   </li>
                 ))}
             </ol>
           </div>
+        )}
+
+        {checked && cards.some((c) => c.youngEarthDate) && (
+          <p className="chronology-young-earth-note">
+            * {YOUNG_EARTH_DATE_NOTE} See {AGE_OF_EARTH_TOPIC_NAME} in Topics.
+          </p>
         )}
 
         <div className="game-pin">

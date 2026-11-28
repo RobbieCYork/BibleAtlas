@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AGE_OF_EARTH_TOPIC_NAME, YOUNG_EARTH_DATE_NOTE } from "../data/datingDebate";
 import { getQuestionById } from "../data/gameQuestions";
 import { fetchAnswersForQuestion, checkAndAdvance, submitAnswer, type GameRoom, type GamePlayer, type GameBuzz } from "../lib/gameSupabase";
 import Icon from "./Icon";
@@ -324,6 +325,11 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
         ) : locked ? (
           <p className="game-question-reveal">Answer locked in — waiting on the rest of the table…</p>
         ) : null}
+        {roundOver && question.youngEarthDate && (
+          <p className="game-question-young-earth">
+            {YOUNG_EARTH_DATE_NOTE} See {AGE_OF_EARTH_TOPIC_NAME} in Topics.
+          </p>
+        )}
       </div>
 
       {/* Alone, there is always a button here; with others, only once the round is over. It sticks to

@@ -861,6 +861,15 @@
   background: rgba(219, 40, 78, 0.12);
 }
 
+/* The note after a trivia answer that is a young-earth date (datingDebate.ts). */
+.game-question-young-earth {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
 .game-question-reveal {
   font-weight: 600;
   text-align: center;

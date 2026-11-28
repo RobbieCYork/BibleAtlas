@@ -104,6 +104,9 @@ export interface ChronologyCard {
   /** Human-readable date, revealed only once the round is checked. */
   dateLabel: string;
   category: TimelineEventCategory;
+  /** The date is a young-earth one (TimelineEvent.youngEarthDate): the reveal marks it and adds the
+   * note from datingDebate.ts. Display only — never read by the deal, the order or the score. */
+  youngEarthDate?: boolean;
 }
 
 /** One dealable card with everything the pairing rules need. */
@@ -300,6 +303,7 @@ const toCard = (c: DeckCard): ChronologyCard => ({
   order: c.order,
   dateLabel: c.event.dateLabel,
   category: c.event.category,
+  ...(c.event.youngEarthDate ? { youngEarthDate: true } : {}),
 });
 
 /** Deal one round, shuffled so the player has something to sort. */

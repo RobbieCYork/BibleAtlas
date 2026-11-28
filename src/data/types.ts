@@ -146,6 +146,10 @@ export interface Person {
   /** How the lifespan dates were derived, including caveats, textual variants, or competing chronologies
    * — rendered as its own "Dating" section, same convention as TimelineEvent.datingNotes. */
   lifespanDatingNotes?: string;
+  /** True when the lifespan comes from a young-earth reading of the Genesis 5 and 11 genealogies
+   * (Ussher's chronology). The panels and the public page show a short note beside it — see
+   * src/data/datingDebate.ts. Same meaning as TimelineEvent.youngEarthDate. */
+  youngEarthDate?: boolean;
   /** Which stream of history this person belongs to. Absent means "biblical", so every person
    * carried over from the original Atlas dataset is unaffected.
    * - "biblical": named in Scripture. `verses` holds real Bible references, rendered as links into
@@ -430,6 +434,12 @@ export interface TimelineEvent {
   /** How we know (or don't know) when this happened — rendered as its own "Dating" section.
    * Required in spirit whenever dateCertainty is "disputed" or "legendary". */
   datingNotes?: string;
+  /** True when the date comes from a young-earth reading of the Genesis 5 and 11 genealogies
+   * (Ussher's chronology: Creation c. 4004 BC, the Flood c. 2348 BC, and the Primeval History dates
+   * reckoned from them). Every place the date is shown adds a short note on the debate pointing at
+   * the Young Earth and Old Earth Creationism topic — see src/data/datingDebate.ts. Never changes the
+   * date itself, its ordering or any game's scoring. */
+  youngEarthDate?: boolean;
   /** Bible references, e.g. "2 Kings 25:8-21" — rendered as clickable verse links in References. */
   scriptureRefs?: string[];
   /** Non-biblical sources/witnesses, e.g. "Josephus, The Jewish War 6.249-270" or a URL. */

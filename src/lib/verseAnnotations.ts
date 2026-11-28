@@ -2724,6 +2724,10 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // Pharisees, Herod's rise) that ALSO name the Apostle. Registering the full name on a person
     // record would be the tidier fix if he is ever given one.
     { after: /^\s+Hyrcanus\b/, to: null },
+    // Whitcomb (The Genesis Flood, 1961), Lightfoot (17th-century chronologer), Walton (The
+    // Lost World of Genesis One) and C. John Collins (the analogical-days view) — modern men named in young-earth-old-earth-creationism and the
+    // Flood article. Interim; a record would change the answer.
+    { after: /^\s+(?:Whitcomb|Lightfoot|Walton|Collins)\b/, to: null },
 
     // ── The book intros, pinned one at a time by their own words.
     //
@@ -2905,7 +2909,8 @@ const NAME_CONTEXT_RULES: Record<string, NameContextRule[]> = {
     // and St Thomas Bay, which is a place in Malta rather than a man at all. Roe is Sir Thomas Roe,
     // James I's ambassador to the Porte, who carried Codex Alexandrinus to England — added with the
     // papyri-and-uncials batch, 2026-09-10, and found by modern-names.mjs on that commit.
-    { after: /^\s+(?:More|Cromwell|Clarkson|Thompson|Bay|Roe)\b/, to: null },
+    // Chalmers is the 19th-century Scottish minister who popularised the gap theory of Genesis 1.
+    { after: /^\s+(?:More|Cromwell|Clarkson|Thompson|Bay|Roe|Chalmers)\b/, to: null },
   ],
   peter: [
     // Abelard, Faber (a founding Jesuit), Flint (a Dead Sea Scrolls scholar).

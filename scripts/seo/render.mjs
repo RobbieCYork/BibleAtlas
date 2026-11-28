@@ -423,6 +423,19 @@ const heading = (title, kicker, sub) =>
     sub ? `<p class="sub">${sub}</p>` : ""
   }`;
 
+/** The short note under a young-earth date (src/data/datingDebate.ts), with a link to the topic
+ * that argues each side. Plain text, never linkified, so it adds no block to the seo-only-links
+ * snapshot; the topic link is resolved through urlFor like any other explicit cross-reference, so a
+ * missing topic renders the note without a dead link. */
+const youngEarthNote = (record, ctx) => {
+  const d = ctx.datingDebate;
+  if (!record.youngEarthDate || !d) return "";
+  const href = ctx.urlFor("topic", d.AGE_OF_EARTH_TOPIC_ID);
+  return `<p class="note"><strong>${esc(d.YOUNG_EARTH_DATE_LABEL)}.</strong> ${esc(d.YOUNG_EARTH_DATE_NOTE)}${
+    href ? ` <a href="${esc(href)}">Read the case for each view: ${esc(d.AGE_OF_EARTH_TOPIC_NAME)}</a>` : ""
+  }</p>`;
+};
+
 const paras = (arr, id, ctx) => (arr ?? []).map((t) => p(ctx.linkify(t, id))).join("");
 
 const splitParas = (text) =>
@@ -616,6 +629,7 @@ export function personPage(person, ctx) {
         .filter(Boolean)
         .join(" · ")
     ),
+    youngEarthNote(person, ctx),
     `<p class="lead">${ctx.linkify(person.summary, person.id)}</p>`,
     section("Life and work", paras(person.lifeStory, person.id, ctx)),
     dl([
@@ -892,6 +906,7 @@ export function eventPage(ev, ctx) {
           : ""
       }`
     ),
+    youngEarthNote(ev, ctx),
     `<p class="lead">${ctx.linkify(ev.summary, ev.id)}</p>`,
     section("The event", paras(splitParas(ev.article), ev.id, ctx)),
     ev.datingNotes ? section("Dating", p(ctx.linkify(ev.datingNotes, ev.id))) : "",

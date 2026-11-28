@@ -30,6 +30,7 @@ export { computeLinkAnnotations } from ${JSON.stringify(path.join(REPO_ROOT, "sr
 export * as accountDeletionNotice from ${JSON.stringify(path.join(REPO_ROOT, "src/data/accountDeletionNotice"))};
 export * as legalDocuments from ${JSON.stringify(path.join(REPO_ROOT, "src/data/legalDocuments"))};
 export * as aboutContent from ${JSON.stringify(path.join(REPO_ROOT, "src/data/aboutPage"))};
+export * as datingDebate from ${JSON.stringify(path.join(REPO_ROOT, "src/data/datingDebate"))};
 `;
 
 let cached = null;

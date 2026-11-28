@@ -56,6 +56,9 @@ export interface QuizQuestion {
   /** Lowercased free text (name, alternate names, role/tag/era, category label) — searched by the
    * custom-topic free-text search below. Not shown in the UI. */
   keywords: string;
+  /** The answer is a young-earth date (TimelineEvent.youngEarthDate): the reveal adds the short note
+   * from datingDebate.ts. Display only — never part of the choices, the answer or the points. */
+  youngEarthDate?: boolean;
 }
 
 export const DIFFICULTY_POINTS: Record<QuizDifficulty, 1 | 3 | 5 | 10> = {
@@ -726,6 +729,7 @@ function timelineYearQuestions(): QuizQuestion[] {
       correctIndex,
       entityId: event.id,
       keywords: buildKeywords(event.title, event.era, event.category),
+      ...(event.youngEarthDate ? { youngEarthDate: true } : {}),
     });
   }
   return out;

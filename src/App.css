@@ -1366,6 +1366,20 @@ body.resizing-panels {
   margin-top: 0;
 }
 
+/* The note under a young-earth date (YoungEarthDateNote.tsx). */
+.young-earth-date-note {
+  margin: 4px 0 10px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.young-earth-date-note .verse-location-link {
+  text-align: left;
+}
+
 .pronunciation {
   font-style: italic;
 }

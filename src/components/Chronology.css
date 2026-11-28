@@ -198,6 +198,22 @@
   margin-left: 8px;
 }
 
+/* A young-earth date on reveal (datingDebate.ts): a compact tag on the card, a footnote below. */
+.chronology-card-young-earth {
+  padding: 1px 7px;
+  border-radius: 100px;
+  border: 1px dashed var(--border);
+  font-size: calc(11px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.chronology-young-earth-note {
+  margin: 10px 0 0;
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+  line-height: 1.45;
+}
+
 /* ---------------------------------------------------------------- buttons */
 
 .chronology-btn-primary {
