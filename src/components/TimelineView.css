@@ -813,10 +813,9 @@
   max-width: 132px;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* Unlike the book/lifespan labels below, this one is ALWAYS positioned past its own button's right
-   * edge (never "inside") — so unlike those, there's no inside case worth preserving pointer-events:
-   * none for; the label needs to be clickable itself (see .tl-marker/.tl-range-bar's onClick, which
-   * this click bubbles up to) or every event's title+year chip is dead. */
+  /* This pill is usually outside its own button's box (a range bar's title can be pushed far along it,
+   * see below), so it needs to be clickable itself — the click bubbles up to .tl-marker/.tl-range-bar
+   * — or every event's title+year chip is dead. */
   pointer-events: auto;
   cursor: pointer;
   /* This label renders past its own marker/bar's box, into the horizontal space of whatever comes
@@ -828,6 +827,50 @@
    * confined inside its own parent — so it reliably wins that hit-test. Kept below the hover/focus
    * bump (4/5) so a genuinely moused-over neighbor can still draw in front as expected. */
   z-index: 3;
+}
+
+/* A ranged event's title rests just past the end of its bar. A bar is often wider than the screen,
+ * so while that resting place is out of sight the title holds to an edge of the screen, over the bar:
+ *
+ *  - .tl-range-long (bar and title cannot both fit on screen): at the start of the bar, then held at
+ *    the left edge as the bar goes by, as lifetime names are, until the end arrives and takes it.
+ *  - .tl-range-short (they can): held at the right edge while the end is still beyond it, never
+ *    further back than the start of the bar. Otherwise at rest.
+ *
+ * Either way the title stays between the bar's start and its resting place, which is the footprint row
+ * packing reserves for it, so it can never touch another mark in its row; and it moves continuously,
+ * so it never jumps. All numbers are unitless px from the origin, set by TimelineView.tsx
+ * (--tl-view-left and --tl-view-width on the scroller; --x, --start and --rest on the bar); 100% is
+ * the title's own width. */
+.tl-range-bar-label {
+  left: 0;
+  margin-left: 0;
+}
+
+.tl-range-long .tl-range-bar-label {
+  transform: translate(
+    calc(
+      clamp(
+          var(--start, 0) * 1px,
+          (var(--tl-view-left, 0) + 4) * 1px,
+          var(--rest, 0) * 1px
+        ) - var(--x, 0) * 1px
+    ),
+    -50%
+  );
+}
+
+.tl-range-short .tl-range-bar-label {
+  transform: translate(
+    calc(
+      clamp(
+          var(--start, 0) * 1px,
+          (var(--tl-view-left, 0) + var(--tl-view-width, 0) - 2) * 1px - 100%,
+          var(--rest, 0) * 1px
+        ) - var(--x, 0) * 1px
+    ),
+    -50%
+  );
 }
 
 .tl-event-label-name {

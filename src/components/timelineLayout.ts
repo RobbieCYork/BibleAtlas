@@ -38,8 +38,12 @@ const MARKER_HALF_PX = 7;
 const MARKER_LABEL_END_PX = 144;
 /** A range bar is never drawn narrower than this. */
 export const MIN_RANGE_BAR_PX = 12;
+/** From a range bar's end to its title pill, where the pill rests when there is room for it. */
+export const RANGE_LABEL_GAP_PX = 7;
+/** The widest title pill (max-width in TimelineView.css). */
+export const LABEL_MAX_PX = 132;
 /** From a range bar's end to the right end of the widest title pill. */
-const RANGE_LABEL_PX = 140;
+const RANGE_LABEL_PX = LABEL_MAX_PX + RANGE_LABEL_GAP_PX + 1;
 /** A lifespan bar is never drawn narrower than this. */
 const MIN_LIFE_BAR_PX = 6;
 /** A lifespan bar wider than this carries its name inside; narrower ones put it to the right. */

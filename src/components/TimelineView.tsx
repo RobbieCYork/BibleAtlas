@@ -17,7 +17,9 @@ import {
   LIFE_BAR_H,
   LIFE_LABEL_INSIDE_PX,
   LIFE_ROW_H,
+  LABEL_MAX_PX,
   PX_PER_YEAR,
+  RANGE_LABEL_GAP_PX,
   ROW_PAD,
   TICK_YEARS,
   bandHeight,
@@ -1206,19 +1208,29 @@ export default function TimelineView({
 
         if (extent.barW !== null) {
           const bar = clipBar(x, extent.barW);
+          // Can the whole bar and its title be on screen together? That decides which edge of the
+          // screen the title holds to while part of the bar is off it (.tl-range-bar-label).
+          const fits = extent.barW + RANGE_LABEL_GAP_PX + LABEL_MAX_PX <= size.w;
           nodes.push(
             <button
               key={e.id}
               type="button"
-              className={`tl-range-bar ${markClass}${focused}`}
-              // The fade belongs to the whole span, not to the piece of it that is rendered.
-              style={{
-                left: bar.left,
-                top: y,
-                width: bar.width,
-                backgroundSize: `${extent.barW}px 100%`,
-                backgroundPosition: `${x - origin - bar.left}px 0`,
-              }}
+              className={`tl-range-bar ${fits ? "tl-range-short" : "tl-range-long"} ${markClass}${focused}`}
+              // The fade belongs to the whole span, not to the piece of it that is rendered. --x is
+              // where that piece starts; --start and --rest are the first and last places the title
+              // may be: the start of the span, and just past its end.
+              style={
+                {
+                  left: bar.left,
+                  top: y,
+                  width: bar.width,
+                  backgroundSize: `${extent.barW}px 100%`,
+                  backgroundPosition: `${x - origin - bar.left}px 0`,
+                  "--x": bar.left,
+                  "--start": x - origin,
+                  "--rest": x - origin + extent.barW + RANGE_LABEL_GAP_PX,
+                } as CSSProperties
+              }
               onClick={() => onSelectTimelineEvent(e.id)}
               onMouseEnter={(ev) => showTip(ev, e.title, e.dateLabel, e.era)}
               onMouseLeave={hideTip}
@@ -1256,6 +1268,7 @@ export default function TimelineView({
     renderFrom,
     renderTo,
     clipBar,
+    size.w,
     onSelectTimelineEvent,
     showTip,
     hideTip,
@@ -1398,8 +1411,10 @@ export default function TimelineView({
                 style={
                   {
                     transform: `translate3d(${translateX}px, 0, 0)`,
-                    // How far the screen's left edge is from the origin (see .tl-life-label).
+                    // Where the screen is, measured from the origin, so that names can hold to its
+                    // edges (see .tl-life-label and .tl-range-bar-label).
                     "--tl-view-left": -translateX,
+                    "--tl-view-width": size.w,
                   } as CSSProperties
                 }
               >

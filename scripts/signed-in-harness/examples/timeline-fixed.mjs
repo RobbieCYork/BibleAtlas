@@ -305,7 +305,7 @@ export default async function (h) {
     const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     const vpEl = document.querySelector(".tl-canvas-viewport");
     const seen = new Set(), heights = new Set(), problems = [];
-    let steps = 0, maxDomPx = 0, maxShift = 0, maxNodes = 0, badTicks = 0, shortStrips = 0, first = null, last = null, prev = null;
+    let steps = 0, maxDomPx = 0, maxShift = 0, maxNodes = 0, badTicks = 0, shortStrips = 0, anonymous = 0, first = null, last = null, prev = null;
     for (;;) {
       await frame();
       const s = (0, eval)(measure);
@@ -337,6 +337,13 @@ export default async function (h) {
           const p = boxes[i], q = boxes[j];
           if (Math.min(p.b, q.b) - Math.max(p.t, q.t) > 1 && Math.min(p.r, q.r) - Math.max(p.l, q.l) > 0.5) problems.push(`overlap: ${p.n} / ${q.n}`);
         }
+      for (const m of scroller.querySelectorAll(".tl-range-bar")) {
+        const bar = m.getBoundingClientRect(), pill = m.querySelector(".tl-range-bar-label").getBoundingClientRect();
+        const barSeen = Math.min(bar.right, vp.right) - Math.max(bar.left, vp.left);
+        const pillSeen = Math.min(pill.right, vp.right) - Math.max(pill.left, vp.left);
+        /* A bar on screen shows as much of its title as it shows of itself, up to the whole title. */
+        if (barSeen > 0 && pillSeen < Math.min(barSeen, pill.width) - 3) anonymous++;
+      }
       if (boxes.length) maxDomPx = Math.max(maxDomPx, hi - lo);
       steps++;
       if (prev !== null && Math.abs(s.startYear - prev) < 0.001) break;
@@ -344,15 +351,103 @@ export default async function (h) {
       vpEl.dispatchEvent(new WheelEvent("wheel", { deltaX: Math.round(vp.width * 0.75), bubbles: true, cancelable: true }));
       if (steps > 2000) break;
     }
-    return { steps, first, last, seen: seen.size, heights: [...heights], problems: [...new Set(problems)].slice(0, 8), problemCount: new Set(problems).size, maxDomPx: Math.round(maxDomPx), maxShift: Math.round(maxShift), maxNodes, badTicks, shortStrips, overflow: document.documentElement.scrollWidth - innerWidth };
+    return { steps, first, last, seen: seen.size, heights: [...heights], problems: [...new Set(problems)].slice(0, 8), problemCount: new Set(problems).size, maxDomPx: Math.round(maxDomPx), maxShift: Math.round(maxShift), maxNodes, badTicks, shortStrips, anonymous, overflow: document.documentElement.scrollWidth - innerWidth };
   }, MEASURE);
   console.log(`    ${JSON.stringify({ ...sweep, heights: sweep.heights })}`);
   h.assert(sweep.heights.length === 1 && sweep.heights[0] === JSON.stringify(HEIGHTS), `${sweep.steps} stops from "${sweep.first}" to "${sweep.last}": one set of band heights throughout`);
   h.assert(sweep.badTicks === 0, "five-year marks 195px apart at every stop");
   h.assert(sweep.shortStrips === 0, `the date row runs the full width at every stop (${sweep.shortStrips} short)`);
   h.assert(sweep.problemCount === 0, `no mark or label overlaps another or leaves its band ${JSON.stringify(sweep.problems)}`);
+  h.assert(sweep.anonymous === 0, `no bar on screen is ever without its title (${sweep.anonymous} found)`);
   h.assert(sweep.seen === 403, `every drawn event and lifetime comes on screen (${sweep.seen} of 403)`);
   h.assert(sweep.maxShift <= 1024 && sweep.overflow <= 0, `largest transform ${sweep.maxShift}px, marks span at most ${sweep.maxDomPx}px, ${sweep.maxNodes} nodes at most`);
+
+  h.section("long bars keep their titles");
+  /* Pan, a few px at a time, from before each bar arrives until its title has left. The title is
+   * located on screen at every step. Fast across the middle of the very long ones. */
+  for (const [title, era, year] of [
+    ["Zoroaster and the Founding", "BC", 1500], ["The Forty Years", "BC", 1446], ["The Life and Ministry of Paul", "AD", 34], ["Public Ministry of Jesus", "AD", 27],
+  ]) {
+    const lead = Math.ceil((await h.evaluate(() => document.querySelector(".tl-canvas-viewport").clientWidth)) / PX_PER_YEAR) + 3;
+    const from = era === "BC" ? -year - lead / 2 : year - lead / 2;
+    await goTo(String(Math.abs(Math.round(from))), from < 0 ? "BC" : "AD");
+    await park();
+    const walk = await h.evaluate(async (title) => {
+      const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      const vpEl = document.querySelector(".tl-canvas-viewport");
+      const find = () => [...document.querySelectorAll(".tl-range-bar")].find((e) => e.getAttribute("aria-label").startsWith(title));
+      let started = false, steps = 0, pinned = 0, jumps = [], hidden = [], strays = [], rest = null, kind = "", fullW = 0;
+      const rows = new Set(), widths = new Set();
+      let previous = null, barPx = 0;
+      const wheel = async (dx) => { vpEl.dispatchEvent(new WheelEvent("wheel", { deltaX: dx, bubbles: true, cancelable: true })); await frame(); };
+      for (let i = 0; i < 6000; i++) {
+        const vp = vpEl.getBoundingClientRect();
+        const el = find();
+        const pill = el?.querySelector(".tl-range-bar-label").getBoundingClientRect();
+        if (el) {
+          const bar = el.getBoundingClientRect();
+          started = true; kind = el.className.includes("tl-range-long") ? "long" : "short";
+          const start = bar.left + parseFloat(el.style.getPropertyValue("--start")) - parseFloat(el.style.getPropertyValue("--x"));
+          const restX = bar.left + parseFloat(el.style.getPropertyValue("--rest")) - parseFloat(el.style.getPropertyValue("--x"));
+          const barSeen = Math.min(bar.right, vp.right) - Math.max(bar.left, vp.left);
+          const pillSeen = Math.min(pill.right, vp.right) - Math.max(pill.left, vp.left);
+          if (barSeen > 0 && pillSeen < Math.min(barSeen, pill.width) - 3) hidden.push(Math.round(barSeen));
+          if (pill.left < start - 0.6 || pill.left > restX + 0.6) strays.push(Math.round(pill.left - start));
+          if (Math.abs(pill.left - restX) > 1 && barSeen > 0) pinned++;
+          rows.add(el.style.top); widths.add(Math.round(pill.width));
+          /* Between two steps the title moves no further than the screen did, and never backwards
+           * (forwards = to the left on screen). */
+          if (previous) {
+            const moved = pill.left - previous.x;
+            if (moved > 0.6 || moved < -previous.dx - 0.6) jumps.push([Math.round(moved), previous.dx]);
+          }
+          if (restX < vp.left - 5) rest ??= Math.round((pill.left - restX) * 10) / 10;
+          if (pill.right < vp.left) break;
+        } else if (started) break;
+        const long = el && el.getBoundingClientRect();
+        const nearEnd = !el || Math.abs(long.right - vp.right) < 500 || long.right - vp.left < 500 || long.left > vp.left - 300;
+        const dx = nearEnd ? 17 : 173;
+        previous = pill ? { x: pill.left, dx } : null;
+        await wheel(dx);
+        steps++;
+      }
+      return { kind, steps, pinned, jumps: jumps.slice(0, 5), hidden: hidden.slice(0, 5), strays: strays.slice(0, 5), rest, rows: rows.size, widths: [...widths] };
+    }, title);
+    console.log(`    ${title}: ${JSON.stringify(walk)}`);
+    h.assert(walk.steps > 10 && walk.hidden.length === 0, `${title} (${walk.kind}): title visible at every one of ${walk.steps} steps`);
+    h.assert(walk.jumps.length === 0, `${title}: never jumps ${JSON.stringify(walk.jumps)}`);
+    h.assert(walk.strays.length === 0 && walk.rows === 1, `${title}: stays between the bar's start and its resting place, in one row ${JSON.stringify(walk.strays)}`);
+    h.assert(walk.rest === 0, `${title}: ends at its normal place just past the bar (off by ${walk.rest}px)`);
+  }
+
+  h.section("tapping a held title");
+  await goTo("1000", "BC");
+  const held = await h.evaluate(() => {
+    const vpEl = document.querySelector(".tl-canvas-viewport");
+    const vp = vpEl.getBoundingClientRect();
+    for (const el of document.querySelectorAll(".tl-range-long")) {
+      let bar = el.getBoundingClientRect();
+      if (!(bar.left < vp.left - 50 && bar.right > vp.right + 50)) continue;
+      vpEl.scrollTop = parseFloat(el.style.top) - vpEl.clientHeight / 2;
+      bar = el.getBoundingClientRect();
+      const pill = el.querySelector(".tl-range-bar-label").getBoundingClientRect();
+        return { name: el.getAttribute("aria-label").split(",")[0], offset: Math.round(pill.left - vp.left), pill: { x: pill.x + pill.width / 2, y: pill.y + pill.height / 2 }, bar: { x: bar.x < vp.x ? vp.x + vp.width * 0.75 : bar.x + 20, y: bar.y + bar.height / 2 } };
+    }
+    return null;
+  });
+  h.assert(!!held && held.offset === 4, `mid-way along a bar its title is held at the left edge ${JSON.stringify(held)}`);
+  await park();
+  await h.screenshot(`fixed-${W}-held-title.png`);
+  for (const part of ["pill", "bar"]) {
+    const p = held[part];
+    if (mobile) await h.touch([p]);
+    else for (const type of ["mousePressed", "mouseReleased"]) await h.cdp("Input.dispatchMouseEvent", { type, x: p.x, y: p.y, button: "left", buttons: type === "mousePressed" ? 1 : 0, clickCount: 1 });
+    await h.sleep(700);
+    const opened = (await h.exists(".timeline-event-overlay")) ? await h.text(".timeline-event-overlay") : "";
+    h.assert(opened.includes(held.name), `tapping the ${part === "pill" ? "held title" : "bar itself"} opens "${held.name}"`);
+    if (opened) await h.click({ css: ".timeline-event-overlay button", text: "Back" }).catch(async () => h.click(".timeline-event-overlay .back-btn"));
+    await h.sleep(500);
+  }
 
   h.section("lifetimes keep their names");
   await goTo("900", "BC");
