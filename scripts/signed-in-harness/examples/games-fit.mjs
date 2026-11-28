@@ -367,14 +367,12 @@ export default async function (h) {
   /* ------------------------------------------------------------ Chronology */
   const chronoStart = async (level) => {
     await openGame("Chronology");
-    await choose("Play solo");
     await h.click(`.game-level-option input[value="${level}"]`);
     await h.click(".game-start-button");
     await h.waitFor(".chronology-card");
   };
   const chronoScreens = async (quick) => {
     await openGame("Chronology");
-    await choose("Play solo");
     await check("chronology setup", [".game-start-button"], { shot: null });
     for (const level of quick ? ["expert"] : chrono.CHRONOLOGY_LEVELS.map((l) => l.key)) {
       await chronoStart(level);
@@ -404,14 +402,12 @@ export default async function (h) {
   /* ------------------------------------------------------------ Fill in the Blank */
   const blankScreens = async (quick) => {
     await openGame("Fill in the Blank");
-    await choose("Play solo");
     await check("fill-in-blank setup", [".game-start-button"], { shot: null });
     for (const level of quick ? ["expert"] : blank.DIFFICULTY_LEVELS.map((l) => l.key)) {
       const list = blank.FILL_BLANK_VERSES.filter((v) => v.difficulty === level);
       if (!list.length) continue;
       const verse = longestBy((v) => v.words.join(" ").length)(list);
       await openGame("Fill in the Blank");
-      await choose("Play solo");
       await h.click(`.game-level-option input[value="${level}"]`);
       await h.evaluate((n, k) => { let c = 0; Math.random = () => (c++ === n - 1 - k ? 0 : 0.999999); }, list.length, list.indexOf(verse));
       await h.click(".game-start-button");
@@ -421,7 +417,6 @@ export default async function (h) {
       await check(`fill-in-blank ${level}, answer shown`, [".fillblank-btn-primary"], { shot: null });
     }
     await openGame("Fill in the Blank");
-    await choose("Play solo");
     await h.click(".game-start-button");
     for (let life = 0; life < 3; life++) {
       await h.click({ css: ".fillblank-btn-primary", text: "Check Answer" });
@@ -437,7 +432,6 @@ export default async function (h) {
     const samples = { shortest: sorted[0], typical: sorted[Math.floor(sorted.length / 2)], longest: sorted.at(-1) };
     for (const [kind, verse] of Object.entries(samples)) {
       await openGame("Scripture Memorization Challenge", { local: {} });
-      await choose("Play solo");
       await h.type(".memchallenge-search", verse.reference);
       await h.click({ css: ".memchallenge-verse-row", text: verse.reference });
       await check(`memorization ready (${kind}, ${verse.reference})`, [".memchallenge-btn-primary"], { shot: kind === "longest" ? "memo-ready-longest" : null });
@@ -451,7 +445,6 @@ export default async function (h) {
       const next = sorted[1];
       const words = next.text.split(/\s+/);
       await openGame("Scripture Memorization Challenge", { local: { "bibleAtlas.memorizationChallenge.masteredRefs.v1": JSON.stringify([old.reference]) } });
-      await choose("Play solo");
       await h.type(".memchallenge-search", next.reference);
       await h.click({ css: ".memchallenge-verse-row", text: next.reference });
       await h.click(".memchallenge-btn-primary");
@@ -472,7 +465,6 @@ export default async function (h) {
   /* ------------------------------------------------------------ 20 Questions */
   const twentyScreens = async () => {
     await openGame("20 Questions");
-    await choose("Play solo");
     await check("20 questions setup", [".game-start-button"], { shot: null });
     await h.click(".game-start-button");
     await h.waitFor(".tq-question");
@@ -541,7 +533,6 @@ export default async function (h) {
     },
     blank: async () => {
       await openGame("Fill in the Blank");
-      await choose("Play solo");
       await h.click('.game-level-option input[value="hard"]');
       await h.click(".game-start-button");
       await h.waitFor(".fillblank-input");
@@ -552,7 +543,6 @@ export default async function (h) {
     memo: async () => {
       const verse = [...memo.MEMORIZATION_VERSES].sort((a, b) => b.text.length - a.text.length)[0];
       await openGame("Scripture Memorization Challenge");
-      await choose("Play solo");
       await h.type(".memchallenge-search", verse.reference);
       await h.click({ css: ".memchallenge-verse-row", text: verse.reference });
       await check("memorization: Ready", [".memchallenge-btn-primary"]);

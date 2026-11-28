@@ -20,7 +20,6 @@ import { DAILY_NAME_ANSWERS, type DailyNameAnswer } from "../data/dailyName";
 import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
 import Icon from "./Icon";
-import { GameEntryChoices } from "./GameEntry";
 import HowToPlay, { HowToPlayButton } from "./HowToPlay";
 import { useHowToPlay } from "../lib/howToPlay";
 import "./DailyName.css";
@@ -30,7 +29,7 @@ interface DailyNameViewProps {
   onOpenArticle?: OpenGameArticle;
 }
 
-type Screen = "home" | "menu" | "playing";
+type Screen = "menu" | "playing";
 type Mode = "daily" | "practice";
 
 const KEY_ROWS = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
@@ -70,7 +69,7 @@ const ANSWER_BY_WORD = new Map(DAILY_NAME_ANSWERS.map((a) => [a.word, a]));
 /** Daily Name — guess the day's hidden Bible name in six tries. See lib/dailyName.ts for the rules
  * and data/dailyName.ts (generated) for where the names come from. */
 export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewProps) {
-  const [screen, setScreen] = useState<Screen>("home");
+  const [screen, setScreen] = useState<Screen>("menu");
   const [mode, setMode] = useState<Mode>("daily");
   const [todayKey, setTodayKey] = useState(() => localDateKey());
   const [days, setDays] = useState<Record<string, DailyRecord>>(() => readDays());
@@ -224,50 +223,45 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
     </header>
   );
 
-  if (screen === "home" || screen === "menu") {
+  if (screen === "menu") {
     const todayDone = isFinished(todayRecord);
     return (
       <div className="game-root" data-page-bg="game-setup">
-        {header(screen === "home" ? onBack : () => setScreen("home"), screen === "home" ? "Back to Game Center" : "Back")}
+        {header(onBack, "Back to Game Center")}
         <div className="game-body">
-          {screen === "home" ? (
-            <GameEntryChoices onSolo={() => setScreen("menu")} />
-          ) : (
-            <div className="dn-setup">
-              <div className="games-panel-intro">
-                <h2>Play solo</h2>
-                <p>
-                  Guess the hidden Bible name — a person or a place — in {MAX_GUESSES} tries. Each guess must be a real name
-                  from the Bible. Everyone gets the same name on the same day.
-                </p>
-              </div>
-              <div className="game-center-list">
-                <button type="button" className="game-center-card game-entry-card" onClick={startDaily}>
-                  <span className="game-center-card-icon">
-                    <Icon name="calendar" />
-                  </span>
-                  <span className="game-center-card-body">
-                    <span className="game-center-card-title">Today's name · #{number}</span>
-                    <span className="game-center-card-tagline">
-                      {todayDone ? (isWon(todayRecord) ? "Solved — see your result" : "Finished — see who it was") : todayRecord.guesses.length ? "Carry on where you left off" : `${todayAnswer.word.length} letters`}
-                    </span>
-                  </span>
-                  <span className="game-center-card-chevron" aria-hidden="true">›</span>
-                </button>
-                <button type="button" className="game-center-card game-entry-card" onClick={startPractice}>
-                  <span className="game-center-card-icon">
-                    <Icon name="target" />
-                  </span>
-                  <span className="game-center-card-body">
-                    <span className="game-center-card-title">Practice</span>
-                    <span className="game-center-card-tagline">As many random names as you like. Doesn't count toward your streak.</span>
-                  </span>
-                  <span className="game-center-card-chevron" aria-hidden="true">›</span>
-                </button>
-              </div>
-              <StatsPanel stats={stats} />
+          <div className="dn-setup">
+            <div className="games-panel-intro">
+              <p>
+                Guess the hidden Bible name — a person or a place — in {MAX_GUESSES} tries. Each guess must be a real name
+                from the Bible. Everyone gets the same name on the same day.
+              </p>
             </div>
-          )}
+            <div className="game-center-list">
+              <button type="button" className="game-center-card game-entry-card" onClick={startDaily}>
+                <span className="game-center-card-icon">
+                  <Icon name="calendar" />
+                </span>
+                <span className="game-center-card-body">
+                  <span className="game-center-card-title">Today's name · #{number}</span>
+                  <span className="game-center-card-tagline">
+                    {todayDone ? (isWon(todayRecord) ? "Solved — see your result" : "Finished — see who it was") : todayRecord.guesses.length ? "Carry on where you left off" : `${todayAnswer.word.length} letters`}
+                  </span>
+                </span>
+                <span className="game-center-card-chevron" aria-hidden="true">›</span>
+              </button>
+              <button type="button" className="game-center-card game-entry-card" onClick={startPractice}>
+                <span className="game-center-card-icon">
+                  <Icon name="target" />
+                </span>
+                <span className="game-center-card-body">
+                  <span className="game-center-card-title">Practice</span>
+                  <span className="game-center-card-tagline">As many random names as you like. Doesn't count toward your streak.</span>
+                </span>
+                <span className="game-center-card-chevron" aria-hidden="true">›</span>
+              </button>
+            </div>
+            <StatsPanel stats={stats} />
+          </div>
         </div>
       </div>
     );

@@ -1,8 +1,9 @@
 /**
- * Every game opens on how to play and nothing else: Play solo, Create multiplayer game, Join
- * multiplayer game (Play solo alone where a game has no multiplayer). Options come after a choice,
- * behind one start button; Join is the code and nothing else; Back steps one level; a room this tab
- * is seated in is rejoined; a game switched to Testing stays shut.
+ * A game with multiplayer opens on how to play and nothing else: Play solo, Create multiplayer game,
+ * Join multiplayer game. Options come after a choice, behind one start button; Join is the code and
+ * nothing else. A solo-only game has no such screen: it opens straight on its own options (or verse
+ * list), and Back from there is Game Center. Back steps one level; a room this tab is seated in is
+ * rejoined; a game switched to Testing stays shut.
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844  --script scripts/signed-in-harness/examples/game-entry.mjs
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 1280x800 --script scripts/signed-in-harness/examples/game-entry.mjs
  *
@@ -15,9 +16,11 @@ const THREE = ["Play solo", "Create multiplayer game", "Join multiplayer game"];
 const GAMES = [
   { title: "Bible Trivia", choices: THREE },
   { title: "Saving Peter", choices: THREE },
-  { title: "Fill in the Blank", choices: ["Play solo"], ready: ".fillblank-picker", playing: ".fillblank-input" },
-  { title: "Scripture Memorization Challenge", choices: ["Play solo"] },
-  { title: "Chronology", choices: ["Play solo"], ready: ".chronology-picker", playing: ".chronology-card" },
+  { title: "Fill in the Blank", ready: ".fillblank-picker", levels: true, playing: ".fillblank-input", picture: true },
+  { title: "Scripture Memorization Challenge", ready: ".memchallenge-picker", picture: false },
+  { title: "Chronology", ready: ".chronology-picker", levels: true, playing: ".chronology-card", picture: true },
+  { title: "Daily Name", ready: ".dn-setup", picture: true },
+  { title: "20 Questions", ready: ".tq-setup", picture: true },
 ];
 const OPTIONS = ".games-topic-select, .games-difficulty, .games-code-input, .game-start-button, .games-high-scores, .games-panel-intro, .memchallenge-picker";
 
@@ -54,7 +57,9 @@ export default async function (h) {
     await h.reload(); await h.sleep(900);
     await openCenter();
   };
-  const open = async (title) => { await fresh(); await h.click({ css: ".game-center-card", text: title }); await h.waitFor(".game-entry-card"); };
+  /** The screen a game opens on: the three choices, or a solo-only game's own options. */
+  const arrival = (title) => GAMES.find((g) => g.title === title).ready ?? ".game-entry-card";
+  const open = async (title) => { await fresh(); await h.click({ css: ".game-center-card", text: title }); await h.waitFor(arrival(title)); };
   const choose = async (text) => { await h.click({ css: ".game-entry-card", text }); await h.sleep(200); };
   const back = async () => { await h.click(".game-header button"); await h.sleep(250); };
   const header = () => h.text(".game-header h2");
@@ -86,7 +91,7 @@ export default async function (h) {
     await h.screenshot(`${name}-${dev}.png`);
   };
 
-  for (const g of GAMES) {
+  for (const g of GAMES.filter((x) => x.choices)) {
     h.section(`${g.title} (${dev})`);
     await open(g.title);
     await isFirst(g, "from Game Center");
@@ -97,11 +102,26 @@ export default async function (h) {
     h.assert(rpcs.length === 0, `${g.title}: looking creates no room`);
   }
 
+  const soloChoice = { css: ".game-entry-card, .game-center-card-title", text: "Play solo" };
   for (const g of GAMES.filter((x) => x.ready)) {
+    h.section(`${g.title}: straight to its own screen (${dev})`);
+    await open(g.title);
+    h.assert(!(await h.exists(soloChoice)) && !/Play solo/.test(await h.text(".game-body")), `${g.title}: no Play solo screen, row or heading`);
+    h.assert((await picture()) === g.picture, `${g.title}: ${g.picture ? "photograph behind it" : "plain, no photograph"}`);
+    h.assert((await h.evaluate(() => document.querySelector(".game-header button").getAttribute("aria-label"))) === "Back to Game Center", "its Back says Back to Game Center");
+    await sound(`solo-${g.title.split(" ")[0].toLowerCase()}`);
+    await back();
+    h.assert((await header()) === "Game Center", `${g.title}: one Back is Game Center`);
+    // And again: nothing remembers a skipped screen.
+    await h.click({ css: ".game-center-card", text: g.title });
+    await h.waitFor(g.ready);
+    h.assert(true, `${g.title}: reopened on the same screen`);
+    h.assert(rpcs.length === 0, `${g.title}: looking creates no room`);
+  }
+
+  for (const g of GAMES.filter((x) => x.levels)) {
     h.section(`${g.title}: difficulty, then Start`);
     await open(g.title);
-    await choose("Play solo");
-    await h.waitFor(g.ready);
     const levels = await h.evaluate(() => [...document.querySelectorAll(".game-level-option input")].map((i) => i.value));
     h.assert(levels.length >= 3 && (await h.count(".game-start-button")) === 1 && !(await h.exists(g.playing)), `${levels.length} levels and one start button; nothing has started`);
     await h.click(`.game-level-option input[value="${levels[2]}"]`);
@@ -124,16 +144,13 @@ export default async function (h) {
     await back();
     h.assert((await h.exists(g.ready)) && (await h.evaluate(() => document.querySelector(".game-level-option input:checked").value)) === levels[2], "Back from play is the difficulty screen, choice kept");
     await back();
-    await isFirst(g, "after Back");
-    await back();
     h.assert((await header()) === "Game Center", "then Game Center");
   }
 
   h.section("Scripture Memorization Challenge: verse, then Start");
   const memo = GAMES[3];
   await open(memo.title);
-  await choose("Play solo");
-  h.assert((await h.count(".memchallenge-verse-row")) > 50 && /mastered/.test(await h.text(".memchallenge-picker .games-panel-intro")), "verse list and mastered count after Play solo");
+  h.assert((await h.count(".memchallenge-verse-row")) > 50 && /mastered/.test(await h.text(".memchallenge-picker .games-panel-intro")), "verse list and mastered count on opening");
   await sound("setup-memorization");
   await h.click(".memchallenge-verse-row");
   h.assert((await h.exists(".memchallenge-ready")) && (await h.count(".memchallenge-btn-primary")) === 1 && !(await h.exists(".memchallenge-input")), "a verse opens with one start button");
@@ -145,7 +162,7 @@ export default async function (h) {
   await back();
   h.assert(await h.exists(".memchallenge-picker"), "Back from the verse is the verse list");
   await back();
-  await isFirst(memo, "after Back");
+  h.assert((await header()) === "Game Center", "then Game Center");
 
   h.section("Saving Peter solo");
   const peter = GAMES[1];
@@ -241,7 +258,12 @@ export default async function (h) {
   }
 
   h.section("Release flags: hidden from a member, even with a room still stored");
-  const stage = (live) => h.backend.setTable("feature_release", h.backend.tables.feature_release.map((x) => (x.feature.startsWith("game_") ? { ...x, live } : x)));
+  // Every game gets a row: one with none is treated as Live, and the fixtures do not carry the newest.
+  const KEYS = ["bible_trivia", "saving_peter", "fill_blank", "memorization", "chronology", "daily_name", "twenty_questions"].map((k) => `game_${k}`);
+  const stage = (live) => h.backend.setTable("feature_release", [
+    ...h.backend.tables.feature_release.filter((x) => !KEYS.includes(x.feature)),
+    ...KEYS.map((feature) => ({ feature, live, updated_at: null, updated_by: null })),
+  ]);
   stage(false);
   await h.evaluate(() => sessionStorage.setItem("bible-atlas-active-saving-peter-room", "saving_peter_rooms-1"));
   await h.reload(); await h.sleep(1500);
@@ -255,7 +277,6 @@ export default async function (h) {
     ...GAMES.map((g) => [g.title, null]),
     ["Bible Trivia", "Play solo"], ["Bible Trivia", "Join multiplayer game"],
     ["Saving Peter", "Play solo"], ["Saving Peter", "Create multiplayer game"], ["Saving Peter", "Join multiplayer game"],
-    ["Fill in the Blank", "Play solo"], ["Chronology", "Play solo"], ["Scripture Memorization Challenge", "Play solo"],
   ];
   for (const [title, step] of steps) {
     await h.evaluate(() => localStorage.setItem("feature-test-view-v1", "1"));

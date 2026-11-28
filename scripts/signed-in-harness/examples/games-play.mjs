@@ -77,10 +77,11 @@ export default async function (h) {
   const header = () => h.text(".game-header h2");
   const choose = (title) => h.click({ css: ".game-entry-card", text: title });
   const start = () => h.click(".game-start-button");
-  /** Play solo, pick a difficulty, press the start button. */
+  /** Pick a difficulty and press the start button. Only a game with multiplayer asks Play solo
+   * first; the others open on their difficulty screen. */
   const startLevel = async (title, key) => {
     await openGame(title);
-    await choose("Play solo");
+    if (title === "Saving Peter") await choose("Play solo");
     await h.click(`.game-level-option input[value="${key}"]`);
     await start();
   };
@@ -143,7 +144,6 @@ export default async function (h) {
 
   h.section("Scripture Memorization Challenge");
   await openGame("Scripture Memorization Challenge");
-  await choose("Play solo");
   await sound("memorization-picker");
   const first = [...memo.MEMORIZATION_VERSES].sort((a, b) => a.text.length - b.text.length)[0];
   await h.type(".memchallenge-search", first.reference);

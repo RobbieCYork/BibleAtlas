@@ -56,7 +56,6 @@ export default async function (h) {
     await openCenter();
     await h.click({ css: ".game-center-card", text: "Daily Name" });
     await h.waitFor({ css: ".game-header h2", text: "Daily Name" });
-    await h.click({ css: ".game-entry-card", text: "Play solo" });
     await h.waitFor({ css: ".game-entry-card", text: "Today's name" });
   };
   /** Type with the on-screen keys. */
@@ -93,15 +92,17 @@ export default async function (h) {
   const cards = await h.evaluate(() => [...document.querySelectorAll(".game-center-card-title")].map((e) => e.childNodes[0].textContent.trim()));
   h.assert(cards.includes("Daily Name"), `Game Center lists Daily Name (${cards.join(", ")})`);
   await h.click({ css: ".game-center-card", text: "Daily Name" });
-  await h.waitFor(".game-entry-card");
-  const entry = await h.evaluate(() => [...document.querySelectorAll(".game-entry-card .game-center-card-title")].map((e) => e.textContent.trim()));
-  h.assert(JSON.stringify(entry) === JSON.stringify(["Play solo"]), `first screen is Play solo only (${entry.join(", ")})`);
-  h.assert(await h.exists('.game-root[data-page-bg="game-setup"]'), "entry screen carries the game-setup background");
-  await sound("entry");
-  await h.click({ css: ".game-entry-card", text: "Play solo" });
   await h.waitFor({ css: ".game-entry-card", text: "Practice" });
+  const entry = await h.evaluate(() => [...document.querySelectorAll(".game-entry-card .game-center-card-title")].map((e) => e.textContent.trim().split(" ·")[0]));
+  h.assert(JSON.stringify(entry) === JSON.stringify(["Today's name", "Practice"]), `opens straight on today's name and Practice, no Play solo screen (${entry.join(", ")})`);
+  h.assert(await h.exists('.game-root[data-page-bg="game-setup"]'), "the menu carries the game-setup background");
   h.assert((await h.text({ css: ".game-entry-card", text: "Today's name" })).includes(`#${number}`), `menu offers today's name #${number}`);
   await sound("menu");
+  await h.click(".game-header button");
+  await h.waitFor({ css: ".game-header h2", text: "Game Center" });
+  h.assert(!(await h.exists(".game-entry-card")), "Back from the menu is Game Center");
+  await h.click({ css: ".game-center-card", text: "Daily Name" });
+  await h.waitFor({ css: ".game-entry-card", text: "Practice" });
 
   h.section("How to play — first time, before the board");
   await h.click({ css: ".game-entry-card", text: "Today's name" });
@@ -410,7 +411,6 @@ async function fit(h, dn, data, key, keyWord) {
     await h.evaluate((x) => { Math.random = () => x; }, (i + 0.5) / pool.length);
     await h.click({ css: ".mobile-tab", text: "Games" });
     await h.click({ css: ".game-center-card", text: "Daily Name" });
-    await h.click({ css: ".game-entry-card", text: "Play solo" });
     await h.click({ css: ".game-entry-card", text: "Practice" });
     await h.waitFor(".dn-board");
     await h.sleep(150);

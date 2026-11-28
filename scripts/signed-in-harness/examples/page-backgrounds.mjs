@@ -33,9 +33,6 @@ const SCREENS = {
   "join-peter": [".game-root", "judean-road"],
   "first-bible-trivia": [".game-root", "judean-road"],
   "first-saving-peter": [".game-root", "judean-road"],
-  "first-fill-blank": [".game-root", "judean-road"],
-  "first-memorization": [".game-root", "judean-road"],
-  "first-chronology": [".game-root", "judean-road"],
 };
 
 export default async function (h) {
@@ -52,6 +49,8 @@ export default async function (h) {
   };
   const firstScreen = async (title) => { await openGames(); await h.click({ css: ".game-center-card", text: title }); await h.waitFor(".game-entry-card"); };
   const entry = async (title, choice, ready) => { await firstScreen(title); await h.click({ css: ".game-entry-card", text: choice }); await h.waitFor(ready); };
+  /** A solo-only game has no first screen of choices: it opens on its own options. */
+  const soloGame = async (title, ready) => { await openGames(); await h.click({ css: ".game-center-card", text: title }); await h.waitFor(ready); };
   const openers = {
     "game-center": openGames,
     "about": async () => { await h.click(MENU_BUTTON); await h.sleep(300); await h.click(phone ? ".mobile-nav-menu-about" : ".panel-menu-about"); await h.waitFor(".about-root"); },
@@ -60,17 +59,14 @@ export default async function (h) {
       else { await h.click(MENU_BUTTON); await h.sleep(200); await h.click({ css: ".panel-menu-item", text: "Articles" }); await esc(); }
       await h.waitFor(".articles-section-header");
     },
-    "setup-fill-blank": () => entry("Fill in the Blank", "Play solo", ".fillblank-picker"),
-    "setup-chronology": () => entry("Chronology", "Play solo", ".chronology-picker"),
+    "setup-fill-blank": () => soloGame("Fill in the Blank", ".fillblank-picker"),
+    "setup-chronology": () => soloGame("Chronology", ".chronology-picker"),
     "setup-peter-level": () => entry("Saving Peter", "Play solo", ".level-picker"),
     "setup-peter-create": () => entry("Saving Peter", "Create multiplayer game", ".game-start-button"),
     "join-trivia": () => entry("Bible Trivia", "Join multiplayer game", ".games-code-input"),
     "join-peter": () => entry("Saving Peter", "Join multiplayer game", ".games-code-input"),
     "first-bible-trivia": () => firstScreen("Bible Trivia"),
     "first-saving-peter": () => firstScreen("Saving Peter"),
-    "first-fill-blank": () => firstScreen("Fill in the Blank"),
-    "first-memorization": () => firstScreen("Scripture Memorization Challenge"),
-    "first-chronology": () => firstScreen("Chronology"),
   };
 
   /** Every visible text under the screen: is there an opaque ground between it and the picture, and
@@ -203,7 +199,8 @@ export default async function (h) {
 
     for (const [name, title, ready] of [["Memorization's verse list", "Scripture Memorization Challenge", ".memchallenge-picker"], ["Bible Trivia's topic screen", "Bible Trivia", ".games-topic-select"]]) {
       await h.reload(); await h.sleep(900);
-      await entry(title, "Play solo", ready);
+      if (title === "Bible Trivia") await entry(title, "Play solo", ready);
+      else await soloGame(title, ready);
       await h.sleep(600);
       h.assert((await h.evaluate(() => getComputedStyle(document.querySelector(".game-root")).backgroundImage)) === "none", `${name} has no picture`);
     }

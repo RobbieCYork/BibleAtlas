@@ -3,12 +3,12 @@ import Icon, { type IconName } from "./Icon";
 
 interface GameEntryChoicesProps {
   onSolo: () => void;
-  /** Left out for a game with no multiplayer, whose first screen is then Play solo alone. */
-  multiplayer?: { onCreate: () => void; onJoin: () => void };
+  multiplayer: { onCreate: () => void; onJoin: () => void };
 }
 
-/** The first screen of every game: how to play, and nothing else. Topic, difficulty and the like
- * come after Play solo or Create multiplayer game; Join goes straight to the code. */
+/** The first screen of a game with multiplayer: how to play, and nothing else. Topic, difficulty and
+ * the like come after Play solo or Create multiplayer game; Join goes straight to the code. A solo-only
+ * game has no such screen — it opens on its own options, since there is nothing to choose between. */
 export function GameEntryChoices({ onSolo, multiplayer }: GameEntryChoicesProps) {
   const choice = (icon: IconName, title: string, onClick: () => void) => (
     <button type="button" className="game-center-card game-entry-card" onClick={onClick}>
@@ -26,8 +26,8 @@ export function GameEntryChoices({ onSolo, multiplayer }: GameEntryChoicesProps)
   return (
     <div className="game-center-list">
       {choice("people", "Play solo", onSolo)}
-      {multiplayer && choice("players", "Create multiplayer game", multiplayer.onCreate)}
-      {multiplayer && choice("link", "Join multiplayer game", multiplayer.onJoin)}
+      {choice("players", "Create multiplayer game", multiplayer.onCreate)}
+      {choice("link", "Join multiplayer game", multiplayer.onJoin)}
     </div>
   );
 }

@@ -13,7 +13,7 @@ import {
 import BackButton from "./BackButton";
 import "./Chronology.css";
 import Icon from "./Icon";
-import { GameEntryChoices, LevelSetup } from "./GameEntry";
+import { LevelSetup } from "./GameEntry";
 import { useScrollTop } from "../lib/useScrollTop";
 
 interface ChronologyViewProps {
@@ -30,14 +30,14 @@ const CATEGORY_LABELS: Record<ChronologyCard["category"], string> = {
   religion: "World Religions",
 };
 
-type Screen = "home" | "menu" | "playing" | "gameover";
+type Screen = "menu" | "playing" | "gameover";
 
 /** Chronology — the player is dealt a handful of timeline events in scrambled order and puts them
  * back into the order they happened, earliest at the top. Reordering is done with ▲/▼ buttons
  * rather than drag-and-drop: dragging is awkward on touch, and this stays keyboard-reachable and
  * screen-reader-legible for free. Three lives; any round with a card out of place costs one. */
 export default function ChronologyView({ onBack }: ChronologyViewProps) {
-  const [screen, setScreen] = useState<Screen>("home");
+  const [screen, setScreen] = useState<Screen>("menu");
   const [level, setLevel] = useState<ChronologyLevelDef | null>(null);
   const [choice, setChoice] = useState<ChronologyLevel>(CHRONOLOGY_LEVELS[0].key);
   const [category, setCategory] = useState<ChronologyCategory>("all");
@@ -102,23 +102,20 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
     setChecked(false);
   };
 
-  if (screen === "home" || screen === "menu") {
+  if (screen === "menu") {
     return (
       <div className="game-root" data-page-bg="game-setup">
         <header className="game-header">
-          <BackButton onClick={screen === "home" ? onBack : () => setScreen("home")} ariaLabel={screen === "home" ? "Back to Game Center" : "Back"} />
+          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
           <h2 className="games-inline-icon">
           <Icon name="chronology" />
           Chronology
         </h2>
         </header>
         <div className="game-body">
-          {screen === "home" ? (
-            <GameEntryChoices onSolo={() => setScreen("menu")} />
-          ) : (
+          <>
             <div className="chronology-picker">
               <div className="games-panel-intro">
-                <h2>Play solo</h2>
                 <p>
                   Put the events back in the order they happened, earliest first. Higher levels deal more
                   cards, less famous events, and events closer together. Three lives.
@@ -143,7 +140,7 @@ export default function ChronologyView({ onBack }: ChronologyViewProps) {
                 </div>
               </LevelSetup>
             </div>
-          )}
+          </>
         </div>
       </div>
     );

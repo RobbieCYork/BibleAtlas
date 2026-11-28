@@ -9,7 +9,7 @@ import {
 import BackButton from "./BackButton";
 import "./FillBlank.css";
 import Icon from "./Icon";
-import { GameEntryChoices, LevelSetup } from "./GameEntry";
+import { LevelSetup } from "./GameEntry";
 import { useScrollTop } from "../lib/useScrollTop";
 
 interface FillBlankViewProps {
@@ -31,13 +31,13 @@ function shuffled<T>(arr: T[]): T[] {
   return copy;
 }
 
-type Screen = "home" | "menu" | "playing" | "gameover";
+type Screen = "menu" | "playing" | "gameover";
 
 /** "Fill in the Blank" — a standout OT/NT verse is shown with one or more phrases blanked out; the
  * player types each missing phrase before time runs out. Three lives; a wrong or timed-out answer
  * costs one. Time budget and blank count both scale with difficulty (see fillBlankVerses.ts). */
 export default function FillBlankView({ onBack }: FillBlankViewProps) {
-  const [screen, setScreen] = useState<Screen>("home");
+  const [screen, setScreen] = useState<Screen>("menu");
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null);
   const [choice, setChoice] = useState<Difficulty>(DIFFICULTY_LEVELS[0].key);
   const [queue, setQueue] = useState<FillBlankVerse[]>([]);
@@ -147,28 +147,23 @@ export default function FillBlankView({ onBack }: FillBlankViewProps) {
     setCurrent(null);
   };
 
-  if (screen === "home" || screen === "menu") {
+  if (screen === "menu") {
     return (
       <div className="game-root" data-page-bg="game-setup">
         <header className="game-header">
-          <BackButton onClick={screen === "home" ? onBack : () => setScreen("home")} ariaLabel={screen === "home" ? "Back to Game Center" : "Back"} />
+          <BackButton onClick={onBack} ariaLabel="Back to Game Center" />
           <h2 className="games-inline-icon">
           <Icon name="fillBlank" />
           Fill in the Blank
         </h2>
         </header>
         <div className="game-body">
-          {screen === "home" ? (
-            <GameEntryChoices onSolo={() => setScreen("menu")} />
-          ) : (
-            <div className="fillblank-picker">
-              <div className="games-panel-intro">
-                <h2>Play solo</h2>
-                <p>Standout verses from the Old and New Testaments — type the missing words before time runs out. Three lives.</p>
-              </div>
-              <LevelSetup name="fill-blank-level" levels={DIFFICULTY_LEVELS} value={choice} onChange={setChoice} onStart={() => startGame(choice)} />
+          <div className="fillblank-picker">
+            <div className="games-panel-intro">
+              <p>Standout verses from the Old and New Testaments — type the missing words before time runs out. Three lives.</p>
             </div>
-          )}
+            <LevelSetup name="fill-blank-level" levels={DIFFICULTY_LEVELS} value={choice} onChange={setChoice} onStart={() => startGame(choice)} />
+          </div>
         </div>
       </div>
     );

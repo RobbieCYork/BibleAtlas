@@ -4,7 +4,6 @@ import { TQ_VERSES } from "../data/twentyQuestionsVerses";
 import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
 import Icon, { type IconName } from "./Icon";
-import { GameEntryChoices } from "./GameEntry";
 import HowToPlay, { HowToPlayButton } from "./HowToPlay";
 import { useHowToPlay } from "../lib/howToPlay";
 import "./TwentyQuestions.css";
@@ -17,7 +16,7 @@ interface TwentyQuestionsViewProps {
 const TQ_LIMIT = 20;
 
 type Choice = TQCategory | "any";
-type Screen = "home" | "menu" | "playing";
+type Screen = "menu" | "playing";
 
 interface Turn {
   kind: "question" | "guess";
@@ -88,7 +87,7 @@ const turnsUsed = (g: Game) => g.turns.filter((t) => t.kind === "question" || t.
  * wrong guess costs a question; a right one ends the game. When all twenty are spent, one last
  * guess is still allowed. */
 export default function TwentyQuestionsView({ onBack, onOpenArticle }: TwentyQuestionsViewProps) {
-  const [screen, setScreen] = useState<Screen>("home");
+  const [screen, setScreen] = useState<Screen>("menu");
   const [choice, setChoice] = useState<Choice>("people");
   const [game, setGame] = useState<Game | null>(null);
   const [stats, setStats] = useState(readStats);
@@ -171,57 +170,52 @@ export default function TwentyQuestionsView({ onBack, onOpenArticle }: TwentyQue
   if (screen !== "playing" || !game) {
     return (
       <div className="game-root" data-page-bg="game-setup">
-        {header(screen === "home" ? onBack : () => setScreen("home"), screen === "home" ? "Back to Game Center" : "Back")}
+        {header(onBack, "Back to Game Center")}
         <div className="game-body">
-          {screen === "home" ? (
-            <GameEntryChoices onSolo={() => setScreen("menu")} />
-          ) : (
-            <div className="tq-setup">
-              <div className="games-panel-intro">
-                <h2>Play solo</h2>
-                <p>
-                  The app picks a secret. Ask up to {TQ_LIMIT} yes-or-no questions from the list, then guess. Guess whenever you
-                  like — a wrong guess costs a question. Every answer is checked against Scripture; where the Bible doesn't
-                  settle it, the answer is "Not stated".
-                </p>
-              </div>
-              <form
-                className="games-panel-card game-level-setup"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  start(choice);
-                }}
-              >
-                <fieldset className="games-difficulty">
-                  <legend>Choose a category</legend>
-                  <div className="game-center-list">
-                    {CHOICES.map((c) => (
-                      <label key={c.key} className={`game-center-card game-level-option${choice === c.key ? " is-selected" : ""}`}>
-                        <input type="radio" name="tq-category" value={c.key} checked={choice === c.key} onChange={() => setChoice(c.key)} />
-                        <span className="game-center-card-icon">
-                          <Icon name={c.icon} />
-                        </span>
-                        <span className="game-center-card-body">
-                          <span className="game-center-card-title">{c.label}</span>
-                          <span className="game-center-card-tagline">
-                            {c.description}
-                            {c.key !== "any" && ` ${TQ_SETS[c.key].entries.length} to find.`}
-                          </span>
-                        </span>
-                        <span className="game-level-check" aria-hidden="true">
-                          {choice === c.key && <Icon name="check" />}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </fieldset>
-                <button type="submit" className="games-primary-button game-start-button">
-                  <Icon name="play" inline /> Start game
-                </button>
-              </form>
-              <TQStats stats={stats} />
+          <div className="tq-setup">
+            <div className="games-panel-intro">
+              <p>
+                The app picks a secret. Ask up to {TQ_LIMIT} yes-or-no questions from the list, then guess. Guess whenever you
+                like — a wrong guess costs a question. Every answer is checked against Scripture; where the Bible doesn't
+                settle it, the answer is "Not stated".
+              </p>
             </div>
-          )}
+            <form
+              className="games-panel-card game-level-setup"
+              onSubmit={(e) => {
+                e.preventDefault();
+                start(choice);
+              }}
+            >
+              <fieldset className="games-difficulty">
+                <legend>Choose a category</legend>
+                <div className="game-center-list">
+                  {CHOICES.map((c) => (
+                    <label key={c.key} className={`game-center-card game-level-option${choice === c.key ? " is-selected" : ""}`}>
+                      <input type="radio" name="tq-category" value={c.key} checked={choice === c.key} onChange={() => setChoice(c.key)} />
+                      <span className="game-center-card-icon">
+                        <Icon name={c.icon} />
+                      </span>
+                      <span className="game-center-card-body">
+                        <span className="game-center-card-title">{c.label}</span>
+                        <span className="game-center-card-tagline">
+                          {c.description}
+                          {c.key !== "any" && ` ${TQ_SETS[c.key].entries.length} to find.`}
+                        </span>
+                      </span>
+                      <span className="game-level-check" aria-hidden="true">
+                        {choice === c.key && <Icon name="check" />}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+              <button type="submit" className="games-primary-button game-start-button">
+                <Icon name="play" inline /> Start game
+              </button>
+            </form>
+            <TQStats stats={stats} />
+          </div>
         </div>
       </div>
     );

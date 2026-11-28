@@ -44,7 +44,7 @@ export default async function (h) {
     }
     await h.waitFor(".game-center-card");
   };
-  /** Fresh page, Math.random pinned to `r`, through Play solo to the category screen. */
+  /** Fresh page, Math.random pinned to `r`, to the category screen: the game opens on it. */
   const toMenu = async (r) => {
     await h.reload();
     await h.sleep(800);
@@ -52,7 +52,6 @@ export default async function (h) {
     await openCenter();
     await h.click({ css: ".game-center-card", text: "20 Questions" });
     await h.waitFor({ css: ".game-header h2", text: "20 Questions" });
-    await h.click({ css: ".game-entry-card", text: "Play solo" });
     await h.waitFor('input[name="tq-category"]');
   };
   const startCat = async (cat) => {
@@ -93,7 +92,7 @@ export default async function (h) {
   await h.evaluate(() => { localStorage.removeItem("twenty-questions-v1"); localStorage.removeItem("twenty-questions-howto-v1"); });
   await toMenu(0);
   const entry = await h.evaluate(() => [...document.querySelectorAll(".game-entry-card .game-center-card-title")].map((e) => e.textContent.trim()));
-  h.assert(entry.length === 0, "category screen (Play solo already chosen)");
+  h.assert(entry.length === 0, "the game opens on the category screen, with no Play solo screen");
   h.assert(await h.exists('.game-root[data-page-bg="game-setup"]'), "setup screen carries the game-setup background");
   const cats = await h.evaluate(() => [...document.querySelectorAll(".game-level-option .game-center-card-title")].map((e) => e.textContent));
   h.assert(JSON.stringify(cats) === JSON.stringify(["People", "Places", "Things", "Surprise me"]), `categories: ${cats.join(", ")}`);

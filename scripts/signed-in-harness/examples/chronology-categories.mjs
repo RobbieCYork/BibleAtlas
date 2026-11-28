@@ -46,7 +46,6 @@ export default async function (h) {
     await h.reload(); await h.sleep(900);
     await openCenter();
     await h.click({ css: ".game-center-card", text: "Chronology" });
-    await h.click({ css: ".game-entry-card", text: "Play solo" });
     await h.waitFor(".chronology-category select");
   };
   const setCategory = (key) => h.evaluate((k) => {
