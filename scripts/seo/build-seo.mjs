@@ -117,7 +117,7 @@ export async function generateSeo(outDir, { supabase = null } = {}) {
       // a discovery's `findSiteId` pointing at the Location or POI it was dug out of — under the
       // same rule the linkifier already follows: it returns null for a record this run did not
       // emit, so a stale id renders as plain text instead of a dead link.
-      write(outDir, fileForPath(p), render(record, { linkify, urlFor, nameFor, datingDebate: data.datingDebate, siblings: siblingsFor(records, i, kind.item) }));
+      write(outDir, fileForPath(p), render(record, { linkify, urlFor, nameFor, datingDebate: data.datingDebate, personEvidence: data.personEvidence, siblings: siblingsFor(records, i, kind.item) }));
       urls.push(p);
       pages++;
     });

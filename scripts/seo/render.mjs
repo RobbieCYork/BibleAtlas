@@ -477,15 +477,12 @@ const CERTAINTY_NOTE = {
 export function locationPage(loc, ctx) {
   const cat = CATEGORY_LABEL[loc.category] ?? loc.category;
   const facts = loc.history?.notableFacts ?? [];
-  // A Location has no `summary` field of its own, so the lead is composed from what the record does
-  // state — its category and its modern name — and the notable facts follow underneath. Nothing is
-  // asserted here that is not already in the data; "today X" is dropped when the modern name merely
-  // restates the ancient one ("Jerusalem, today Jerusalem, Israel").
-  const modernDiffers =
-    loc.modernName && !loc.modernName.toLowerCase().startsWith(loc.name.toLowerCase());
-  const lead = `${loc.name} is a ${cat.toLowerCase()} of the biblical world${
-    modernDiffers ? `, known today as ${loc.modernName}` : ""
-  }.`;
+  // A Location has no `summary` field of its own, so the lead is composed from its name and category
+  // alone, and the notable facts follow underneath. The modern name is NOT folded into the sentence:
+  // the field often holds a hedge rather than a name ("Location disputed — ...", "Traditionally
+  // identified with ...", "Exact site unidentified; ..."), and "known today as" turned each of those
+  // into a false statement. It is printed under the title with its own label instead.
+  const lead = `${loc.name} is a ${cat.toLowerCase()} of the biblical world.`;
   const description = clip(`${lead} ${facts[0] ?? ""}`);
   const trail = [
     { name: "Library", path: "/library" },
@@ -499,7 +496,7 @@ export function locationPage(loc, ctx) {
       cat,
       [
         loc.pronunciation ? `<span class="note">${esc(loc.pronunciation)}</span>` : "",
-        loc.modernName ? `Modern ${esc(loc.modernName)}` : "",
+        loc.modernName ? `Modern location: ${esc(loc.modernName)}` : "",
         loc.alternateNames?.length ? `Also called ${esc(loc.alternateNames.join(", "))}` : "",
       ]
         .filter(Boolean)
@@ -562,7 +559,7 @@ export function poiPage(poi, ctx) {
       poi.tag,
       [
         poi.pronunciation ? `<span class="note">${esc(poi.pronunciation)}</span>` : "",
-        poi.modernName ? `Modern ${esc(poi.modernName)}` : "",
+        poi.modernName ? `Modern location: ${esc(poi.modernName)}` : "",
         poi.alternateNames?.length ? `Also called ${esc(poi.alternateNames.join(", "))}` : "",
         esc(coordLabel(poi.coordinates)),
       ]
@@ -650,11 +647,13 @@ export function personPage(person, ctx) {
     person.controversies?.length
       ? section("Questions and debates", paras(person.controversies, person.id, ctx))
       : "",
-    evidence
-      ? section(evidenceHeading, evidence)
-      : person.noExtraBiblicalRecordNote
-        ? section(evidenceHeading, p(`<span class="note">${esc(person.noExtraBiblicalRecordNote)}</span>`))
-        : "",
+    // Never for a modern person, and never a default sentence: data/personEvidence.ts, the same rule
+    // the app applies.
+    !ctx.personEvidence.showsHistoricalEvidence(person)
+      ? ""
+      : evidence
+        ? section(evidenceHeading, evidence)
+        : section(evidenceHeading, p(`<span class="note">${esc(person.noExtraBiblicalRecordNote)}</span>`)),
     person.quotes?.length
       ? section(
           "In their own words",

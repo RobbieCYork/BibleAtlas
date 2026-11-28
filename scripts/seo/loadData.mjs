@@ -31,6 +31,7 @@ export * as accountDeletionNotice from ${JSON.stringify(path.join(REPO_ROOT, "sr
 export * as legalDocuments from ${JSON.stringify(path.join(REPO_ROOT, "src/data/legalDocuments"))};
 export * as aboutContent from ${JSON.stringify(path.join(REPO_ROOT, "src/data/aboutPage"))};
 export * as datingDebate from ${JSON.stringify(path.join(REPO_ROOT, "src/data/datingDebate"))};
+export * as personEvidence from ${JSON.stringify(path.join(REPO_ROOT, "src/data/personEvidence"))};
 `;
 
 let cached = null;

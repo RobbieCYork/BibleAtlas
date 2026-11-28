@@ -179,7 +179,9 @@ export interface Person {
   /** Free text naming where they lived/were from/traveled to — location names here get auto-linked. */
   placesLived?: string;
   extraBiblicalReferences?: ExtraBiblicalReference[];
-  /** Explicit note shown when no extra-biblical record exists, instead of the section being silently absent. */
+  /** Explicit note, written for this person, shown when no extra-biblical record exists. Without it (and
+   * with no entries above) the section is hidden; there is no default sentence. Neither field is shown
+   * for a modern person. See data/personEvidence.ts. */
   noExtraBiblicalRecordNote?: string;
   /** Citations from this person's own writings, used instead of `verses` for kind: "church"
    * figures — who have no Bible references of their own. Rendered as plain citations, never as

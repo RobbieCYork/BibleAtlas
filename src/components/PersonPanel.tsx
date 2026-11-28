@@ -8,6 +8,7 @@ import PronunciationAudioButton from "./PronunciationAudioButton";
 import ArticleHeader from "./ArticleHeader";
 import Icon from "./Icon";
 import { personImages } from "../data/personImages";
+import { showsHistoricalEvidence } from "../data/personEvidence";
 import { personCardSpec, shareFilename } from "../lib/shareCard";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
 import YoungEarthDateNote from "./YoungEarthDateNote";
@@ -241,63 +242,63 @@ export default function PersonPanel({
         )}
       </div>
 
-      {/* For biblical figures the question is what survives *outside* the Bible; for anyone not
+      {/* Whether there is a section at all is decided in one place, data/personEvidence.ts: never for
+          a modern person, and never for a record with nothing of its own to say.
+
+          For biblical figures the question is what survives *outside* the Bible; for anyone not
           named in Scripture — a church-history figure (kind: "church"), or a secular one from the
           surrounding world (kind: "world") — there is no biblical record to be "extra" to, so the
           same section is titled plainly. The test is deliberately "is this figure biblical", not
           "is this figure church": `kind` is optional and absent means biblical, and any further
           non-biblical kind should fall on the plain side without another edit here. */}
-      <div className="extra-biblical-section">
-        <h4>{isBiblical ? "Extra-Biblical Evidence" : "Historical Evidence"}</h4>
-        {person.extraBiblicalReferences && person.extraBiblicalReferences.length > 0 ? (
-          <ul className="extra-biblical-list">
-            {person.extraBiblicalReferences.map((ref, i) => (
-              <li key={i} className="extra-biblical-item">
-                {/* The source line and summary name the actual finds — "The Pilate Stone", "The Tel
-                    Dan Stele" — which now have articles of their own, so they run through the
-                    auto-linker like every other prose field. `citation` deliberately does not: it is
-                    a book/chapter/section reference ("18.5.2"), not prose, and the linker would read
-                    its digits as a Bible verse. */}
-                <p className="extra-biblical-source">
-                  <LinkedVerseText
-                    text={ref.source}
-                    onSelectLocation={onSelectLocation}
-                    onSelectPoi={onSelectPoi}
-                    onSelectPerson={onSelectPerson}
-                    onSelectTopic={onSelectTopic}
-                    excludeId={person.id}
-                  />{" "}
-                  <span className="extra-biblical-citation">({ref.citation})</span>
-                  {ref.url && (
-                    <a href={ref.url} target="_blank" rel="noopener noreferrer" className="extra-biblical-link">
-                      Read the source ↗
-                    </a>
-                  )}
-                </p>
-                <p className="extra-biblical-summary">
-                  <LinkedVerseText
-                    text={ref.summary}
-                    onSelectLocation={onSelectLocation}
-                    onSelectPoi={onSelectPoi}
-                    onSelectPerson={onSelectPerson}
-                    onSelectTopic={onSelectTopic}
-                    onSelectVerse={onSelectVerse}
-                    excludeId={person.id}
-                  />
-                </p>
-                <p className="extra-biblical-reliability">{ref.reliability}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="extra-biblical-none">
-            {person.noExtraBiblicalRecordNote ??
-              (isBiblical
-                ? "No known extra-biblical historical record of this person survives — what we know comes from the Bible text alone."
-                : "No detailed contemporary record of this person survives — what we know comes from later accounts.")}
-          </p>
-        )}
-      </div>
+      {showsHistoricalEvidence(person) && (
+        <div className="extra-biblical-section">
+          <h4>{isBiblical ? "Extra-Biblical Evidence" : "Historical Evidence"}</h4>
+          {person.extraBiblicalReferences && person.extraBiblicalReferences.length > 0 ? (
+            <ul className="extra-biblical-list">
+              {person.extraBiblicalReferences.map((ref, i) => (
+                <li key={i} className="extra-biblical-item">
+                  {/* The source line and summary name the actual finds — "The Pilate Stone", "The Tel
+                      Dan Stele" — which now have articles of their own, so they run through the
+                      auto-linker like every other prose field. `citation` deliberately does not: it is
+                      a book/chapter/section reference ("18.5.2"), not prose, and the linker would read
+                      its digits as a Bible verse. */}
+                  <p className="extra-biblical-source">
+                    <LinkedVerseText
+                      text={ref.source}
+                      onSelectLocation={onSelectLocation}
+                      onSelectPoi={onSelectPoi}
+                      onSelectPerson={onSelectPerson}
+                      onSelectTopic={onSelectTopic}
+                      excludeId={person.id}
+                    />{" "}
+                    <span className="extra-biblical-citation">({ref.citation})</span>
+                    {ref.url && (
+                      <a href={ref.url} target="_blank" rel="noopener noreferrer" className="extra-biblical-link">
+                        Read the source ↗
+                      </a>
+                    )}
+                  </p>
+                  <p className="extra-biblical-summary">
+                    <LinkedVerseText
+                      text={ref.summary}
+                      onSelectLocation={onSelectLocation}
+                      onSelectPoi={onSelectPoi}
+                      onSelectPerson={onSelectPerson}
+                      onSelectTopic={onSelectTopic}
+                      onSelectVerse={onSelectVerse}
+                      excludeId={person.id}
+                    />
+                  </p>
+                  <p className="extra-biblical-reliability">{ref.reliability}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="extra-biblical-none">{person.noExtraBiblicalRecordNote}</p>
+          )}
+        </div>
+      )}
 
       {person.sources && person.sources.length > 0 && (
         <div className="sources-section">
