@@ -636,6 +636,9 @@ function App() {
   // Lets the Archaeology entry in both menus send the Articles panel to its Archaeology page —
   // same one-shot-request shape as openReadingPlansNonce above, and undefined whenever no request is
   // waiting, so the panel never opens a page nobody asked for. See openArchaeology below.
+  // Bumped when the Articles tab/menu row is tapped: ArticlesPanel drops any category page and search
+  // text so it lands on its home list.
+  const [articlesHomeNonce, setArticlesHomeNonce] = useState(0);
   const [openArchaeologyNonce, setOpenArchaeologyNonce] = useState<number | undefined>(undefined);
   // Lets the Timeline's Books-of-the-Bible band jump straight to a book's Introduction (instead of
   // its chapter 1) — same one-shot-request shape as journalRequest, carrying which book since that
@@ -1547,6 +1550,28 @@ function App() {
     setOpenArchaeologyNonce((n) => (n ?? 0) + 1);
   };
 
+  /** Tab-bar and hamburger taps on a panel destination (Bible, Map, Notes, Articles, Social list).
+   * Shared so the two entry points can't drift. Tapping Articles always lands on the Articles home
+   * (browse list) — an open article, its cross-link trail and any category page are dropped, since a
+   * "section" tap that leaves you on the article you're reading looks like a dead button. Tapping Map
+   * while already on the Map tab with a place selected clears the selection (all pins back).
+   * Bible and Notes are left alone: their "home" is the reading position / the editor, and dropping
+   * either could throw away unsaved work. */
+  const selectMobilePanelTab = (key: PanelKey) => {
+    if (key === "articles") {
+      setSelectedId(null);
+      setSelectedPoiId(null);
+      setSelectedPersonId(null);
+      setSelectedTopicId(null);
+      setSelectedTimelineEventId(null);
+      setDetailsHistory([]);
+      setArticlesHomeNonce((n) => n + 1);
+    } else if (key === "map" && mobilePanelOf(panelsRef.current) === "map" && hasSelectionRef.current) {
+      clearSelection();
+    }
+    setMobileActivePanel(key);
+  };
+
   const goToMobileDestination = (key: MobileTabKey) => {
     if (key === "timeline" || key === "games") {
       goToTakeover(key);
@@ -1563,7 +1588,7 @@ function App() {
     closeTimeline();
     closeGame();
     closeMyProfile();
-    setMobileActivePanel(key);
+    selectMobilePanelTab(key);
   };
 
   /** Where the reader is standing, in the terms the issue reporter files a report in: a synthetic
@@ -2067,6 +2092,7 @@ function App() {
             onSelectTimelineEvent={handleSelectTimelineEventFromArticles}
             openSection="archaeology"
             openSectionNonce={openArchaeologyNonce}
+            homeNonce={articlesHomeNonce}
             onOpenedSection={() => setOpenArchaeologyNonce(undefined)}
             expand={sideExpand}
             style={{ width: articlesWidth }}
@@ -2217,7 +2243,7 @@ function App() {
             closeGame();
             closeMyProfile();
             if (key === "friends" && view) handleSelectFriendsView(view);
-            setMobileActivePanel(key);
+            selectMobilePanelTab(key);
           }}
           friendsBadgeCount={pendingFriendRequests}
           messagesBadgeCount={unreadMessages}

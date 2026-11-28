@@ -55,6 +55,8 @@ interface ArticlesPanelProps {
    * replay an old request. */
   openSection?: SectionKey;
   openSectionNonce?: number;
+  /** Bumped when the reader taps the Articles tab/menu row: back to the category list, search cleared. */
+  homeNonce?: number;
   onOpenedSection?: () => void;
   expand?: boolean;
   style?: React.CSSProperties;
@@ -143,6 +145,7 @@ export default function ArticlesPanel({
   onSelectTimelineEvent,
   openSection,
   openSectionNonce,
+  homeNonce,
   onOpenedSection,
   expand,
   style,
@@ -172,6 +175,14 @@ export default function ArticlesPanel({
     sectionRefs.current[returnFocusRef.current]?.focus({ preventScroll: true });
     returnFocusRef.current = null;
   }, [page]);
+
+  const prevHomeNonce = useRef(homeNonce);
+  useEffect(() => {
+    if (homeNonce === prevHomeNonce.current) return;
+    prevHomeNonce.current = homeNonce;
+    setQuery("");
+    setPage(null);
+  }, [homeNonce]);
 
   // Arriving from a menu entry: clear whatever search text was left in the box, and open that
   // category's page.
