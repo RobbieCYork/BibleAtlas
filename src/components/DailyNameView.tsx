@@ -41,6 +41,9 @@ const MARK_WORDS: Record<LetterMark, string> = { right: "right spot", elsewhere:
 const MARK_RANK: Record<LetterMark, number> = { absent: 0, elsewhere: 1, right: 2 };
 const ALL_MARKS: LetterMark[] = ["right", "elsewhere", "absent"];
 
+/** The always-visible key's wording: short enough for one row on a small phone. */
+const KEY_WORDS: Record<LetterMark, string> = { right: "Right spot", elsewhere: "In name, wrong spot", absent: "Not in name" };
+
 /** The shape of each mark in words, so the How to play panel never rests on colour. */
 const MARK_LOOK: Record<LetterMark, string> = {
   right: "Solid tile, filled dot.",
@@ -300,6 +303,14 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
           ? `${toGo} more ${toGo === 1 ? "letter" : "letters"}, then tap Enter.`
           : "Now tap Enter to check it.";
 
+  // A letter used more times than the name has it leaves a pale tile although the letter is in the
+  // name. Said under the board when the latest guess did that.
+  const last = guesses[guesses.length - 1];
+  const lastMarks = last && !finished ? markGuess(last, answer.word) : [];
+  const extra = lastMarks.length
+    ? last.split("").find((l, i) => lastMarks[i] === "absent" && lastMarks.some((m, j) => last[j] === l && m !== "absent"))
+    : undefined;
+
   return (
     <div className="game-root">
       {playHeader}
@@ -333,11 +344,18 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
           </div>
         </div>
 
+        <Legend />
+
         <div className="dn-under">
           <p className="dn-message" role="status" aria-live="polite">
             {message}
           </p>
           {!message && hint && <p className="dn-hint">{hint}</p>}
+          {!message && extra && (
+            <p className="dn-hint dn-extra">
+              Pale {extra}: the name has no more {extra}’s.
+            </p>
+          )}
         </div>
 
         {finished ? (
@@ -404,8 +422,6 @@ export default function DailyNameView({ onBack, onOpenArticle }: DailyNameViewPr
             ))}
           </div>
         )}
-
-        <Legend />
       </div>
     </div>
   );
@@ -454,10 +470,12 @@ function DailyNameHelp({ length, answer }: { length: number; answer: string }) {
           );
         })}
       </ul>
+      <p>If you use a letter more times than the name has it, the extra ones are marked as not in the name.</p>
     </>
   );
 }
 
+/** The key under the board: the real tile styles and marks, always on screen. */
 function Legend() {
   return (
     <ul className="dn-legend" aria-label="What the marks mean">
@@ -467,7 +485,7 @@ function Legend() {
             <span className="dn-letter">A</span>
             <span className="dn-mark" />
           </span>
-          <span>{MARK_WORDS[m][0].toUpperCase() + MARK_WORDS[m].slice(1)}</span>
+          <span>{KEY_WORDS[m]}</span>
         </li>
       ))}
     </ul>

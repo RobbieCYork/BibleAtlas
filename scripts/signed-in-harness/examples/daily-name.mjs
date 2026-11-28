@@ -3,7 +3,9 @@
  * between), a practice win and a practice loss, the physical keyboard, guess rejection, letter
  * marks against the real rules, device stats, the spoiler-free share text, and the reveal's
  * article link. Also How to play (shown once before the first board, reopened by its button), the
- * first-guess hint and the Enter messages, and — on a phone run — that the board and the whole
+ * first-guess hint and the Enter messages, the always-visible key to the three marks (the board's
+ * own tile styles; the note when a repeated letter leaves a pale tile), every skin light and dark,
+ * and — on a phone run — that the board, the key and the whole
  * keyboard fit above the tab bar for every name length at several phone sizes, with safe-area
  * insets, the seasonal-walk banner, the owner's Test view strip and large text. Run at both widths:
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 --script scripts/signed-in-harness/examples/daily-name.mjs
@@ -151,6 +153,25 @@ export default async function (h) {
 
   h.section("Daily — WIN");
   h.assert((await h.count(".dn-row")) === 6 && (await h.count(".dn-row:first-child .dn-tile")) === answer.word.length, `6 rows of ${answer.word.length} tiles`);
+  /** The key: drawn, in view, between the board and the message slot, clear of the keyboard, and
+   * each sample styled exactly as the board tile and keyboard key of that mark. */
+  const keyShown = () =>
+    h.evaluate(() => {
+      const el = document.querySelector(".dn-legend");
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      const board = document.querySelector(".dn-board").getBoundingClientRect();
+      const body = document.querySelector(".game-mode .game-body").getBoundingClientRect();
+      const kb = document.querySelector(".dn-keyboard")?.getBoundingClientRect();
+      const seen = [...el.querySelectorAll("li")].every((li) => { const b = li.getBoundingClientRect(); const at = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return !!at && li.contains(at); });
+      return {
+        words: [...el.querySelectorAll("li > span:last-child")].map((s) => s.textContent),
+        ok: r.height > 0 && seen && r.top >= board.bottom - 0.5 && r.bottom <= body.bottom + 0.5 && (!kb || r.bottom <= kb.top + 0.5) && r.left >= 0 && r.right <= innerWidth,
+        height: Math.round(r.height),
+      };
+    });
+  const empty = await keyShown();
+  h.assert(empty?.ok && JSON.stringify(empty.words) === JSON.stringify(["Right spot", "In name, wrong spot", "Not in name"]), `key on screen before the first guess (${JSON.stringify(empty)})`);
   await sound("board-empty");
   // A word that is not a name is refused and costs nothing.
   await keyWord("Q".repeat(answer.word.length));
@@ -169,6 +190,15 @@ export default async function (h) {
     return { right: s(".dn-legend .dn-right"), elsewhere: s(".dn-legend .dn-elsewhere"), absent: s(".dn-legend .dn-absent") };
   });
   h.assert(shapes.elsewhere === "dashed" && shapes.right === "solid", `marks differ in shape, not just colour (frames: ${JSON.stringify(shapes)})`);
+  const sameLook = await h.evaluate(() => {
+    const look = (el, mark) => { const s = getComputedStyle(el); const d = getComputedStyle(el.querySelector(".dn-mark")); return [s.backgroundColor, s.borderTopStyle, s.borderTopColor, s.color, d.backgroundColor, d.backgroundImage, d.borderTopStyle].join("|") + mark; };
+    return ["right", "elsewhere", "absent"].flatMap((m) => {
+      const sample = look(document.querySelector(`.dn-legend .dn-${m}`), m);
+      return [...document.querySelectorAll(`.dn-board .dn-${m}, .dn-key.dn-${m}`)].filter((el) => look(el, m) !== sample).map((el) => `${m}: ${el.className}`);
+    });
+  });
+  h.assert(sameLook.length === 0, `board tiles and keys look exactly like their key sample ${sameLook.slice(0, 3).join("; ")}`);
+  h.assert((await keyShown())?.ok, "key still on screen with two guesses made");
   await sound("board-two-guesses");
   await keyWord(answer.word);
   await h.waitFor(".dn-result");
@@ -198,6 +228,82 @@ export default async function (h) {
   const heading = await h.evaluate((name) => [...document.querySelectorAll("h1, h2")].some((e) => e.textContent.includes(name)), answer.label.split(",")[0]);
   h.assert(heading, `and opens the ${answer.label} article`);
   await h.screenshot(`daily-name-article-${dev}.png`);
+
+  h.section("Key — a repeated letter");
+  // A practice name and a guess that uses one of its letters more often than the name does.
+  {
+    const all = data.DAILY_NAME_GUESSES.split(" ");
+    const practice = data.DAILY_NAME_ANSWERS.filter((a) => a.word !== answer.word);
+    let found = null;
+    for (let i = 0; i < practice.length && !found; i++) {
+      const word = practice[i].word;
+      for (const g of all) {
+        if (g.length !== word.length || g === word) continue;
+        const m = dn.markGuess(g, word);
+        const at = [...g].findIndex((l, k) => m[k] === "absent" && m.some((x, j) => g[j] === l && x !== "absent"));
+        const plain = all.find((p) => p.length === word.length && p !== word && !dn.markGuess(p, word).some((x, k) => x === "absent" && dn.markGuess(p, word).some((y, j) => p[j] === p[k] && y !== "absent")));
+        if (at >= 0 && plain) { found = { i, word, guess: g, letter: g[at], plain }; break; }
+      }
+    }
+    h.assert(!!found, `found a case: ${found?.guess} against ${found?.word}`);
+    await h.reload();
+    await h.sleep(800);
+    await h.evaluate((x) => { Math.random = () => x; }, (found.i + 0.5) / practice.length);
+    await openDaily();
+    await h.click({ css: ".game-entry-card", text: "Practice" });
+    await h.waitFor(".dn-board");
+    await keyWord(found.guess);
+    const noteText = await h.evaluate(() => document.querySelector(".dn-extra")?.textContent ?? null);
+    h.assert(noteText === `Pale ${found.letter}: the name has no more ${found.letter}’s.`, `note under the board: "${noteText}"`);
+    h.assert((await h.evaluate(() => { const n = document.querySelector(".dn-extra").getBoundingClientRect(); const k = document.querySelector(".dn-keyboard").getBoundingClientRect(); return n.bottom <= k.top + 0.5; })) && (await keyShown())?.ok, "note and key both clear of the keyboard");
+    await sound("repeated-letter");
+    await keyWord(found.plain);
+    h.assert(!(await h.exists(".dn-extra")), `gone after a guess without one (${found.plain})`);
+    await h.click(".how-open");
+    await h.waitFor(".how-panel");
+    h.assert(/more times than the name has it/.test(await h.text(".how-panel")), "How to play says it too");
+    await h.click(".how-close");
+    await h.waitFor(".dn-board");
+  }
+
+  h.section("Key — every theme");
+  {
+    // The app's own two settings, loaded for real: light, dark, and each skin (a skin fixes its mode).
+    const skins = ["sticker", "clarity", "midnight", "sage", "skyreader", "trailhead", "highlighter"];
+    const looks = [["light", null], ["dark", null], ...skins.map((k) => [k === "midnight" ? "dark" : "light", k])];
+    {
+      for (const [theme, skin] of looks) {
+        await h.evaluate((t, k, key, word, guesses) => {
+          localStorage.setItem("app-theme", t);
+          if (k) localStorage.setItem("app-skin", k); else localStorage.removeItem("app-skin");
+          localStorage.setItem("daily-name-v1", JSON.stringify({ v: 1, days: { [key]: { word, guesses } } }));
+        }, theme, skin, todayKey, answer.word, wrong.slice(0, 2));
+        await h.reload();
+        await h.sleep(800);
+        await openDaily();
+        await h.click({ css: ".game-entry-card", text: "Today's name" });
+        await h.waitFor(".dn-board");
+        await h.sleep(150);
+        h.assert((await h.evaluate(() => `${document.documentElement.dataset.theme} ${document.documentElement.dataset.skin ?? ""}`)) === `${theme} ${skin ?? ""}`, `${theme} ${skin ?? "default"} applied by the app`);
+        const r = await h.evaluate(() => {
+          // Any colour the browser reports, as sRGB, through a canvas.
+          const c = document.createElement("canvas"); c.width = c.height = 1; const x = c.getContext("2d", { willReadFrequently: true });
+          const rgb = (under, col) => { x.fillStyle = `rgb(${under.join(",")})`; x.fillRect(0, 0, 1, 1); x.fillStyle = col; x.fillRect(0, 0, 1, 1); return [...x.getImageData(0, 0, 1, 1).data].slice(0, 3); };
+          const lum = (c3) => { const [r2, g, b] = c3.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r2 + 0.7152 * g + 0.0722 * b; };
+          const ratio = (a, b) => { const [p, q] = [lum(a), lum(b)].sort((m, n) => n - m); return (p + 0.05) / (q + 0.05); };
+          const ground = (el) => { const chain = []; for (let e = el; e; e = e.parentElement) chain.unshift(getComputedStyle(e).backgroundColor); return chain.reduce((u, col) => rgb(u, col), [255, 255, 255]); };
+          const li = [...document.querySelectorAll(".dn-legend li")];
+          return {
+            words: Math.min(...li.map((l) => { const s = l.lastElementChild; const g = ground(s); return ratio(rgb(g, getComputedStyle(s).color), g); })),
+            marks: Math.min(...li.map((l) => { const t = l.firstElementChild; const g = ground(t); return ratio(rgb(g, getComputedStyle(t.querySelector(".dn-mark")).color), g); })),
+          };
+        });
+        h.assert(r.words >= 4.5 && r.marks >= 3 && (await keyShown())?.ok, `${theme} ${skin ?? "default"}: key words ${r.words.toFixed(1)}:1, marks on their tiles ${r.marks.toFixed(1)}:1`);
+        await shot(`key-${theme}-${skin ?? "default"}`);
+      }
+    }
+    await h.evaluate(() => { localStorage.setItem("app-theme", "light"); localStorage.removeItem("app-skin"); });
+  }
 
   h.section("Daily — LOSS (fresh device storage)");
   await h.evaluate(() => localStorage.removeItem("daily-name-v1"));
@@ -280,6 +386,8 @@ async function fit(h, dn, data, key, keyWord) {
         keyH: Math.floor(Math.min(...keys.map((k) => box(k).height))),
         spare: Math.round(tab.top - kb.bottom),
         overlap: Math.max(0, Math.round(board.bottom - under.top)),
+        key: (() => { const el = document.querySelector(".dn-legend"); const r = box(el); const lis = [...el.querySelectorAll("li")]; return r.height > 0 && r.top >= board.bottom - 0.5 && r.bottom <= under.top + 0.5 && r.bottom <= kb.top + 0.5 && r.top >= b.top - 0.5 && lis.every((li) => { const q = box(li); const at = document.elementFromPoint(q.left + q.width / 2, q.top + q.height / 2); return q.left >= 0 && q.right <= innerWidth && !!at && li.contains(at); }); })(),
+        keyHeight: Math.round(box(document.querySelector(".dn-legend")).height),
         banner: !!document.querySelector(".walk-banner"),
         strip: !!document.querySelector(".release-test-strip"),
       };
@@ -309,8 +417,8 @@ async function fit(h, dn, data, key, keyWord) {
     return pool[i].word;
   };
 
-  const fits = (m) => m.keys === 28 && m.enterAndDelete && !m.hidden && !m.cut && m.tiles > 0 && m.scroll <= 0 && !m.overlap && m.keyH >= 40 && m.keyW >= 28 && m.tile >= 20;
-  const line = (m) => `tile ${m.tile}px, keys ${m.keyW}x${m.keyH}, ${m.spare}px under the keyboard${fits(m) ? "" : " " + JSON.stringify(m)}`;
+  const fits = (m) => m.key && m.keys === 28 && m.enterAndDelete && !m.hidden && !m.cut && m.tiles > 0 && m.scroll <= 0 && !m.overlap && m.keyH >= 40 && m.keyW >= 28 && m.tile >= 20;
+  const line = (m) => `key ${m.keyHeight}px, tile ${m.tile}px, keys ${m.keyW}x${m.keyH}, ${m.spare}px under the keyboard${fits(m) ? "" : " " + JSON.stringify(m)}`;
 
   for (const banner of [false, true]) {
     for (const size of SIZES) {
@@ -349,7 +457,7 @@ async function fit(h, dn, data, key, keyWord) {
       for (const length of [5, 9]) {
         await open(size, { scale, banner: true }, length);
         const m = await measure();
-        h.assert(m.keys === 28 && !m.hidden && m.keyH >= 40, `${length} letters: whole keyboard in view; tile ${m.tile}px, page scrolls ${m.scroll}px`);
+        h.assert(m.keys === 28 && !m.hidden && m.keyH >= 40 && m.key, `${length} letters: whole keyboard and the key in view; key ${m.keyHeight}px, tile ${m.tile}px, page scrolls ${m.scroll}px`);
         await h.screenshot(`daily-name-large-${scale}-${size[0]}-${length}.png`);
         await keyWord("Z".repeat(length));
         const r = await measure();

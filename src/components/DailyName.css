@@ -206,6 +206,9 @@
   .dn-fit .dn-keyboard {
     gap: 5px;
   }
+  .dn-fit .dn-legend .dn-tile-sample {
+    --dn-tile: 20px;
+  }
   /* Read out, not drawn: the hint already gives the length, and the board shows the guess count. */
   .dn-fit .dn-status {
     position: absolute;
@@ -214,13 +217,6 @@
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
-  }
-}
-
-/* The How to play button covers this on shorter screens. */
-@container dn-play (max-height: 620px) {
-  .dn-fit .dn-legend {
-    display: none;
   }
 }
 
@@ -259,24 +255,29 @@
   flex-shrink: 0;
 }
 
-/* --------------------------------------------------------------- legend */
+/* ------------------------------------------------------------------ key
+   Always on screen, between the board and the keyboard: one row of three. The text size is capped
+   like the rest of the fit screen, and a label wraps inside its own column before the row does. */
 
 .dn-legend {
   list-style: none;
-  margin: 8px 0 0;
+  margin: 0;
   padding: 0;
+  max-width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
+  gap: 4px 12px;
   justify-content: center;
-  font-size: calc(13px * var(--tsz, 1));
-  color: var(--text-muted);
+  font-size: min(calc(12px * var(--tsz, 1)), 15px);
+  line-height: 1.2;
+  color: var(--text);
+  text-align: left;
 }
 
 .dn-legend li {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
+  min-width: 0;
 }
 
 .dn-tile-sample {
@@ -289,6 +290,22 @@
   right: 1px;
   width: 5px;
   height: 5px;
+}
+
+.dn-legend .dn-tile-sample {
+  --dn-tile: 24px;
+  flex-shrink: 0;
+  font-size: 11px;
+}
+/* Nudged off centre so the letter never touches the mark in so small a tile. */
+.dn-legend .dn-tile-sample .dn-letter {
+  position: relative;
+  top: 1.5px;
+  right: 2px;
+}
+.dn-legend .dn-tile-sample .dn-mark {
+  width: 6px;
+  height: 6px;
 }
 
 /* --------------------------------------------------------------- result */
