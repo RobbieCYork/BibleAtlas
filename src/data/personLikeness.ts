@@ -2,7 +2,8 @@ import { personImages, type PersonImage } from "./personImages";
 
 /**
  * The only pictures a person article shows (Robbie, 2026-11-28): real likenesses. A photograph, or a
- * portrait made in the sitter's lifetime by a named artist who saw them. Everything else in
+ * portrait made in the sitter's lifetime by a named artist. (No record of a sitting was found for the
+ * Wilberforce and Spurgeon paintings; see the list named below.) Everything else in
  * personImages.ts (imagined or later depictions, including every biblical figure; posthumous works;
  * later copies; anonymous or uncertain attributions) stays on file and is not displayed.
  *
