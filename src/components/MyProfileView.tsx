@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import Chevron from "./Chevron";
-import { createPortal } from "react-dom";
 import { supabase, formatJoinDate, type Profile } from "../lib/supabase";
 import ReadingProgressGrid from "./ReadingProgressGrid";
 import PostsFeed from "./PostsFeed";
@@ -19,15 +18,8 @@ import {
   type ProfileLink,
 } from "../lib/profileLinks";
 import Icon, { type IconName } from "./Icon";
-import { TRANSLATIONS, useBibleTranslation } from "../lib/bibleTranslation";
 import { fetchPassage, passageText } from "../lib/biblePassage";
-import OfflineBiblesSection from "./OfflineBibles";
-import DeleteAccountControl from "./DeleteAccountControl";
 import { TestingMarker } from "./FeatureRelease";
-import SkinPicker from "./SkinPicker";
-import MyReportsSheet from "./MyReportsSheet";
-import ReportIssueSheet from "./ReportIssueSheet";
-import type { ReportSurface } from "../lib/reportContext";
 import { useFeature, SOCIAL_CONNECTIONS_ENABLED } from "../lib/features";
 
 /** A church website is typed without a scheme half the time ("mychurch.org") — treat that as shorthand
@@ -592,82 +584,6 @@ function MyProfileControl({
   );
 }
 
-/** Tables that hold this account's own content — every row is scoped by user_id (profiles by its
- * primary key `id` instead). Friend requests/messages/groups are deliberately left out: those rows
- * belong jointly to more than one account, so they don't fit a single-user backup. */
-const BACKUP_TABLES = ["notes", "highlights", "tags", "verse_tags", "sermon_notes", "reading_progress"] as const;
-
-/** Lets an account download everything it owns — profile fields plus every note/highlight/tag/sermon
- * note/reading position — as a JSON file, so a person's own Bible-study content can never be lost even
- * if something goes wrong on the server side. Not a full account restore tool, just a personal copy. */
-function DataExportControl({ userId }: { userId: string }) {
-  const [exporting, setExporting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleExport = async () => {
-    setExporting(true);
-    setError(null);
-    try {
-      const [profileRes, ...tableResults] = await Promise.all([
-        supabase.from("profiles").select("*").eq("id", userId).single(),
-        ...BACKUP_TABLES.map((table) => supabase.from(table).select("*").eq("user_id", userId)),
-      ]);
-      if (profileRes.error) throw profileRes.error;
-      const backup: Record<string, unknown> = { exported_at: new Date().toISOString(), profile: profileRes.data };
-      BACKUP_TABLES.forEach((table, i) => {
-        const res = tableResults[i];
-        if (res.error) throw res.error;
-        backup[table] = res.data;
-      });
-      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `biblical-atlas-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Couldn't export — try again.");
-    } finally {
-      setExporting(false);
-    }
-  };
-
-  return (
-    <div className="auth-settings-section auth-settings-section-stacked">
-      <span className="auth-settings-label">Back Up My Data</span>
-      <p className="auth-benefits">
-        Download your profile, notes, highlights, tags, sermon notes, and reading position as a JSON file you keep
-        yourself.
-      </p>
-      <button type="button" onClick={handleExport} disabled={exporting}>
-        {exporting ? "Preparing…" : "Download Backup"}
-      </button>
-      {error && <p className="auth-status auth-error">{error}</p>}
-    </div>
-  );
-}
-
-/** "Bible version" — the same saved preference as the reader's translation chip (lib/bibleTranslation),
- * so changing it here changes what the Bible tab shows next, and vice versa. Stored on this device. */
-function BibleVersionSetting() {
-  const [translation, setTranslation] = useBibleTranslation();
-  return (
-    <div className="auth-settings-section auth-settings-section-stacked">
-      <label className="auth-settings-label" htmlFor="myprofile-bible-version">
-        Bible version
-      </label>
-      <select id="myprofile-bible-version" value={translation} onChange={(e) => setTranslation(e.target.value)}>
-        {TRANSLATIONS.map((t) => (
-          <option key={t.id} value={t.id}>
-            {t.label}
-          </option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
 interface MyProfileViewProps {
   userId: string;
   onDisplayNameSaved: (name: string) => void;
@@ -680,26 +596,18 @@ interface MyProfileViewProps {
   /** Opens the Friends panel to a specific list (Friends/Messages/Groups), closing My Profile first —
    * same "leave this full-screen mode to enter another surface" shape as onGoToVerse above. */
   onOpenFriends: (view: FriendsView) => void;
-  /** Where the reader was standing before opening My Profile — only needed so a report started from
-   * "My Reports" ("report something") carries context. Falls back to a generic surface. */
-  reportSurface?: ReportSurface;
 }
-
-const PROFILE_REPORT_SURFACE: ReportSurface = { route: "app", title: "Capstone Bible", target: null };
 
 /** Full-screen "My Profile" mode — same top-level takeover pattern as TimelineView (a boolean in App
  * renders this over the whole app-body, with its own header and Back button) instead of the small
  * anchored dropdown this used to be. Reachable on a phone from the "My Profile" tab and header menu
  * row, and on desktop from the main menu's "Go to" list and the account menu (its "My Profile" row
  * and the identity header above it). */
-export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends, reportSurface }: MyProfileViewProps) {
-  // My Reports and the report form are the same full-screen sheets the account menu opens, drawn over
-  // this page. (Settings is not here: it opens from the account menu, see SettingsView.)
-  const [sheet, setSheet] = useState<null | "myReports" | "report">(null);
+export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends }: MyProfileViewProps) {
   const [postsTab, setPostsTab] = useState<"newsfeed" | "mine">("newsfeed");
   // Feature stages (lib/features.ts) — each hides its own entry point and nothing else.
+  // (Bible version, Theme, downloads, backup, My Reports and account deletion are in Settings.)
   const postsFeature = useFeature("posts_newsfeed");
-  const deletionFeature = useFeature("account_deletion");
   return (
     <section className="myprofile-root" aria-label="My Profile">
       <header className="myprofile-header">
@@ -708,20 +616,14 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
       </header>
       <div className="myprofile-body">
         <div className="myprofile-body-inner">
+          <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
+          <div className="auth-settings-divider" />
           {SOCIAL_CONNECTIONS_ENABLED && (
             <>
-            <div className="auth-settings-section auth-settings-section-stacked">
-              <ViewSwitcher onSelectView={onOpenFriends} />
-            </div>
+            <ViewSwitcher onSelectView={onOpenFriends} />
             <div className="auth-settings-divider" />
             </>
           )}
-          <MyProfileControl userId={userId} onDisplayNameSaved={onDisplayNameSaved} onGoToVerse={onGoToVerse} />
-          <div className="auth-settings-divider" />
-          <BibleVersionSetting />
-          <div className="auth-settings-divider" />
-          <SkinPicker />
-          <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked">
             <span className="auth-settings-label">My Reading</span>
             <ReadingProgressGrid userId={userId} isOwn />
@@ -759,45 +661,8 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           </div>
           </>
           )}
-          <div className="auth-settings-divider" />
-          <OfflineBiblesSection />
-          <DataExportControl userId={userId} />
-          <div className="auth-settings-divider" />
-          <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
-            <button type="button" className="myprofile-link-row" onClick={() => setSheet("myReports")}>
-              <Icon name="doc" inline /> My Reports &amp; Suggestions
-            </button>
-          </div>
-          {deletionFeature.visible && (
-            <>
-              <div className="auth-settings-divider" />
-              <DeleteAccountControl />
-            </>
-          )}
         </div>
       </div>
-      {/* Portaled out: these are the same position:fixed sheets the account menu draws, but there they sit
-          inside the app header (z-index 65), which is what keeps the header's own controls from being
-          drawn over their ← Back. Here they would sit under that header, so they go to <body> with
-          .report-portal lifting them above it. */}
-      {sheet &&
-        createPortal(
-          <div className="report-portal">
-            {sheet === "myReports" && (
-        <MyReportsSheet userId={userId} onClose={() => setSheet(null)} onReportSomething={() => setSheet("report")} />
-      )}
-            {sheet === "report" && (
-        <ReportIssueSheet
-          userId={userId}
-          isGuest={false}
-          surface={reportSurface ?? PROFILE_REPORT_SURFACE}
-          onClose={() => setSheet(null)}
-          onOpenMyReports={() => setSheet("myReports")}
-        />
-      )}
-          </div>,
-          document.body,
-        )}
     </section>
   );
 }

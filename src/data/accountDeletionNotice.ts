@@ -111,7 +111,7 @@ export const HOW_TO_DELETE: DeletionNoticeLine[] = [
   {
     label: "In the app, or in a web browser",
     detail:
-      "Sign in at capstonebible.com or in the Capstone Bible app, open My Profile, scroll to Delete My Account, type DELETE to confirm, and confirm once more. Your account is gone before the screen finishes closing.",
+      "Sign in at capstonebible.com or in the Capstone Bible app, open Settings from the account menu at the top right, scroll to Delete My Account, type DELETE to confirm, and confirm once more. Your account is gone before the screen finishes closing.",
   },
   {
     label: "By email, if you cannot sign in",
@@ -121,6 +121,6 @@ export const HOW_TO_DELETE: DeletionNoticeLine[] = [
   {
     label: "Take a copy first, if you want one",
     detail:
-      "My Profile has a Back Up My Data button that downloads your profile, notes, highlights, tags, sermon notes and reading position as a file you keep. Do that before you delete — afterwards there is nothing left to export.",
+      "Settings has a Back Up My Data button that downloads your profile, notes, highlights, tags, sermon notes and reading position as a file you keep. Do that before you delete — afterwards there is nothing left to export.",
   },
 ];

@@ -49,11 +49,11 @@ export default async function (h) {
   h.section("member: My Profile carries Friends / Groups / Messages");
   await h.click('[data-tour="tab-social"]'); await h.sleep(900);
   for (const label of ["Friends", "Groups", "Messages"]) {
-    h.assert(await h.exists({ css: ".myprofile-social-links button", text: label }), `My Profile has a ${label} button`);
+    h.assert(await h.exists({ css: ".myprofile-mode .myprofile-social-links button", text: label }), `My Profile has a ${label} button`);
   }
 
   h.section("member: the friend is listed");
-  await h.click({ css: ".myprofile-social-links button", text: "Friends" }); await h.sleep(1200);
+  await h.click({ css: ".myprofile-mode .myprofile-social-links button", text: "Friends" }); await h.sleep(1200);
   h.assert(/Harness Admin/.test(await body()), "Friends lists Harness Admin");
 
   h.section("member: the friend's message arrives and a reply goes out");
@@ -80,7 +80,7 @@ export default async function (h) {
   h.section("member: Add member refuses a non-friend in plain words (sql/056)");
   await h.goto("/"); await h.sleep(1200);
   await h.click('[data-tour="tab-social"]'); await h.sleep(900);
-  await h.click({ css: ".myprofile-social-links button", text: "Groups" }); await h.sleep(1200);
+  await h.click({ css: ".myprofile-mode .myprofile-social-links button", text: "Groups" }); await h.sleep(1200);
   await h.click({ css: "li.friends-list-item-clickable", text: "Harness Study Group" }); await h.sleep(1200);
   // Members live on their own tab in the group detail.
   if (!(await h.exists('input[placeholder="Add a friend by email or phone"]'))) {
@@ -98,7 +98,7 @@ export default async function (h) {
   seed(h);
   await h.reload(); await h.sleep(1500);
   await h.click('[data-tour="tab-social"]'); await h.sleep(900);
-  await h.click({ css: ".myprofile-social-links button", text: "Friends" }); await h.sleep(1200);
+  await h.click({ css: ".myprofile-mode .myprofile-social-links button", text: "Friends" }); await h.sleep(1200);
   h.assert(/Harness Member/.test(await body()), "admin's Friends lists Harness Member");
   await h.click({ css: ".friends-message-button" }); await h.sleep(1200);
   const tb = await body();

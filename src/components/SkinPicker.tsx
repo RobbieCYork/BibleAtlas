@@ -1,6 +1,6 @@
 import { SKINS, setSkin, useStoredSkin, type SkinChoice } from "../lib/skin";
 
-/** My Profile → Theme. The same heading and native select as "Bible version" above it.
+/** Settings → Theme. The same heading and native select as "Bible version" below it.
  * A choice applies at once and is remembered on this device only (lib/skin.tsx). */
 const OPTIONS: ReadonlyArray<{ id: SkinChoice; label: string }> = [
   { id: "default", label: "Default" },

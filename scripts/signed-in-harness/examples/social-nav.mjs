@@ -89,7 +89,8 @@ export default async function (h) {
   const onBible = async (msg) => { const w = await where(); h.assert(w.bible && !w.takeover && !w.social, `${msg}: the Bible, no social screen (${JSON.stringify(w)})`); };
   const back = async () => { await h.click(".social-header .back-btn"); await h.sleep(600); };
   const browserBack = async () => { await h.evaluate(() => history.back()); await h.sleep(700); };
-  const switcher = async (label) => { await h.click({ css: ".myprofile-social-links button", text: label }); await h.sleep(800); };
+  // My Profile is drawn over the social lists, which stay mounted under it with the same buttons: take the ones on top.
+  const switcher = async (label) => { const over = (await h.exists(".myprofile-mode")) ? ".myprofile-mode " : ""; await h.click({ css: `${over}.myprofile-social-links button`, text: label }); await h.sleep(800); };
   const openProfile = async () => {
     if (phone) await h.click('[data-tour="tab-social"]');
     else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click({ css: "button", text: "My Profile" }); }

@@ -3,7 +3,7 @@
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 --script scripts/signed-in-harness/examples/report-suggest.mjs
  *   (also --persona owner, and at 375x667 and 1280x800)
  *
- * Every persona: the header flag, account menu, About button and My Profile row name both uses; the form
+ * Every persona: the header flag, account menu, About button and Settings row name both uses; the form
  * opens on "Report a problem" with the either-or first; a problem still needs a category (idea is not in
  * the picker) and files category + severity; a suggestion has no category or severity field, files
  * category `idea` with severity null, even if a severity was picked before switching, and typed text
@@ -239,15 +239,12 @@ export default async (h) => {
   h.assert((await form(h)).checked === "problem", "menu opens the same form");
   await h.click({ css: ".report-sheet button", text: "← Back" }); await h.sleep(300);
 
-  // My Profile's row, and the empty list.
-  if (parseInt(size) < 769) {
-    await h.click('[aria-label="Settings and account"]'); await h.sleep(300); // close the account menu
-    await h.click('.mobile-tab-bar [data-menu="social"]');
-  } else await h.click(".auth-identity-link");
-  await h.waitFor(".myprofile-link-row"); await h.sleep(400);
-  h.assert((await h.text(".myprofile-link-row")) === MINE, "My Profile row");
+  // The Settings row, and the empty list.
+  await h.click({ css: ".auth-menu-item", text: "Settings" }); // the account menu is still open
+  await h.waitFor(".settings-reports-row"); await h.sleep(400);
+  h.assert((await h.text(".settings-reports-row")) === MINE, "Settings row");
   h.backend.setTable("reports", []);
-  await h.click(".myprofile-link-row"); await h.waitFor(".report-empty"); await h.sleep(300);
+  await h.click(".settings-reports-row"); await h.waitFor(".report-empty"); await h.sleep(300);
   h.assert(/haven't sent anything yet/.test(await h.text(".report-empty")), "empty list covers both");
   await h.click({ css: ".report-empty button", text: "Report or suggest something" }); await h.sleep(500);
   h.assert(await h.exists(".report-kind"), "empty-list button opens the form");

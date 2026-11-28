@@ -47,7 +47,7 @@ export default function DeleteAccountControl() {
   const [stage, setStage] = useState<Stage>("closed");
   const [typed, setTyped] = useState("");
   const [error, setError] = useState<string | null>(null);
-  // Feature stage (lib/features.ts). My Profile already omits this control while account deletion
+  // Feature stage (lib/features.ts). Settings already omits this control while account deletion
   // is in Testing for this viewer; the checks here keep the flow itself from running even if the
   // control is mounted some other way. The server-side refusal is in the delete-account Edge
   // Function, which reads the same flag.

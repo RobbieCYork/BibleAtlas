@@ -8344,6 +8344,16 @@ a.profile-links-url {
   font-size: calc(15px * var(--tsz, 1));
 }
 
+/* On My Profile the buttons sit between two dividers, whose own margins are the space each side. */
+.myprofile-body-inner > .social-switcher {
+  margin: 0;
+}
+
+/* The profile block above them draws nothing until it has loaded; no divider over an empty top. */
+.myprofile-body-inner > .auth-settings-divider:first-child {
+  display: none;
+}
+
 .myprofile-social-links {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -13660,7 +13670,7 @@ img.sn-image,
   font-size: calc(16px * var(--tsz, 1));
 }
 
-/* --- Account menu tidy (2026-11-15): Reports inside the Admin Console, My Reports in My Profile --- */
+/* --- Account menu tidy (2026-11-15): Reports inside the Admin Console, My Reports in Settings --- */
 .report-embedded {
   display: flex;
   flex-direction: column;

@@ -7,6 +7,11 @@ import { useTabStages } from "../lib/tabFeatures";
 import Icon from "./Icon";
 import { TestingMarker } from "./FeatureRelease";
 import NavBarTestingNotice from "./NavBarTestingNotice";
+import SkinPicker from "./SkinPicker";
+import OfflineBiblesSection from "./OfflineBibles";
+import DeleteAccountControl from "./DeleteAccountControl";
+import { TRANSLATIONS, useBibleTranslation } from "../lib/bibleTranslation";
+import { useFeature } from "../lib/features";
 
 /** Shared with both the logged-in and logged-out dropdown states — text size is a setting, not an
  * account action, so it lives in this menu but isn't gated on being signed in. */
@@ -201,36 +206,134 @@ export function ReadingResetControl({ userId }: { userId: string }) {
   );
 }
 
-/** The account Settings content — text size, light or dark, navigation bar, read-mark reset, legal links.
+/** Tables that hold this account's own content — every row is scoped by user_id (profiles by its
+ * primary key `id` instead). Friend requests/messages/groups are deliberately left out: those rows
+ * belong jointly to more than one account, so they don't fit a single-user backup. */
+const BACKUP_TABLES = ["notes", "highlights", "tags", "verse_tags", "sermon_notes", "reading_progress"] as const;
+
+/** Lets an account download everything it owns — profile fields plus every note/highlight/tag/sermon
+ * note/reading position — as a JSON file, so a person's own Bible-study content can never be lost even
+ * if something goes wrong on the server side. Not a full account restore tool, just a personal copy. */
+function DataExportControl({ userId }: { userId: string }) {
+  const [exporting, setExporting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleExport = async () => {
+    setExporting(true);
+    setError(null);
+    try {
+      const [profileRes, ...tableResults] = await Promise.all([
+        supabase.from("profiles").select("*").eq("id", userId).single(),
+        ...BACKUP_TABLES.map((table) => supabase.from(table).select("*").eq("user_id", userId)),
+      ]);
+      if (profileRes.error) throw profileRes.error;
+      const backup: Record<string, unknown> = { exported_at: new Date().toISOString(), profile: profileRes.data };
+      BACKUP_TABLES.forEach((table, i) => {
+        const res = tableResults[i];
+        if (res.error) throw res.error;
+        backup[table] = res.data;
+      });
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `biblical-atlas-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Couldn't export — try again.");
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  return (
+    <div className="auth-settings-section auth-settings-section-stacked">
+      <span className="auth-settings-label">Back Up My Data</span>
+      <p className="auth-benefits">
+        Download your profile, notes, highlights, tags, sermon notes, and reading position as a JSON file you keep
+        yourself.
+      </p>
+      <button type="button" onClick={handleExport} disabled={exporting}>
+        {exporting ? "Preparing…" : "Download Backup"}
+      </button>
+      {error && <p className="auth-status auth-error">{error}</p>}
+    </div>
+  );
+}
+
+/** "Bible version" — the same saved preference as the reader's translation chip (lib/bibleTranslation),
+ * so changing it here changes what the Bible tab shows next, and vice versa. Stored on this device. */
+function BibleVersionSetting() {
+  const [translation, setTranslation] = useBibleTranslation();
+  return (
+    <div className="auth-settings-section auth-settings-section-stacked">
+      <label className="auth-settings-label" htmlFor="myprofile-bible-version">
+        Bible version
+      </label>
+      <select id="myprofile-bible-version" value={translation} onChange={(e) => setTranslation(e.target.value)}>
+        {TRANSLATIONS.map((t) => (
+          <option key={t.id} value={t.id}>
+            {t.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+/** The account Settings content, in page order: how the app looks and reads (text size, light or
+ * dark, Theme, Bible version, navigation bar), read-mark reset, offline Bibles, data backup, My Reports
+ * and the welcome tour, legal links, and account deletion last.
  * One copy, rendered in two homes: the full-screen SettingsView (every real account) and the account
  * menu's own Settings view (guests). Both open from the account menu's Settings row. `userId` is null
- * for a guest, who has no reading marks to reset. */
+ * for a guest, who gets only the device controls and the legal links. */
 export default function AccountSettingsBody({
   userId,
   onOpenTour,
+  onOpenMyReports,
 }: {
   userId: string | null;
   /** Real accounts only (SettingsView): the row that reopens the welcome tour. */
   onOpenTour?: () => void;
+  /** Real accounts only (SettingsView): the row that opens My Reports & Suggestions. */
+  onOpenMyReports?: () => void;
 }) {
+  const deletionFeature = useFeature("account_deletion");
   return (
     <>
       <TextSizeControl />
       <AppearanceControl />
+      {userId && (
+        <>
+          <SkinPicker />
+          <BibleVersionSetting />
+        </>
+      )}
       <NavBarControl />
       {userId && (
         <>
           <div className="auth-settings-divider" />
           <ReadingResetControl userId={userId} />
+          <div className="auth-settings-divider" />
+          <OfflineBiblesSection />
+          <DataExportControl userId={userId} />
         </>
       )}
-      {onOpenTour && (
+      {(onOpenMyReports || onOpenTour) && (
         <>
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
-            <button type="button" className="myprofile-link-row settings-tour-row" onClick={onOpenTour}>
-              <Icon name="play" inline /> Welcome tour
-            </button>
+            {onOpenMyReports && (
+              <button type="button" className="myprofile-link-row settings-reports-row" onClick={onOpenMyReports}>
+                <Icon name="doc" inline /> My Reports &amp; Suggestions
+              </button>
+            )}
+            {onOpenTour && (
+              <button type="button" className="myprofile-link-row settings-tour-row" onClick={onOpenTour}>
+                <Icon name="play" inline /> Welcome tour
+              </button>
+            )}
           </div>
         </>
       )}
@@ -241,6 +344,12 @@ export default function AccountSettingsBody({
         <span aria-hidden="true"> · </span>
         <a href="/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
       </p>
+      {userId && deletionFeature.visible && (
+        <>
+          <div className="auth-settings-divider" />
+          <DeleteAccountControl />
+        </>
+      )}
     </>
   );
 }

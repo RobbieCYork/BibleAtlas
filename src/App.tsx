@@ -2183,7 +2183,6 @@ function App() {
                   openVerse(reference);
                 }}
                 onOpenFriends={openFriendsFromProfile}
-                reportSurface={reportSurface}
               />
             )}
           </div>
@@ -2218,7 +2217,7 @@ function App() {
             z-index). */}
         {showSettings && session && !session.user.is_anonymous && (
           <div className="myprofile-mode">
-            <SettingsView userId={session.user.id} onClose={closeOverlayPage} onOpenTour={openTour} />
+            <SettingsView userId={session.user.id} onClose={closeOverlayPage} onOpenTour={openTour} reportSurface={reportSurface} />
           </div>
         )}
         {showAbout && session && !session.user.is_anonymous && (

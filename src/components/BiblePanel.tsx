@@ -302,7 +302,7 @@ export default function BiblePanel({
   onBookIntroBack,
   initializing,
 }: BiblePanelProps) {
-  // The saved "Bible version" preference, shared with My Profile (lib/bibleTranslation).
+  // The saved "Bible version" preference, shared with Settings (lib/bibleTranslation).
   const [translation, setTranslation] = useBibleTranslation();
   /** The translation the on-screen chapter was last requested in — lets a change made elsewhere
    * (My Profile) reload the open chapter without double-loading the chip's own change. */
@@ -1813,7 +1813,7 @@ export default function BiblePanel({
     if (!isRangeTagged(popup.startVerse, popup.endVerse, tag.id)) await handleToggleVerseTag(tag.id);
   };
 
-  // The version was changed somewhere other than the chip (My Profile): reload the open chapter.
+  // The version was changed somewhere other than the chip (Settings): reload the open chapter.
   useEffect(() => {
     if (translation === loadedTranslationRef.current) return;
     if (currentBook && currentChapter !== null) {

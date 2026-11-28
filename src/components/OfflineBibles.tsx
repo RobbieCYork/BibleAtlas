@@ -151,7 +151,7 @@ function OfflineBibleList() {
 
 const offered = (downloaded: number) => PACKS.length > 0 || downloaded > 0;
 
-/** My Profile's section, with the divider that follows it, so that hiding it leaves no double line. */
+/** The Settings page's section, with the divider that follows it, so that hiding it leaves no double line. */
 export default function OfflineBiblesSection() {
   const { ids } = useDownloadSummary();
   if (!offered(ids.length)) return null;

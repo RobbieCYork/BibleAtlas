@@ -325,7 +325,7 @@ export async function addUserByInvite(input: AddUserInput): Promise<string> {
  * My Profile. The constraint below did not loosen. The capability was built on the other side of
  * it. */
 export const ADMIN_ACTIONS_NOT_BUILT = [
-  "Deleting someone ELSE's account (a person deletes their own from My Profile)",
+  "Deleting someone ELSE's account (a person deletes their own from Settings)",
   "Changing someone's email address",
   "Manually confirming an unverified email",
   "Signing in as another user to reproduce a bug",

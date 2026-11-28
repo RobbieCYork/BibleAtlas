@@ -167,7 +167,7 @@ export const TERMS_OF_SERVICE: LegalDocument = {
     {
       heading: "9. Ending your account",
       body: [
-        "You can stop using the Service at any time. You can delete your account yourself: open **My Profile**, scroll to **Delete My Account**, type DELETE to confirm, and confirm once more. Deletion is immediate and permanent and cannot be undone. [What is deleted and what is kept](/delete-account) is set out in full on its own page. If you cannot sign in, write to " +
+        "You can stop using the Service at any time. You can delete your account yourself: open **Settings** from the account menu at the top right, scroll to **Delete My Account**, type DELETE to confirm, and confirm once more. Deletion is immediate and permanent and cannot be undone. [What is deleted and what is kept](/delete-account) is set out in full on its own page. If you cannot sign in, write to " +
           EMAIL +
           " from the email address on the account.",
         "We may suspend or close your account if you break these Terms, if we are required to by law, or if we stop offering the Service. Where it is reasonable and safe to do so, we will tell you first.",
@@ -243,7 +243,7 @@ export const PRIVACY_POLICY: LegalDocument = {
           "**We do not sell your personal information, we do not show ads, and we do not use advertising or third-party analytics trackers.**",
           "Your private notes, sermon notes, prayer list, highlights and tags are visible only to you in the app. Things you share go to the people you share them with: friends, a group, or the people in a game.",
           "Your data is not end-to-end encrypted. The people who run Capstone Bible can technically access what is stored in its database, as described in section 5.",
-          "You can download a copy of your study material and delete your account yourself, at any time, from My Profile.",
+          "You can download a copy of your study material and delete your account yourself, at any time, from Settings.",
         ],
       ],
     },
@@ -340,9 +340,9 @@ export const PRIVACY_POLICY: LegalDocument = {
       heading: "10. Your choices and rights",
       body: [
         [
-          "**See and download your data.** My Profile has a **Back Up My Data** button that downloads your profile, notes, highlights, tags, sermon notes and reading position as a file. For a copy of anything else we hold about you, email us.",
+          "**See and download your data.** **Settings** has a **Back Up My Data** button that downloads your profile, notes, highlights, tags, sermon notes and reading position as a file. For a copy of anything else we hold about you, email us.",
           "**Correct it.** You can edit your profile and your content in the app at any time.",
-          "**Delete it.** You can delete individual items in the app, or [delete your whole account](/delete-account) from My Profile.",
+          "**Delete it.** You can delete individual items in the app, or [delete your whole account](/delete-account) from Settings.",
           "**Control who sees it.** Use the visibility settings on your posts, notes, profile details and social links, the name-search setting in My Profile, and blocking.",
         ],
         "Depending on where you live, you may have further legal rights over your personal information — for example to object to or restrict how we use it, or to complain to a data-protection authority. To make any request, email " +

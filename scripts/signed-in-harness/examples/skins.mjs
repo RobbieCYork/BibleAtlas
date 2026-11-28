@@ -4,7 +4,7 @@
  *   node scripts/signed-in-harness/run.mjs --persona owner --viewport 390x844 \
  *        --script scripts/signed-in-harness/examples/skins.mjs --out <dir>
  *
- * persona member / owner / ... (signed in): My Profile -> Theme holds the picker; each skin applies
+ * persona member / owner / ... (signed in): Settings -> Theme holds the picker; each skin applies
  *                      (data-skin, self-hosted fonts actually loaded, tokens), persists across a reload; screenshots
  *                      named <skin>-<screen>-<phone|desktop>.png in --out.
  * persona signedout   : always Default, even with a skin value planted in localStorage. With nothing chosen,
@@ -17,7 +17,7 @@ import { writeFileSync, readFileSync } from "node:fs";
 import { openAdminConsole, openArticle, MENU_BUTTON } from "../lib/app.mjs";
 
 const SKINS = (process.env.SKINS ?? "default,sticker,clarity,midnight,sage,skyreader,trailhead,highlighter").split(",");
-const SCREENS = (process.env.SCREENS ?? "reader,map,timeline,notes,article,profile,games,admin,plans,library,dialog").split(",");
+const SCREENS = (process.env.SCREENS ?? "reader,map,timeline,notes,article,profile,settings,games,admin,plans,library,dialog").split(",");
 const VERSES = JSON.parse(readFileSync(process.env.MARK8 ?? new URL("./mark8-web.json", import.meta.url), "utf8"));
 
 // bible-api.com is blocked in the harness; answer it in-page with Mark 8:1-12 (WEB, public domain).
@@ -59,7 +59,13 @@ async function openProfile(h) {
   await h.waitFor(".myprofile-root"); await h.sleep(600);
 }
 
-/** Pick a theme in the My Profile select, firing the change event React listens for. */
+async function openSettings(h) {
+  await h.click('[aria-label="Settings and account"]'); await h.sleep(300);
+  await h.click({ css: ".auth-menu-item", text: "Settings" });
+  await h.waitFor(".settings-root"); await h.sleep(600);
+}
+
+/** Pick a theme in the Settings select, firing the change event React listens for. */
 const chooseTheme = (h, value) => h.evaluate((v) => {
   const s = document.querySelector("#myprofile-theme");
   Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value").set.call(s, v);
@@ -72,7 +78,8 @@ const SCREEN_FNS = {
   timeline: async (h) => { await goTo(h, "Timeline"); await h.sleep(1500); },
   notes: async (h) => { await goTo(h, "Notes"); },
   article: async (h) => { await openArticle(h, "Demons"); await h.sleep(500); },
-  profile: async (h) => { await openProfile(h); await h.evaluate(() => document.querySelector("#myprofile-theme")?.scrollIntoView({ block: "center", behavior: "instant" })); await h.sleep(500); },
+  profile: async (h) => { await openProfile(h); await h.sleep(500); },
+  settings: async (h) => { await openSettings(h); await h.sleep(500); },
   games: async (h) => { await goTo(h, "Games"); },
   // Reading Plans: phone = More sheet is not a tab, so use the account menu entry the desktop uses (both layouts have it).
   plans: async (h) => {
@@ -206,11 +213,11 @@ export default async function (h) {
   h.assert((await h.evaluate(() => document.documentElement.getAttribute("data-skin"))) === null, "unknown stored skin value fails safe to Default");
   await h.evaluate(() => { try { localStorage.removeItem("app-skin"); } catch {} });
 
-  // ---- the picker, in My Profile ---------------------------------------------------------------
-  h.section(`${h.persona}: My Profile picker, ${device}`);
+  // ---- the picker, in Settings -----------------------------------------------------------------
+  h.section(`${h.persona}: Settings picker, ${device}`);
   await h.reload(); await h.sleep(1500);
-  await openProfile(h);
-  h.assert((await h.count("#myprofile-theme")) === 1, "theme select is on My Profile");
+  await openSettings(h);
+  h.assert((await h.count("#myprofile-theme")) === 1, "theme select is on Settings");
   const opts = await h.evaluate(() => [...document.querySelectorAll("#myprofile-theme option")].map((o) => o.textContent.trim()));
   h.assert(JSON.stringify(opts) === JSON.stringify(["Default", "Sticker Pop", "Clarity", "Midnight Signal", "Sage Study", "Sky Reader", "Trailhead", "Highlighter"]), `options: ${opts}`);
   // through the UI's own change event: pick Clarity, check it applies, then back to Default

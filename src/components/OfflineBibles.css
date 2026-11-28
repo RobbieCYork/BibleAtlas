@@ -1,4 +1,4 @@
-/* Offline Bible downloads (My Profile and the reader's own window) and the reader's offline lines. */
+/* Offline Bible downloads (Settings and the reader's own window) and the reader's offline lines. */
 
 .offline-sheet {
   --tsz: var(--text-scale, 1);

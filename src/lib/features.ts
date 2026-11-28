@@ -140,7 +140,7 @@ export const FEATURES: ReadonlyArray<FeatureDef> = [
     where:
       "Articles and Archaeology in the menus and the mobile tab bar. Links in Bible text and map pins still open an article. The public /library pages are static and are not affected.",
   },
-  { key: "account_deletion", label: "Account deletion", where: "Delete Account on My Profile (also refused by the server once the Edge Function is redeployed)." },
+  { key: "account_deletion", label: "Account deletion", where: "Delete My Account in Settings (also refused by the server once the Edge Function is redeployed)." },
   { key: "avatars", label: "Profile photos", where: "Change Photo when editing My Profile. Existing photos still display." },
   // The individual games — children of games_trivia, in Game Center's own order.
   { key: "game_bible_trivia", label: "Bible Trivia", where: GAME_WHERE("Bible Trivia") + " Covers solo and multiplayer.", parent: "games_trivia" },
