@@ -157,7 +157,7 @@ export default function GamesPanel({ entry, onRoomReady }: GamesPanelProps) {
         <h2>{solo ? "Play solo" : "Create multiplayer game"}</h2>
         <p>
           {solo
-            ? `Wrong answers cost you. Reach ${TARGET_SCORE} points to win, or play until the questions run out.`
+            ? `Wrong answers cost you, and so does running out of time. Reach ${TARGET_SCORE} points to win, or play until the questions run out.`
             : `Create a room and share the code. Every player answers, wrong answers cost you, first correct doubles. First to ${TARGET_SCORE} wins, or the highest score when the questions run out.`}
         </p>
       </div>

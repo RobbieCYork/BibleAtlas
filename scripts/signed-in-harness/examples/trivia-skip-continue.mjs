@@ -3,8 +3,9 @@
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 --script scripts/signed-in-harness/examples/trivia-skip-continue.mjs
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 375x667 --script scripts/signed-in-harness/examples/trivia-skip-continue.mjs
  *
- * One player: Skip before answering (scored as a wrong answer), Continue after. Two players: no Skip,
- * Continue only once the round is over. Either way the revealed answer holds four seconds, counted
+ * One player: Skip before answering (scored as a wrong answer), Continue after, and running out of
+ * time takes the same points as a wrong answer, once, before the game moves on. Two players: no Skip,
+ * Continue only once the round is over, and running out of time scores nothing. Either way the revealed answer holds four seconds, counted
  * down on the button, then the game moves on by itself; Continue moves sooner. The countdown stops
  * while the page is hidden, and a wrong device clock doesn't shorten a question that arrives live.
  * (trivia-hold.mjs checks the hold with two real browsers.) The room RPCs are fakes that
@@ -256,9 +257,20 @@ export default async function (h) {
   await settle();
   await watch();
   advances = calls.advance.length;
-  h.assert(calls.submit.length > 0, "(running the full 15 seconds out)");
-  await h.sleep(13000);
+  now = question();
+  before = player().score;
+  submits = calls.submit.length;
+  await h.sleep(13000); // (running the full 15 seconds out)
+  await h.waitFor({ css: ".game-question-reveal", text: "that's" });
+  s = await screen();
+  const late = calls.submit.at(-1);
+  h.assert(calls.submit.length === submits + 1 && late.p_answer_index === -2 && late.p_correct === false && late.p_points === now.points, `time-up is sent once, as a wrong answer worth ${now.points}`);
+  h.assert(player().score === before - now.points, `score ${before} -> ${player().score}`);
+  h.assert(s.reveal.includes(`Time's up — that's -${now.points}`) && s.reveal.includes(now.choices[now.correctIndex]) && s.right.length === 1 && s.wrong === 0, `feedback: ${s.reveal}`);
+  h.assert((await h.text(".game-question-answered-count")).trim().startsWith("0/1"), "a timed-out question doesn't read as answered");
+  await shot("solo-timeup");
   await heldFour("after time runs out");
+  h.assert(player().score === before - now.points && calls.submit.length === submits + 1, "charged once");
   h.assert(calls.advance.length === advances + 1 && room().current_question_index === 6, "one call, one question forward");
 
   h.section("A tap meant for Continue as the game moves on doesn't skip the next question");
@@ -300,24 +312,95 @@ export default async function (h) {
   }
   stampSkew = 0;
 
-  h.section("Time runs out");
+  h.section("Time runs out while away");
   await settle();
   before = player().score;
+  now = question();
   submits = calls.submit.length;
   advances = calls.advance.length;
   room().current_question_started_at = new Date(Date.now() - 20000).toISOString();
   await resume();
-  await h.sleep(500);
+  await h.waitFor({ css: ".game-question-reveal", text: "that's" });
   s = await screen();
   const timedOut = room().current_question_index;
-  h.assert(/Time's up/.test(s.reveal) && s.buttons === "Continue" && player().score === before && calls.advance.length === advances, `rejoined after time ran out: "${s.reveal}" — nothing scored, counting ${s.countdown}`);
+  h.assert(s.reveal.includes(`Time's up — that's -${now.points}`) && s.buttons === "Continue" && player().score === before - now.points && calls.submit.length === submits + 1 && calls.advance.length === advances, `rejoined after time ran out: "${s.reveal}" — score ${before} -> ${player().score}, counting ${s.countdown}`);
   await reachable("time up");
+  await resume();
+  await h.sleep(300);
+  s = await screen();
+  h.assert(player().score === before - now.points && buzzes().filter((b) => b.question_index === timedOut).length === 1 && s.reveal.includes(`Time's up — that's -${now.points}`), `reloaded again: not charged twice, "${s.reveal}"`);
+  submits = calls.submit.length;
   await press("Continue");
   await h.waitFor({ css: ".game-question-index", text: `Question ${timedOut + 2} ` });
   h.assert(calls.submit.length === submits, "Continue moves on sooner");
+
+  // What happens to the points when the request goes wrong. Each starts on a question with a few
+  // seconds left.
+  const nearlyExpired = async () => {
+    buzzes().length = 0;
+    room().current_question_started_at = new Date(Date.now() - 8000).toISOString();
+    await resume();
+    h.assert((await screen()).buttons === "Skip", `(time still left: ${(await screen()).timer})`);
+  };
+  /** Makes the next `n` submit_answer requests fail inside the page, as a dropped connection would. */
+  const dropSubmits = (n) =>
+    h.evaluate((n) => {
+      window.__drop = n;
+      window.__dropped = 0;
+      if (window.__realFetch) return;
+      window.__realFetch = window.fetch.bind(window);
+      window.fetch = (input, init) => {
+        if (String(input?.url ?? input).includes("rpc/submit_answer") && window.__drop > 0) { window.__drop--; window.__dropped++; return Promise.reject(new TypeError("Failed to fetch")); }
+        return window.__realFetch(input, init);
+      };
+    }, n);
+
+  h.section("Time runs out with the connection down");
   await settle();
+  await nearlyExpired();
+  before = player().score;
+  now = question();
+  let was = room().current_question_index;
+  await dropSubmits(4);
+  advances = calls.advance.length;
+  await h.waitFor({ css: ".game-action-button", text: "Continue" }, { timeout: 10000 });
+  await h.sleep(600);
+  await press("Continue");
+  await h.sleep(3500);
+  s = await screen();
+  h.assert(calls.advance.length === advances && player().score === before && room().current_question_index === was && s.buttons === "Continue (disabled)", `while it can't be sent the game waits, even after Continue (${s.buttons})`);
+  await h.waitFor({ css: ".game-question-index", text: `Question ${was + 2} ` }, { timeout: 12000 });
+  h.assert(player().score === before - now.points && (await h.evaluate(() => window.__dropped)) === 4, `sent on the fifth try, charged once (${before} -> ${player().score}), then moved on`);
+
+  h.section("An answer that fails to send as the time runs out");
+  await settle();
+  await nearlyExpired();
+  before = player().score;
+  now = question();
+  submits = calls.submit.length;
+  await dropSubmits(1);
+  await h.click({ css: ".game-choice-button", text: now.choices[now.correctIndex] });
+  await h.waitFor({ css: ".game-question-reveal", text: "Correct" }, { timeout: 8000 });
+  h.assert(player().score === before + now.points && calls.submit.length === submits + 1 && calls.submit.at(-1).p_answer_index === now.correctIndex, `the chosen answer is sent again, not a time-out (${before} -> ${player().score})`);
+
+  h.section("The server won't take the time-out");
+  for (const [code, tries, label] of [["P0001", 1, "refusal"], ["XX000", 3, "server error"]]) {
+    await settle();
+    let refused = 0;
+    h.backend.setRpc("submit_answer", () => { refused++; throw { status: code === "P0001" ? 400 : 500, code, message: "no" }; });
+    buzzes().length = 0;
+    room().current_question_started_at = new Date(Date.now() - 20000).toISOString();
+    was = room().current_question_index;
+    before = player().score;
+    await resume();
+    await h.waitFor({ css: ".game-question-index", text: `Question ${was + 2} ` }, { timeout: 14000 });
+    h.assert(refused === tries && player().score === before, `${label}: asked ${refused} time(s), then the game still moved on`);
+  }
+  h.backend.setRpc("submit_answer", (a) => { calls.submit.push(a); return submit(me.id, a); });
+  const resumed = room().current_question_index;
 
   h.section("The server refuses the first advance");
+  await settle();
   await press("Skip");
   await h.waitFor({ css: ".game-action-button", text: "Continue" });
   await settle();
@@ -326,7 +409,7 @@ export default async function (h) {
   await press("Continue");
   await h.sleep(300);
   h.assert((await screen()).buttons === "Continue (disabled)", "Continue shows it is working");
-  await h.waitFor({ css: ".game-question-index", text: `Question ${timedOut + 3} ` }, { timeout: 8000 });
+  await h.waitFor({ css: ".game-question-index", text: `Question ${resumed + 2} ` }, { timeout: 8000 });
   h.assert(calls.advance.length === advances + 3, "retried until accepted, one question forward");
 
   h.section("Resuming a skipped question, and the last question");
@@ -354,6 +437,20 @@ export default async function (h) {
   await press("Skip");
   await heldFour("last question, before the results");
   h.assert(room().status === "finished", "then the results");
+  await startSolo();
+  room().current_question_index = room().question_ids.length - 1;
+  now = question();
+  room().current_question_started_at = new Date(Date.now() - 20000).toISOString();
+  let finalScore = null;
+  h.backend.setRpc("check_and_advance", (a) => { calls.advance.push({ ...a, at: Date.now() }); finalScore ??= player().score; return advance(a); });
+  await resume();
+  await h.waitFor(".game-results-banner", { timeout: 12000 });
+  h.assert(finalScore === -now.points, `time runs out on the last question: ${finalScore} is on the board before the game finishes`);
+  h.backend.setRpc("check_and_advance", (a) => {
+    calls.advance.push({ ...a, at: Date.now() });
+    if (refuseAdvance > 0) { refuseAdvance--; throw { code: "P0001", message: "Question still in progress" }; }
+    return advance(a);
+  });
 
   h.section("A question this build no longer has");
   await startSolo();
@@ -366,7 +463,7 @@ export default async function (h) {
   h.assert(/no longer available/.test(gone) && /Continue/.test(gone), `says so and offers Continue: ${gone.replace(/\s+/g, " ")}`);
   await press("Continue");
   await h.waitFor(".game-choice-button");
-  h.assert(room().current_question_index === 1, "Continue passes over it");
+  h.assert(room().current_question_index === 1 && player().score === 0 && buzzes().length === 0, "Continue passes over it, and nothing is charged");
 
   h.section("Large text and dark theme");
   await h.evaluate(() => localStorage.setItem("app-theme", "dark"));
@@ -464,9 +561,11 @@ export default async function (h) {
   refuseAdvance = 1000;
   room().current_question_started_at = new Date(Date.now() - 20000).toISOString();
   submits = calls.submit.length;
+  before = player().score;
   await resume();
+  await h.sleep(1200);
   s = await screen();
-  h.assert(s.buttons === "Continue" && /Time's up/.test(s.reveal) && calls.submit.length === submits, `time up with two players: ${s.buttons}, no Skip`);
+  h.assert(s.buttons === "Continue" && /Time's up\. The answer/.test(s.reveal) && calls.submit.length === submits && player().score === before, `time up with two players: ${s.buttons}, no Skip, nothing scored ("${s.reveal}")`);
   refuseAdvance = 0;
   await h.waitFor({ css: ".game-question-index", text: "Question 6 " }, { timeout: 8000 });
 

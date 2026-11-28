@@ -42,6 +42,15 @@ const SHORT_CHOICE = 22;
 /** The answer_index a skipped question is recorded with. It matches no choice, so to the server and
  * to every screen it is an ordinary wrong answer. */
 const SKIPPED = -1;
+/** The answer_index recorded when the time runs out on a player who is alone: a wrong answer like
+ * SKIPPED, kept apart so the screen can still say the time ran out. */
+const TIMED_OUT = -2;
+/** Postgres's code for submit_answer()'s own refusals (question over, not a player). Asking again
+ * can't change the reply. */
+const REFUSED = "P0001";
+/** Other errors the server answers with are retried this often before the game is let move on. A
+ * request that never reached the server is retried for as long as the question is up. */
+const TIME_UP_ATTEMPTS = 3;
 
 /** Everything on screen that belongs to one question. Kept with its question's index, so that a new
  * question never renders, even once, with the previous one's answers. */
@@ -55,12 +64,16 @@ interface Turn {
    * reflects the first-correct 2x bonus (or its absence) without this component needing to know
    * whether it actually won that race. */
   awarded: number | null;
+  /** The server has replied about my score for this question, so the game may move on. */
+  settled: boolean;
+  /** This screen has just taken the points for running out of time. */
+  timedOut: boolean;
   continuing: boolean;
   /** When the game will move on by itself (this device's clock); null while it isn't counting. */
   advanceAt: number | null;
 }
 
-const newTurn = (index: number): Turn => ({ index, answers: [], myChoice: null, submitting: false, awarded: null, continuing: false, advanceAt: null });
+const newTurn = (index: number): Turn => ({ index, answers: [], myChoice: null, submitting: false, awarded: null, settled: false, timedOut: false, continuing: false, advanceAt: null });
 
 function usePageVisible() {
   const [visible, setVisible] = useState(() => !document.hidden);
@@ -84,13 +97,14 @@ function usePageVisible() {
  * the question it is ending.
  *
  * Alone, there is also a Skip button until the player answers. Skip is recorded and scored as a wrong
- * answer; running out of time scores nothing. */
+ * answer, and so is running out of time; the game doesn't move on until that has been sent. With
+ * others at the table, running out of time scores nothing. */
 export default function GameRoomPlay({ room, players, userId, answersVersion, onRoomAdvanced, onScored, renderVideoStrip }: GameRoomPlayProps) {
   const index = room.current_question_index;
   const question = getQuestionById(room.question_ids[index] ?? "");
   const [stored, setStored] = useState<Turn>(() => newTurn(index));
   const turn = stored.index === index ? stored : newTurn(index);
-  const { answers, myChoice, submitting, awarded, continuing, advanceAt } = turn;
+  const { answers, myChoice, submitting, awarded, settled, timedOut, continuing, advanceAt } = turn;
   const [now, setNow] = useState(() => Date.now());
   const visible = usePageVisible();
 
@@ -99,6 +113,11 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
   const indexRef = useRef(index);
   indexRef.current = index;
   const submittedIndexRef = useRef(-1);
+  /** The last answer that failed to send. If the time runs out with nothing recorded, it is sent
+   * again as it was, so a dropped request doesn't turn an answer into a time-out. */
+  const lateAnswerRef = useRef<{ index: number; choice: number } | null>(null);
+  /** The last question this screen saw more than one player seated for. */
+  const sharedIndexRef = useRef(-1);
   const lastPressRef = useRef(0);
   const onRoomAdvancedRef = useRef(onRoomAdvanced);
   onRoomAdvancedRef.current = onRoomAdvanced;
@@ -146,10 +165,56 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
   const elapsedMs = now - startedAt;
   const secondsLeft = Math.max(0, Math.ceil((ROUND_SECONDS * 1000 - elapsedMs) / 1000));
   const everyoneAnswered = players.length > 0 && answers.length >= players.length;
-  const roundOver = everyoneAnswered || elapsedMs >= ROUND_SECONDS * 1000;
+  const timeIsUp = elapsedMs >= ROUND_SECONDS * 1000;
+  const roundOver = everyoneAnswered || timeIsUp;
   // The same count the rest of this game calls solo (and that submit_answer() withholds the 2x bonus
   // on), except that an empty list means the players have not loaded yet.
   const solo = players.length === 1;
+  if (players.length > 1) sharedIndexRef.current = index;
+  const myAnswer = answers.find((a) => a.user_id === userId) ?? null;
+  // Alone and out of time with nothing recorded, so the points are still to be taken. A question that
+  // others were seated for doesn't turn into a solo one when they leave. Until the players have loaded
+  // this can't be ruled out.
+  const timeUpOwed =
+    !!question && timeIsUp && !myAnswer && !settled && (players.length === 0 || (solo && sharedIndexRef.current !== index));
+
+  // Takes them, with the same call a wrong answer makes.
+  useEffect(() => {
+    if (!timeUpOwed || submitting || !question) return;
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout>;
+    let attemptsLeft = TIME_UP_ATTEMPTS;
+    const attempt = () => {
+      if (players.length === 0) {
+        onScored(); // asks for the players again
+        timer = setTimeout(attempt, ADVANCE_RETRY_MS);
+        return;
+      }
+      const late = lateAnswerRef.current?.index === index ? lateAnswerRef.current.choice : null;
+      const choice = late ?? TIMED_OUT;
+      const scoreBefore = players.find((p) => p.user_id === userId)?.score ?? 0;
+      submitAnswer(room.id, index, choice, choice === question.correctIndex, question.points)
+        .then((result) => {
+          // Not guarded by `cancelled`: update() already ignores a question the room has left.
+          if (result.alreadyAnswered) update(index, { settled: true });
+          else if (late === null) update(index, { settled: true, timedOut: true });
+          else update(index, { settled: true, myChoice: late, awarded: result.player.score - scoreBefore });
+          onScored();
+          refetchAnswers(index);
+        })
+        .catch((error: { code?: string }) => {
+          if (cancelled) return;
+          if (error.code === REFUSED || (error.code && --attemptsLeft === 0)) update(index, { settled: true });
+          else timer = setTimeout(attempt, ADVANCE_RETRY_MS);
+        });
+    };
+    attempt();
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeUpOwed, submitting, solo, room.id, index]);
 
   // The bar under the question takes up room, so on a small phone bring each new question, and then
   // its answer, into view. "nearest" leaves the page still when they are already showing.
@@ -175,7 +240,7 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
   // this, so it doesn't rely on a "host" being present; the loop stops when the index changes and this
   // effect cleans up.
   useEffect(() => {
-    if (!roundOver || !(continuing || visible)) return;
+    if (!roundOver || timeUpOwed || !(continuing || visible)) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout>;
     let attemptsLeft = CONTINUE_ATTEMPTS;
@@ -199,7 +264,7 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
       update(index, { advanceAt: null });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roundOver, continuing, visible, room.id, index]);
+  }, [roundOver, timeUpOwed, continuing, visible, room.id, index]);
 
   /** False for the second tap of a double tap on the buttons below the question. */
   const acceptPress = () => {
@@ -241,10 +306,11 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
     );
   }
 
-  const myAnswer = answers.find((a) => a.user_id === userId) ?? null;
   const locked = myAnswer !== null || submitting;
   const answeredUserIds = new Set(answers.map((a) => a.user_id));
   const correctUserIds = new Set(answers.filter((a) => a.answer_index === question.correctIndex).map((a) => a.user_id));
+  const answeredCount = answers.filter((a) => a.answer_index !== TIMED_OUT).length;
+  const ranOut = timedOut || myAnswer?.answer_index === TIMED_OUT;
 
   const handleAnswer = async (choiceIndex: number) => {
     // The ref refuses a second answer sent before the first has re-rendered the buttons as disabled.
@@ -255,10 +321,11 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
     const scoreBefore = players.find((p) => p.user_id === userId)?.score ?? 0;
     try {
       const result = await submitAnswer(room.id, index, choiceIndex, correct, question.points);
-      if (!result.alreadyAnswered) update(index, { awarded: result.player.score - scoreBefore });
+      update(index, result.alreadyAnswered ? { settled: true } : { settled: true, awarded: result.player.score - scoreBefore });
       onScored();
       await refetchAnswers(index);
     } catch {
+      lateAnswerRef.current = { index, choice: choiceIndex };
       submittedIndexRef.current = -1;
       update(index, { submitting: false, myChoice: null });
     }
@@ -283,7 +350,7 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
           </span>
           {!roundOver && <span className="game-question-timer">⏱ {secondsLeft}s</span>}
           <span className="game-question-answered-count">
-            {answeredUserIds.size}/{players.length} answered
+            {answeredCount}/{players.length} answered
           </span>
           <span className="game-question-bonus-hint"><Icon name="medal" inline /> First correct = 2×</span>
         </div>
@@ -314,7 +381,9 @@ export default function GameRoomPlay({ room, players, userId, answersVersion, on
         </div>
         {roundOver ? (
           <p ref={revealRef} className="game-question-reveal">
-            {myAnswer
+            {ranOut
+              ? <><Icon name="timer" inline /> Time's up — that's {-question.points}. The answer was "{question.choices[question.correctIndex]}."</>
+              : myAnswer
               ? correctUserIds.has(userId)
                 ? awarded && awarded > question.points
                   ? <><Icon name="check" inline /> First correct answer — double points! +{awarded}</>
