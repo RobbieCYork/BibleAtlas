@@ -16,7 +16,7 @@ const NONE = ["Anglicanism", "The Episcopal Church", "Churches of Christ", "Non-
 
 async function readBeliefs(h) {
   return h.evaluate(() => {
-    const heads = [...document.querySelectorAll("h4")];
+    const heads = [...document.querySelectorAll("h4, h5")];
     const bb = heads.find((x) => x.textContent.trim() === "Basic beliefs");
     const all = document.body.innerText;
     const out = { hasBibleRefsBlock: [...document.querySelectorAll("h4")].some((x) => /^Bible References/i.test(x.textContent.trim())), noteCount: (all.match(/Scripture cited by/g) || []).length, paras: [] };
@@ -54,7 +54,7 @@ export default async (h) => {
       n += want.length;
     }
     if (["southern-baptist-convention", "catholicism", "seventh-day-adventist-church", "lutheranism", "presbyterianism", "eastern-orthodoxy"].includes(id)) {
-      await h.evaluate(() => { const bb = [...document.querySelectorAll("h4")].find((x) => x.textContent.trim() === "Basic beliefs"); bb.scrollIntoView({ behavior: "instant", block: "start" }); });
+      await h.evaluate(() => { const bb = [...document.querySelectorAll("h4, h5")].find((x) => x.textContent.trim() === "Basic beliefs"); bb.scrollIntoView({ behavior: "instant", block: "start" }); });
       await h.sleep(300);
       await h.screenshot(`denom-${id}-${h.viewport}.png`);
     }
