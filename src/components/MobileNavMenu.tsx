@@ -149,7 +149,7 @@ export default function MobileNavMenu({
         ref={buttonRef}
         data-tour={TOUR_ANCHORS.menu}
         className="mobile-nav-menu-button"
-        aria-label="Menu — go to Bible, Map, Timeline, Notes, Articles, My Profile or Games"
+        aria-label="Menu — go to Bible, Map, Timeline, Notes, Articles, Games or My Profile"
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={open ? menuId : undefined}

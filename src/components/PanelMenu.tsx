@@ -11,7 +11,7 @@ import { TOUR_ANCHORS } from "../data/welcomeTour";
 export type PanelKey = "map" | "bible" | "notes" | "friends" | "articles";
 
 /** The full-area takeovers this menu can navigate to. Not PanelKeys, and deliberately not modelled
- * as such: Timeline, My Profile and Games render outside the panel system (see App.tsx), cover the
+ * as such: Timeline, Games and My Profile render outside the panel system (see App.tsx), cover the
  * whole work area, and are mutually exclusive with each other. */
 export type DestinationKey = "timeline" | "profile" | "games";
 
@@ -87,8 +87,8 @@ const PANEL_GROUPS: PanelKey[][] = [
 const GO_TO_ROWS: { key: DestinationKey | "archaeology"; label: string; icon: IconName; blurb: string }[] = [
   { key: "timeline", label: "Timeline", icon: "timeline", blurb: "Biblical & world history" },
   { key: "archaeology", label: "Archaeology", icon: "archaeology", blurb: "Discoveries & manuscripts" },
-  { key: "profile", label: "My Profile", icon: "social", blurb: "Details & reading progress" },
   { key: "games", label: "Games", icon: "games", blurb: "Live trivia with friends" },
+  { key: "profile", label: "My Profile", icon: "social", blurb: "Details & reading progress" },
 ];
 
 /** The desktop header's hamburger.
@@ -97,7 +97,7 @@ const GO_TO_ROWS: { key: DestinationKey | "archaeology"; label: string; icon: Ic
  *
  *  - **Panels** are checkboxes. Multi-select, capped at three, order-independent — "show me Bible
  *    and Map at once". They keep their existing behaviour and their cap caption verbatim.
- *  - **Go to** rows are buttons, not checkboxes. Timeline, My Profile and Games are full-area
+ *  - **Go to** rows are buttons, not checkboxes. Timeline, Games and My Profile are full-area
  *    takeovers (App.tsx), single-select, mutually exclusive, and they cover the
  *    panels rather than joining them. You don't have Timeline open *alongside* Bible — you go to
  *    it. A checkbox would promise a fourth simultaneous panel that cannot exist.
@@ -204,7 +204,7 @@ export default function PanelMenu({
         data-tour={TOUR_ANCHORS.menu}
         className="panel-menu-button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Menu — show or hide panels, or go to Timeline, My Profile or Games"
+        aria-label="Menu — show or hide panels, or go to Timeline, Games or My Profile"
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={open ? menuId : undefined}

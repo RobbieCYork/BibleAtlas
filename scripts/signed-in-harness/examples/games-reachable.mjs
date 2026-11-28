@@ -6,7 +6,7 @@
  */
 import { openAdminConsole, MENU_BUTTON } from "../lib/app.mjs";
 
-const ALL = ["Bible", "Map", "Timeline", "Notes", "Articles", "My Profile", "Games"];
+const ALL = ["Bible", "Map", "Timeline", "Notes", "Articles", "Games", "My Profile"];
 const NO_GAMES = ALL.filter((l) => l !== "Games");
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 

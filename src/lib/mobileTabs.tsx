@@ -7,18 +7,18 @@ import type { IconName } from "../components/Icon";
  * Keeping them separate means nothing here renames or reuses a PanelKey or an existing storage key. */
 export type MobileTabKey = "bible" | "map" | "timeline" | "notes" | "articles" | "social" | "games";
 
-/** Fixed render order — the same order the bar has always shown (Bible, Map, Timeline, Notes,
- * Articles, Social, Games). Hiding a tab omits it in place; nothing is ever reordered, because the
- * owner asked to remove and re-add tabs, not rearrange them, and a stable order is what makes a
- * bottom bar learnable in the first place. */
+/** Fixed render order: Bible, Map, Timeline, Notes, Articles, Games, My Profile (My Profile last,
+ * under Games, from 2026-11-28 at the owner's request). The bottom bar, the phone's hamburger menu and
+ * Settings → Navigation Bar all read it. Hiding a tab omits it in place; readers can remove and
+ * re-add tabs but not rearrange them, and a stable order is what makes a bottom bar learnable. */
 export const MOBILE_TAB_ORDER: MobileTabKey[] = [
   "bible",
   "map",
   "timeline",
   "notes",
   "articles",
-  "social",
   "games",
+  "social",
 ];
 
 /** `icon` is a name in the app's own icon set (components/Icon.tsx), not a glyph. It used to be an

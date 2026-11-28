@@ -99,7 +99,7 @@ export default async function (h) {
     // A short window scrolls the menu (existing behaviour); then rows below the fold are not a fault.
     h.assert(main.scrolls || main.hidden.length === 0, `main menu: every row clickable ${JSON.stringify(main.hidden)}`);
     const order = main.keys.filter((k) => ["timeline", "profile", "games"].includes(k));
-    h.assert(order.join() === "timeline,profile,games", `Go to order matches the phone menu: ${order}`);
+    h.assert(order.join() === "timeline,games,profile", `Go to order matches the phone menu: ${order}`);
     h.assert(await h.evaluate((s) => !!document.querySelector(`${s} svg`) && document.querySelector(s).innerText.includes("My Profile"), GO), "Go to row is labelled and has an icon");
     console.log(`  main menu scrolls: ${main.scrolls}`);
     await shot(`${flag}-main-menu`);
