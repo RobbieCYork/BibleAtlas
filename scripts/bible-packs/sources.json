@@ -50,11 +50,12 @@
     "url": "https://bereanbible.com/bsb.txt",
     "publisher": "Berean Bible (the translation's publisher), linked from https://berean.bible/downloads.htm",
     "bytes": 4331393,
-    "held": "Not approved to ship (Robbie approved the download, not adding the translation). build.mjs skips it unless named with --only.",
+    "sha256": "2ac3af1de52d4e68261cba91d85c320b7eadc6560e830d99e591767b8ff5ca96",
+    "held": "Approved to ship by Robbie, 2026-11-28. build.mjs skips it unless named with --only.",
     "licence": {
       "status": "Publisher states the text was dedicated to the public domain on 2023-04-30; attribution appreciated, not required.",
       "publisherPage": "https://berean.bible/terms.htm",
-      "inFile": "Not checked: the file has not been downloaded.",
+      "inFile": "Header: \"This text of God's Word has been dedicated to the public domain.\" (downloaded 2026-11-28).",
       "checked": "2026-11-28"
     }
   }

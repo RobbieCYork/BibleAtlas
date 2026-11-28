@@ -9,10 +9,7 @@ app offers no downloads and no BSB, and reads from bible-api.com as before.
 
 ## What ships
 
-WEB, KJV and ASV. **The BSB is held:** the app has the wiring, but adding the translation has not been
-approved, so it has no pack, the app does not list it and the legal pages do not name it. Adding it
-means Robbie's yes, then step 2 with `--only bsb`, steps 4 and 5, and putting it back in section 8 of
-the Terms. Licence statements for every source are recorded in `sources.json`.
+WEB, KJV, ASV and the BSB. The BSB was approved by Robbie on 2026-11-28 (an exception to the Wikisource-only rule; the publisher dedicated it to the public domain on 2023-04-30). Its source, `bsb.txt` from bereanbible.com (4,331,393 bytes, SHA-256 `2ac3af1de52d4e68261cba91d85c320b7eadc6560e830d99e591767b8ff5ca96`), is built with `--only bsb`. Its attribution line is shown under a BSB chapter. The name-linker has not yet been measured on the BSB (step 5), so its person and place links are unverified. Licence statements for every source are recorded in `sources.json`.
 
 The KJV source also carries the Apocrypha. Only the 66 books are packed; bible-api.com serves the
 same 66.
