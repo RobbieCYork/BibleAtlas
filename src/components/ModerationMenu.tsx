@@ -252,7 +252,7 @@ export default function ModerationMenu({
                 {alsoBlock && !error && (
                   <p className="mod-dialog-text">
                     {who} is blocked. You won't see each other's posts, comments or messages, and neither of you can
-                    contact the other. You can undo this in Settings → Blocked accounts.
+                    contact the other. You can undo this in the account menu, under Safety & Contact → Blocked accounts.
                   </p>
                 )}
                 {error && <p className="mod-dialog-error">{error}</p>}
@@ -345,7 +345,7 @@ export default function ModerationMenu({
                 <h3 className="mod-dialog-title">{who} is blocked</h3>
                 <p className="mod-dialog-text">
                   You won't see their posts, comments or messages, and they can't message or comment at you. They aren't
-                  told about this. Undo it any time in Settings → Blocked accounts.
+                  told about this. Undo it any time in the account menu, under Safety & Contact → Blocked accounts.
                 </p>
                 <div className="mod-dialog-actions">
                   <button type="button" className="mod-dialog-primary" onClick={close}>
