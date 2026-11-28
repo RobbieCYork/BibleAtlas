@@ -26,7 +26,8 @@ import {
   type VerseTag,
   type Profile,
 } from "../lib/supabase";
-import { getTextOffsetInRoot } from "../lib/domTextOffset";
+import { getCaretRectForTextOffset, getTextOffsetInRoot } from "../lib/domTextOffset";
+import { keepSheetAboveKeyboard, opensOnScreenKeyboard } from "../lib/onScreenKeyboard";
 import { setActiveScripture } from "../lib/reportContext";
 import {
   CHAPTER_AUDIO_CREDIT,
@@ -1024,6 +1025,13 @@ export default function BiblePanel({
       if (!result) return;
       suppressSelectionClearRef.current = true;
       window.getSelection()?.removeAllRanges();
+      // iOS can put a long-press selection back after this handler has cleared it, leaving its blue
+      // grips (and menu) over the sheet. Clear again once the gesture has finished with it.
+      for (const delay of [0, 350]) {
+        window.setTimeout(() => {
+          if (holdSheetRef.current) window.getSelection()?.removeAllRanges();
+        }, delay);
+      }
       holdSheetRef.current = false;
       setHoldPreview(false);
       setPopup({
@@ -1360,6 +1368,8 @@ export default function BiblePanel({
     const saved = await writeHighlight(editor, editor.highlightColor, editor.highlightId);
     setNoteDraft("");
     setInlineNoteDraft("");
+    // The box was grown to fit what was typed into it; empty again, it goes back to one line.
+    if (inlineNoteRef.current) inlineNoteRef.current.style.height = "";
     setPopup({
       kind: "verse-actions",
       startVerse: editor.startVerse,
@@ -1387,8 +1397,10 @@ export default function BiblePanel({
     }
   };
 
-  // Open on the note box: focus it the moment a sheet appears for a new range (not on every re-render
-  // of the same range, so applying a colour does not yank focus back).
+  // The moment a sheet appears for a new range (not on every re-render of the same range, so applying
+  // a colour does not yank focus back), hold the range on our own preview mark. With a mouse and a
+  // keyboard the note box is focused too. On a touch screen it must not be: focusing it raises the
+  // on-screen keyboard over the very sheet it sits in, so the keyboard waits for a tap in the box.
   const sheetRangeKey =
     popup?.kind === "verse-actions" && userId
       ? `${popup.startVerse}:${popup.startOffset}:${popup.endVerse}:${popup.endOffset}`
@@ -1400,36 +1412,62 @@ export default function BiblePanel({
     holdSheetRef.current = true;
     window.getSelection()?.removeAllRanges();
     setHoldPreview(true);
-    el.focus({ preventScroll: true });
+    if (!opensOnScreenKeyboard()) el.focus({ preventScroll: true });
   }, [sheetRangeKey]);
 
-  /** Keeps the selected verse and the sheet visible when the on-screen keyboard shrinks the visual
-   * viewport: scrolls the reading area so the first selected verse sits inside the part of the visual
-   * viewport that is above the sheet. */
-  const keepSelectionVisible = () => {
+  /** Scrolls the reading area so the text the sheet is about sits above it, adding scroll room under
+   * the last verse when there is not enough of the chapter left to scroll into. */
+  const revealSheetText = (range: VerseRange) => {
     const sheet = sheetRef.current;
     const scroller = scrollContainerRef.current;
-    if (!sheet || !scroller || popup?.kind !== "verse-actions") return;
-    const verseEl = textRefs.current[popup.startVerse];
-    if (!verseEl) return;
-    const vv = window.visualViewport;
-    const top = (vv?.offsetTop ?? 0) + 8;
+    const startEl = textRefs.current[range.startVerse];
+    const endEl = textRefs.current[range.endVerse];
+    if (!sheet || !scroller || !startEl || !endEl) return;
+    const first = getCaretRectForTextOffset(startEl, range.startOffset);
+    const last = getCaretRectForTextOffset(endEl, range.endOffset);
+    if (!first || !last) return;
+    const box = scroller.getBoundingClientRect();
     const sheetTop = sheet.getBoundingClientRect().top;
-    const limit = Math.min(sheetTop, (vv ? vv.offsetTop + vv.height : window.innerHeight)) - 12;
-    const r = verseEl.getBoundingClientRect();
-    if (r.top < top) scroller.scrollTop -= top - r.top;
-    else if (r.bottom > limit) scroller.scrollTop += Math.min(r.bottom - limit, r.top - top);
+    const top = Math.max(box.top, 0) + 8;
+    const limit = sheetTop - 12;
+    if (first.top < top) {
+      scroller.scrollTop -= top - first.top;
+      return;
+    }
+    const by = Math.min(last.bottom - limit, first.top - top);
+    if (by <= 0) return;
+    if (by > scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop) {
+      scroller.style.paddingBottom = `${Math.round(box.bottom - sheetTop) + 18}px`;
+    }
+    scroller.scrollTop += by;
   };
-  useEffect(() => {
-    const vv = window.visualViewport;
-    if (!vv || !sheetRangeKey) return;
-    const onResize = () => {
-      if (document.activeElement === inlineNoteRef.current) keepSelectionVisible();
-    };
-    vv.addEventListener("resize", onResize);
-    return () => vv.removeEventListener("resize", onResize);
+
+  // Keeps the sheet above the on-screen keyboard (see lib/onScreenKeyboard.ts), and the text it is
+  // about above the sheet: when the sheet opens on a range, when the keyboard moves it, and on a
+  // touch screen (or while lifted) whenever it grows. With a mouse, a sheet merely changing height
+  // never scrolls the reader out from under someone who has scrolled elsewhere.
+  const revealedRef = useRef("");
+  useLayoutEffect(() => {
+    const sheet = sheetRef.current;
+    if (!popup || !sheet) {
+      revealedRef.current = "";
+      if (scrollContainerRef.current) scrollContainerRef.current.style.paddingBottom = "";
+      return;
+    }
+    return keepSheetAboveKeyboard(sheet, (lifted, height) => {
+      const follow = lifted || opensOnScreenKeyboard();
+      const key = `${popup.startVerse}:${popup.endVerse}:${lifted}:${follow ? height : ""}`;
+      if (revealedRef.current === key) return;
+      revealedRef.current = key;
+      // A tag sheet opened from a verse marker carries no character range: reveal the whole verses.
+      revealSheetText(
+        popup.kind === "tag-picker"
+          ? { startVerse: popup.startVerse, startOffset: 0, endVerse: popup.endVerse, endOffset: Number.MAX_SAFE_INTEGER }
+          : popup
+      );
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sheetRangeKey]);
+  }, [popup]);
 
   // One line, always: if the labelled Note/Tag/Share buttons do not fit on the row, drop to icon-only
   // (their aria-labels stay). Re-measured when the row's width or the text size changes.
@@ -2488,8 +2526,6 @@ export default function BiblePanel({
                     onFocus={() => {
                       holdSheetRef.current = true;
                       setHoldPreview(true);
-                      // After the keyboard has had a moment to open and the viewport to settle.
-                      window.setTimeout(keepSelectionVisible, 300);
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
@@ -2523,7 +2559,7 @@ export default function BiblePanel({
                             rows={3}
                             maxLength={8000}
                             aria-label="Edit note"
-                            autoFocus
+                            autoFocus={!opensOnScreenKeyboard()}
                           />
                           {noteEditError && <p className="verse-popup-note-error">{noteEditError}</p>}
                           <div className="verse-popup-note-item-actions">
@@ -2570,7 +2606,7 @@ export default function BiblePanel({
                 value={noteDraft}
                 onChange={(e) => setNoteDraft(e.target.value)}
                 placeholder="Write a note…"
-                autoFocus
+                autoFocus={!opensOnScreenKeyboard()}
               />
               {/* Saving also highlights the quoted text (owner's item 3); these pick the colour it gets. */}
               <div className="verse-popup-note-highlight-row">
