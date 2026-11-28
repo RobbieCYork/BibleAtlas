@@ -51,10 +51,10 @@ export const people: Person[] = [
       },
       {
         source: "Eusebius of Caesarea, Church History",
-        citation: "2.25",
+        citation: "2.25; 3.1.2",
         url: "https://www.newadvent.org/fathers/250102.htm",
         summary:
-          "Writing in the early 4th century, Eusebius records the tradition that Peter was crucified upside down in Rome under Nero, citing the earlier writer Origen as his source for that detail.",
+          "Writing in the early 4th century, Eusebius records the tradition that Peter and Paul were both martyred in Rome under Nero, citing the Roman presbyter Gaius and Dionysius of Corinth (2.25); in a later chapter he cites the earlier writer Origen for the detail that Peter was crucified head downward at his own request (3.1).",
         reliability:
           "Later church tradition (Eusebius wrote roughly 250 years after Peter's death) — valuable for showing what the early church believed, but not a contemporary historical record.",
       },
@@ -98,13 +98,13 @@ export const people: Person[] = [
         source: "The Pilate Stone (inscription, Caesarea Maritima)",
         citation: "Discovered 1961, now in the Israel Museum, Jerusalem",
         summary:
-          "A limestone block bearing a dedicatory inscription naming \"[Pon]tius Pilatus,\" \"[Praef]ectus Iuda[eae]\" (Prefect of Judea) — the only known archaeological inscription naming Pilate, confirming his existence and exact Roman title.",
+          "A limestone block bearing a dedicatory inscription naming \"[Pon]tius Pilatus,\" \"[Praef]ectus Iuda[eae]\" (Prefect of Judea) — the only known stone inscription naming Pilate, confirming his existence and exact Roman title. (A copper-alloy ring from Herodium inscribed 'Pilatus', published in 2018, may also be connected with him, but that link is uncertain.)",
         reliability:
-          "Direct physical/archaeological evidence from Pilate's own time in office — the strongest possible kind of extra-biblical confirmation.",
+          "Direct physical evidence from Pilate's own time in office — the strongest kind of extra-biblical confirmation.",
       },
       {
         source: "Josephus, Antiquities of the Jews",
-        citation: "18.3.1-2 (55-64) and 18.4.1-2 (85-89)",
+        citation: "18.3.1-2 (55-62) and 18.4.1-2 (85-89)",
         url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.3.1",
         summary:
           "Describes Pilate provoking riots by bringing military standards into Jerusalem and by using temple funds for an aqueduct, and records the Mount Gerizim incident that led to Pilate being recalled to Rome.",
@@ -703,6 +703,13 @@ export const people: Person[] = [
         summary: "Later Christian tradition holds Philip was martyred at Hierapolis in Phrygia (modern Turkey); in 2011 archaeologists excavating Hierapolis identified a Roman-era tomb and adjoining church they believe was venerated by early Christians as Philip's burial site, though his remains were not found there.",
         reliability: "The Acts of Philip is a late, legendary text with no historical reliability. The archaeological find is genuine and shows an early cult site associated with Philip's memory at Hierapolis, but it confirms local veneration, not the historical facts of his life or death.",
       },
+      {
+        source: "Polycrates of Ephesus, letter to Victor of Rome, quoted by Eusebius",
+        citation: "Eusebius, Church History 3.31.3; 5.24.2",
+        url: "https://www.newadvent.org/fathers/250103.htm",
+        summary: "Writing around AD 190, Polycrates, bishop of Ephesus, lists 'Philip, one of the twelve apostles' among the great figures buried in Asia, saying he sleeps in Hierapolis with two of his daughters who grew old as virgins.",
+        reliability: "The earliest written witness to a Philip buried at Hierapolis, about a century after the events. The daughters suggest Polycrates may have merged the apostle with Philip the evangelist, whose prophesying daughters appear in Acts 21:8-9.",
+      },
     ],
     verses: [
       { reference: "John 1:43-46", note: "Called by Jesus, brings Nathanael to him" },
@@ -1122,7 +1129,7 @@ export const people: Person[] = [
         citation: "25.4",
         url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Suetonius/12Caesars/Claudius*.html#25",
         summary: "Suetonius records that the emperor Claudius 'expelled the Jews from Rome, since they were constantly making disturbances because of the instigator Chrestus.' Most historians read 'Chrestus' as a garbled reference to Christ, meaning the expulsion likely arose from disputes within Rome's Jewish community over the emerging Christian movement.",
-        reliability: "Contemporary Roman historical writing (Suetonius wrote in the early 2nd century, drawing on earlier records) — independent, non-Christian confirmation of the expulsion event that Acts 18:2 also describes, though the 'Chrestus' identification with Christ is a scholarly inference, not stated outright.",
+        reliability: "Roman historical writing from about 70 years after the event (Suetonius wrote around AD 120, drawing on earlier records) — independent, non-Christian confirmation of the expulsion that Acts 18:2 also describes, though the 'Chrestus' identification with Christ is a scholarly inference, not stated outright, and Aquila and Priscilla themselves are not named.",
       },
     ],
     verses: [
@@ -1314,9 +1321,9 @@ export const people: Person[] = [
       },
       {
         source: "Josephus, Jewish Antiquities",
-        citation: "Antiquities 18.2.2 (33-35)",
+        citation: "Antiquities 18.2.2 (35); 18.4.3 (95)",
         url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.2.2",
-        summary: "Josephus records that the Roman prefect Valerius Gratus appointed 'Joseph, who was also called Caiaphas' as high priest, and that he was later removed from office by the proconsul Vitellius around AD 36-37.",
+        summary: "Josephus records that the Roman prefect Valerius Gratus appointed 'Joseph, who was also called Caiaphas' as high priest, and that he was later removed from office by Vitellius, the Roman legate (governor) of Syria, around AD 36-37.",
         reliability: "Independent first-century historical account confirming Caiaphas's appointment, long tenure, and eventual removal.",
       },
     ],
@@ -1413,7 +1420,21 @@ export const people: Person[] = [
     ],
     occupation: "King over territories in northern Palestine; overseer of the Jerusalem Temple and high priesthood",
     placesLived: "Ruled from Caesarea Philippi and other territories in the region; frequently present in Caesarea Maritima.",
-    noExtraBiblicalRecordNote: "Josephus discusses Agrippa II's reign and territory extensively (he was a contemporary and even a correspondent of Josephus), but no extant source outside Acts records this specific hearing with Paul.",
+    extraBiblicalReferences: [
+      {
+        source: "Josephus, The Jewish War",
+        citation: "2.16.4 (345-401)",
+        url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+BJ+2.16.4",
+        summary: "Josephus gives a long speech in which Agrippa II urges the people of Jerusalem in AD 66 not to go to war with Rome; elsewhere in the War and in Antiquities 20 he records the territories Rome gave Agrippa and his role in the revolt.",
+        reliability: "A contemporary who knew Agrippa personally. The speech is Josephus's composition in the manner of ancient historians, not a transcript, but the outline of Agrippa's career is well grounded.",
+      },
+      {
+        source: "Josephus, Life",
+        citation: "364-367",
+        summary: "Josephus says Agrippa wrote him sixty-two letters vouching for the accuracy of his history of the war, and quotes two of them.",
+        reliability: "Contemporary, though self-serving: Josephus quotes the letters to vouch for his own work.",
+      },
+    ],
     verses: [
       { reference: "Acts 25:13-27", note: "Consulted by Festus about Paul's case" },
       { reference: "Acts 26:1-32", note: "Hears Paul's extended defense" },
@@ -1442,9 +1463,9 @@ export const people: Person[] = [
     extraBiblicalReferences: [
       {
         source: "Tacitus, Histories",
-        citation: "Histories 5.9",
+        citation: "Histories 5.9; Annals 12.54",
         url: "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Tacitus/Histories/5A*.html#9",
-        summary: "Tacitus writes that Felix practiced 'the power of a king with the mind of a slave' (\"per omnem saevitiam ac libidinem ius regium servili ingenio exercuit\"), and elsewhere Roman sources including Suetonius and Josephus describe his governorship as marked by corruption and brutal suppression of unrest in Judea.",
+        summary: "Tacitus writes that Felix practiced 'the power of a king with the mind of a slave' (\"per omnem saevitiam ac libidinem ius regium servili ingenio exercuit\"), and in the Annals (12.54) he blames Felix's misrule for unrest in Judea. Josephus separately describes Felix's harsh suppression of bandits and rebels. Suetonius (Claudius 28) mentions Felix only as a favoured freedman who governed Judea and married three queens.",
         reliability: "Independent Roman historical assessment from a source with no connection to the Christian tradition; broadly consistent with the corruption implied in Acts 24:26.",
       },
     ],
@@ -1666,10 +1687,10 @@ export const people: Person[] = [
     placesLived: "Caesarea",
     extraBiblicalReferences: [
       {
-        source: "Josephus, Jewish Antiquities and The Jewish War",
-        citation: "General background on Roman garrison units in Judea",
-        summary: "Josephus confirms Caesarea as the headquarters of Roman auxiliary forces in Judea and describes units similarly organized to the \"Italian Regiment\" (Cohors II Italica) mentioned in Acts, but he does not mention Cornelius by name.",
-        reliability: "Corroborates the general military and geographic setting of Acts 10, not the individual — no ancient source outside Acts names Cornelius himself.",
+        source: "Josephus; tombstone of an officer of the cohors II Italica (Carnuntum)",
+        citation: "General background on Roman auxiliary troops at Caesarea; Carnuntum inscription, c. AD 69-70",
+        summary: "Josephus confirms that the Roman governor's auxiliary troops were based at Caesarea, but he never mentions an 'Italian' cohort or Cornelius. A unit called the cohors II Italica civium Romanorum is attested by inscriptions, including a tombstone from Carnuntum (Austria), dated c. AD 69-70, of an optio of that cohort serving with a detachment of the Syrian army.",
+        reliability: "Corroborates the general military setting of Acts 10, not the individual — no ancient source outside Acts names Cornelius. Whether the cohors II Italica is the unit Luke means, and whether it was at Caesarea as early as the late 30s, is debated: the inscriptions place it in the province of Syria, later in the century.",
       },
     ],
     verses: [
@@ -1740,7 +1761,7 @@ export const people: Person[] = [
     extraBiblicalReferences: [
       {
         source: "Josephus, Antiquities of the Jews",
-        citation: "20.9.2-4 (205-213); 20.5.2 (103)",
+        citation: "Antiquities 20.5.2 (103); 20.9.2-3 (205-210); Jewish War 2.17.9 (441)",
         url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.9.2",
         summary: "Josephus describes Ananias son of Nedebaeus as high priest, notes his reputation for greed and violence (including servants who seized priestly tithes by force), and records his eventual assassination by rebels early in the Jewish revolt.",
         reliability: "An independent, detailed historical source corroborating Ananias's tenure and reputation, from a writer close to these events in time and place.",
@@ -1799,10 +1820,10 @@ export const people: Person[] = [
     extraBiblicalReferences: [
       {
         source: "Mishnah (e.g., Sotah 9:15; tractate Gittin)",
-        citation: "Mishnah, Sotah 9:15",
+        citation: "Mishnah, Sotah 9:15; Gittin 4:2-3; cf. Josephus, Life 190-191",
         url: "https://www.sefaria.org/Mishnah_Sotah.9.15",
-        summary: "Jewish tradition independently and extensively documents Gamaliel (often called 'Gamaliel the Elder') as the grandson of the great sage Hillel and one of the most revered figures in early rabbinic Judaism, credited with rulings that shaped Jewish legal practice.",
-        reliability: "Solid historical record. This is a well-established figure in Jewish sources outside the New Testament, though the Mishnah's portrait comes from a rabbinic rather than Christian perspective and predates the Gospels' final form by only decades.",
+        summary: "The Mishnah remembers 'Rabban Gamaliel the Elder' as one of the most revered early sages ('when Rabban Gamaliel the Elder died, the glory of the Torah ceased', Sotah 9:15) and credits him with legal enactments (Gittin 4:2-3). Later rabbinic tradition presents him as the grandson of Hillel. Josephus (Life 190-191) describes Gamaliel's son as a Pharisee from a very illustrious Jerusalem family.",
+        reliability: "Independent Jewish attestation of a sage of this name and standing, consistent with Acts 5:34. The Mishnah was compiled around AD 200, more than a century after Gamaliel, so its traditions are rabbinic memory rather than contemporary records; Josephus's mention of his son is first-century.",
       },
     ],
     verses: [
@@ -1983,10 +2004,10 @@ export const people: Person[] = [
     placesLived: "Cyprus.",
     extraBiblicalReferences: [
       {
-        source: "Cyprus inscription naming Lucius Sergius Paullus; a possible boundary-stone inscription from Rome",
-        citation: "Soloi inscription, Cyprus",
-        summary: "An inscription discovered on Cyprus names a Roman official, Lucius Sergius Paullus, and a separate inscription from Rome names a Sergius Paullus who served as a curator of the Tiber River — both plausibly the same man, and plausibly the proconsul from Acts.",
-        reliability: "Widely accepted by many historians and archaeologists as corroborating the existence and career of the biblical Sergius Paulus, but the identification is not universally certain — the name was not uncommon, and the connection between the two inscriptions and the man in Acts rests on reasonable inference rather than airtight proof.",
+        source: "Inscriptions naming a Lucius Sergius Paullus (Rome) and a proconsul Paulus (Soloi, Cyprus)",
+        citation: "Tiber curators' boundary stone, Rome (CIL VI 31545, reign of Claudius); Soloi inscription, Cyprus",
+        summary: "A boundary stone from Rome names Lucius Sergius Paullus as one of the curators of the Tiber under Claudius, and a Greek inscription from Soloi on Cyprus is dated 'in the proconsulship of Paulus'. Some scholars identify one or both with the proconsul of Acts 13:7. The Sergii Paulli are also attested as landowners near Pisidian Antioch, the city Paul went on to next (Acts 13:14).",
+        reliability: "Suggestive but uncertain. Neither inscription names a Sergius Paulus as proconsul of Cyprus: the Rome stone gives no Cyprus post, and the Soloi text gives only 'Paulus' and has been dated on its letter forms to the mid-first century or later. The links to Acts rest on inference, which many but not all historians accept.",
       },
     ],
     verses: [
@@ -2014,7 +2035,7 @@ export const people: Person[] = [
         source: "Josephus, Antiquities of the Jews 20.7.1-2 (20.141-144)",
         citation: "Josephus, Antiquities 20.7.1-2",
         url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+20.7.1",
-        summary: "Josephus independently records Drusilla's marriage to Felix, noting it was Felix's second marriage and that Drusilla abandoned her first husband, Azizus, king of Emesa, to marry him — a union Josephus frames as scandalous.",
+        summary: "Josephus independently records Drusilla's marriage to Felix, noting that Drusilla abandoned her first husband, Azizus, king of Emesa, to marry him — a union Josephus frames as scandalous.",
         reliability: "Strong independent corroboration. Josephus was a contemporary Jewish historian with detailed knowledge of the Herodian family, and his account lines up with and supplements the brief mention in Acts.",
       },
     ],
@@ -2428,7 +2449,7 @@ export const people: Person[] = [
       {
         source: "Atrahasis Epic and Enuma Elish (Mesopotamian creation myths)",
         citation: "Old Babylonian period, c. 18th century BC (Atrahasis); Enuma Elish, c. 12th century BC or earlier",
-        summary: "Both texts describe the gods fashioning the first humans out of clay, sometimes mixed with divine blood or spit, to relieve the gods of labor — a broad narrative pattern (humanity formed from earthly material by divine action) that parallels Genesis 2:7's account of Adam's formation from dust.",
+        summary: "In Atrahasis the gods fashion the first humans from clay mixed with the flesh and blood of a slain god and the spittle of the gods; in Enuma Elish humanity is made from the blood of the slain god Kingu. In both, humans are made to relieve the gods of labor. The broad pattern (humanity made by divine action, in Atrahasis from earthly material) parallels Genesis 2:7's account of Adam's formation from dust.",
         reliability: "These are independent Mesopotamian literary traditions, not a record of the biblical Adam — they show that 'humanity molded from clay/dust by a deity' was a widespread Ancient Near Eastern motif, useful as cultural background but not evidence for a specific historical individual.",
       },
     ],
@@ -2641,7 +2662,7 @@ export const people: Person[] = [
         source: "Nuzi tablets (Hurrian archive, ancient Nuzi, near modern Kirkuk, Iraq)",
         citation: "15th century BC cuneiform archive, excavated 1925-1931",
         summary: "These family-law and adoption documents from a Hurrian community describe customs strikingly similar to patriarchal-era practices in Genesis, including a childless wife giving her servant to her husband as a surrogate to produce an heir (paralleling Sarah and Hagar in Genesis 16), and a household servant serving as an heir in the absence of a son (paralleling Abraham's mention of Eliezer of Damascus in Genesis 15:2-3).",
-        reliability: "Genuine excavated legal texts that illuminate the social and legal world the patriarchal narratives assume, showing such practices were real and recognized customs of the broader region and era — but they do not mention Abraham by name and are not direct evidence of his historical existence.",
+        reliability: "Genuine excavated legal texts that illuminate the social and legal world the patriarchal narratives assume, showing such practices were real and recognized customs of the broader region and era — but they do not mention Abraham by name and are not direct evidence of his historical existence. Many of the closest parallels proposed in the mid-20th century (notably by Cyrus Gordon and E. A. Speiser) were later challenged by Thomas L. Thompson and John Van Seters, who argued the customs were neither unique to the 2nd millennium BC nor as close as claimed; scholars remain divided on how much weight they bear.",
       },
       {
         source: "Mari tablets (Mari, on the Euphrates, modern Syria)",
@@ -2727,8 +2748,8 @@ export const people: Person[] = [
       {
         source: "Nuzi tablets (Hurrian archive, ancient Nuzi, near modern Kirkuk, Iraq)",
         citation: "15th century BC cuneiform archive, excavated 1925-1931",
-        summary: "Several Nuzi marriage contracts specify that a barren wife must provide her husband with a servant woman to bear children on her behalf, and that any son born this way could not be expelled once born — a legal backdrop that closely matches, and helps explain, Sarah's decision to give Hagar to Abraham and the seriousness of Sarah's later demand to expel Hagar and Ishmael.",
-        reliability: "Genuine excavated legal documents confirming that surrogate-motherhood arrangements like Hagar's were a real and recognized custom in the broader region during the approximate patriarchal era — valuable social-legal background, though the tablets do not mention Hagar or Abraham by name.",
+        summary: "A Nuzi marriage contract (that of Gilimninu), with parallels in other ancient Near Eastern contracts and in Hammurabi's laws, specifies that a barren wife must provide her husband with a slave woman to bear children, and that the wife may not send the offspring away — a legal backdrop that closely matches, and helps explain, Sarah's decision to give Hagar to Abraham and the seriousness of Sarah's later demand to expel Hagar and Ishmael.",
+        reliability: "Genuine excavated legal documents confirming that surrogate-motherhood arrangements like Hagar's were a real and recognized custom in the broader region during the approximate patriarchal era — valuable social-legal background, though the tablets do not mention Hagar or Abraham by name. Many of the closest parallels proposed in the mid-20th century (notably by Cyrus Gordon and E. A. Speiser) were later challenged by Thomas L. Thompson and John Van Seters, who argued the customs were neither unique to the 2nd millennium BC nor as close as claimed; scholars remain divided on how much weight they bear.",
       },
     ],
     verses: [
@@ -2900,7 +2921,7 @@ export const people: Person[] = [
         source: "Nuzi Tablets (Mesopotamian legal archive, 15th century BC)",
         citation: "Excavated at Nuzi (modern Yorghan Tepe, Iraq), 1925-1931",
         summary: "A large cache of Hurrian legal and administrative documents describing customs such as selling a birthright for present consideration, oral deathbed blessings carrying binding legal force, and the significance of household gods (teraphim) in inheritance claims — social customs strikingly similar to those depicted in the Jacob narratives (birthright sale, Isaac's blessing, Rachel's theft of Laban's teraphim in Genesis 31:19).",
-        reliability: "Genuine comparative Ancient Near Eastern legal material that illuminates the plausibility and cultural setting of the patriarchal narratives' customs; it does not name or confirm Jacob himself, and dating and geographic distance from Nuzi to Canaan mean scholars debate how directly it applies.",
+        reliability: "Genuine comparative Ancient Near Eastern legal material that illuminates the plausibility and cultural setting of the patriarchal narratives' customs; it does not name or confirm Jacob himself, and dating and geographic distance from Nuzi to Canaan mean scholars debate how directly it applies. Many of the closest parallels proposed in the mid-20th century (notably by Cyrus Gordon and E. A. Speiser) were later challenged by Thomas L. Thompson and John Van Seters, who argued the customs were neither unique to the 2nd millennium BC nor as close as claimed; scholars remain divided on how much weight they bear.",
       },
       {
         source: "Egyptian topographical lists (e.g., Thutmose III's Karnak list)",
@@ -2979,7 +3000,7 @@ export const people: Person[] = [
     ],
     occupation: "Shepherdess",
     placesLived: "Raised in Paddan-aram (Haran); moved to Canaan with Jacob's household; died and was buried near Bethlehem.",
-    noExtraBiblicalRecordNote: "No extra-biblical source names or attests Rachel individually. The Nuzi Tablets' documentation of household-god (teraphim) customs as markers of inheritance rights offers a genuine, well-attested cultural parallel that illuminates why Rachel's theft of Laban's idols mattered legally, but it corroborates a custom, not the person.",
+    noExtraBiblicalRecordNote: "No extra-biblical source names or attests Rachel individually. The Nuzi Tablets' documentation of household-god (teraphim) customs as markers of inheritance rights has been proposed (notably by Cyrus Gordon) as explaining why Rachel's theft of Laban's idols mattered legally, though later scholars such as Moshe Greenberg questioned that reading; either way it concerns a custom, not the person.",
     verses: [
       { reference: "Genesis 29:9-30", note: "Meets Jacob and becomes his wife after Laban's deception" },
       { reference: "Genesis 30:1-24", note: "Struggles with infertility before bearing Joseph" },
@@ -3054,10 +3075,10 @@ export const people: Person[] = [
         reliability: "Genuine evidence that the general social pattern behind Joseph's story — a Semitic outsider entering Egyptian domestic/administrative service — was historically plausible and common; it does not mention Joseph or any figure resembling him specifically.",
       },
       {
-        source: "Egyptian vizier investiture customs (tomb reliefs and administrative texts, e.g. the Tomb of Rekhmire)",
-        citation: "New Kingdom Egyptian records, c. 15th century BC",
-        summary: "Egyptian texts and tomb art depict the ceremonial investiture of a vizier with a signet ring, fine linen garments, and a gold chain of office — the same specific items Genesis 41:42 describes Pharaoh giving Joseph upon his elevation.",
-        reliability: "A genuine and specific cultural/administrative parallel showing the narrative's investiture details match authentic Egyptian court practice; it corroborates the plausibility of the account's Egyptian setting, not the historicity of Joseph as an individual, since no Egyptian record names him.",
+        source: "Egyptian rewards and insignia of high office (New Kingdom tomb reliefs, e.g. the tomb of Ay at Amarna)",
+        citation: "New Kingdom Egyptian records, c. 15th-14th century BC",
+        summary: "New Kingdom tomb reliefs show the king rewarding high officials with heavy gold collars (the 'gold of honour'), and Egyptian officials carried seals and wore fine linen as marks of rank: the kinds of items Genesis 41:42 describes Pharaoh giving Joseph (a signet ring, garments of fine linen, a gold chain).",
+        reliability: "A genuine and specific cultural/administrative parallel showing the narrative's details fit known Egyptian court practice (scholars debate which period of Egyptian history they fit best); it corroborates the plausibility of the account's Egyptian setting, not the historicity of Joseph as an individual, since no Egyptian record names him.",
       },
     ],
     noExtraBiblicalRecordNote: "No Egyptian inscription, papyrus, or artifact names Joseph specifically, and no Pharaoh in the narrative is named, which along with debated chronology makes it impossible to align Joseph definitively with a specific, independently attested Egyptian dynasty or ruler.",
@@ -3381,7 +3402,7 @@ export const people: Person[] = [
         source: "Deir 'Alla Inscription",
         citation: "Plaster wall text, Tell Deir 'Alla, Jordan Valley; discovered 1967 by a Dutch archaeological team led by Henk Franken; text paleographically dated to roughly the 9th-8th century BC",
         summary: "A fragmentary Aramaic-related inscription that opens \"The Sayings of [Bala]am, son of Beor, who was a seer of the gods,\" describing a nighttime divine vision in which the gods warn Balaam of coming judgment, which he then relays to his people. It is an independent, non-Israelite religious/literary tradition — composed in a polytheistic Transjordanian context, not a Yahwistic one — with no direct connection to the Numbers narrative's events.",
-        reliability: "Genuinely significant and rare: it is real, independent extrabiblical attestation that a seer figure named \"Balaam son of Beor\" was known and revered across a wide region and several centuries after the Numbers setting. It does not corroborate the biblical story or confirm any specific event, but it strongly suggests Balaam was a real, widely remembered figure in ancient Near Eastern tradition rather than a purely Israelite literary invention.",
+        reliability: "Genuinely significant and rare: it is real, independent extrabiblical attestation that a seer figure named \"Balaam son of Beor\" was known and remembered in a non-Israelite community east of the Jordan, centuries after the Numbers setting. It does not corroborate the biblical story or confirm any specific event, but it is often taken to suggest that Balaam was a genuinely remembered figure in the region's tradition rather than a purely Israelite literary invention.",
       },
     ],
     verses: [
@@ -3757,7 +3778,7 @@ export const people: Person[] = [
         source: "The Tel Dan Stele",
         citation: "Aramaic basalt inscription fragment, discovered 1993-1994 at Tel Dan, northern Israel; now in the Israel Museum, Jerusalem",
         summary: "A victory inscription, likely erected by an Aramean king (probably Hazael of Damascus) boasting of victories over the kings of Israel and of the 'House of David' (bytdwd), describing the killing of a king from that dynasty. It is the earliest known extra-biblical reference to David, confirming that a dynasty known by his name was recognized by Israel's neighbors within a few centuries of his traditional reign.",
-        reliability: "Widely accepted by mainstream archaeologists and epigraphers as a genuine 9th-century BC inscription referencing David's dynasty by name. It does not describe David's own life or reign directly — only that a royal house bearing his name existed and was known regionally roughly a century after his traditional death — but it decisively ended earlier scholarly claims that David was purely legendary.",
+        reliability: "Widely accepted by mainstream archaeologists and epigraphers as a genuine 9th-century BC inscription referencing David's dynasty by name. It does not describe David's own life or reign directly — only that a royal house bearing his name existed and was known regionally roughly a century after his traditional death — but it made the earlier claim that David was purely legendary much harder to sustain. A few scholars have proposed other readings of bytdwd, which most epigraphers reject.",
       },
       {
         source: "The Mesha Stele (Moabite Stone)",
@@ -4018,13 +4039,19 @@ export const people: Person[] = [
         source: "The Siloam Inscription (Hezekiah's Tunnel Inscription)",
         citation: "Paleo-Hebrew inscription discovered 1880 in Hezekiah's Tunnel, Jerusalem; now in the Istanbul Archaeology Museums",
         summary: "A six-line Hebrew inscription carved by the tunnel's own workmen, describing the moment two teams digging from opposite ends met in the middle, and water then flowing from the spring to the pool — a direct physical record of the very tunnel project attributed to Hezekiah in 2 Kings 20:20 and 2 Chronicles 32:30.",
-        reliability: "A contemporary, in-situ Hebrew inscription tied to the exact engineering project the Bible credits Hezekiah with commissioning — among the strongest archaeological confirmations of any specific act by a named Old Testament king.",
+        reliability: "A contemporary, in-situ Hebrew inscription tied to the engineering project the Bible credits Hezekiah with commissioning. The inscription itself does not name Hezekiah: the link rests on the biblical accounts and on the tunnel's date, which radiometric tests published in 2003 placed around 700 BC.",
       },
       {
         source: "LMLK seal impressions",
         citation: "Hundreds of stamped jar handles found at Judean sites, mostly dated to Hezekiah's reign, 8th century BC",
         summary: "Storage jars stamped 'lmlk' ('belonging to the king') with royal insignia, widely interpreted by archaeologists as evidence of centralized royal provisioning — plausibly connected to Hezekiah's military preparations against the Assyrian threat described in 2 Chronicles 32:1-8.",
         reliability: "Solid archaeological evidence of centralized royal administration in this period; the specific connection to Hezekiah's war preparations is a reasonable but not certain scholarly inference.",
+      },
+      {
+        source: "Royal bulla of Hezekiah (Ophel excavations, Jerusalem)",
+        citation: "Excavated 2009 in the Ophel excavations directed by Eilat Mazar; published 2015",
+        summary: "A clay seal impression reading 'Belonging to Hezekiah [son of] Ahaz, king of Judah', with a winged-sun emblem, found in a refuse dump beside a royal building just south of Jerusalem's Temple Mount.",
+        reliability: "Excavated rather than bought on the antiquities market, so it carries more weight than earlier unprovenanced royal seals; the excavators announced it as the first seal impression of an Israelite or Judean king found in a scientific excavation.",
       },
     ],
     verses: [
@@ -4126,7 +4153,7 @@ export const people: Person[] = [
       {
         source: "The Lachish Letters",
         citation: "Ostraca (inscribed pottery shards) discovered 1935, Lachish, Israel; now largely in the British Museum",
-        summary: "A set of Hebrew military correspondence from the final days before Jerusalem's fall, including a fraught letter noting that the signal fires of Azekah were no longer visible — evidence the city had already fallen to Babylon, matching the desperate final days depicted in Jeremiah 34:7.",
+        summary: "A set of Hebrew military correspondence from the final days before Jerusalem's fall, including a letter (Lachish Letter 4) whose writer says they are watching for the signals of Lachish because they cannot see Azekah — commonly read as a sign that Azekah had already fallen to Babylon, matching the desperate final days depicted in Jeremiah 34:7.",
         reliability: "Genuine contemporary Hebrew documents from the exact siege context Jeremiah describes; strong circumstantial corroboration of the military collapse, though they do not reference Jeremiah directly.",
       },
     ],
@@ -4201,15 +4228,15 @@ export const people: Person[] = [
     placesLived: "Jerusalem (before exile); Babylon, capital of the Babylonian and later Persian-controlled territory",
     extraBiblicalReferences: [
       {
-        source: "The Nabonidus Cylinder",
-        citation: "Cuneiform cylinder, discovered at Sippar; British Museum",
-        summary: "An inscription of King Nabonidus, Babylon's last king, records that he spent years away from Babylon at Tayma in Arabia and entrusted 'the kingship' in Babylon to his son Belshazzar — explaining why Daniel 5 depicts Belshazzar ruling in Babylon and offering to make Daniel only 'third' ruler in the kingdom (since Nabonidus, not Belshazzar, held the actual throne).",
-        reliability: "A genuine and highly significant Babylonian royal inscription that resolved a long-standing historical puzzle about Belshazzar, who was unknown outside the Bible until 19th-century cuneiform discoveries confirmed his existence and unusual co-regent status.",
+        source: "The Nabonidus Cylinders from Ur",
+        citation: "Cuneiform foundation cylinders from the ziggurat at Ur, found 1854; British Museum",
+        summary: "Building inscriptions of King Nabonidus, Babylon's last king, close with a prayer for 'Belshazzar, my firstborn son'. They were the first cuneiform texts found to name Belshazzar, previously known only from Daniel. The cylinders do not describe his role in government; that comes from the texts in the next entry.",
+        reliability: "A genuine and highly significant Babylonian royal inscription that resolved a long-standing historical puzzle about Belshazzar, who was unknown outside the Bible until 19th-century cuneiform discoveries confirmed his existence. Neither this nor the next entry mentions Daniel himself.",
       },
       {
         source: "Babylonian administrative and chronicle texts on Nabonidus and Belshazzar",
         citation: "Various cuneiform tablets, including the Verse Account of Nabonidus and Babylonian Chronicle texts",
-        summary: "Multiple independent Babylonian texts confirm Belshazzar as Nabonidus's son who exercised royal authority in Babylon in his father's absence, though he is never given the formal title 'king' in Babylonian records — a nuance scholars connect to Daniel 5:16's offer of only third-highest rank, since the (absent) king and his son Belshazzar occupied the first two.",
+        summary: "The Verse Account of Nabonidus says the king 'entrusted the kingship' to his eldest son and went off to Tayma in Arabia, and the Nabonidus Chronicle records the king staying at Tayma for years while the crown prince remained in Babylonia. Together these texts confirm Belshazzar as Nabonidus's son who exercised royal authority in Babylon in his father's absence, though he is never given the formal title 'king' in Babylonian records — a nuance scholars connect to Daniel 5:16's offer of only third-highest rank, since the (absent) king and his son Belshazzar occupied the first two.",
         reliability: "Strong corroborating evidence for the historical existence and role of Belshazzar; the precise relationship between the biblical and cuneiform framing remains a live and genuine subject of scholarly discussion, honestly presented as such rather than a clean one-to-one match.",
       },
     ],
@@ -4314,8 +4341,8 @@ export const people: Person[] = [
       {
         source: "Elephantine Papyri",
         citation: "Aramaic papyri from a Jewish military colony at Elephantine, Egypt, 5th century BC; various collections including the Brooklyn Museum and Berlin",
-        summary: "Letters from this Jewish garrison community include correspondence addressed to 'Bagohi,' governor of Judah, and reference 'the sons of Sanballat, governor of Samaria' — attesting to the same regional political structure (a Persian-appointed governor of Judah, and a rival governor of Samaria named Sanballat) that appears in the book of Nehemiah, generations after Nehemiah's own tenure.",
-        reliability: "Independent contemporary Aramaic administrative correspondence confirming the existence of the governorship of Judah and a Sanballat family ruling Samaria under Persian authority — strong corroboration of the political framework of Nehemiah's account, though the specific individual named 'Sanballat' in these later papyri is likely a descendant rather than Nehemiah's own antagonist.",
+        summary: "Letters from this Jewish garrison community include correspondence addressed to 'Bagohi,' governor of Judah, and reference 'the sons of Sanballat, governor of Samaria' — attesting to the same regional political structure (a Persian-appointed governor of Judah, and a rival governor of Samaria named Sanballat) that appears in the book of Nehemiah. The letter dates to 407 BC, about 35 years after Nehemiah first came to Jerusalem.",
+        reliability: "Independent contemporary Aramaic administrative correspondence confirming the existence of the governorship of Judah and a Sanballat family ruling Samaria under Persian authority — strong corroboration of the political framework of Nehemiah's account, and the Sanballat named as governor of Samaria, whose sons were by then acting for him, is widely identified with Nehemiah's adversary (Nehemiah 2:10, 19). The same papyri name Johanan as high priest in Jerusalem (compare Nehemiah 12:22).",
       },
     ],
     verses: [
@@ -5195,7 +5222,7 @@ export const people: Person[] = [
         reliability: "A genuine, contemporary Assyrian royal inscription naming Manasseh directly as a subject vassal, independently confirming his historical existence and Assyrian vassalage in this period.",
       },
       {
-        source: "Ashurbanipal's Annals (Rassam Cylinder / Prism C)",
+        source: "Ashurbanipal's Annals (Prism C)",
         citation: "c. 667 BC campaign against Egypt",
         summary: "Ashurbanipal's records again list Manasseh of Judah among twenty-two kings of the seacoast required to furnish troops and supplies for his campaign against Egypt, indicating Manasseh's vassal status continued under Esarhaddon's successor.",
         reliability: "A genuine, contemporary Assyrian inscription; corroborates a lengthy period of Manasseh's subjugation to Assyria consistent with the biblical narrative's setting, though it does not itself describe any deportation to Babylon.",
@@ -5255,13 +5282,13 @@ export const people: Person[] = [
       {
         source: "Babylonian Chronicles",
         citation: "Chronicle concerning the fall of Nineveh and the years following, late 7th century BC",
-        summary: "Babylonian chronicle tablets independently confirm the broader geopolitical background of Josiah's reign and death: the collapse of Assyrian power, Necho II of Egypt's march north in 609 BC to support the remnants of the Assyrian army against Babylon, and the general historicity of this period's power struggles.",
+        summary: "Babylonian chronicle tablets independently confirm the broader geopolitical background of Josiah's reign and death: the collapse of Assyrian power, an Egyptian army marching north in 609 BC to support the remnants of the Assyrian army against Babylon at Harran (the chronicle does not name the pharaoh), and the general historicity of this period's power struggles.",
         reliability: "A genuine contemporary Babylonian administrative record; it corroborates the historical setting and approximate date of the Battle of Megiddo but does not mention Josiah or the battle itself by name.",
       },
       {
         source: "Egyptian records of Necho II",
         citation: "Various inscriptions and later Greek historical accounts (e.g., Herodotus)",
-        summary: "Necho II is a well-attested historical pharaoh of Egypt's 26th Dynasty, independently confirmed through Egyptian monuments and later classical sources, consistent with his campaign through the Levant described in 2 Kings 23:29 and 2 Chronicles 35:20.",
+        summary: "Necho II is a well-attested historical pharaoh of Egypt's 26th Dynasty, independently confirmed through Egyptian monuments and later classical sources, consistent with his campaign through the Levant described in 2 Kings 23:29 and 2 Chronicles 35:20. Herodotus (2.159) says Necos defeated the 'Syrians' at 'Magdolus', which many scholars take as a garbled memory of Megiddo.",
         reliability: "Necho II's reign and general policy of intervening in the Levant during Assyria's collapse are well established historically, providing strong background corroboration for the circumstances of Josiah's death, though no Egyptian text describes the Megiddo encounter with Josiah specifically.",
       },
     ],
@@ -5299,7 +5326,7 @@ export const people: Person[] = [
         source: "Jehoiachin's Rations Tablets (Weidner Tablets)",
         citation: "Excavated in Babylon 1899-1917; housed in the Vorderasiatisches Museum, Berlin",
         summary: "Cuneiform administrative tablets from Nebuchadnezzar's palace archives list oil and barley rations issued to 'Ya'u-kīnu, king of the land of Yahudu' and his five sons, alongside other royal captives, dated to the years following the 597 BC deportation.",
-        reliability: "A genuine, contemporary Babylonian administrative record independently confirming that Jehoiachin/Jeconiah was held in Babylon and still recognized with the royal title 'king of Judah' there — one of the strongest direct archaeological corroborations of any named biblical king, closely matching the favorable treatment described in 2 Kings 25:27-30.",
+        reliability: "A genuine, contemporary Babylonian administrative record independently confirming that Jehoiachin/Jeconiah was held in Babylon and still recognized with the royal title 'king of Judah' there — one of the strongest direct archaeological corroborations of any named biblical king, consistent with the favorable treatment described in 2 Kings 25:27-30 (the tablet naming him dates to about 592 BC, decades before his release by Evil-merodach).",
       },
     ],
     verses: [
@@ -5323,7 +5350,7 @@ export const people: Person[] = [
     controversies: [
       "1 Chronicles 3:19 names Zerubbabel's father as Pedaiah (Shealtiel's brother) rather than Shealtiel himself, while Ezra, Haggai, Zechariah, and Matthew's genealogy all call Zerubbabel 'son of Shealtiel.' The most common explanations are a levirate-type arrangement preserving Shealtiel's line through his brother, or that 'son' is used in the broader ancient sense of legal heir/successor rather than strict biological parentage.",
     ],
-    noExtraBiblicalRecordNote: "No extra-biblical inscription or record names Shealtiel individually, though the Babylonian exile of Jehoiachin's household is corroborated by Babylonian ration tablets that mention Jehoiachin and his sons by name (though not Shealtiel specifically).",
+    noExtraBiblicalRecordNote: "No extra-biblical inscription or record names Shealtiel individually, though the Babylonian exile of Jehoiachin's household is corroborated by Babylonian ration tablets that name Jehoiachin and record rations for his five sons, who are not named, so Shealtiel cannot be identified among them.",
     verses: [
       { reference: "1 Chronicles 3:17", note: "Listed as a son of the exiled King Jeconiah" },
       { reference: "Ezra 3:2", note: "Named as the father of Zerubbabel" },
@@ -5658,7 +5685,7 @@ export const people: Person[] = [
       },
       {
         source: "Lapis Tiburtinus (Tivoli inscription)",
-        citation: "CIL XIV 3613, fragmentary, provenance and subject debated",
+        citation: "CIL XIV 3613, fragmentary, found near Tivoli; subject debated",
         summary: "A damaged Latin inscription describing an unnamed Roman official who governed Syria twice and received military honors; some scholars have proposed this refers to an earlier tenure by Quirinius, though the official's name does not survive on the fragment and the identification is contested.",
         reliability: "Highly uncertain as evidence for Quirinius specifically — the inscription is fragmentary, unnamed, and its subject is disputed among historians rather than a confirmed reference to him.",
       },
@@ -5804,9 +5831,9 @@ export const people: Person[] = [
     extraBiblicalReferences: [
       {
         source: "Josephus, Antiquities of the Jews",
-        citation: "18.4.6 (106-108); 18.2.1 (28); 18.5.4 (136-137)",
+        citation: "18.4.6 (106-108); 18.2.1 (28); 18.5.4 (136-137); 18.6.10 (237)",
         url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.4.6",
-        summary: "Josephus describes Philip's roughly forty-year reign as fair and moderate, his founding of Caesarea Philippi and rebuilding of Bethsaida-Julias, his marriage to Salome (daughter of Herodias), and, at his death without an heir, the absorption of his tetrarchy into the Roman province of Syria before later being granted to Agrippa II.",
+        summary: "Josephus describes Philip's thirty-seven-year reign as fair and moderate, his founding of Caesarea Philippi and rebuilding of Bethsaida-Julias, his marriage to Salome (daughter of Herodias), and, at his death without an heir, the absorption of his tetrarchy into the Roman province of Syria until the emperor Gaius (Caligula) granted it to Herod Agrippa I in AD 37.",
         reliability: "The principal near-contemporary historical source for Philip's reign, generally regarded as reliable on the outline of his rule and territorial administration.",
       },
     ],
@@ -5872,9 +5899,9 @@ export const people: Person[] = [
       },
       {
         source: "Seneca the Younger, various works and letters",
-        citation: "e.g., dedications of De Ira and De Vita Beata; Natural Questions 4a, preface",
+        citation: "e.g., dedications of De Ira and De Vita Beata; Natural Questions 4a, preface; Moral Letters 104.1",
         url: "https://en.wikisource.org/wiki/Author:Lucius_Annaeus_Seneca",
-        summary: "Seneca dedicated two of his philosophical works to his brother Gallio and, in the preface to the fourth book of his Natural Questions, describes Gallio's illness in Achaia and his good-natured personality ('no mortal is so pleasant to any one person as Gallio is to everybody').",
+        summary: "Seneca dedicated two of his philosophical works to his brother Gallio praises his good-natured personality in the preface to the fourth book of his Natural Questions ('no mortal is so pleasant to any one person as Gallio is to everybody'), and in a letter (Moral Letters 104.1) recalls Gallio taking ship at once when he began to run a fever in Achaia, blaming the place rather than his body.",
         reliability: "Independent corroboration from Gallio's own brother that he was a real, well-known Roman official of the mid-first century, though these references do not independently date his Achaian proconsulship the way the Delphi inscription does.",
       },
     ],
@@ -5916,7 +5943,7 @@ export const people: Person[] = [
                 source: "Josephus, Antiquities of the Jews",
                 citation: "18.1.3 (12-15)",
                 url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+18.1.3",
-                summary: "Describes the Pharisees as living simply, valued highly by the common people, and skilled interpreters of the law who believe the soul survives death and that souls of the virtuous pass into other bodies, while the wicked are punished — a belief roughly corresponding to bodily resurrection.",
+                summary: "Describes the Pharisees as living simply, valued highly by the common people, and skilled interpreters of the law who believe the soul survives death and that the souls of the virtuous will have power to revive and live again, while the wicked are held in everlasting imprisonment — usually read as belief in a resurrection.",
                 reliability: "A later, more detailed restatement of Pharisaic belief in Josephus's overview of the Jewish 'schools of thought,' consistent with his earlier account in Antiquities 13; generally treated by historians as reliable in outline, if colored by Josephus casting Jewish groups in terms a Greco-Roman readership would recognize as philosophical schools.",
             },
             {
@@ -5964,7 +5991,7 @@ export const people: Person[] = [
         extraBiblicalReferences: [
             {
                 source: "Josephus, Antiquities of the Jews",
-                citation: "13.10.6 (293-298)",
+                citation: "13.10.5-6 (288-298)",
                 url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+AJ+13.10.6",
                 summary: "Recounts the historical break between the Hasmonean ruler John Hyrcanus and the Pharisees, after which Hyrcanus adopted Sadducean positions and abolished Pharisaic legal regulations — an early, concrete example of the two parties' rival political fortunes.",
                 reliability: "One of the few narrative episodes in Josephus that shows Pharisee-Sadducee rivalry playing out in an actual political event rather than as abstract doctrinal description; widely cited by historians as evidence the split was real and consequential well before the New Testament period.",
@@ -5980,8 +6007,8 @@ export const people: Person[] = [
                 source: "Josephus, The Jewish War",
                 citation: "2.8.14 (164-166)",
                 url: "https://www.perseus.tufts.edu/hopper/text?doc=J.+BJ+2.8.14",
-                summary: "Notes that the Sadducees are able to persuade only the wealthy, not the common people, and that officeholders from the party must submit to Pharisaic positions once in office because ordinary people would not otherwise accept their rulings.",
-                reliability: "A useful independent confirmation of the Sadducees' narrow, elite social base as distinct from the Pharisees' popular support; consistent with the Gospels' and Acts' portrayal of the Sadducees as the establishment party.",
+                summary: "Says the Sadducees deny fate and reject any survival of the soul or rewards and punishments after death, and that, while the Pharisees are affectionate to one another, the Sadducees are rough even toward each other.",
+                reliability: "Confirms Antiquities 18.1.4 on Sadducean belief. The related claims that the Sadducees persuaded only the wealthy and had to defer to Pharisaic practice once in office come from Antiquities 13.10.6 (298) and 18.1.4 (17), not from this passage; they fit the Gospels' and Acts' portrayal of the Sadducees as the establishment party.",
             },
         ],
         verses: [
@@ -6095,9 +6122,15 @@ export const people: Person[] = [
         citation: "1.28",
         url: "https://www.ccel.org/ccel/schaff/npnf201.html",
         summary:
-          "Eusebius records Constantine's account of a vision of a cross of light before the Battle of the Milvian Bridge.",
+          "Eusebius records Constantine's own account, which Eusebius says the emperor swore to him in later years, of a cross of light seen in the sky with the words 'by this conquer', during the campaign against Maxentius that ended at the Milvian Bridge.",
         reliability:
           "Contemporary but highly favorable biography written by a churchman who knew him",
+      },
+      {
+        source: "Lactantius, On the Deaths of the Persecutors",
+        citation: "44.5",
+        summary: "Writing within a few years of the battle (c. AD 315), Lactantius says Constantine was told in a dream to mark the heavenly sign of God on his soldiers' shields before fighting Maxentius, and did so.",
+        reliability: "Contemporary, by a Christian teacher at Constantine's court. It differs in detail from Eusebius's later account (a dream rather than a vision in the sky).",
       },
     ],
     quotes: [
@@ -6139,6 +6172,20 @@ export const people: Person[] = [
     ],
     occupation: "Bishop, theologian",
     placesLived: "Alexandria, Trier, Rome",
+    extraBiblicalReferences: [
+      {
+        source: "Athanasius, Defence against the Arians (Apologia contra Arianos)",
+        citation: "written in the 350s",
+        summary: "Athanasius's own dossier on the charges against him, reproducing documents such as the letter of Julius, bishop of Rome, and the letters of the Council of Serdica (343) that cleared him.",
+        reliability: "Contemporary documents, but selected and arranged by Athanasius to defend his own conduct.",
+      },
+      {
+        source: "Gregory of Nazianzus, Oration 21 (On the Great Athanasius)",
+        citation: "c. AD 379-380",
+        summary: "A eulogy delivered in Constantinople within a decade of Athanasius's death, praising his steadfastness through his exiles.",
+        reliability: "Near-contemporary, by a fellow Nicene bishop; a panegyric, not a neutral account.",
+      },
+    ],
     quotes: [
       {
         reference: "On the Incarnation",
@@ -6177,8 +6224,20 @@ export const people: Person[] = [
     ],
     occupation: "Presbyter",
     placesLived: "Alexandria",
-    noExtraBiblicalRecordNote:
-      "Arius's own writings survive only in fragments quoted by his opponents, notably Athanasius; no complete work of his has survived independently.",
+    extraBiblicalReferences: [
+      {
+        source: "Arius, Letter to Eusebius of Nicomedia",
+        citation: "c. 318-320; preserved in Epiphanius, Panarion 69.6, and Theodoret, Church History 1.5",
+        summary: "Arius complains that his bishop Alexander is persecuting him and sets out his own teaching that the Son 'is not unbegotten' and came into being by the Father's will.",
+        reliability: "Arius's own words, but preserved only by writers opposed to him.",
+      },
+      {
+        source: "Alexander of Alexandria, encyclical letter on the deposition of Arius",
+        citation: "c. 319-324; preserved in Socrates, Church History 1.6",
+        summary: "Arius's bishop announces to other bishops that Arius and his supporters have been excommunicated, and summarises the teaching he condemns.",
+        reliability: "Contemporary, from Arius's principal opponent.",
+      },
+    ],
     verses: [],
     sources: [
       {
@@ -6207,6 +6266,21 @@ export const people: Person[] = [
     ],
     occupation: "Bishop, historian",
     placesLived: "Caesarea Maritima",
+    extraBiblicalReferences: [
+      {
+        source: "Eusebius, Letter to the Church of Caesarea",
+        citation: "AD 325; preserved by Athanasius (On the Decrees of Nicaea) and Socrates (Church History 1.8)",
+        summary: "Written from Nicaea, Eusebius explains to his own congregation why he signed the council's creed, quoting the creed he had put forward and how he understood the word homoousios.",
+        reliability: "A contemporary first-person document, shaped by his need to justify his signature.",
+      },
+      {
+        source: "Eusebius, Church History",
+        citation: "8.9.4",
+        url: "https://www.newadvent.org/fathers/250108.htm",
+        summary: "Eusebius says he was himself present in the Thebaid in Egypt and saw Christians executed there during the Great Persecution.",
+        reliability: "His own eyewitness testimony, written within a few years.",
+      },
+    ],
     quotes: [
       {
         reference: "Ecclesiastical History, Preface",
@@ -6247,6 +6321,20 @@ export const people: Person[] = [
     ],
     occupation: "Priest, translator, scholar",
     placesLived: "Stridon, Rome, Antioch, the Syrian desert, Constantinople, Bethlehem",
+    extraBiblicalReferences: [
+      {
+        source: "Correspondence of Jerome and Augustine",
+        citation: "c. 394-419; in the letter collections of both",
+        summary: "Augustine and Jerome exchanged letters for some twenty-five years, arguing over Jerome's translation from the Hebrew and over Paul's rebuke of Peter in Galatians 2.",
+        reliability: "Contemporary, with letters from both sides surviving.",
+      },
+      {
+        source: "Rufinus of Aquileia, Apology against Jerome",
+        citation: "c. AD 400-401",
+        summary: "Jerome's former friend answers his attacks during their quarrel over Origen, giving a hostile contemporary portrait of him.",
+        reliability: "Contemporary but polemical.",
+      },
+    ],
     quotes: [
       {
         reference: "Commentary on Isaiah, Prologue",
@@ -6340,6 +6428,20 @@ export const people: Person[] = [
     ],
     occupation: "Roman governor, bishop, hymn writer",
     placesLived: "Trier, Rome, Milan",
+    extraBiblicalReferences: [
+      {
+        source: "Augustine, Confessions",
+        citation: "5.13.23-6.4.6",
+        summary: "Augustine describes meeting Ambrose in Milan in 384, being won over by his preaching, and finding him reading silently in his study.",
+        reliability: "An eyewitness account by a convert of Ambrose's, written about fifteen years later.",
+      },
+      {
+        source: "Paulinus of Milan, Life of Ambrose",
+        citation: "early 5th century",
+        summary: "A biography by Ambrose's former secretary, written at Augustine's request, covering his election as bishop and his clashes with the imperial court.",
+        reliability: "Written by someone who knew him, but hagiographical, with many miracle stories.",
+      },
+    ],
     quotes: [
       {
         reference: "attributed",
@@ -6375,6 +6477,20 @@ export const people: Person[] = [
     ],
     occupation: "Priest, archbishop, preacher",
     placesLived: "Antioch, Constantinople",
+    extraBiblicalReferences: [
+      {
+        source: "Palladius, Dialogue on the Life of John Chrysostom",
+        citation: "c. AD 408",
+        summary: "Written within a year or so of Chrysostom's death by a bishop who supported him, describing his deposition and exile.",
+        reliability: "Contemporary, by a partisan of Chrysostom.",
+      },
+      {
+        source: "Socrates Scholasticus, Church History; Sozomen, Church History",
+        citation: "Socrates 6.2-6.21; Sozomen book 8 (c. 440s)",
+        summary: "Both Constantinople-based historians narrate his career as bishop, his conflict with the empress Eudoxia and with the bishop of Alexandria, and his exile.",
+        reliability: "Written about a generation later, drawing on earlier sources; Socrates is noticeably cooler toward Chrysostom than Sozomen.",
+      },
+    ],
     quotes: [
       {
         reference: "attributed final words",
@@ -6462,6 +6578,20 @@ export const people: Person[] = [
     ],
     occupation: "Roman prefect, monk, pope",
     placesLived: "Rome, Constantinople",
+    extraBiblicalReferences: [
+      {
+        source: "Gregory the Great, Register of Letters (Registrum epistularum)",
+        citation: "AD 590-604",
+        summary: "About 850 of Gregory's letters as pope survive, covering church administration, the papal estates, relations with Lombards and Byzantines, and the mission to the English.",
+        reliability: "His own official correspondence; a contemporary primary source.",
+      },
+      {
+        source: "Gregory of Tours, History of the Franks",
+        citation: "10.1",
+        summary: "A contemporary account of Gregory's election in 590 during an outbreak of plague in Rome, his reluctance to accept, and the penitential procession he organized.",
+        reliability: "Contemporary, from a report brought back by a deacon of Tours who was in Rome at the time.",
+      },
+    ],
     quotes: [
       {
         reference: "attributed, on seeing Anglian slaves",
@@ -6509,7 +6639,7 @@ export const people: Person[] = [
         citation: "throughout",
         url: "https://www.confessio.ie/",
         summary:
-          "Patrick's own autobiographical defense of his mission and character, the only certainly authentic document from his life.",
+          "Patrick's own autobiographical defense of his mission and character, one of only two documents generally accepted as his own (the other is his Letter to the Soldiers of Coroticus).",
         reliability: "Primary source, written by Patrick himself",
       },
     ],
@@ -6553,6 +6683,20 @@ export const people: Person[] = [
     ],
     occupation: "King, Emperor",
     placesLived: "Aachen, various Frankish territories",
+    extraBiblicalReferences: [
+      {
+        source: "Einhard, Life of Charlemagne",
+        citation: "written c. 817-830",
+        summary: "A biography by a scholar who lived at Charlemagne's court, covering his wars, his appearance and habits, and his coronation as emperor in Rome in 800.",
+        reliability: "By someone who knew him well, but modelled on Suetonius's lives of the emperors and favourable to its subject.",
+      },
+      {
+        source: "Royal Frankish Annals (Annales regni Francorum)",
+        citation: "entries for 741-829",
+        summary: "Year-by-year annals kept at or near the Frankish court, recording his campaigns and his crowning by Pope Leo III on Christmas Day 800.",
+        reliability: "Contemporary court annals; an official perspective that tends to pass over setbacks.",
+      },
+    ],
     verses: [],
     sources: [
       {
@@ -6582,6 +6726,20 @@ export const people: Person[] = [
     ],
     occupation: "Scholar, patriarch",
     placesLived: "Constantinople",
+    extraBiblicalReferences: [
+      {
+        source: "Letters of Pope Nicholas I",
+        citation: "AD 860s",
+        summary: "Nicholas refused to recognize Photius's elevation over the deposed patriarch Ignatius, and a Roman synod of 863 declared him deposed.",
+        reliability: "Contemporary official correspondence from his opponents' side.",
+      },
+      {
+        source: "Acts of the councils of Constantinople",
+        citation: "869-870 and 879-880",
+        summary: "The council of 869-870 condemned Photius; the council of 879-880, attended by papal legates, restored him. The two councils are still weighed differently by the Catholic and Orthodox churches.",
+        reliability: "Contemporary conciliar records, each produced by the party then in power.",
+      },
+    ],
     verses: [],
     sources: [
       {
@@ -6609,6 +6767,20 @@ export const people: Person[] = [
     ],
     occupation: "Monk, archbishop, theologian",
     placesLived: "Aosta, Bec (Normandy), Canterbury",
+    extraBiblicalReferences: [
+      {
+        source: "Eadmer, Life of Anselm and History of Recent Events (Historia novorum)",
+        citation: "early 12th century",
+        summary: "Accounts by a Canterbury monk who was Anselm's companion and chaplain, covering his life at Bec, his time as archbishop, and his quarrels with William II and Henry I over royal control of the church.",
+        reliability: "Contemporary and intimate, though written by a devoted admirer.",
+      },
+      {
+        source: "Anselm's letters",
+        citation: "several hundred survive",
+        summary: "Anselm's correspondence as monk, abbot and archbishop, alongside his own treatises such as the Proslogion and Why God Became Man.",
+        reliability: "His own writings; contemporary primary sources.",
+      },
+    ],
     quotes: [
       {
         reference: "Proslogion, Chapter 1",
@@ -6644,6 +6816,20 @@ export const people: Person[] = [
     ],
     occupation: "Abbot, preacher, theologian",
     placesLived: "Fontaine-lès-Dijon, Cîteaux, Clairvaux",
+    extraBiblicalReferences: [
+      {
+        source: "The First Life of Bernard (Vita Prima)",
+        citation: "Book 1 by William of Saint-Thierry, begun c. 1145-1148; continued after 1153 by Arnold of Bonneval and Geoffrey of Auxerre",
+        summary: "A biography begun while Bernard was still alive by a friend, and completed after his death by two monks who knew him, Geoffrey having been his secretary.",
+        reliability: "Contemporary, by close associates, but written to support his canonization.",
+      },
+      {
+        source: "Bernard's letters and sermons",
+        citation: "c. 1115-1153",
+        summary: "Several hundred of Bernard's letters survive, along with his sermons on the Song of Songs and treatises, documenting his role in church politics, his conflict with Peter Abelard and his preaching of the Second Crusade.",
+        reliability: "His own writings; contemporary primary sources.",
+      },
+    ],
     quotes: [
       {
         reference: "On Loving God",
@@ -6680,6 +6866,26 @@ export const people: Person[] = [
     ],
     occupation: "Friar, founder of a religious order",
     placesLived: "Assisi, Rome, Egypt, La Verna",
+    extraBiblicalReferences: [
+      {
+        source: "Tommaso da Celano, First Life of St. Francis",
+        citation: "1228-1229",
+        summary: "Commissioned by Pope Gregory IX at Francis's canonization, two years after his death, by a friar who had known him.",
+        reliability: "Near-contemporary but hagiographical, written for the order and the papacy.",
+      },
+      {
+        source: "Jacques de Vitry, letters",
+        citation: "1216 (from Genoa) and 1220 (from Damietta)",
+        summary: "A French churchman describes the new 'Lesser Brothers' he met in Italy in 1216, and in 1220 reports from the crusader camp in Egypt that their founder had crossed the lines and preached to the sultan.",
+        reliability: "Contemporary outside witness; the 1220 letter is the earliest report of Francis's meeting with the sultan.",
+      },
+      {
+        source: "Francis's autograph blessing for Brother Leo (Chartula)",
+        citation: "Basilica of St. Francis, Assisi",
+        summary: "A small parchment in Francis's own hand, with praises of God on one side and a blessing for Brother Leo on the other.",
+        reliability: "One of very few surviving autographs of Francis; a direct physical witness.",
+      },
+    ],
     quotes: [
       {
         reference: "Canticle of the Sun",
@@ -6720,6 +6926,26 @@ export const people: Person[] = [
     ],
     occupation: "Priest, founder of a religious order",
     placesLived: "Castile, Languedoc, Rome, Bologna",
+    extraBiblicalReferences: [
+      {
+        source: "Pope Honorius III, bull confirming the Order of Preachers",
+        citation: "22 December 1216",
+        summary: "The papal confirmation of the community Dominic founded at Toulouse.",
+        reliability: "Contemporary official record.",
+      },
+      {
+        source: "Jordan of Saxony, On the Beginnings of the Order of Preachers (Libellus)",
+        citation: "c. 1233",
+        summary: "An account of Dominic's life and the order's founding by his successor as master of the order, who had known him.",
+        reliability: "Near-contemporary, by an insider.",
+      },
+      {
+        source: "Canonization testimonies (Bologna and Toulouse)",
+        citation: "1233",
+        summary: "Sworn statements by friars and others who knew Dominic, gathered for his canonization in 1234.",
+        reliability: "Near-contemporary eyewitness testimony, collected to support his sainthood.",
+      },
+    ],
     verses: [],
     sources: [
       {
@@ -6749,6 +6975,20 @@ export const people: Person[] = [
     ],
     occupation: "Friar, theologian, philosopher",
     placesLived: "Roccasecca, Naples, Cologne, Paris, Rome",
+    extraBiblicalReferences: [
+      {
+        source: "Autograph manuscripts of Thomas Aquinas",
+        citation: "e.g. Summa contra Gentiles, Vatican Library, Vat. lat. 9850",
+        summary: "Several of Thomas's works survive partly in his own notoriously hard-to-read hand, including large parts of the Summa contra Gentiles.",
+        reliability: "Direct physical evidence; his own writing.",
+      },
+      {
+        source: "Canonization inquiries and William of Tocco's Life (Ystoria)",
+        citation: "Naples 1319, Fossanova 1321; Ystoria c. 1318-1323",
+        summary: "Witnesses who had known Thomas, including friars and his former associates, testified about his life; William of Tocco, who had known him, wrote the biography that supported his canonization in 1323.",
+        reliability: "Testimony from people who knew him, gathered about 45 years after his death to support his canonization.",
+      },
+    ],
     quotes: [
       {
         reference: "Summa Theologica, I, Q.2, Art.3",
@@ -6795,8 +7035,26 @@ export const people: Person[] = [
     ],
     occupation: "Merchant, lay preacher",
     placesLived: "Lyon",
-    noExtraBiblicalRecordNote:
-      "No writings by Waldo himself survive; what is known of him comes from hostile ecclesiastical records and later Waldensian tradition.",
+    extraBiblicalReferences: [
+      {
+        source: "Waldo's profession of faith",
+        citation: "Lyon, 1180; manuscript identified by Antoine Dondaine in 1946",
+        summary: "A statement of orthodox belief that Waldo made before a papal legate at a synod in Lyon, ending with his resolve to live in poverty.",
+        reliability: "Contemporary document; a set formula he subscribed to rather than a work he composed freely.",
+      },
+      {
+        source: "Walter Map, Courtiers' Trifles (De nugis curialium)",
+        citation: "1.31",
+        summary: "An English cleric who was present at the Third Lateran Council in 1179 describes questioning the Waldensians who came to seek approval for their preaching, naming them after their leader Valdes of Lyon.",
+        reliability: "Contemporary eyewitness, openly mocking and hostile.",
+      },
+      {
+        source: "Anonymous of Laon, Universal Chronicle",
+        citation: "entry for 1173; written c. 1220",
+        summary: "Tells the story of a rich citizen of Lyon who gave away his wealth after hearing the legend of St. Alexis, the fullest account of Waldo's conversion.",
+        reliability: "Written about fifty years after the events; the details of the conversion story cannot be checked.",
+      },
+    ],
     verses: [],
     sources: [
       {
@@ -6825,6 +7083,26 @@ export const people: Person[] = [
     ],
     occupation: "Theologian, Oxford lecturer",
     placesLived: "Yorkshire, Oxford, Lutterworth",
+    extraBiblicalReferences: [
+      {
+        source: "Pope Gregory XI, bulls against Wycliffe",
+        citation: "22 May 1377",
+        summary: "Gregory XI condemned a list of propositions drawn from Wycliffe's teaching and ordered the English authorities and the University of Oxford to act against him.",
+        reliability: "Contemporary official record, from his opponents.",
+      },
+      {
+        source: "Blackfriars Council, London",
+        citation: "1382",
+        summary: "A council called by Archbishop William Courtenay condemned twenty-four propositions attributed to Wycliffe, some as heretical and some as erroneous.",
+        reliability: "Contemporary official record, from his opponents.",
+      },
+      {
+        source: "Council of Constance",
+        citation: "1415",
+        summary: "The council condemned Wycliffe posthumously and ordered his remains removed from consecrated ground; they were exhumed and burned in 1428.",
+        reliability: "Official conciliar record, three decades after his death.",
+      },
+    ],
     quotes: [
       {
         reference: "attributed",
@@ -6867,6 +7145,12 @@ export const people: Person[] = [
         summary: "Official conciliar record of Hus's condemnation and execution.",
         reliability: "Contemporary institutional record, from the hostile party's perspective",
       },
+      {
+        source: "Petr of Mladoňovice, Account of the Trial of Master Jan Hus (Relatio)",
+        citation: "written c. 1415-1416",
+        summary: "An eyewitness narrative of Hus's hearings and execution at Constance by a Czech who accompanied him there.",
+        reliability: "Contemporary eyewitness account from Hus's own side, so sympathetic to him; read alongside the council's official record.",
+      },
     ],
     quotes: [
       {
@@ -6907,6 +7191,20 @@ export const people: Person[] = [
     ],
     occupation: "Goldsmith, printer, inventor",
     placesLived: "Mainz, Strasbourg",
+    extraBiblicalReferences: [
+      {
+        source: "Strasbourg lawsuit records",
+        citation: "1439",
+        summary: "In a lawsuit brought by the heirs of his partner Andreas Dritzehn, witnesses describe a secret enterprise of Gutenberg's involving a press and other equipment.",
+        reliability: "Contemporary court records; the main source for his years in Strasbourg.",
+      },
+      {
+        source: "Helmasperger Notarial Instrument",
+        citation: "6 November 1455; University of Göttingen library",
+        summary: "A Mainz notary's record of the lawsuit in which Johann Fust sought to recover the money he had advanced to Gutenberg for 'the work of the books'.",
+        reliability: "Contemporary legal document; the record is incomplete and does not include the final judgment.",
+      },
+    ],
     verses: [],
     sources: [
       {

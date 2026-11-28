@@ -9,7 +9,7 @@ location	ai	ai	reader	37
 location	ai	ai	reader:asv	37
 location	ai	ai	reader:kjv	36
 location	alexandria	alexandria	panel	2
-location	alexandria	alexandria	prose	38
+location	alexandria	alexandria	prose	40
 location	alexandria	alexandria	reader	2
 location	alexandria	alexandria	reader:asv	2
 location	alexandria	alexandria	reader:kjv	3
@@ -38,7 +38,7 @@ location	ashkelon	ashkelon	reader	12
 location	ashkelon	ashkelon	reader:asv	12
 location	ashkelon	ashkelon	reader:kjv	9
 location	asia	asia-province	panel	19
-location	asia	asia-province	prose	17
+location	asia	asia-province	prose	18
 location	asia	asia-province	reader	19
 location	asia	asia-province	reader:asv	20
 location	asia	asia-province	reader:kjv	21
@@ -63,7 +63,7 @@ location	babel	babylon	reader	2
 location	babel	babylon	reader:asv	2
 location	babel	babylon	reader:kjv	2
 location	babylon	babylon	panel	294
-location	babylon	babylon	prose	126
+location	babylon	babylon	prose	123
 location	babylon	babylon	reader	294
 location	babylon	babylon	reader:asv	294
 location	babylon	babylon	reader:kjv	295
@@ -123,7 +123,7 @@ location	colossae	colossae	prose	5
 location	colossae	colossae	reader	1
 location	colossae	colossae	reader:asv	1
 location	corinth	corinth	panel	6
-location	corinth	corinth	prose	62
+location	corinth	corinth	prose	63
 location	corinth	corinth	reader	6
 location	corinth	corinth	reader:asv	6
 location	corinth	corinth	reader:kjv	6
@@ -172,7 +172,7 @@ location	edom	edom	reader	81
 location	edom	edom	reader:asv	83
 location	edom	edom	reader:kjv	76
 location	egypt	egypt	panel	618
-location	egypt	egypt	prose	345
+location	egypt	egypt	prose	346
 location	egypt	egypt	reader	618
 location	egypt	egypt	reader:asv	623
 location	egypt	egypt	reader:kjv	612
@@ -187,7 +187,7 @@ location	en gedi	en-gedi	reader	6
 location	en-mishpat	kadesh-barnea	reader:asv	1
 location	engedi	en-gedi	reader:kjv	6
 location	ephesus	ephesus	panel	17
-location	ephesus	ephesus	prose	48
+location	ephesus	ephesus	prose	50
 location	ephesus	ephesus	reader	17
 location	ephesus	ephesus	reader:asv	18
 location	ephesus	ephesus	reader:kjv	17
@@ -272,6 +272,7 @@ location	haran	haran	prose	16
 location	haran	haran	reader	21
 location	haran	haran	reader:asv	21
 location	haran	haran	reader:kjv	19
+location	harran	haran	prose	1
 location	horeb	mount-sinai	panel	17
 location	horeb	mount-sinai	prose	10
 location	horeb	mount-sinai	reader	17
@@ -285,7 +286,7 @@ location	iconium	iconium	reader:kjv	6
 location	idumea	edom	prose	4
 location	idumea	edom	reader:kjv	4
 location	jerusalem	jerusalem	panel	813
-location	jerusalem	jerusalem	prose	625
+location	jerusalem	jerusalem	prose	630
 location	jerusalem	jerusalem	reader	813
 location	jerusalem	jerusalem	reader:asv	811
 location	jerusalem	jerusalem	reader:kjv	816
@@ -319,7 +320,7 @@ location	kadesh barnea	kadesh-barnea	reader	10
 location	kiriath-arba	hebron	prose	2
 location	kiriath-arba	hebron	reader:asv	9
 location	lachish	lachish	panel	24
-location	lachish	lachish	prose	31
+location	lachish	lachish	prose	33
 location	lachish	lachish	reader	24
 location	lachish	lachish	reader:asv	24
 location	lachish	lachish	reader:kjv	24
@@ -476,7 +477,7 @@ location	phrygia	phrygia	prose	6
 location	phrygia	phrygia	reader	3
 location	phrygia	phrygia	reader:asv	3
 location	phrygia	phrygia	reader:kjv	3
-location	pisidian antioch	antioch-pisidia	prose	4
+location	pisidian antioch	antioch-pisidia	prose	5
 location	pontus	pontus	panel	3
 location	pontus	pontus	prose	6
 location	pontus	pontus	reader	3
@@ -508,7 +509,7 @@ location	red sea	red-sea	reader:kjv	28
 location	region of the gerasenes	gadara	prose	1
 location	roman province of asia	asia-province	prose	3
 location	rome	rome	panel	9
-location	rome	rome	prose	290
+location	rome	rome	prose	296
 location	rome	rome	reader	9
 location	rome	rome	reader:asv	9
 location	rome	rome	reader:kjv	9
@@ -601,7 +602,7 @@ location	tekoa	tekoa	reader:asv	9
 location	tekoa	tekoa	reader:kjv	6
 location	tel miqne	ekron	prose	1
 location	tell es-safi	gath	prose	1
-location	temple mount	mount-moriah	prose	3
+location	temple mount	mount-moriah	prose	4
 location	the jordan	jordan-river	panel	189
 location	the jordan	jordan-river	prose	59
 location	the jordan	jordan-river	reader	189
@@ -633,7 +634,7 @@ location	tyre	tyre	reader	59
 location	tyre	tyre	reader:asv	59
 location	tyre	tyre	reader:kjv	37
 location	ur	ur	panel	5
-location	ur	ur	prose	24
+location	ur	ur	prose	25
 location	ur	ur	reader	5
 location	ur	ur	reader:asv	5
 location	ur	ur	reader:kjv	5
@@ -693,9 +694,9 @@ person	adam	adam	reader	21
 person	adam	adam	reader:asv	21
 person	adam	adam	reader:kjv	31
 person	agrippa i	herod-agrippa-i	prose	5
-person	agrippa ii	herod-agrippa-ii	prose	8
+person	agrippa ii	herod-agrippa-ii	prose	7
 person	ahaz	ahaz	panel	44
-person	ahaz	ahaz	prose	24
+person	ahaz	ahaz	prose	25
 person	ahaz	ahaz	reader	37
 person	ahaz	ahaz	reader:asv	37
 person	ahaz	ahaz	reader:kjv	35
@@ -870,7 +871,7 @@ person	christ jesus	jesus-of-nazareth	reader	84
 person	christ jesus	jesus-of-nazareth	reader:asv	86
 person	christ jesus	jesus-of-nazareth	reader:kjv	58
 person	claudius	claudius-caesar	panel	2
-person	claudius	claudius-caesar	prose	27
+person	claudius	claudius-caesar	prose	29
 person	claudius	claudius-caesar	reader	2
 person	claudius	claudius-caesar	reader:asv	2
 person	claudius	claudius-caesar	reader:kjv	1
@@ -1013,7 +1014,7 @@ person	ezra	ezra	reader:kjv	26
 person	father in heaven	god-the-father	panel	4
 person	father in heaven	god-the-father	reader	4
 person	felix	antonius-felix	panel	9
-person	felix	antonius-felix	prose	17
+person	felix	antonius-felix	prose	16
 person	felix	antonius-felix	reader	9
 person	felix	antonius-felix	reader:asv	9
 person	felix	antonius-felix	reader:kjv	9
@@ -1074,7 +1075,7 @@ person	herod	herod-antipas	reader:kjv	23
 person	herod	herod-the-great	reader	11
 person	herod	herod-the-great	reader:asv	11
 person	herod	herod-the-great	reader:kjv	11
-person	herod agrippa i	herod-agrippa-i	prose	11
+person	herod agrippa i	herod-agrippa-i	prose	12
 person	herod agrippa ii	herod-agrippa-ii	prose	3
 person	herod antipas	herod-antipas	prose	23
 person	herod archelaus	herod-archelaus	prose	3
@@ -1525,7 +1526,7 @@ person	onesimus	onesimus	reader	2
 person	onesimus	onesimus	reader:asv	2
 person	onesimus	onesimus	reader:kjv	2
 person	paul	paul-of-tarsus	panel	161
-person	paul	paul-of-tarsus	prose	618
+person	paul	paul-of-tarsus	prose	621
 person	paul	paul-of-tarsus	reader	161
 person	paul	paul-of-tarsus	reader:asv	157
 person	paul	paul-of-tarsus	reader:kjv	162
@@ -1535,7 +1536,7 @@ person	perez	perez	reader	18
 person	perez	perez	reader:asv	18
 person	perez	perez	reader:kjv	3
 person	peter	simon-peter	panel	136
-person	peter	simon-peter	prose	185
+person	peter	simon-peter	prose	186
 person	peter	simon-peter	reader	136
 person	peter	simon-peter	reader:asv	134
 person	peter	simon-peter	reader:kjv	141
@@ -1952,7 +1953,7 @@ poi	bethsaida	bethsaida	reader	7
 poi	bethsaida	bethsaida	reader:asv	7
 poi	bethsaida	bethsaida	reader:kjv	7
 poi	caesarea	caesarea-maritima	panel	15
-poi	caesarea	caesarea-maritima	prose	33
+poi	caesarea	caesarea-maritima	prose	34
 poi	caesarea	caesarea-maritima	reader	15
 poi	caesarea	caesarea-maritima	reader:asv	15
 poi	caesarea	caesarea-maritima	reader:kjv	15
@@ -1996,9 +1997,9 @@ poi	hebron	hebron	prose	32
 poi	hebron	hebron	reader	72
 poi	hebron	hebron	reader:asv	72
 poi	hebron	hebron	reader:kjv	73
-poi	herodium	herodium	prose	5
+poi	herodium	herodium	prose	6
 poi	hierapolis	hierapolis	panel	1
-poi	hierapolis	hierapolis	prose	6
+poi	hierapolis	hierapolis	prose	7
 poi	hierapolis	hierapolis	reader	1
 poi	hierapolis	hierapolis	reader:asv	1
 poi	hierapolis	hierapolis	reader:kjv	1
@@ -2017,7 +2018,7 @@ poi	mamertine prison	mamertine-prison-rome	prose	1
 poi	mars hill	areopagus-athens	prose	1
 poi	masada	masada	prose	9
 poi	megiddo	megiddo	panel	12
-poi	megiddo	megiddo	prose	13
+poi	megiddo	megiddo	prose	14
 poi	megiddo	megiddo	reader	12
 poi	megiddo	megiddo	reader:asv	11
 poi	megiddo	megiddo	reader:kjv	11
@@ -2230,7 +2231,7 @@ topic	assyrians	assyrians	reader	10
 topic	assyrians	assyrians	reader:asv	9
 topic	assyrians	assyrians	reader:kjv	10
 topic	babylonian	babylonians	panel	1
-topic	babylonian	babylonians	prose	89
+topic	babylonian	babylonians	prose	88
 topic	babylonian	babylonians	reader	1
 topic	babylonian chronicle	babylonian-chronicles	prose	9
 topic	babylonian chronicles	babylonian-chronicles	prose	7
@@ -2340,7 +2341,7 @@ topic	edomites	edomites	reader	12
 topic	edomites	edomites	reader:asv	11
 topic	edomites	edomites	reader:kjv	13
 topic	egyptian	egyptians	panel	30
-topic	egyptian	egyptians	prose	178
+topic	egyptian	egyptians	prose	179
 topic	egyptian	egyptians	reader	30
 topic	egyptian	egyptians	reader:asv	27
 topic	egyptian	egyptians	reader:kjv	27
@@ -2358,7 +2359,7 @@ topic	elders	jewish-elders	reader	33
 topic	elders	jewish-elders	reader:asv	32
 topic	elders	jewish-elders	reader:kjv	33
 topic	elephantine papyri	elephantine-papyri	prose	4
-topic	enuma elish	enuma-elish	prose	5
+topic	enuma elish	enuma-elish	prose	6
 topic	epic of gilgamesh	epic-of-gilgamesh	prose	5
 topic	evil spirit	demons	panel	9
 topic	evil spirit	demons	reader	9
@@ -2379,7 +2380,7 @@ topic	gentile	gentiles	reader	2
 topic	gentile	gentiles	reader:asv	1
 topic	gentile	gentiles	reader:kjv	2
 topic	gentiles	gentiles	panel	83
-topic	gentiles	gentiles	prose	33
+topic	gentiles	gentiles	prose	34
 topic	gentiles	gentiles	reader	83
 topic	gentiles	gentiles	reader:asv	103
 topic	gentiles	gentiles	reader:kjv	131
@@ -2388,7 +2389,7 @@ topic	gospel of thomas	gospel-of-thomas	prose	3
 topic	great isaiah scroll	great-isaiah-scroll	prose	5
 topic	great psalms scroll	great-psalms-scroll	prose	1
 topic	greek	greeks	panel	15
-topic	greek	greeks	prose	395
+topic	greek	greeks	prose	396
 topic	greek	greeks	reader	15
 topic	greek	greeks	reader:asv	14
 topic	greek	greeks	reader:kjv	12
@@ -2436,7 +2437,7 @@ topic	jehoash inscription	jehoash-inscription	prose	1
 topic	jehoiachin's rations tablets	jehoiachin-ration-tablets	prose	1
 topic	jesus boat	galilee-boat	prose	3
 topic	jewish	jews	panel	7
-topic	jewish	jews	prose	391
+topic	jewish	jews	prose	388
 topic	jewish	jews	reader	7
 topic	jewish	jews	reader:asv	1
 topic	jewish	jews	reader:kjv	1
@@ -2490,8 +2491,9 @@ topic	moabites	moabites-and-ammonites	reader:kjv	19
 topic	most holy place	holy-of-holies	panel	1
 topic	most holy place	holy-of-holies	prose	2
 topic	most holy place	holy-of-holies	reader	1
-topic	nabonidus chronicle	babylonian-chronicles	prose	1
-topic	nabonidus cylinder	nabonidus-cylinder	prose	2
+topic	nabonidus chronicle	babylonian-chronicles	prose	2
+topic	nabonidus cylinder	nabonidus-cylinder	prose	1
+topic	nabonidus cylinders	nabonidus-cylinder	prose	1
 topic	nag hammadi codices	nag-hammadi-codices	prose	2
 topic	nahal hever greek minor prophets scroll	greek-minor-prophets-scroll	prose	7
 topic	nash papyrus	nash-papyrus	prose	1
@@ -2537,12 +2539,12 @@ topic	persians	persians	reader:asv	5
 topic	persians	persians	reader:kjv	7
 topic	peshitta	peshitta	prose	4
 topic	pharisee	topic-pharisees	panel	12
-topic	pharisee	topic-pharisees	prose	13
+topic	pharisee	topic-pharisees	prose	14
 topic	pharisee	topic-pharisees	reader	12
 topic	pharisee	topic-pharisees	reader:asv	12
 topic	pharisee	topic-pharisees	reader:kjv	13
 topic	pharisees	topic-pharisees	panel	89
-topic	pharisees	topic-pharisees	prose	60
+topic	pharisees	topic-pharisees	prose	61
 topic	pharisees	topic-pharisees	reader	89
 topic	pharisees	topic-pharisees	reader:asv	86
 topic	pharisees	topic-pharisees	reader:kjv	87
@@ -2565,7 +2567,7 @@ topic	preparation day	day-of-preparation	reader	1
 topic	preparation day	day-of-preparation	reader:kjv	1
 topic	qumran scrolls	dead-sea-scrolls	prose	2
 topic	roman	romans	panel	8
-topic	roman	romans	prose	484
+topic	roman	romans	prose	485
 topic	roman	romans	reader	8
 topic	roman	romans	reader:asv	7
 topic	roman	romans	reader:kjv	5
@@ -2587,7 +2589,7 @@ topic	sabbath day	sabbath	reader:asv	45
 topic	sabbath day	sabbath	reader:kjv	56
 topic	sadducee	topic-sadducees	prose	1
 topic	sadducees	topic-sadducees	panel	14
-topic	sadducees	topic-sadducees	prose	46
+topic	sadducees	topic-sadducees	prose	47
 topic	sadducees	topic-sadducees	reader	14
 topic	sadducees	topic-sadducees	reader:asv	14
 topic	sadducees	topic-sadducees	reader:kjv	14
@@ -2715,7 +2717,7 @@ topic	topheth	gehenna	panel	9
 topic	topheth	gehenna	reader	9
 topic	topheth	gehenna	reader:asv	10
 topic	topheth	gehenna	reader:kjv	1
-topic	torah	torah	prose	37
+topic	torah	torah	prose	38
 topic	trinitarian	the-trinity	prose	6
 topic	ugaritic texts	ugarit-tablets	prose	1
 topic	unclean spirit	demons	panel	13
@@ -3244,6 +3246,7 @@ verse	acts 13	-	prose	4
 verse	acts 13:1-3	-	prose	2
 verse	acts 13:13	-	prose	3
 verse	acts 13:13-14	-	prose	1
+verse	acts 13:14	-	prose	1
 verse	acts 13:14-41	-	prose	1
 verse	acts 13:15	-	prose	1
 verse	acts 13:2	-	prose	2
@@ -3253,7 +3256,7 @@ verse	acts 13:5	-	prose	2
 verse	acts 13:50-51	-	prose	1
 verse	acts 13:6-12	-	prose	3
 verse	acts 13:6-8	-	prose	1
-verse	acts 13:7	-	prose	1
+verse	acts 13:7	-	prose	2
 verse	acts 13:9-12	-	prose	1
 verse	acts 14:1-7	-	prose	1
 verse	acts 14:12	-	prose	1
@@ -3543,7 +3546,7 @@ verse	daniel 4	-	prose	3
 verse	daniel 4:17	-	prose	1
 verse	daniel 4:30	-	prose	1
 verse	daniel 4:32	-	prose	1
-verse	daniel 5	-	prose	7
+verse	daniel 5	-	prose	6
 verse	daniel 5:16	-	prose	1
 verse	daniel 5:30	-	prose	1
 verse	daniel 6	-	prose	3
@@ -3790,6 +3793,7 @@ verse	galatians 1:15-16	-	prose	1
 verse	galatians 1:17-18	-	prose	1
 verse	galatians 1:19	-	prose	2
 verse	galatians 1:21	-	prose	1
+verse	galatians 2	-	prose	1
 verse	galatians 2:1-10	-	prose	1
 verse	galatians 2:1-3	-	prose	1
 verse	galatians 2:11-13	-	prose	1

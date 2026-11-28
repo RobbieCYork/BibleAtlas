@@ -1145,23 +1145,26 @@ person.extraBib.source|nicodemus|cbf870d6c6	49	Pilate	pontius-pilate
 person.extraBib.source|simon-peter|65815b6ad3	0	Eusebius of Caesarea	eusebius-of-caesarea
 person.extraBib.summary|abraham|c3cf950927	250	Sarah	sarah
 person.extraBib.summary|abraham|c3cf950927	260	Hagar	hagar
+person.extraBib.summary|antonius-felix|a73cdd94c3	320	Claudius	claudius-caesar
 person.extraBib.summary|aquila|e934429e21	35	Claudius	claudius-caesar
 person.extraBib.summary|bernice|71037615b5	65	Agrippa II	herod-agrippa-ii
-person.extraBib.summary|drusilla|fbd77e2b80	54	Felix	antonius-felix
-person.extraBib.summary|drusilla|fbd77e2b80	75	Felix	antonius-felix
+person.extraBib.summary|drusilla|35c6040c43	54	Felix	antonius-felix
 person.extraBib.summary|gallio|d9cfd4d502	182	Claudius	claudius-caesar
 person.extraBib.summary|gallio|d9cfd4d502	58	Claudius	claudius-caesar
-person.extraBib.summary|hagar|7d83de9af8	260	Sarah	sarah
-person.extraBib.summary|hagar|7d83de9af8	294	Abraham	abraham
-person.extraBib.summary|hagar|7d83de9af8	325	Sarah	sarah
+person.extraBib.summary|hagar|f89d51f34b	327	Sarah	sarah
+person.extraBib.summary|hagar|f89d51f34b	361	Abraham	abraham
+person.extraBib.summary|hagar|f89d51f34b	392	Sarah	sarah
 person.extraBib.summary|herod-antipas|d514eeb55c	127	John the Baptist	john-the-baptist
 person.extraBib.summary|herod-antipas|d514eeb55c	212	John	john-the-baptist
 person.extraBib.summary|herod-archelaus|e78acdff7c	130	Augustus	caesar-augustus
 person.extraBib.summary|herod-the-great|bcb0e26f4d	68	Augustus	caesar-augustus
+person.extraBib.summary|hezekiah|cfe28aa861	63	Ahaz	ahaz
 person.extraBib.summary|isaiah|fe7a0f0081	112	Hezekiah	hezekiah
 person.extraBib.summary|jacob|d4fddf869c	357	Isaac	isaac
 person.extraBib.summary|jacob|d4fddf869c	375	Rachel	rachel
 person.extraBib.summary|james-brother-of-jesus|d2aebf1977	101	Jesus	jesus-of-nazareth
+person.extraBib.summary|jerome|029867686b	126	Paul	paul-of-tarsus
+person.extraBib.summary|jerome|029867686b	143	Peter	simon-peter
 person.extraBib.summary|jesus-of-nazareth|22c8c1aaf5	179	Pilate	pontius-pilate
 person.extraBib.summary|jesus-of-nazareth|b5c8755f28	172	Tiberius	tiberius-caesar
 person.extraBib.summary|jesus-of-nazareth|b5c8755f28	256	Nero	nero-caesar
@@ -1182,12 +1185,15 @@ person.extraBib.summary|nicodemus|6d1e72b507	110	Pilate	pontius-pilate
 person.extraBib.summary|nicodemus|6d1e72b507	182	Jesus	jesus-of-nazareth
 person.extraBib.summary|nicodemus|6d1e72b507	89	Jesus	jesus-of-nazareth
 person.extraBib.summary|paul-of-tarsus|66bb499591	245	Nero	nero-caesar
-person.extraBib.summary|philip-the-tetrarch|80a6728d0c	161	Salome	salome-follower-of-jesus
-person.extraBib.summary|philip-the-tetrarch|80a6728d0c	322	Agrippa II	herod-agrippa-ii
+person.extraBib.summary|philip-the-tetrarch|3a24997e0f	160	Salome	salome-follower-of-jesus
+person.extraBib.summary|philip-the-tetrarch|3a24997e0f	340	Herod Agrippa I	herod-agrippa-i
 person.extraBib.summary|pontius-pilate|c091b6f052	14	Nero	nero-caesar
 person.extraBib.summary|pontius-pilate|c091b6f052	197	Tiberius	tiberius-caesar
 person.extraBib.summary|quirinius|b4cc8d56ab	124	Archelaus	herod-archelaus
-person.extraBib.summary|simon-peter|78132f7695	116	Nero	nero-caesar
+person.extraBib.summary|sergius-paulus|63cd01ac7f	346	Paul	paul-of-tarsus
+person.extraBib.summary|sergius-paulus|63cd01ac7f	98	Claudius	claudius-caesar
+person.extraBib.summary|simon-peter|0bf13e8e84	118	Nero	nero-caesar
+person.extraBib.summary|simon-peter|0bf13e8e84	80	Paul	paul-of-tarsus
 person.extraBib.summary|tiberius-caesar|a9ce842b65	14	Nero	nero-caesar
 person.extraBib.summary|tiberius-caesar|a9ce842b65	240	Jesus	jesus-of-nazareth
 person.extraBib.summary|tiberius-caesar|ef9482a643	41	Augustus	caesar-augustus
