@@ -6,7 +6,8 @@ import { TRANSLATIONS } from "../lib/bibleTranslation";
 import { useFeatures, FEATURES, type FeatureKey, type FeatureVisibility } from "../lib/features";
 import { MOBILE_TAB_META, useMobileTabs } from "../lib/mobileTabs";
 import { useTabStages } from "../lib/tabFeatures";
-import { TOUR_STEPS, type TourAnchor, type TourChip, type TourPlaceholder, type TourStep, type TourWhere } from "../data/welcomeTour";
+import { TOUR_STEPS, type TourAnchor, type TourChip, type TourCondition, type TourPlaceholder, type TourStep, type TourWhere } from "../data/welcomeTour";
+import { useTwentyQMultiplayerEnabled } from "../lib/twentyQuestionsMultiplayer";
 import "./WelcomeTour.css";
 
 interface WelcomeTourProps {
@@ -109,6 +110,7 @@ function placeCard(isMobile: boolean, ring: Box | null, height: number): CSSProp
  * <dialog>, so focus stays inside it, the page behind is inert and Escape closes it. */
 export default function WelcomeTour({ isMobile, walkTitle, onClose }: WelcomeTourProps) {
   const stages = useFeatures(FEATURE_KEYS);
+  const tqMultiplayer = useTwentyQMultiplayerEnabled();
   const { visible: tabsShown } = useMobileTabs();
   const { isAvailable: tabAvailable } = useTabStages();
   const steps = STEPS.filter(
@@ -137,7 +139,11 @@ export default function WelcomeTour({ isMobile, walkTitle, onClose }: WelcomeTou
     walk: walkTitle ?? "",
   };
   const fill = (text: string) => text.replace(/\{(\w+)\}/g, (whole, key: string) => values[key as TourPlaceholder] ?? whole);
-  const body = [step.body, ...(step.extras ?? []).filter((e) => canSee(stages, e.anyFeature)).map((e) => e.text)];
+  const conditions: Record<TourCondition, boolean> = { twenty_questions_multiplayer: tqMultiplayer === true };
+  const body = [
+    step.body,
+    ...(step.extras ?? []).filter((e) => canSee(stages, e.anyFeature) && (!e.when || conditions[e.when])).map((e) => e.text),
+  ];
 
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);

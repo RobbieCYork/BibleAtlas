@@ -9,7 +9,7 @@ Last verified against production: **2026-10-24** (read-only catalog queries for 
 
 ---
 
-## The next free number is 057
+## The next free number is 058
 
 (045-050 are claimed on the unmerged `groups-assignments` and `groups-invites` branches; 051 is the
 About page; 052 is report categories / voting off. Check every branch, not this table alone, before taking a number:
@@ -36,7 +36,8 @@ About page; 052 is report categories / voting off. Check every branch, not this 
 | **054** | `054_admin_usage_report.sql` — Admin Console usage graphs: `admin_usage_report()` (counts per period: accounts, active, returning, chapters, articles, games by game, notes, reports by category) and `admin_registered_summary()` (Users tab card). Two read-only SECURITY DEFINER functions gated on `is_admin()`, EXECUTE revoked from PUBLIC and anon, no table/policy changes, no user-id argument. Committed on branch `usage-graphs`, **not applied**. The app draws what 019/021/025 can answer until it is. Rehearsal: `scripts/sql-rehearsal/054_admin_usage_report.mjs` (48 checks). |
 | **055** | `055_report_screenshots.sql` — Report a Problem screenshots: private `report-screenshots` bucket (3 MB, jpeg/png/webp), three Storage policies (reporter uploads/reads/deletes own; administrators read a screenshot a report points at; no update), `reports.screenshot_path` with a shape check, unique index and guard trigger, `report_screenshots_enabled()` (client probe) and `report_screenshot_orphans()` (admin). Committed on branch `report-screenshot`, **not applied**. The app shows nothing until it is. Needs `delete-account` redeployed (it now purges this bucket). |
 | **056** | `056_groups_add_member_consent.sql` — `add_group_member()` / `create_group()` only add the caller's accepted friends, never across a block; both pin `search_path` and lose anon EXECUTE. Committed on branch `social-reenable`, **APPLIED 2026-11-28**. Required by `SOCIAL_CONNECTIONS_ENABLED = true`. Rehearsed in `scripts/sql-rehearsal/056_groups_add_member_consent.mjs`. |
-| **057** | Next genuinely free number. |
+| **057** | `057_twenty_questions_multiplayer.sql` — 20 Questions multiplayer: `twenty_q_rooms`, `twenty_q_players`, `twenty_q_moves` (members read, nobody writes directly) and `twenty_q_secrets` (RLS on, no policy, no grants — the secret is chosen and kept in the database), turn / ask / guess / pass / leave / kick functions, `twenty_q_multiplayer_enabled()` (client probe). Committed on branch `mp-twenty-questions`, **not applied**. The app shows solo only until it is. Rehearsal: `scripts/sql-rehearsal/057_twenty_questions_multiplayer.mjs`. |
+| **058** | Next genuinely free number. |
 
 ### Numbers that are TAKEN but MISSING from this directory
 

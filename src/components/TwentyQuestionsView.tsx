@@ -3,19 +3,22 @@ import { TQ_SETS, answerFor, type TQAnswer, type TQCategory, type TQEntry, type 
 import { TQ_VERSES } from "../data/twentyQuestionsVerses";
 import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
-import Icon, { type IconName } from "./Icon";
+import Icon from "./Icon";
 import HowToPlay, { HowToPlayButton } from "./HowToPlay";
 import { useHowToPlay } from "../lib/howToPlay";
+import { ANSWER_ICON, ANSWER_LABEL, CHOICES, inSentence, type Choice } from "../lib/twentyQuestionsText";
 import "./TwentyQuestions.css";
 
 interface TwentyQuestionsViewProps {
   onBack: () => void;
+  /** Where Back on the category screen goes, for screen readers. Game Center unless 20 Questions has
+   * a Play solo / multiplayer screen in front of it (TwentyQuestionsHub). */
+  backLabel?: string;
   onOpenArticle?: OpenGameArticle;
 }
 
 const TQ_LIMIT = 20;
 
-type Choice = TQCategory | "any";
 type Screen = "menu" | "playing";
 
 interface Turn {
@@ -32,15 +35,8 @@ interface Game {
   status: "playing" | "won" | "lost";
 }
 
-const CHOICES: { key: Choice; label: string; description: string; icon: IconName }[] = [
-  { key: "people", label: "People", description: "Someone from the Old or New Testament.", icon: "people" },
-  { key: "places", label: "Places", description: "A city, region, sea, river, mountain or island on the map.", icon: "place" },
-  { key: "things", label: "Things", description: "An object, animal, plant, food or structure in a Bible story.", icon: "archaeology" },
-  { key: "any", label: "Surprise me", description: "Any of the three — you'll be told which.", icon: "target" },
-];
 
-const ANSWER_LABEL: Record<TQAnswer, string> = { yes: "Yes", no: "No", unknown: "Not stated" };
-const ANSWER_ICON: Record<TQAnswer, string> = { yes: "✓", no: "✕", unknown: "–" };
+
 
 /* ---------------------------------------------------------------- device stats */
 
@@ -77,8 +73,6 @@ function writeStats(stats: Record<TQCategory, CategoryStats>) {
   }
 }
 
-/** "The burning bush" reads "the burning bush" inside a sentence. */
-const inSentence = (name: string) => name.replace(/^The /, "the ");
 
 const turnsUsed = (g: Game) => g.turns.filter((t) => t.kind === "question" || t.answer !== "yes").length;
 
@@ -86,7 +80,7 @@ const turnsUsed = (g: Game) => g.turns.filter((t) => t.kind === "question" || t.
  * yes/no questions from a fixed, checked list (data/twentyQuestions/) and may guess at any time. A
  * wrong guess costs a question; a right one ends the game. When all twenty are spent, one last
  * guess is still allowed. */
-export default function TwentyQuestionsView({ onBack, onOpenArticle }: TwentyQuestionsViewProps) {
+export default function TwentyQuestionsView({ onBack, backLabel = "Back to Game Center", onOpenArticle }: TwentyQuestionsViewProps) {
   const [screen, setScreen] = useState<Screen>("menu");
   const [choice, setChoice] = useState<Choice>("people");
   const [game, setGame] = useState<Game | null>(null);
@@ -170,7 +164,7 @@ export default function TwentyQuestionsView({ onBack, onOpenArticle }: TwentyQue
   if (screen !== "playing" || !game) {
     return (
       <div className="game-root" data-page-bg="game-setup">
-        {header(onBack, "Back to Game Center")}
+        {header(onBack, backLabel)}
         <div className="game-body">
           <div className="tq-setup">
             <div className="games-panel-intro">

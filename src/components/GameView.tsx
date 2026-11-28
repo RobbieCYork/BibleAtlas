@@ -8,7 +8,8 @@ import FillBlankView from "./FillBlankView";
 import MemorizationView from "./MemorizationView";
 import ChronologyView from "./ChronologyView";
 import DailyNameView from "./DailyNameView";
-import TwentyQuestionsView from "./TwentyQuestionsView";
+import TwentyQuestionsHub from "./TwentyQuestionsHub";
+import { twentyQMultiplayerEnabled } from "../lib/twentyQuestionsMultiplayer";
 import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
 import Icon from "./Icon";
@@ -41,6 +42,12 @@ export default function GameView({ session, onClose, gameCenterNonce, onOpenArti
   const [activeGame, setActiveGame] = useState<string | null>(null);
 
   const selectGame = (key: string) => setActiveGame(key);
+
+  // Ask once, early, whether 20 Questions multiplayer exists yet (sql/057), so its first screen is
+  // ready by the time anyone opens it.
+  useEffect(() => {
+    void twentyQMultiplayerEnabled();
+  }, []);
   const backToCenter = () => setActiveGame(null);
 
   // Only react on an actual CHANGE to the nonce, not its initial value on mount — otherwise Games
@@ -57,13 +64,13 @@ export default function GameView({ session, onClose, gameCenterNonce, onOpenArti
   // Per-game stages (lib/features.ts). GameCenter hides a game's card; this handles a game that is
   // already open when it stops being visible to this viewer (in practice: the owner switching from
   // Test view to Live view, or flipping it to Testing, while inside it). A solo game goes straight
-  // back to Game Center. The two multiplayer games are told instead, and leave only once the player
+  // back to Game Center. The multiplayer games are told instead, and leave only once the player
   // is not in a room — a lobby or match already under way is never cut off; only creating, joining
   // or starting a fresh room from their entry screens is gated.
   const stages = useFeatures(GAME_FEATURE_KEYS);
   const activeDef = GAMES.find((g) => g.key === activeGame);
   const activeVisible = activeDef ? stages[activeDef.feature].visible : true;
-  const isMultiplayerGame = activeGame === "bible-trivia" || activeGame === "saving-peter";
+  const isMultiplayerGame = activeGame === "bible-trivia" || activeGame === "saving-peter" || activeGame === "twenty-questions";
   useEffect(() => {
     if (activeGame && !activeVisible && !isMultiplayerGame) backToCenter();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +83,8 @@ export default function GameView({ session, onClose, gameCenterNonce, onOpenArti
   if (activeGame === "memorization") return <MemorizationView onBack={backToCenter} />;
   if (activeGame === "chronology") return <ChronologyView onBack={backToCenter} />;
   if (activeGame === "daily-name") return <DailyNameView onBack={backToCenter} onOpenArticle={onOpenArticle} />;
-  if (activeGame === "twenty-questions") return <TwentyQuestionsView onBack={backToCenter} onOpenArticle={onOpenArticle} />;
+  if (activeGame === "twenty-questions")
+    return <TwentyQuestionsHub session={session} onBack={backToCenter} onOpenArticle={onOpenArticle} available={activeVisible} />;
 
   return (
     <div className="game-root" data-page-bg="game-center">

@@ -53,13 +53,18 @@ export interface TourWhere {
 export const TOUR_PLACEHOLDERS = ["translations", "games", "sections", "walk"] as const;
 export type TourPlaceholder = (typeof TOUR_PLACEHOLDERS)[number];
 
+/** Things a sentence can wait for that are not feature stages: a migration not yet applied.
+ * `twenty_questions_multiplayer`: sql/057 (lib/twentyQuestionsMultiplayer.ts asks). */
+export type TourCondition = "twenty_questions_multiplayer";
+
 export interface TourStep {
   id: string;
   icon: IconName;
   title: string;
   body: string;
-  /** Sentences added only while this viewer can see their feature. */
-  extras?: { text: string; anyFeature: FeatureKey[] }[];
+  /** Sentences added only while this viewer can see their feature — and, with `when`, only while
+   * that database step is applied (the component asks; see TourCondition). */
+  extras?: { text: string; anyFeature: FeatureKey[]; when?: TourCondition }[];
   /** The step shows only while this viewer can see ALL of these (lib/features.ts decides). */
   features?: FeatureKey[];
   /** ...and at least one of these. */
@@ -281,6 +286,13 @@ export const TOUR_STEPS = [
     icon: "twentyQuestions",
     title: "20 Questions",
     body: "The app picks a secret person, place or thing from the Bible. Ask yes-or-no questions from a list and find it within twenty.",
+    extras: [
+      {
+        text: "Or play with friends: create a multiplayer game, share the code and take turns asking. The first right guess wins.",
+        anyFeature: ["game_twenty_questions"],
+        when: "twenty_questions_multiplayer",
+      },
+    ],
     features: ["games_trivia", "game_twenty_questions"],
     phone: { path: [{ tab: "games" }, { icon: "twentyQuestions", label: "20 Questions" }] },
     desktop: { path: [{ icon: "games", label: "Games" }, { icon: "twentyQuestions", label: "20 Questions" }] },
@@ -288,7 +300,9 @@ export const TOUR_STEPS = [
     names: [
       { file: "components/GameCenter.tsx", text: 'title: "20 Questions"' },
       { file: "components/TwentyQuestionsView.tsx", text: "const TQ_LIMIT = 20;" },
-      { file: "components/TwentyQuestionsView.tsx", text: 'label: "Things"' },
+      { file: "lib/twentyQuestionsText.ts", text: 'label: "Things"' },
+      { file: "components/TwentyQuestionsMultiplayerView.tsx", text: "<h2>Create multiplayer game</h2>" },
+      { file: "components/TwentyQuestionsRoomPlay.tsx", text: "The first right guess wins." },
     ],
   },
   {

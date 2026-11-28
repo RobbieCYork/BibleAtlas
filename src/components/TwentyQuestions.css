@@ -400,3 +400,110 @@
   color: var(--text-muted);
   font-weight: 600;
 }
+
+/* ------------------------------------------------------------------ multiplayer (TwentyQuestionsRoomPlay.tsx) */
+.tq-room {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tq-lobby-category {
+  margin: 0;
+  text-align: center;
+  color: var(--text);
+}
+
+.tq-turn-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.tq-turn-banner.is-mine {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.tq-turn-banner-text {
+  min-width: 0;
+}
+
+.tq-turn-timer {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.tq-turn-timer.is-low {
+  color: var(--text-h);
+  font-weight: 700;
+}
+
+.tq-order {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: calc(13px * var(--tsz, 1));
+}
+
+.tq-order li {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel-bg);
+  color: var(--text);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tq-order li.is-current {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 700;
+}
+
+.tq-turn-who {
+  display: block;
+  font-size: calc(12px * var(--tsz, 1));
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.tq-turn-skip {
+  opacity: 0.8;
+}
+
+.tq-turn-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tq-turn-actions .tq-guess-open {
+  width: auto;
+  flex: 1 1 auto;
+}
+
+.tq-question:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.tq-reveal .tq-winner {
+  margin: 0 auto 4px;
+  gap: 0;
+}
