@@ -139,11 +139,11 @@ export const FEATURES: ReadonlyArray<FeatureDef> = [
   { key: "avatars", label: "Profile photos", where: "Change Photo when editing My Profile. Existing photos still display." },
   // The individual games — children of games_trivia, in Game Center's own order.
   { key: "game_bible_trivia", label: "Bible Trivia", where: GAME_WHERE("Bible Trivia") + " Covers solo and multiplayer.", parent: "games_trivia" },
+  { key: "game_daily_name", label: "Daily Name", where: GAME_WHERE("Daily Name"), parent: "games_trivia" },
   { key: "game_saving_peter", label: "Saving Peter", where: GAME_WHERE("Saving Peter") + " Covers solo and multiplayer.", parent: "games_trivia" },
   { key: "game_fill_blank", label: "Fill in the Blank", where: GAME_WHERE("Fill in the Blank"), parent: "games_trivia" },
   { key: "game_memorization", label: "Scripture Memorization Challenge", where: GAME_WHERE("Scripture Memorization Challenge"), parent: "games_trivia" },
   { key: "game_chronology", label: "Chronology", where: GAME_WHERE("Chronology"), parent: "games_trivia" },
-  { key: "game_daily_name", label: "Daily Name", where: GAME_WHERE("Daily Name"), parent: "games_trivia" },
   { key: "game_twenty_questions", label: "20 Questions", where: GAME_WHERE("20 Questions"), parent: "games_trivia" },
 ];
 

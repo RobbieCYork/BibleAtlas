@@ -25,6 +25,13 @@ export const GAMES: GameDef[] = [
     tagline: "Live multiplayer trivia with video chat — every player answers, first correct doubles.",
   },
   {
+    key: "daily-name",
+    feature: "game_daily_name",
+    icon: "dailyName",
+    title: "Daily Name",
+    tagline: "One hidden Bible name a day, the same for everyone — six guesses. Practice as much as you like.",
+  },
+  {
     key: "saving-peter",
     feature: "game_saving_peter",
     icon: "savingPeter",
@@ -51,13 +58,6 @@ export const GAMES: GameDef[] = [
     icon: "chronology",
     title: "Chronology",
     tagline: "Put events back in the order they happened. Pick a category, Beginner to Expert.",
-  },
-  {
-    key: "daily-name",
-    feature: "game_daily_name",
-    icon: "dailyName",
-    title: "Daily Name",
-    tagline: "One hidden Bible name a day, the same for everyone — six guesses. Practice as much as you like.",
   },
   {
     key: "twenty-questions",
