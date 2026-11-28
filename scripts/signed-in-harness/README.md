@@ -146,6 +146,7 @@ Selectors live there so a rename is one edit.
 | `timeline-fixed.mjs` | the one-scale timeline at 402px and desktop: five-year marks 195px apart; Ctrl/⌘ wheel, pinch, gesture events, double-click/tap and +, −, 0 change nothing and pinches do not zoom the page; one set of band heights across a stop-by-stop pan of the whole span with no overlapping marks, no bar without its title and every event reachable; long bars panned a few px at a time (title always visible, never jumps, rests past the end) and tapped; the five `hiddenOnTimeline` events neither drawn nor searchable; the tallest stretches; "Go to" a year (BC/AD, no year 0, both ends) and the eras; search jumps; wheel, swipe and drag; no caption in the lanes menu; large text |
 | `verse-sheet-keyboard.mjs` | the reader's verse sheet at 402px and desktop, with a SIMULATED keyboard and touch pointer: selecting by touch focuses nothing; a tapped note box lifts the sheet so box, Save and the selected text are above the keyboard; dismissal restores it; Note editor and Cancel; low text scrolled above the sheet; mouse still focuses the box on open. Real iOS focus behaviour needs the Simulator |
 | `young-earth-notes.mjs` | the young-earth date note (src/data/datingDebate.ts) at 390px and desktop: under the date of Creation, the Flood and Babel and the lifespans of Adam, Noah and Enoch, absent for Abraham and the Call of Abram; its link opens Young Earth and Old Earth Creationism with its five sections; Chronology rounds that deal a young-earth card show the marker and footnote only once checked, one per such card, and a round without one shows neither |
+| `report-screenshots.mjs` | Report a Problem screenshots (sql/055) at 390px and desktop, with an in-memory bucket (`h.backend.setStorage`): before 055 no screenshot UI, no `screenshot_path` key and no Storage request; after, the sheet opens within a frame or two of the tap, the thumbnail is the screen behind (not the form), "Include this screenshot" starts unticked, privacy line, full-size viewer and Escape; unticked uploads nothing; ticked uploads one jpeg to `<own uid>/<uuid>.jpg` and the report carries the path; suggestion never uploads; refused upload explained and nothing filed; failed insert removes the upload; Withdraw removes the file; account-menu row captures; administrator sees the image, advisor is told it exists and gets no link. Storage policies are not modelled here |
 | `network-closed.mjs` | self-test of the closed network |
 | `fixtures-override.mjs` | `--fixtures` |
 
@@ -167,7 +168,9 @@ containers and the marker overlay have shown stale pixels while the DOM was righ
   behaviour is exercised. The session is accepted because the fake says so. `signInWithPassword` against
   the fake returns the current persona (the member, from the signed-out screen) whatever you type, and
   `signInAnonymously` returns the guest.
-- **Storage and uploads.** Avatars, post media, sermon-note images: `/storage/v1/*` answers 404/empty.
+- **Storage and uploads.** Avatars, post media, sermon-note images: `/storage/v1/*` answers 404/empty,
+  unless a script registers `h.backend.setStorage(req => response)` (see `examples/report-screenshots.mjs`).
+  That is a fake bucket for the CLIENT; it does not enforce Storage policies.
 - **Realtime and multiplayer.** Under `run.mjs` the websocket cannot connect (the host does not
   resolve): chat, badges that arrive live and multiplayer rooms are not testable there. Solo UI is.
   `game-media.mjs` stands in a fake Realtime (`lib/fake-realtime.mjs`) for the game rooms only; it

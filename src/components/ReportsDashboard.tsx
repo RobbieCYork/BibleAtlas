@@ -28,6 +28,7 @@ import {
   type UserRoleRow,
 } from "../lib/reportsApi";
 import { fetchUsers, type AdminUserRow } from "../lib/adminApi";
+import { screenshotUrl } from "../lib/reportScreenshots";
 
 interface ReportsDashboardProps {
   /** The role current_user_role() actually returned. Never widened here: every gate below asks
@@ -88,6 +89,45 @@ function Stat({ label, value }: { label: string; value: number | string }) {
  * viewer's tier lets them do about it. (sql/025's advisor voting was removed
  * 2026-11-26; see the header of lib/reportsApi.ts.)
  * ======================================================================== */
+
+/** The screenshot a reporter chose to attach (sql/055). The image lives in a private bucket: Storage
+ * gives administrators a short-lived link for a screenshot a report points at, and nobody else but the
+ * reporter. Advisors see that one exists, not the image — it can show private notes or messages. */
+function ReportScreenshot({ path, isAdmin }: { path: string; isAdmin: boolean }) {
+  const [url, setUrl] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    if (!isAdmin) return;
+    let cancelled = false;
+    void screenshotUrl(path).then(
+      (u) => {
+        if (!cancelled) setUrl(u);
+      },
+      () => {
+        if (!cancelled) setFailed(true);
+      }
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [path, isAdmin]);
+  return (
+    <>
+      <p className="admin-block-heading">Screenshot they attached</p>
+      {!isAdmin ? (
+        <p className="report-intro">A screenshot is attached. Only administrators can open it.</p>
+      ) : failed ? (
+        <p className="report-intro">The screenshot couldn't be loaded.</p>
+      ) : !url ? (
+        <p className="report-intro">Loading the screenshot…</p>
+      ) : (
+        <a className="report-shot-admin" href={url} target="_blank" rel="noopener noreferrer" title="Open full size">
+          <img src={url} alt="The reporter's screen when they opened the report form" />
+        </a>
+      )}
+    </>
+  );
+}
 
 function ReportDetailView({
   reportId,
@@ -222,6 +262,8 @@ function ReportDetailView({
           <blockquote className="report-selection-quote">{r.selected_text}</blockquote>
         </>
       )}
+
+      {r.screenshot_path && <ReportScreenshot path={r.screenshot_path} isAdmin={isAdmin} />}
 
       <p className="admin-block-heading">Where they were</p>
       <div className="report-captured-list">

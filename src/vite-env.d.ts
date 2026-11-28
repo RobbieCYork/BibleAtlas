@@ -5,6 +5,8 @@ interface ImportMetaEnv {
   readonly VITE_SUPABASE_ANON_KEY: string;
   /** Where the downloadable Bible files are served from, if not this app's own /bibles/. */
   readonly VITE_BIBLE_PACK_BASE?: string;
+  /** "1" only in local screenshot-fidelity builds (lib/screenCaptureProbe.ts). */
+  readonly VITE_CAPTURE_PROBE?: string;
 }
 
 interface ImportMeta {

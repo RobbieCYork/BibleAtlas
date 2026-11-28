@@ -2,7 +2,7 @@
  * The Terms of Service and Privacy Policy, published at /terms and /privacy.
  *
  * WHERE THESE WORDS COME FROM. Every statement in the Privacy Policy is a claim about what the app
- * and its database actually do, audited from the code on the effective date below: the tables and
+ * and its database actually do, audited from the code on its effective date below: the tables and
  * row-level-security policies in `sql/000_baseline.sql` and the applied migrations, the analytics
  * client in `src/lib/analytics.ts`, the deletion Edge Function in
  * `supabase/functions/delete-account/index.ts`, and the hosts the browser contacts. If one of those
@@ -40,7 +40,10 @@ export const LEGAL_ENTITY: { name: string | null; mailingAddress: string | null 
 };
 
 export const LEGAL_CONTACT_EMAIL = "admin@capstonebible.com";
-export const LEGAL_EFFECTIVE_DATE = "November 28, 2026";
+// Each document carries its own date: a change to one must not re-date the other. Both moved on
+// 2026-11-28 for offline reading; the Privacy Policy also for report screenshots (sql/055).
+export const TERMS_EFFECTIVE_DATE = "November 28, 2026";
+export const PRIVACY_EFFECTIVE_DATE = "November 28, 2026";
 
 export interface LegalSection {
   heading: string;
@@ -268,7 +271,7 @@ export const PRIVACY_POLICY: LegalDocument = {
         "**Your Bible study.** Notes on passages (including the verses and text you quoted), highlights, tags, sermon notes (title, speaker, Scripture reference, your notes, and any photographs you add), prayer-list items and whether you have marked them answered, your reading position, the chapters you mark as read, your reading-plan progress, and how many seconds you spend reading each day.",
         "**Social activity.** Friend requests and friendships; posts (text, photos, videos, and friends you tag); comments; direct messages to friends (including when they were read, and messages you pin); groups you create or join, join requests, and group messages; the people you block and the content you hide. Friends, groups and messages are switched off in the app for now (see section 4); what was stored before then is kept.",
         "**Games.** The game rooms you host or join, your answers and scores, and your high scores (stored with your display name). In multiplayer games you can turn on your camera and microphone: see section 6.",
-        "**Reports.** If you use Report a Problem, the report itself plus technical details to help us fix it: the page and screen you were on, any text you selected, the app version, your browser's user-agent string, your screen size and platform. If you report a person's content, the reason, any details you add, and a short excerpt (up to 1,000 characters) of the content you reported.",
+        "**Reports.** If you use Report a Problem, the report itself plus technical details to help us fix it: the page and screen you were on, any text you selected, the app version, your browser's user-agent string, your screen size and platform. When you open the report form, the app makes a picture of the screen you were on, on your device; it is sent only if you tick **Include this screenshot**, and it may show anything that was on your screen, such as your notes or messages. If you report a person's content, the reason, any details you add, and a short excerpt (up to 1,000 characters) of the content you reported.",
         "**Usage information.** The app records which features are used — for example that the app was opened, a panel was opened, a chapter was read, a note or post was created, a search was run (whether in places or in Scripture — never what you searched for), or a game was played. Each event is a name from a fixed list the app chose, sometimes with a fixed label such as which panel or game, and never anything you typed: no note, message or post text, no search words, no verse text. Events are grouped into a visit using a random identifier held in your browser tab, with the visit's start and last-active times, so we can see how long the app is used. When you are signed in, these records are linked to your account. Visits to the sign-in screen are recorded without an account.",
         "**Technical information.** Like any website, the services that host the app automatically receive your IP address, browser and device type, and the time of each request, and keep them in their server logs.",
         "We do not collect payment information, precise location, or your contacts.",
@@ -306,7 +309,7 @@ export const PRIVACY_POLICY: LegalDocument = {
     {
       heading: "5. Administrators and the people who run Capstone Bible",
       body: [
-        "A small number of people we appoint as administrators can use an in-app console that shows: the list of accounts, with each account's email address, display name, sign-up date, last sign-in, last activity, number of visits and total time in the app; usage statistics; recent posts that are shared with friends and recent comments; problem reports; and reports about content, including the reported excerpt. Administrators can remove posts and comments that break the rules, and can send an account a password-reset email (they never see or set your password).",
+        "A small number of people we appoint as administrators can use an in-app console that shows: the list of accounts, with each account's email address, display name, sign-up date, last sign-in, last activity, number of visits and total time in the app; usage statistics; recent posts that are shared with friends and recent comments; problem reports, including any screenshot the reporter chose to attach; and reports about content, including the reported excerpt. Administrators can remove posts and comments that break the rules, and can send an account a password-reset email (they never see or set your password).",
         "Beyond that console, the people who operate the Service have administrative access to its database and file storage, which means they can technically access everything stored there — including private notes, sermon notes, prayer-list items and messages. **Nothing in Capstone Bible is end-to-end encrypted.** We do not look at private content, except where it is needed to keep the Service running or secure, to investigate a report or a suspected breach of our Terms, or where the law requires it.",
       ],
     },

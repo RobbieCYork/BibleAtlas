@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import BackButton from "./BackButton";
 import Icon from "./Icon";
 import ReportIssueSheet from "./ReportIssueSheet";
+import { beginReportScreenshot } from "../lib/reportScreenshots";
+import type { PendingCapture } from "../lib/screenCapture";
 import AboutText from "./AboutText";
 import { ABOUT_TITLE } from "../data/aboutPage";
 import { loadAboutContent, useAboutContent } from "../lib/aboutContent";
@@ -25,6 +27,7 @@ interface AboutViewProps {
  * refresh when the page opens. */
 export default function AboutView({ userId, onClose, reportSurface }: AboutViewProps) {
   const [reporting, setReporting] = useState(false);
+  const [capture, setCapture] = useState<PendingCapture | null>(null);
   const content = useAboutContent();
   useEffect(() => {
     void loadAboutContent();
@@ -39,7 +42,10 @@ export default function AboutView({ userId, onClose, reportSurface }: AboutViewP
       <div className="myprofile-body">
         <article className="myprofile-body-inner about-text">
           <AboutText content={content} />
-          <button type="button" className="about-report" onClick={() => setReporting(true)}>
+          <button type="button" className="about-report" onClick={() => {
+              setCapture(beginReportScreenshot());
+              setReporting(true);
+            }}>
             <Icon name="flag" inline /> Report a Problem or Suggest a Feature
           </button>
         </article>
@@ -50,6 +56,7 @@ export default function AboutView({ userId, onClose, reportSurface }: AboutViewP
         createPortal(
           <div className="report-portal">
             <ReportIssueSheet
+              screenshot={capture}
               userId={userId}
               isGuest={false}
               surface={reportSurface}

@@ -11146,6 +11146,104 @@ a.profile-links-url {
   background: var(--accent);
 }
 
+/* --- Report screenshot (lib/reportScreenshots.ts, sql/055) ---
+ * Thumbnail beside an unticked "Include this screenshot". The thumbnail is a button that opens the
+ * full-size viewer; the viewer sits above every sheet (.report-portal .report-sheet is z-index 70). */
+.report-shot {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.report-shot-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.report-shot-thumb {
+  flex: 0 0 auto;
+  width: 88px;
+  max-height: 160px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface-sunken);
+  cursor: zoom-in;
+}
+
+.report-shot-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.report-shot-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.report-shot-include {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: var(--sans);
+  font-size: calc(14px * var(--tsz, 1));
+  color: var(--text);
+  cursor: pointer;
+}
+
+.report-shot-include input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.report-shot-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: calc(var(--safe-top, 0px) + 16px) 16px calc(var(--safe-bottom, 0px) + 16px);
+  background: rgba(0, 0, 0, 0.86);
+  cursor: zoom-out;
+}
+
+.report-shot-viewer img {
+  max-width: 100%;
+  max-height: calc(100% - 64px);
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+.report-shot-viewer-close {
+  flex: 0 0 auto;
+}
+
+.report-shot-admin {
+  display: inline-block;
+  max-width: 260px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.report-shot-admin img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* --- "What gets sent with this report" --- */
 
 .report-captured {

@@ -5,6 +5,8 @@ import ReportIssueSheet from "./ReportIssueSheet";
 import MyReportsSheet from "./MyReportsSheet";
 import type { ReportSurface } from "../lib/reportContext";
 import { TOUR_ANCHORS } from "../data/welcomeTour";
+import { beginReportScreenshot } from "../lib/reportScreenshots";
+import type { PendingCapture } from "../lib/screenCapture";
 
 interface HeaderReportButtonProps {
   userId: string;
@@ -22,6 +24,9 @@ interface HeaderReportButtonProps {
  * and does not leave the account menu open. */
 export default function HeaderReportButton({ userId, surface }: HeaderReportButtonProps) {
   const [view, setView] = useState<"closed" | "report" | "myReports">("closed");
+  // The picture of the screen as it was at this tap, taken before the sheet draws over it. Null when
+  // the form is reached from My Reports instead (that screen is not what the report is about).
+  const [capture, setCapture] = useState<PendingCapture | null>(null);
   return (
     <>
       <button
@@ -30,7 +35,10 @@ export default function HeaderReportButton({ userId, surface }: HeaderReportButt
         className="social-links-item header-report"
         aria-label="Report a problem or suggest a feature"
         title="Report a problem or suggest a feature"
-        onClick={() => setView("report")}
+        onClick={() => {
+          setCapture(beginReportScreenshot());
+          setView("report");
+        }}
       >
         <Icon name="flag" />
       </button>
@@ -40,6 +48,7 @@ export default function HeaderReportButton({ userId, surface }: HeaderReportButt
           <div className="report-portal">
             {view === "report" ? (
               <ReportIssueSheet
+                screenshot={capture}
                 userId={userId}
                 isGuest={false}
                 surface={surface}
@@ -50,7 +59,10 @@ export default function HeaderReportButton({ userId, surface }: HeaderReportButt
               <MyReportsSheet
                 userId={userId}
                 onClose={() => setView("closed")}
-                onReportSomething={() => setView("report")}
+                onReportSomething={() => {
+                  setCapture(null);
+                  setView("report");
+                }}
               />
             )}
           </div>,

@@ -5,6 +5,8 @@ import { signOutOnThisDevice } from "../lib/offline/signOut";
 import AccountSettingsBody, { TextSizeControl, AppearanceControl, NavBarControl } from "./AccountSettings";
 import AdminConsole from "./AdminConsole";
 import ReportIssueSheet from "./ReportIssueSheet";
+import { beginReportScreenshot } from "../lib/reportScreenshots";
+import type { PendingCapture } from "../lib/screenCapture";
 import MyReportsSheet from "./MyReportsSheet";
 import ReportsDashboard from "./ReportsDashboard";
 import SafetySheet from "./SafetySheet";
@@ -98,6 +100,8 @@ export default function AuthButton({
 }: AuthButtonProps) {
   const [open, setOpen] = useState(false);
   const [menuView, setMenuView] = useState<MenuView>("menu");
+  // Report a Problem: the screen as it was when the menu row was tapped, menu and all (see HeaderReportButton).
+  const [reportCapture, setReportCapture] = useState<PendingCapture | null>(null);
   // The entry point to the Admin Console (My Profile used to have a second; it was removed). Same
   // gate, same hook, same component — nothing about access is decided here. useIsAdmin only answers "should this
   // menu draw the item?"; a non-admin who forced the item open would get a console of "not
@@ -374,7 +378,10 @@ export default function AuthButton({
             {/* Everyone signed in, guests included — the guest branch of the sheet explains why
                 they can't file one, which is a better answer than an item that isn't there. */}
             <div className="auth-settings-divider" />
-            <button type="button" data-menu="report" className="auth-menu-item" onClick={() => setMenuView("report")}>
+            <button type="button" data-menu="report" className="auth-menu-item" onClick={() => {
+                setReportCapture(isGuest ? null : beginReportScreenshot());
+                setMenuView("report");
+              }}>
               <Icon name="flag" inline /> Report a Problem or Suggest a Feature
             </button>
             {/* App Store Review Guideline 1.2 asks for published contact information and a visible
@@ -427,6 +434,7 @@ export default function AuthButton({
             paragraph into least of all. `open` stays true so ← Back returns to the menu. */}
         {open && menuView === "report" && (
           <ReportIssueSheet
+            screenshot={reportCapture}
             userId={session.user.id}
             isGuest={isGuest}
             surface={reportSurface ?? UNKNOWN_SURFACE}
@@ -438,7 +446,10 @@ export default function AuthButton({
           <MyReportsSheet
             userId={session.user.id}
             onClose={() => setMenuView("menu")}
-            onReportSomething={() => setMenuView("report")}
+            onReportSomething={() => {
+              setReportCapture(null);
+              setMenuView("report");
+            }}
           />
         )}
         {/* Gated on the resolved role, never on `reportsRole` being merely non-null: canSeeReports

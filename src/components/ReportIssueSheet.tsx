@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import Chevron from "./Chevron";
 import {
   fetchCategories,
@@ -18,6 +19,8 @@ import {
   type ReportSurface,
 } from "../lib/reportContext";
 import Icon from "./Icon";
+import { removeReportScreenshot, screenshotsEnabled, uploadReportScreenshot } from "../lib/reportScreenshots";
+import type { PendingCapture } from "../lib/screenCapture";
 
 interface ReportIssueSheetProps {
   userId: string;
@@ -43,7 +46,19 @@ interface ReportIssueSheetProps {
   onClose: () => void;
   /** So the account menu can offer "see it in My Reports" straight after a successful send. */
   onOpenMyReports?: () => void;
+  /** The picture of the screen taken at the tap that opened this form (lib/reportScreenshots.ts), or
+   * null/absent when there is none to offer (reached from My Reports, a guest, or screenshots off).
+   * It stays in memory on this device; it is uploaded only if the reporter ticks the box. */
+  screenshot?: PendingCapture | null;
 }
+
+/** What the form knows about the screenshot. "none" draws nothing at all: no capture, or sql/055 is
+ * not applied, which must look exactly like the form did before screenshots existed. */
+type Shot =
+  | { state: "none" }
+  | { state: "pending" }
+  | { state: "failed" }
+  | { state: "ready"; blob: Blob; url: string; width: number; height: number };
 
 const TITLE_MAX = 200;
 const BODY_MAX = 8000;
@@ -99,7 +114,7 @@ function CapturedRow({ label, value }: { label: string; value: string | null }) 
   );
 }
 
-export default function ReportIssueSheet({ userId, isGuest, surface, onClose, onOpenMyReports }: ReportIssueSheetProps) {
+export default function ReportIssueSheet({ userId, isGuest, surface, onClose, onOpenMyReports, screenshot }: ReportIssueSheetProps) {
   // Captured ONCE, on mount. Re-capturing on every render would let the page underneath (a chapter
   // auto-advancing, a selection being cleared) rewrite what the reporter is looking at while they
   // are typing about it.
@@ -116,6 +131,46 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+  const [shot, setShot] = useState<Shot>({ state: "none" });
+  // OFF until the reporter turns it on. Never defaulted on, never remembered between reports.
+  const [includeShot, setIncludeShot] = useState(false);
+  const [viewingShot, setViewingShot] = useState(false);
+
+  // The capture was started by the tap that opened this form; here it is only collected. Shown only
+  // once the database says screenshots exist (sql/055) — until then this stays "none" and the form is
+  // unchanged. Nothing here uploads anything.
+  useEffect(() => {
+    if (!screenshot || isGuest) return;
+    let cancelled = false;
+    let url: string | null = null;
+    void screenshotsEnabled().then((on) => {
+      if (cancelled || !on) return;
+      setShot((s) => (s.state === "none" ? { state: "pending" } : s));
+      screenshot.result.then(
+        (r) => {
+          if (cancelled) return;
+          url = URL.createObjectURL(r.blob);
+          setShot({ state: "ready", blob: r.blob, url, width: r.width, height: r.height });
+        },
+        () => {
+          if (!cancelled) setShot({ state: "failed" });
+        }
+      );
+    });
+    return () => {
+      cancelled = true;
+      if (url) URL.revokeObjectURL(url);
+    };
+  }, [screenshot, isGuest]);
+
+  useEffect(() => {
+    if (!viewingShot) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setViewingShot(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [viewingShot]);
 
   // Not fetched for a guest: the guest branch below returns before the form exists, so this would
   // be a round trip for a <select> nobody will see — and a failure would park an error in state
@@ -165,7 +220,12 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
     if (!canSend) return;
     setSending(true);
     setError(null);
+    // Uploaded only now, only for a problem report, and only if the box is ticked.
+    let screenshotPath: string | null = null;
     try {
+      if (!suggesting && includeShot && shot.state === "ready") {
+        screenshotPath = await uploadReportScreenshot(userId, shot.blob);
+      }
       await submitReport({
         reporter_id: userId,
         category: suggesting ? SUGGESTION_CATEGORY : category,
@@ -185,17 +245,24 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
         viewport_w: context.viewport_w,
         viewport_h: context.viewport_h,
         platform: context.platform,
+        // The key is left out entirely when there is no screenshot, so a database without sql/055
+        // (no such column) receives exactly the insert it always has.
+        ...(screenshotPath ? { screenshot_path: screenshotPath } : {}),
       });
       // The selection has now been spent. Leaving it would attach the same highlighted sentence to
       // the next report filed from anywhere in the app.
       clearRememberedSelection();
       setSent(true);
     } catch (err) {
+      // The report did not go in, so the image it would have pointed at must not stay behind.
+      if (screenshotPath) void removeReportScreenshot(screenshotPath);
       setError(humanizeReportError(err, suggesting));
     } finally {
       setSending(false);
     }
   };
+
+  const showShot = !suggesting && shot.state !== "none";
 
   if (isGuest) {
     return (
@@ -385,6 +452,45 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
             </label>
           )}
 
+          {showShot && (
+            <div className="report-shot">
+              <p className="report-field-label">Screenshot</p>
+              {shot.state === "pending" && <p className="report-field-hint">Taking a picture of the screen…</p>}
+              {shot.state === "failed" && (
+                <p className="report-field-hint">
+                  A picture of this screen couldn't be taken, so this report will be sent without one.
+                </p>
+              )}
+              {shot.state === "ready" && (
+                <div className="report-shot-row">
+                  <button
+                    type="button"
+                    className="report-shot-thumb"
+                    onClick={() => setViewingShot(true)}
+                    aria-label="View the screenshot full size"
+                  >
+                    <img src={shot.url} alt="The screen as it was when you opened this form" />
+                  </button>
+                  <div className="report-shot-text">
+                    <label className="report-shot-include">
+                      <input
+                        type="checkbox"
+                        checked={includeShot}
+                        onChange={(e) => setIncludeShot(e.target.checked)}
+                        disabled={sending}
+                      />
+                      <span>Include this screenshot</span>
+                    </label>
+                    <p className="report-field-hint">
+                      It may show your notes, messages or anything else that was on your screen. It is
+                      sent only if you tick the box, and only you and the site's administrators can see it.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Every field on CapturedContext, verbatim. Collapsed by default because it is long and
               dull, present because sending someone's browser string without showing it to them is
               not a thing this app does. */}
@@ -419,9 +525,20 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
                 />
                 <CapturedRow label="Device" value={context.platform} />
                 <CapturedRow label="Browser" value={context.user_agent} />
+                {showShot && (
+                  <CapturedRow
+                    label="Screenshot"
+                    value={
+                      shot.state === "ready" && includeShot
+                        ? "Included — the picture shown above"
+                        : "Not included"
+                    }
+                  />
+                )}
                 <p className="report-captured-note">
                   Your name and account are attached, so the team can follow up. Nothing else about
-                  what you were reading is collected.
+                  what you were reading is collected
+                  {showShot ? ", and the screenshot is sent only if you tick “Include this screenshot”." : "."}
                 </p>
               </div>
             )}
@@ -443,6 +560,22 @@ export default function ReportIssueSheet({ userId, isGuest, surface, onClose, on
           </div>
         </form>
       </div>
+      {viewingShot &&
+        shot.state === "ready" &&
+        createPortal(
+          <div
+            className="report-shot-viewer"
+            role="dialog"
+            aria-label="Screenshot, full size"
+            onClick={() => setViewingShot(false)}
+          >
+            <img src={shot.url} alt="The screen as it was when you opened this form" />
+            <button type="button" className="report-btn report-shot-viewer-close" onClick={() => setViewingShot(false)}>
+              Close
+            </button>
+          </div>,
+          document.body
+        )}
     </div>
   );
 }

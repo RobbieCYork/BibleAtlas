@@ -4,6 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import type { Feature, FeatureCollection, Geometry, LineString, Point, Polygon } from "geojson";
 import type { Location, LocationCategory, PointOfInterest } from "../data/types";
 import type { MapMode } from "./ThenNowToggle";
+import { registerCanvasRedraw } from "../lib/screenCapture";
 
 /**
  * "Illuminated" — our own MapLibre style (public/map/illuminated.json), derived from the
@@ -757,6 +758,10 @@ export default function MapView({
     });
     map.addControl(new maplibregl.NavigationControl(), "top-right");
     mapRef.current = map;
+    // Report a Problem screenshots: the WebGL buffer is cleared once a frame is shown, so the capture
+    // redraws the map synchronously right before copying its pixels, after the report sheet has
+    // painted (lib/screenCapture.ts).
+    const unregisterCapture = registerCanvasRedraw(map.getCanvas(), () => map.redraw());
 
     map.on("styledata", () => forceEnglishLabels(map));
 
@@ -894,6 +899,7 @@ export default function MapView({
       clusterInfoRef.current = {};
       namePopupRef.current?.remove();
       namePopupRef.current = null;
+      unregisterCapture();
       map.remove();
       mapRef.current = null;
     };

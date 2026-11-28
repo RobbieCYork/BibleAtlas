@@ -149,8 +149,8 @@ export async function generateSeo(outDir, { supabase = null } = {}) {
   // person deciding whether to sign up, and an app-store reviewer, must be able to read both without
   // an account — and generated from src/data/legalDocuments.ts so there is one copy of the words.
   const legal = data.legalDocuments;
-  write(outDir, fileForPath("/terms"), legalPage(legal.TERMS_OF_SERVICE, { path: "/terms", effectiveDate: legal.LEGAL_EFFECTIVE_DATE }));
-  write(outDir, fileForPath("/privacy"), legalPage(legal.PRIVACY_POLICY, { path: "/privacy", effectiveDate: legal.LEGAL_EFFECTIVE_DATE }));
+  write(outDir, fileForPath("/terms"), legalPage(legal.TERMS_OF_SERVICE, { path: "/terms", effectiveDate: legal.TERMS_EFFECTIVE_DATE }));
+  write(outDir, fileForPath("/privacy"), legalPage(legal.PRIVACY_POLICY, { path: "/privacy", effectiveDate: legal.PRIVACY_EFFECTIVE_DATE }));
   pages += 2;
 
   // One sitemap file: 880-odd URLs is far inside the 50,000-URL / 50 MB limit, so an index would be
