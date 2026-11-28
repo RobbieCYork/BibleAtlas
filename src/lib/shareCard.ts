@@ -15,7 +15,7 @@ export interface ShareCardSpec {
   body: string;
   /** A single emoji shown next to the badge — no icon library here, just a character. */
   glyph: string;
-  /** Wrap the body in curly quotes (verse cards). */
+  /** Set the body as a quotation (verse cards) — see quoteVerse(). */
   bodyQuoted?: boolean;
 }
 
@@ -52,6 +52,62 @@ export function placeCardSpec(entry: Location | PointOfInterest): ShareCardSpec 
 /** Card content for a biblical person — role badge + the summary hook. */
 export function personCardSpec(person: Person): ShareCardSpec {
   return { badge: person.role, title: person.name, body: excerpt(person.summary, 180), glyph: "🧑" };
+}
+
+/**
+ * A verse as the share card prints it. The card's own “ ” are only for a passage that carries no such
+ * marks itself; one that already quotes someone is printed as written, because a second pair around it
+ * reads as a doubled or stray mark.
+ *
+ * A selection often cuts a quotation in half (speech that runs over several verses), so the missing
+ * partner is added at the very start or end. Nothing inside the passage is ever changed.
+ */
+export function quoteVerse(text: string): string {
+  if (!text) return "";
+  const open: { mark: "“" | "‘"; at: number; maybeClosed?: boolean }[] = [];
+  let before = "";
+  const unopened = (mark: "“" | "‘") => {
+    if (!(before + text).startsWith(mark)) before = mark + before;
+  };
+  for (let i = 0; i < text.length; i += 1) {
+    const c = text[i];
+    const top = open[open.length - 1];
+    if (c === "“" || c === "‘") {
+      // The Bible reprints the openers at the start of each new paragraph of the same speech (“‘…).
+      // Those repeat the levels already open; they do not start deeper ones.
+      const run = /^[“‘]+/.exec(text.slice(i))![0];
+      const newParagraph = /(^|[.!?”’]\s+)$/.test(text.slice(0, i));
+      if (newParagraph && run.length <= open.length && [...run].every((mark, n) => open[n].mark === mark)) {
+        open.length = run.length;
+        i += run.length - 1;
+        continue;
+      }
+      if (c === "‘" && top?.mark === "‘" && top.maybeClosed) open.pop();
+      if (open[open.length - 1]?.mark !== c) open.push({ mark: c, at: i });
+    } else if (c === "”") {
+      const at = open.map((q) => q.mark).lastIndexOf("“");
+      if (at < 0) unopened("“");
+      else open.length = at;
+    } else if (c === "’") {
+      // The same character is the apostrophe. After a letter it may be either (“disciples’ feet”,
+      // “‘Yes’”), so it can only ever stop a mark being added; after punctuation it closes a quote.
+      const afterLetter = /\p{L}/u.test(text[i - 1] ?? "");
+      if (afterLetter && /\p{L}/u.test(text[i + 1] ?? "")) continue;
+      const at = open.map((q) => q.mark).lastIndexOf("‘");
+      if (afterLetter) {
+        // Only a short, unpunctuated span reads as a quoted word or title; further on it is a possessive.
+        if (at >= 0 && /^[^.,;:!?“”]{0,40}$/.test(text.slice(open[at].at + 1, i))) open[at].maybeClosed = true;
+      } else if (at < 0) unopened("‘");
+      else open.length = at;
+    }
+  }
+  const after = open
+    .reverse()
+    .map((q) => (q.maybeClosed ? "" : q.mark === "“" ? "”" : "’"))
+    .join("");
+  const balanced = before + text + after;
+  const hasOwnMarks = /[“”"]|^‘|’$/.test(balanced);
+  return hasOwnMarks ? balanced : `“${balanced}”`;
 }
 
 /** Card content for a selected verse (or verse range) — reference as title, quoted text as body. */

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, typ
 import { createPortal } from "react-dom";
 import html2canvas from "html2canvas";
 import { SHARE_BACKGROUNDS, type ShareBackground, type ShareBackgroundCategory } from "../data/shareBackgrounds";
-import { deliverCard, type ShareCardSpec } from "../lib/shareCard";
+import { deliverCard, quoteVerse, type ShareCardSpec } from "../lib/shareCard";
 import {
   composeShareCard,
   DEFAULT_REGION,
@@ -89,7 +89,7 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
     // point and the badge tells you what kind of thing it is.
     editableRef.current.innerHTML = spec.bodyQuoted
       ? `
-      <div class="share-card-body">${escapeHtml(spec.body ? `“${spec.body}”` : "")}</div>
+      <div class="share-card-body">${escapeHtml(quoteVerse(spec.body))}</div>
       <div class="share-card-title share-card-title-ref">${escapeHtml(spec.title)}</div>
     `.trim()
       : `
