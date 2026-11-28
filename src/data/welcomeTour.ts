@@ -156,11 +156,12 @@ export const TOUR_STEPS = [
     id: "timeline",
     icon: "timeline",
     title: "Travel the Timeline",
-    body: "Bible, church and world history side by side. Drag to move, pinch to zoom, and tap an event to read about it. On a computer, Ctrl or ⌘ with scroll also zooms.",
+    body: "Bible, church and world history side by side. Drag to move through time, or tap Go to and pick a year or an era. Tap an event to read about it.",
     features: ["timeline"],
     phone: { path: [{ tab: "timeline" }] },
     desktop: { path: [MENU_CHIP, { icon: "timeline", label: "Timeline" }] },
     anchors: { phone: ["tab-timeline", "menu"], desktop: ["menu"] },
+    names: [{ file: "components/TimelineGoToMenu.tsx", text: '<span className="tl-goto-button-text">Go to</span>' }],
   },
   {
     id: "articles",

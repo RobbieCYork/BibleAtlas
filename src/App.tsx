@@ -80,7 +80,7 @@ const MOBILE_QUERY = "(max-width: 768px)";
 
 /** One entry in the details "back" trail — enough to restore a prior selection without re-deriving it.
  * The "timeline" variant is different from the rest: it doesn't restore a *selection*, it restores
- * Timeline mode itself (the full-screen takeover) at the exact pan/zoom view the reader left behind
+ * Timeline mode itself (the full-screen takeover) at the exact view the reader left behind
  * when they followed a cross-link out of it (event article, Lifespans bar, or Books band). */
 type DetailsSelection =
   | { kind: "location"; id: string }
@@ -962,7 +962,7 @@ function App() {
   };
 
   // --- Timeline mode -----------------------------------------------------------------------------
-  // Full-screen zoomable timeline (TimelineView) rendered over the normal map/bible/panels layout.
+  // Full-screen timeline (TimelineView) rendered over the normal map/bible/panels layout.
   // Entered from the desktop footer strip, the mobile Timeline tab, or a link-choice popup's "View
   // in Timeline"; left via the view's Back button (or, on mobile, by picking another tab).
   const [showTimeline, setShowTimeline] = useState(false);
@@ -971,14 +971,14 @@ function App() {
   // to this viewer — the owner switching from Test view back to Live view while inside it.
   const timelineFeatureVisible = useFeature("timeline").visible;
   const gamesFeatureVisible = useFeature("games_trivia").visible;
-  // The live pan/zoom view inside Timeline mode, lifted up here so it survives Timeline unmounting —
+  // The live view inside Timeline mode, lifted up here so it survives Timeline unmounting —
   // TimelineView reports every change via onViewChange, and reads it back via initialView so
   // reopening (however it's reached) resumes the last view instead of resetting to the cold-start
   // default. Also what gets snapshotted into a `{ kind: "timeline" }` detailsHistory entry (see
   // exitTimelineThen/goBackInDetails below) so a cross-link away from Timeline can restore this exact
   // view later via "Back", rather than wherever Timeline happens to be when it's reopened.
   const [savedTimelineView, setSavedTimelineView] = useState<TimelineViewState | null>(null);
-  // When Timeline mode was opened for a specific entity (link-choice popup), the view opens zoomed
+  // When Timeline mode was opened for a specific entity (link-choice popup), the view pans
   // to that entity's events/lifespan with a brief highlight. Null for plain entries.
   const [timelineFocusEntityId, setTimelineFocusEntityId] = useState<string | null>(null);
   // Event selected *inside* Timeline mode — its TimelineEventPanel slides in as an overlay on top
@@ -1046,7 +1046,7 @@ function App() {
    * Timeline mode is open (the Lifespans bar, the Books band, and every cross-link inside the
    * in-mode TimelineEventPanel article overlay), so following a person/place/book link lands the
    * reader back in the regular app on that entity's page. Before closing, it snapshots the exact
-   * pan/zoom view being left onto detailsHistory as a `{ kind: "timeline" }` entry (skipped if
+   * view being left onto detailsHistory as a `{ kind: "timeline" }` entry (skipped if
    * there's no view yet to snapshot — practically never, since the cold-start/default view lands
    * within one render of mount) — see goBackInDetails for the other half of this round trip. */
   const exitTimelineThen = (navigate: () => void) => {
@@ -1938,7 +1938,7 @@ function App() {
             />
             {/* Selecting an event opens its article as a slide-in overlay on top of the timeline —
                 same panel component the Details column uses, so it feels native. Back returns to
-                the timeline (Timeline itself never unmounts for this case, so its pan/zoom view is
+                the timeline (Timeline itself never unmounts for this case, so its view is
                 untouched underneath); any cross-link inside the article exits the mode into the
                 normal app, first snapshotting the live view via exitTimelineThen so "Back" from
                 wherever the cross-link lands can restore this exact timeline view later. */}

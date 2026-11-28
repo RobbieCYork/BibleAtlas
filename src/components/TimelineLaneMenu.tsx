@@ -107,10 +107,6 @@ export default function TimelineLaneMenu({ visible, onToggle }: TimelineLaneMenu
               {TIMELINE_LANE_LABELS[key]}
             </label>
           ))}
-          <p className="tl-lane-menu-caption">
-            Each checked timeline gets its own generous height — checking more means more
-            scrolling to reach them all.
-          </p>
         </div>
       )}
     </div>

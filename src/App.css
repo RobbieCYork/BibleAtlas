@@ -8103,7 +8103,7 @@ a.profile-links-url {
   height: 36px;
 }
 
-/* --- Timeline mode (full-screen zoomable timeline) --- */
+/* --- Timeline mode (full-screen timeline) --- */
 
 /* Covers the entire map/bible/panels area while leaving the header, desktop footer, and mobile tab
  * bar in place — the layout underneath stays mounted, so map/Bible state survives the visit. */
