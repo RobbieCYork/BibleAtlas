@@ -688,7 +688,8 @@ const PROFILE_REPORT_SURFACE: ReportSurface = { route: "app", title: "Capstone B
 /** Full-screen "My Profile" mode — same top-level takeover pattern as TimelineView (a boolean in App
  * renders this over the whole app-body, with its own header and Back button) instead of the small
  * anchored dropdown this used to be. Reachable on a phone from the "My Profile" tab and header menu
- * row, and on desktop from the account menu's identity header (avatar, name, email). */
+ * row, and on desktop from the main menu's "Go to" list and the account menu (its "My Profile" row
+ * and the identity header above it). */
 export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onGoToVerse, onOpenFriends, reportSurface }: MyProfileViewProps) {
   // My Reports and the report form are the same full-screen sheets the account menu opens, drawn over
   // this page. (Settings is not here: it opens from the account menu, see SettingsView.)

@@ -19,7 +19,7 @@ import ArticlesPanel from "./components/ArticlesPanel";
 import FriendsPanel from "./components/FriendsPanel";
 import { SOCIAL_CONNECTIONS_ENABLED, READING_PLANS_ENABLED } from "./lib/features";
 import ThenNowToggle, { type MapMode } from "./components/ThenNowToggle";
-import PanelMenu, { type PanelKey } from "./components/PanelMenu";
+import PanelMenu, { type DestinationKey, type PanelKey } from "./components/PanelMenu";
 import type { FriendsView } from "./components/ViewSwitcher";
 import MobileTabBar from "./components/MobileTabBar";
 import ResizeHandle from "./components/ResizeHandle";
@@ -571,8 +571,9 @@ function App() {
   // --- My Profile mode ----------------------------------------------------------------------------
   // Full-screen "My Profile" (MyProfileView), same top-level takeover pattern as Timeline mode below:
   // a boolean here renders it over the whole app-body, with its own header and Back button, entered
-  // from the desktop account menu or the mobile "More" sheet's "My Profile" entry (both via AuthButton)
-  // and left via its own Back button — replaces the small anchored dropdown this used to be.
+  // from the desktop account menu or main menu, or the phone's "My Profile" tab and menu row (see
+  // goToMyProfile), and left via its own Back button — replaces the small anchored dropdown this used
+  // to be.
   const [showMyProfile, setShowMyProfile] = useState(false);
   // Someone picked out of My Profile mode's header people-search (see PeopleSearchBar / searchMode
   // below): their read-only profile takes over the same area, with its own Back button returning to
@@ -1334,13 +1335,24 @@ function App() {
    * Social opens My Profile — those three don't touch setMobileActivePanel at all. Every branch
    * first leaves whichever takeover is currently up, since all three sit at the same z-index and
    * would otherwise stay painted over the destination. */
-  /** The two full-area takeovers both platforms can navigate to. Shared by the mobile router below
+  /** The way into My Profile from the account menu and desktop's PanelMenu. Leaves Timeline and Games
+   * first: all three sit at the same z-index and Games is rendered after My Profile, so opening the
+   * profile over a game changed nothing on screen. */
+  const goToMyProfile = () => {
+    closeTimeline();
+    closeGame();
+    openMyProfile();
+  };
+
+  /** The full-area takeovers the menus can navigate to. Shared by the mobile router below
    * and by desktop's PanelMenu "Go to" group, which replaced the old footer strip: the routing is
    * identical on both (leave whichever other takeover is up, then open this one), even though the
    * rest of `goToMobileDestination` is mobile-specific — Social/panel tabs have no desktop analogue.
    * Kept as one function so the two entry points can't drift apart. */
-  const goToTakeover = (key: "timeline" | "games") => {
-    if (key === "timeline") {
+  const goToTakeover = (key: DestinationKey) => {
+    if (key === "profile") {
+      goToMyProfile();
+    } else if (key === "timeline") {
       closeGame();
       closeMyProfile();
       openTimeline();
@@ -1356,6 +1368,7 @@ function App() {
   const leaveTakeover = () => {
     closeTimeline();
     closeGame();
+    closeMyProfile();
   };
 
   /** The Archaeology entry, from either menu (PanelMenu's "Go to" group on desktop, MobileNavMenu's
@@ -1584,13 +1597,16 @@ function App() {
           onToggle={toggleMenuPanel}
           lastAutoClosed={lastAutoClosed}
           friendsBadgeCount={pendingFriendRequests + unreadMessages + groupsBadgeCount}
-          activeDestination={overlayPage ? null : showTimeline ? "timeline" : showGame ? "games" : null}
+          activeDestination={
+            overlayPage ? null : showGame ? "games" : myProfileMode ? "profile" : showTimeline ? "timeline" : null
+          }
           onNavigate={goToTakeover}
           onLeaveDestination={leaveTakeover}
           onGoToArchaeology={openArchaeology}
           aboutOpen={showAbout}
           onToggleAbout={showAbout ? closeOverlayPage : openAbout}
           onOpenTour={openTour}
+          hasProfile={!!session && !session.user.is_anonymous}
         />
         <button type="button" className="app-logo-button" onClick={goHome} aria-label="Go to Bible">
           <img src="/favicon.svg" className="app-logo" alt="" aria-hidden="true" />
@@ -1667,8 +1683,8 @@ function App() {
           session={session}
           openProfileNonce={openProfileNonce}
           onOpenReadingPlans={READING_PLANS_ENABLED ? openReadingPlans : undefined}
-          onOpenMyProfile={openMyProfile}
-          profileHeaderLink={!isMobile}
+          onOpenMyProfile={goToMyProfile}
+          desktopProfileEntry={!isMobile}
           onOpenSettings={openSettings}
           profileVersion={profileVersion}
           reportSurface={reportSurface}

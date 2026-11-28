@@ -29,13 +29,13 @@ interface AuthButtonProps {
    * menu and hands off to the Bible panel, which isn't rendered inside this dropdown. */
   onOpenReadingPlans?: () => void;
   /** Opens the full-screen My Profile view (see MyProfileView/App). Used by the phone routes that arrive
-   * as openProfileNonce, and by the identity header when profileHeaderLink is set. Closes this menu
-   * itself before handing off, same as onOpenReadingPlans. */
+   * as openProfileNonce, and by this menu's My Profile entries when desktopProfileEntry is set. Closes
+   * this menu itself before handing off, same as onOpenReadingPlans. */
   onOpenMyProfile: () => void;
-  /** Desktop only: make the menu's identity header (avatar, name, email) the way into My Profile. There
-   * is no other desktop entry point, so do not turn this off there. A phone has the "My Profile" tab
-   * and header menu row, which is always listed, so its header stays plain. */
-  profileHeaderLink: boolean;
+  /** Desktop only: this menu leads to My Profile, through a labelled "My Profile" row (first) and the
+   * identity header (avatar, name, email) above it. A phone has the "My Profile" tab and header menu
+   * row, which is always listed, so its account menu stays without them. */
+  desktopProfileEntry: boolean;
   /** Opens the full-screen Settings view (see SettingsView/App) for a real account. Same hand-off as
    * onOpenMyProfile. */
   onOpenSettings: () => void;
@@ -90,7 +90,7 @@ export default function AuthButton({
   openProfileNonce,
   onOpenReadingPlans,
   onOpenMyProfile,
-  profileHeaderLink,
+  desktopProfileEntry,
   onOpenSettings,
   profileVersion,
   reportSurface,
@@ -259,8 +259,12 @@ export default function AuthButton({
 
   if (session) {
     const label = session.user.is_anonymous ? "Guest" : savedDisplayName ?? session.user.email ?? "Account";
-    // Guests have no profile page, so theirs is never a link.
-    const linkHeader = profileHeaderLink && !session.user.is_anonymous;
+    // Guests have no profile page, so they get neither the row nor the header link.
+    const showProfileEntry = desktopProfileEntry && !session.user.is_anonymous;
+    const openProfile = () => {
+      setOpen(false);
+      onOpenMyProfile();
+    };
     return (
       <div className="auth-button" ref={containerRef}>
         <button
@@ -279,17 +283,14 @@ export default function AuthButton({
           </span>
         </button>
         {open && menuView === "menu" && (
-          <div className={`auth-dropdown${linkHeader ? " auth-dropdown-account" : ""}`}>
-            {linkHeader ? (
+          <div className={`auth-dropdown${showProfileEntry ? " auth-dropdown-account" : ""}`}>
+            {showProfileEntry ? (
               <button
                 type="button"
                 data-menu="profile"
                 className="auth-identity auth-identity-link"
                 aria-label={`Open My Profile (${label})`}
-                onClick={() => {
-                  setOpen(false);
-                  onOpenMyProfile();
-                }}
+                onClick={openProfile}
               >
                 <span className="auth-avatar auth-avatar-lg" aria-hidden="true">
                   {label.charAt(0).toUpperCase()}
@@ -317,6 +318,13 @@ export default function AuthButton({
               </div>
             )}
             <div className="auth-settings-divider" />
+            {/* Desktop. Robbie, 2026-11-27: the header above was not recognised as the way in, so My
+                Profile is also named outright. Same icon as the phone's tab. */}
+            {showProfileEntry && (
+              <button type="button" data-menu="profile" className="auth-menu-item" onClick={openProfile}>
+                <Icon name="social" inline /> My Profile
+              </button>
+            )}
             {/* Everyone signed in. A real account gets the full-screen Settings view; a guest gets the
                 same controls inside this dropdown. */}
             <button

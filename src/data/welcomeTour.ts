@@ -285,13 +285,13 @@ export const TOUR_STEPS = [
     body: "Your own page. Edit your details, choose your Bible version and Theme, and download a backup of your data.",
     extras: [{ text: "You can add a photo when you edit it.", anyFeature: ["avatars"] }],
     phone: { path: [{ tab: "social" }] },
-    desktop: { path: [ACCOUNT_CHIP, { icon: "social", label: "Your name" }], hint: "starting at the top right" },
+    desktop: { path: [ACCOUNT_CHIP, { icon: "social", label: "My Profile" }], hint: "starting at the top right" },
     anchors: { phone: ["tab-social", "menu"], desktop: ["account"] },
     names: [
       { file: "components/MyProfileView.tsx", text: "Download Backup" },
       { file: "components/MyProfileView.tsx", text: 'htmlFor="myprofile-bible-version"' },
       { file: "components/SkinPicker.tsx", text: 'htmlFor="myprofile-theme"' },
-      { file: "components/AuthButton.tsx", text: "auth-identity-link" },
+      { file: "components/AuthButton.tsx", text: '<Icon name="social" inline /> My Profile' },
     ],
   },
   {

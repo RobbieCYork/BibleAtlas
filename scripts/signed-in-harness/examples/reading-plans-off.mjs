@@ -26,9 +26,9 @@ export default async (h) => {
     // My Profile
     try {
       await h.reload(); await h.sleep(1500); // Escape does not close the account menu; a second click would only toggle it shut
-      // Phone: the header menu's "My Profile" row. Desktop: the account menu's identity header.
+      // Phone: the header menu's "My Profile" row. Desktop: the account menu's "My Profile" row.
       if ((await h.evaluate(() => window.innerWidth)) <= 768) { await h.click(MENU_BUTTON); await h.sleep(300); await h.click({ css: ".mobile-nav-menu-item", text: "My Profile" }); }
-      else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click(".auth-identity-link"); }
+      else { await h.click('[aria-label="Settings and account"]'); await h.sleep(300); await h.click('.auth-menu-item[data-menu="profile"]'); }
       await h.waitFor(".myprofile-root"); await h.sleep(700);
       const pt = await h.evaluate(() => document.body.innerText); h.assert(!PLAN.test(pt), "My Profile mentions no plan"); await esc(h);
     } catch (e) { h.assert(false, "profile step threw " + e.message); }
