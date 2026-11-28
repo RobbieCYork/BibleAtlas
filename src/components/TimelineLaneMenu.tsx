@@ -108,7 +108,8 @@ export default function TimelineLaneMenu({ visible, onToggle }: TimelineLaneMenu
             </label>
           ))}
           <p className="tl-lane-menu-caption">
-            Each timeline is only as tall as what it shows in the years on screen.
+            Each checked timeline gets its own generous height — checking more means more
+            scrolling to reach them all.
           </p>
         </div>
       )}

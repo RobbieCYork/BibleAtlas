@@ -1,7 +1,7 @@
 /**
  * Timeline gestures. A plain wheel / two-finger scroll moves and never zooms; Ctrl or ⌘ + wheel
  * (which is how browsers report a trackpad pinch) zooms at the pointer; mouse drag and touch behave.
- * There are no zoom buttons: double-click, double-tap, touch pinch and the +, −, 0 keys zoom too.
+ * There are no zoom buttons: the +, − keys zoom, 0 and the Eras menu show the whole span.
  *
  *   node scripts/signed-in-harness/run.mjs --viewport 1280x800 --script scripts/signed-in-harness/examples/timeline-scroll.mjs
  *   node scripts/signed-in-harness/run.mjs --viewport 390x844  --script scripts/signed-in-harness/examples/timeline-scroll.mjs
@@ -23,12 +23,6 @@ export default async function (h) {
     }
   }
   await h.waitFor(".tl-life-bar");
-  await h.sleep(800);
-  /* Bands are only as tall as what they show, so at a normal window height there may be nothing to
-   * scroll. These checks are about scrolling: make the window short (no reload). */
-  await h.cdp("Emulation.setDeviceMetricsOverride", {
-    width: Number(h.viewport.split("x")[0]), height: mobile ? 480 : 400, deviceScaleFactor: 1, mobile: false,
-  });
   await h.sleep(800);
 
   await h.evaluate(() => {
@@ -70,30 +64,22 @@ export default async function (h) {
     return h.evaluate(() => window.__wheel.slice());
   };
   const allPrevented = (log) => log.length > 0 && log.every(Boolean);
+  /* Position of the pointer in units of the gauge bar: unchanged if the zoom is centred there. */
+  const under = (s, x) => (x - rect.x - s.tx) / s.zoom;
+  const startUrl = await state();
   const press = async (key, text, code, windowsVirtualKeyCode) => {
     await h.cdp("Input.dispatchKeyEvent", { type: "keyDown", key, text, code, windowsVirtualKeyCode });
     await h.cdp("Input.dispatchKeyEvent", { type: "keyUp", key, code, windowsVirtualKeyCode });
     await h.sleep(800);
   };
-  /* Pixels per year and the tick spacing, read off the axis labels. */
-  const ticks = () => h.evaluate(() => {
-    const list = [...document.querySelectorAll(".tl-axis-label")].filter((e) => /\d/.test(e.textContent) && !e.textContent.includes("·"))
-      .map((e) => ({ y: (e.textContent.startsWith("AD") ? 1 : -1) * parseInt(e.textContent.replace(/\D+/g, ""), 10), x: parseFloat(e.style.left) }));
-    const first = list[0], next = list.find((t) => t.y > first.y);
-    return { pxPerYear: (next.x - first.x) / (next.y - first.y), interval: next.y - first.y };
-  });
-  /* A point on screen with open timeline under it (no mark or label). */
-  const emptySpot = (r) => h.evaluate((r) => {
-    for (let y = r.y + 10; y < r.y + r.height - 10; y += 7)
-      for (let x = r.x + r.width * 0.6; x < r.x + r.width * 0.9; x += 11) {
-        const el = document.elementFromPoint(x, y);
-        if (el && el.closest(".tl-canvas") && !el.closest("button") && !document.elementFromPoint(x, y + 8)?.closest("button")) return { x: Math.round(x), y: Math.round(y) };
-      }
-    return null;
-  }, r);
-  /* Position of the pointer in units of the gauge bar: unchanged if the zoom is centred there. */
-  const under = (s, x) => (x - rect.x - s.tx) / s.zoom;
-  const startUrl = await state();
+  const keyboardZoom = async (keys) => {
+    h.section("keyboard zoom");
+    await h.evaluate(() => document.querySelector(".tl-canvas").focus({ preventScroll: true }));
+    for (const [key, text, code, vk, dir] of keys) {
+      const a = await state(); await press(key, text, code, vk); const b = await state(); show(`key ${key}`, a, b);
+      h.assert((b.zoom - a.zoom) * dir > 0, `"${key}" zooms ${dir > 0 ? "in" : "out"}`);
+    }
+  };
 
   h.section("header");
   const buttons = await h.evaluate(() => [...document.querySelectorAll(".tl-header button")].map((b) => b.getAttribute("aria-label")));
@@ -130,8 +116,6 @@ export default async function (h) {
     h.assert(b.top > a.top, "sub-pixel momentum deltas are not lost");
 
     h.section("horizontal swipe");
-    await h.evaluate(() => { document.querySelector(".tl-canvas-viewport").scrollTop = 0; });
-    await h.sleep(300); b = await state();
     a = b; log = await wheel(60, 0, { times: 4 }); b = await state(); show("right 4x60", a, b);
     h.assert(Math.abs(a.tx - b.tx - 240) <= 2, "moves forward in time by the swiped distance");
     h.assert(b.zoom === a.zoom && b.top === a.top, "no zoom, no vertical move");
@@ -181,8 +165,6 @@ export default async function (h) {
     await h.click(".tl-era-menu-button");
 
     h.section("Safari gesture events (synthetic)");
-    await h.evaluate(() => document.querySelector(".tl-canvas").focus({ preventScroll: true }));
-    await press("0", "0", "Digit0", 48);
     a = await state();
     const prevented = await h.evaluate((x, y) => {
       const el = document.querySelector(".tl-canvas");
@@ -200,24 +182,7 @@ export default async function (h) {
     h.assert(Math.abs(b.zoom / a.zoom - 1.5) < 0.01, `zoom follows gesture scale (${(b.zoom / a.zoom).toFixed(3)})`);
     h.assert(Math.abs(under(a, at.x) - under(b, at.x)) * b.zoom < 2, "gesture zoom centred on the pointer");
 
-    h.section("keyboard zoom");
-    await h.evaluate(() => document.querySelector(".tl-canvas").focus({ preventScroll: true }));
-    await press("0", "0", "Digit0", 48);
-    for (const [key, text, code, vk, dir] of [["-", "-", "Minus", 189, -1], ["+", "+", "Equal", 187, 1], ["=", "=", "Equal", 187, 1], ["_", "_", "Minus", 189, -1]]) {
-      a = await state(); await press(key, text, code, vk); b = await state(); show(`key ${key}`, a, b);
-      h.assert((b.zoom - a.zoom) * dir > 0, `"${key}" zooms ${dir > 0 ? "in" : "out"}`);
-    }
-    await press("0", "0", "Digit0", 48); b = await state(); show("key 0", a, b);
-    h.assert(Math.abs((await ticks()).pxPerYear - 40) < 0.01, `"0" returns to the working zoom (${(await ticks()).pxPerYear.toFixed(2)} px/yr)`);
-
-    h.section("double-click");
-    a = await state();
-    const open = await emptySpot(rect);
-    for (const [type, clickCount] of [["mousePressed", 1], ["mouseReleased", 1], ["mousePressed", 2], ["mouseReleased", 2]])
-      await h.cdp("Input.dispatchMouseEvent", { type, x: open.x, y: open.y, button: "left", buttons: type === "mousePressed" ? 1 : 0, clickCount });
-    await h.sleep(800); b = await state(); show("double-click", a, b);
-    h.assert(Math.abs(b.zoom / a.zoom - 2.2) < 0.05, `double-click zooms in x2.2 (${(b.zoom / a.zoom).toFixed(2)})`);
-    h.assert(Math.abs(under(a, open.x) - under(b, open.x)) * b.zoom < 2, "double-click zoom centred on the pointer");
+    await keyboardZoom([["-", "-", "Minus", 189, -1], ["+", "+", "Equal", 187, 1], ["=", "=", "Equal", 187, 1], ["_", "_", "Minus", 189, -1]]);
 
     h.section("mouse click-drag");
     a = await state();
@@ -265,32 +230,7 @@ export default async function (h) {
     a = b; await touch(steps.map((i) => [[cx - 120 + i * 8, cy], [cx + 120 - i * 8, cy]]));
     b = await state(); show("pinch in", a, b);
     h.assert(b.zoom / a.zoom < 0.6 && b.scale === 1, `pinch in zooms out (x${(b.zoom / a.zoom).toFixed(2)})`);
-
-    h.section("double-tap");
-    const tap = async (p) => {
-      await h.cdp("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: p.x, y: p.y, id: 0 }] });
-      await h.sleep(40);
-      await h.cdp("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
-    };
-    await h.evaluate(() => document.querySelector(".tl-canvas").focus({ preventScroll: true }));
-    await press("0", "0", "Digit0", 48);
-    await h.evaluate(() => { document.querySelector(".tl-canvas-viewport").scrollTop = 0; });
-    await h.sleep(500);
-    const open = await emptySpot(await h.rect(".tl-canvas-viewport"));
-    a = await state(); await tap(open); await h.sleep(800); b = await state(); show("single tap", a, b);
-    h.assert(b.zoom === a.zoom && b.tx === a.tx, "a single tap changes nothing");
-    a = b; await tap(open); await h.sleep(120); await tap(open); await h.sleep(900); b = await state(); show("double tap", a, b);
-    h.assert(Math.abs(b.zoom / a.zoom - 2.2) < 0.05, `double-tap zooms in once, x2.2 (${(b.zoom / a.zoom).toFixed(2)})`);
-    h.assert(Math.abs(under(a, open.x) - under(b, open.x)) * b.zoom < 4, "centred where tapped");
-    h.assert(b.scale === 1, "page not zoomed");
-    h.assert(!(await h.exists(".timeline-event-overlay")), "no article opened");
-
-    h.section("keyboard zoom");
-    await h.evaluate(() => document.querySelector(".tl-canvas").focus({ preventScroll: true }));
-    for (const [key, text, code, vk, dir] of [["-", "-", "Minus", 189, -1], ["+", "+", "Equal", 187, 1]]) {
-      a = await state(); await press(key, text, code, vk); b = await state(); show(`key ${key}`, a, b);
-      h.assert((b.zoom - a.zoom) * dir > 0, `"${key}" zooms ${dir > 0 ? "in" : "out"}`);
-    }
+    await keyboardZoom([["+", "+", "Equal", 187, 1], ["-", "-", "Minus", 189, -1]]);
   }
 
   h.section("nowhere else");
