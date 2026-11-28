@@ -2,6 +2,7 @@ import type { Citation, DiscoveryFacts, ManuscriptFacts, Topic } from "../data/t
 import type { BeliefRecord } from "../data/beliefs/types";
 import { AREA_LABELS, SOURCE_KIND_LABELS, beliefRecords } from "../data/beliefs";
 import VerseList from "./VerseList";
+import { DigDeeper, Snapshot } from "./ArticleSections";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ArticleHeader from "./ArticleHeader";
@@ -169,7 +170,9 @@ export default function TopicPanel({
       {topic.alternateNames && topic.alternateNames.length > 0 && (
         <p className="alt-names">Also called: {topic.alternateNames.join(", ")}</p>
       )}
-      <p className="person-summary">{topic.summary}</p>
+      <Snapshot>
+        <p className="person-summary">{topic.summary}</p>
+      </Snapshot>
       {(topic.discovery?.authenticityDisputed || topic.discovery?.unprovenanced) && (
       <div className="artifact-tags">
         {/* Two warnings, shown up front rather than left to the third section, because they change
@@ -226,30 +229,34 @@ export default function TopicPanel({
         />
       )}
 
-      <div className="history-section">
-        {topic.sections.map((section, si) => (
-          <div className="history-field" key={si}>
-            <h4>{section.heading}</h4>
-            {section.paragraphs.map((paragraph, pi) => (
-              <p key={pi}>
-                {b?.noBibleLinks ? (
-                  paragraph
-                ) : (
-                  <LinkedVerseText
-                    text={paragraph}
-                    onSelectLocation={onSelectLocation}
-                    onSelectPoi={onSelectPoi}
-                    onSelectPerson={onSelectPerson}
-                    onSelectTopic={onSelectTopic}
-                    onSelectVerse={onSelectVerse}
-                    excludeId={topic.id}
-                  />
-                )}
-              </p>
+      {topic.sections.length > 0 && (
+        <DigDeeper>
+          <div className="history-section">
+            {topic.sections.map((section, si) => (
+              <div className="history-field" key={si}>
+                <h5>{section.heading}</h5>
+                {section.paragraphs.map((paragraph, pi) => (
+                  <p key={pi}>
+                    {b?.noBibleLinks ? (
+                      paragraph
+                    ) : (
+                      <LinkedVerseText
+                        text={paragraph}
+                        onSelectLocation={onSelectLocation}
+                        onSelectPoi={onSelectPoi}
+                        onSelectPerson={onSelectPerson}
+                        onSelectTopic={onSelectTopic}
+                        onSelectVerse={onSelectVerse}
+                        excludeId={topic.id}
+                      />
+                    )}
+                  </p>
+                ))}
+              </div>
             ))}
           </div>
-        ))}
-      </div>
+        </DigDeeper>
+      )}
 
       {related && related.length > 0 && (
         <div className="sources-section">

@@ -39,6 +39,15 @@ const ldJson = (obj) => JSON.stringify(obj, null, 0).replace(/</g, "\\u003c");
 // ---------------------------------------------------------------- fragments
 const p = (html) => `<p>${html}</p>`;
 const section = (heading, inner) => (inner ? `<section><h2>${esc(heading)}</h2>${inner}</section>` : "");
+/* The two named main sections every article shares, matching the app's ArticleSections.tsx:
+ * "Snapshot" is the short lead summary, "Dig Deeper" the long-form body. Everything written inside
+ * Dig Deeper is a `subsection` (h3) of it. */
+const snapshot = (html) => section("Snapshot", `<p class="lead">${html}</p>`);
+const subsection = (heading, inner) => (inner ? `<section><h3>${esc(heading)}</h3>${inner}</section>` : "");
+const digDeeper = (...parts) => {
+  const inner = parts.join("");
+  return inner ? `<section class="dig"><h2>Dig Deeper</h2>${inner}</section>` : "";
+};
 const ul = (items) => (items.length ? `<ul>${items.map((i) => `<li>${i}</li>`).join("")}</ul>` : "");
 
 const extLink = (url, label) =>
@@ -78,6 +87,9 @@ h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:clam
 .lead{font-family:"EB Garamond",Georgia,serif;font-size:21px;line-height:1.55;margin:0 0 8px}
 h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:27px;font-weight:600;margin:38px 0 10px;padding-top:16px;border-top:1px solid var(--rule)}
 h3{font-size:16px;margin:22px 0 4px;font-weight:600}
+.dig h3{font-size:17px}
+.dig>h2+section>h3{margin-top:6px}
+.dig h4{font-size:15px;margin:16px 0 4px;font-weight:600}
 section p,li{font-family:"EB Garamond",Georgia,serif;font-size:18.5px;line-height:1.68}
 .bar nav,.crumbs,.kicker,.sub,.facts,.tag,.cta,footer{font-family:Archivo,-apple-system,sans-serif}
 ul{padding-left:1.15em}
@@ -327,7 +339,7 @@ const archaeologySection = (arch, name) => {
         )} — ${extLink(ph.sourceUrl, "source & licence")}</figcaption></figure>`
     )
     .join("");
-  return section("Archaeology", (arch.note ? p(esc(arch.note)) : "") + photos);
+  return subsection("Archaeology", (arch.note ? p(esc(arch.note)) : "") + photos);
 };
 
 const reflectSection = (prompt) => (prompt ? section("Reflect", p(`<em>${esc(prompt)}</em>`)) : "");
@@ -503,22 +515,24 @@ export function locationPage(loc, ctx) {
         .join(" · ")
     ),
     `<p class="lead">${esc(lead)}</p>`,
-    facts.length ? section("What is known", ul(facts.map((f) => ctx.linkify(f, loc.id)))) : "",
-    section(
-      "History",
-      dl([
-        ["Founded", loc.history?.founded ? esc(loc.history.founded) : ""],
-        ["Population", loc.history?.population ? esc(loc.history.population) : ""],
-        ["Industry", loc.history?.industry ? esc(loc.history.industry) : ""],
-        ["Coordinates", esc(coordLabel(loc.coordinates))],
-      ]) +
-        (rulers.length
-          ? `<h3>Rulers and powers</h3>${ul(
-              rulers.map((r) => `${ctx.linkify(r.name, loc.id)} <span class="note">— ${esc(r.period)}</span>`)
-            )}`
-          : "")
+    digDeeper(
+      facts.length ? subsection("What is known", ul(facts.map((f) => ctx.linkify(f, loc.id)))) : "",
+      subsection(
+        "History",
+        dl([
+          ["Founded", loc.history?.founded ? esc(loc.history.founded) : ""],
+          ["Population", loc.history?.population ? esc(loc.history.population) : ""],
+          ["Industry", loc.history?.industry ? esc(loc.history.industry) : ""],
+          ["Coordinates", esc(coordLabel(loc.coordinates))],
+        ]) +
+          (rulers.length
+            ? `<h4>Rulers and powers</h4>${ul(
+                rulers.map((r) => `${ctx.linkify(r.name, loc.id)} <span class="note">— ${esc(r.period)}</span>`)
+              )}`
+            : "")
+      ),
+      archaeologySection(loc.archaeology, loc.name)
     ),
-    archaeologySection(loc.archaeology, loc.name),
     versesSection(loc.verses),
     loc.modernMapUrl ? section("On a modern map", p(extLink(loc.modernMapUrl, `${loc.name} today`))) : "",
     sourcesSection(loc.sources),
@@ -566,8 +580,8 @@ export function poiPage(poi, ctx) {
         .filter(Boolean)
         .join(" · ")
     ),
-    `<p class="lead">${ctx.linkify(poi.description, poi.id)}</p>`,
-    archaeologySection(poi.archaeology, poi.name),
+    snapshot(ctx.linkify(poi.description, poi.id)),
+    digDeeper(archaeologySection(poi.archaeology, poi.name)),
     poi.modernMapUrl ? section("On a modern map", p(extLink(poi.modernMapUrl, `${poi.name} today`))) : "",
     sourcesSection(poi.sources),
     reflectSection(poi.reflectionPrompt),
@@ -627,26 +641,28 @@ export function personPage(person, ctx) {
         .join(" · ")
     ),
     youngEarthNote(person, ctx),
-    `<p class="lead">${ctx.linkify(person.summary, person.id)}</p>`,
-    section("Life and work", paras(person.lifeStory, person.id, ctx)),
-    dl([
-      ["Occupation", person.occupation ? ctx.linkify(person.occupation, person.id) : ""],
-      ["Places", person.placesLived ? ctx.linkify(person.placesLived, person.id) : ""],
-      [
-        "Dates",
-        person.lifespanLabel
-          ? `${esc(person.lifespanLabel)}${
-              person.lifespanCertainty && person.lifespanCertainty !== "firm"
-                ? ` <span class="tag">${esc(CERTAINTY_NOTE[person.lifespanCertainty] ?? person.lifespanCertainty)}</span>`
-                : ""
-            }`
-          : "",
-      ],
-    ]),
-    person.lifespanDatingNotes ? section("Dating", p(ctx.linkify(person.lifespanDatingNotes, person.id))) : "",
-    person.controversies?.length
-      ? section("Questions and debates", paras(person.controversies, person.id, ctx))
-      : "",
+    snapshot(ctx.linkify(person.summary, person.id)),
+    digDeeper(
+      subsection("Life and work", paras(person.lifeStory, person.id, ctx)),
+      dl([
+        ["Occupation", person.occupation ? ctx.linkify(person.occupation, person.id) : ""],
+        ["Places", person.placesLived ? ctx.linkify(person.placesLived, person.id) : ""],
+        [
+          "Dates",
+          person.lifespanLabel
+            ? `${esc(person.lifespanLabel)}${
+                person.lifespanCertainty && person.lifespanCertainty !== "firm"
+                  ? ` <span class="tag">${esc(CERTAINTY_NOTE[person.lifespanCertainty] ?? person.lifespanCertainty)}</span>`
+                  : ""
+              }`
+            : "",
+        ],
+      ]),
+      person.lifespanDatingNotes ? subsection("Dating", p(ctx.linkify(person.lifespanDatingNotes, person.id))) : "",
+      person.controversies?.length
+        ? subsection("Questions and debates", paras(person.controversies, person.id, ctx))
+        : ""
+    ),
     // Never for a modern person, and never a default sentence: data/personEvidence.ts, the same rule
     // the app applies.
     !ctx.personEvidence.showsHistoricalEvidence(person)
@@ -722,10 +738,10 @@ export function topicPage(topic, ctx) {
         .filter(Boolean)
         .join(" ")
     ),
-    `<p class="lead">${ctx.linkify(topic.summary, topic.id)}</p>`,
+    snapshot(ctx.linkify(topic.summary, topic.id)),
     d ? discoveryFacts(d, ctx) : "",
     m ? manuscriptFacts(m) : "",
-    (topic.sections ?? []).map((s) => section(s.heading, paras(s.paragraphs, topic.id, ctx))).join(""),
+    digDeeper(...(topic.sections ?? []).map((s) => subsection(s.heading, paras(s.paragraphs, topic.id, ctx)))),
     versesSection(topic.verses),
     citationsSection(topic.citations),
     sourcesSection(topic.sources),
@@ -855,10 +871,10 @@ export function beliefPage(topic, ctx) {
       topic.role,
       topic.alternateNames?.length ? `Also called ${esc(topic.alternateNames.join(", "))}` : ""
     ),
-    `<p class="lead">${prose.linkify(topic.summary, topic.id)}</p>`,
+    snapshot(prose.linkify(topic.summary, topic.id)),
     b.classificationNote ? `<p class="note"><strong>About this classification.</strong> ${esc(b.classificationNote)}</p>` : "",
     facts,
-    (topic.sections ?? []).map((s) => section(s.heading, paras(s.paragraphs, topic.id, prose))).join(""),
+    digDeeper(...(topic.sections ?? []).map((s) => subsection(s.heading, paras(s.paragraphs, topic.id, prose)))),
     versesSection(topic.verses),
     section(
       "Sources",
@@ -906,9 +922,11 @@ export function eventPage(ev, ctx) {
       }`
     ),
     youngEarthNote(ev, ctx),
-    `<p class="lead">${ctx.linkify(ev.summary, ev.id)}</p>`,
-    section("The event", paras(splitParas(ev.article), ev.id, ctx)),
-    ev.datingNotes ? section("Dating", p(ctx.linkify(ev.datingNotes, ev.id))) : "",
+    snapshot(ctx.linkify(ev.summary, ev.id)),
+    digDeeper(
+      subsection("The event", paras(splitParas(ev.article), ev.id, ctx)),
+      ev.datingNotes ? subsection("Dating", p(ctx.linkify(ev.datingNotes, ev.id))) : ""
+    ),
     ev.scriptureRefs?.length
       ? section("Scripture references", ul(ev.scriptureRefs.map((r) => `<span class="ref">${esc(r)}</span>`)))
       : "",

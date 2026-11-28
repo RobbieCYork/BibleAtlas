@@ -1418,18 +1418,9 @@ body.resizing-panels {
 }
 
 .history-section {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-}
-
-.history-field h4 {
-  font-size: calc(12px * var(--tsz, 1));
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-  margin-bottom: 4px;
+  gap: 18px;
 }
 
 .history-field p,
@@ -1462,7 +1453,8 @@ body.resizing-panels {
   padding-top: 16px;
 }
 
-.verse-list h4 {
+.verse-list h4,
+section.article-main-section > h4 {
   font-size: calc(12px * var(--tsz, 1));
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1521,6 +1513,50 @@ body.resizing-panels {
   color: var(--text-muted);
 }
 
+/* --- Snapshot and Dig Deeper (ArticleSections.tsx) ---
+ * Two main sections, ruled off and headed exactly like Bible References. What is written inside Dig
+ * Deeper is headed by h5, drawn in sentence case and body size so it reads as part of that section
+ * and not as another one. `section.` in these selectors outranks the book introduction's own h4/h5. */
+.article-main-section {
+  margin-top: 22px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+section.article-main-section > h4 {
+  text-align: start;
+}
+
+.article-snapshot .person-summary {
+  margin-top: 0;
+}
+
+section.article-dig-deeper h5 {
+  font-family: var(--sans);
+  font-size: calc(14px * var(--tsz, 1));
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-h);
+  margin: 0 0 4px;
+}
+
+/* A little air under the section heading, so it reads as the title of everything below and not as a
+ * label on the first subsection. */
+section.article-dig-deeper > h4 + * {
+  margin-top: 4px;
+}
+
+/* A book introduction's subsections have no wrapper to space them. */
+section.article-dig-deeper > h5 {
+  margin-top: 18px;
+}
+
+section.article-dig-deeper > h4 + h5 {
+  margin-top: 4px;
+}
+
 /* --- Reflection prompt (journaling) --- */
 
 .reflection-prompt {
@@ -1565,18 +1601,9 @@ body.resizing-panels {
 
 /* --- Archaeology section --- */
 
-.archaeology-section {
-  margin-top: 20px;
-  border-top: 1px solid var(--border);
-  padding-top: 16px;
-}
-
-.archaeology-section h4 {
-  font-size: calc(12px * var(--tsz, 1));
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
-  margin-bottom: 8px;
+/* A subsection of Dig Deeper: below the history fields on a place, alone in it on a site. */
+.history-section + .archaeology-section {
+  margin-top: 18px;
 }
 
 .archaeology-note {
@@ -8703,10 +8730,9 @@ a.profile-links-url {
  * face at 11–13px uppercase is illegibly light, so they go back to Archivo and take the wider
  * tracking that uppercase needs to breathe. */
 .layer-controls h3,
-.history-field h4,
+section.article-main-section > h4,
 .verse-list h4,
 .reflection-prompt h4,
-.archaeology-section h4,
 .extra-biblical-section h4,
 .sources-section h4,
 .friends-section h4,

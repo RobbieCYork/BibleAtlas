@@ -1,5 +1,6 @@
 import type { Location, LocationCategory } from "../data/types";
 import VerseList from "./VerseList";
+import { DigDeeper } from "./ArticleSections";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
@@ -67,6 +68,14 @@ export default function LocationPanel({
   }
 
   const { history, archaeology } = location;
+  const hasBody = Boolean(
+    history.founded ||
+      history.population ||
+      history.rulers?.length ||
+      history.industry ||
+      history.notableFacts.length ||
+      archaeology
+  );
 
   return (
     <div className={`location-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
@@ -105,75 +114,15 @@ export default function LocationPanel({
         />
       )}
 
-      <div className="history-section">
-        {history.founded && (
-          <div className="history-field">
-            <h4>Founded</h4>
-            <p>
-              <LinkedVerseText
-                text={history.founded}
-                onSelectLocation={onSelectLocation}
-                onSelectPoi={onSelectPoi}
-                onSelectPerson={onSelectPerson}
-                onSelectTopic={onSelectTopic}
-                onSelectVerse={onSelectVerse}
-                excludeId={location.id}
-              />
-            </p>
-          </div>
-        )}
-        {history.population && (
-          <div className="history-field">
-            <h4>Population</h4>
-            <p>
-              <LinkedVerseText
-                text={history.population}
-                onSelectLocation={onSelectLocation}
-                onSelectPoi={onSelectPoi}
-                onSelectPerson={onSelectPerson}
-                onSelectTopic={onSelectTopic}
-                onSelectVerse={onSelectVerse}
-                excludeId={location.id}
-              />
-            </p>
-          </div>
-        )}
-        {history.rulers && history.rulers.length > 0 && (
-          <div className="history-field">
-            <h4>Rulers</h4>
-            <ul>
-              {history.rulers.map((r) => (
-                <li key={r.name}>
-                  {r.name} <span className="ruler-period">({r.period})</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {history.industry && (
-          <div className="history-field">
-            <h4>Industry</h4>
-            <p>
-              <LinkedVerseText
-                text={history.industry}
-                onSelectLocation={onSelectLocation}
-                onSelectPoi={onSelectPoi}
-                onSelectPerson={onSelectPerson}
-                onSelectTopic={onSelectTopic}
-                onSelectVerse={onSelectVerse}
-                excludeId={location.id}
-              />
-            </p>
-          </div>
-        )}
-        {history.notableFacts.length > 0 && (
-          <div className="history-field">
-            <h4>Notable Facts</h4>
-            <ul>
-              {history.notableFacts.map((fact, i) => (
-                <li key={i}>
+      {hasBody && (
+        <DigDeeper>
+          <div className="history-section">
+            {history.founded && (
+              <div className="history-field">
+                <h5>Founded</h5>
+                <p>
                   <LinkedVerseText
-                    text={fact}
+                    text={history.founded}
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
                     onSelectPerson={onSelectPerson}
@@ -181,45 +130,109 @@ export default function LocationPanel({
                     onSelectVerse={onSelectVerse}
                     excludeId={location.id}
                   />
-                </li>
-              ))}
-            </ul>
+                </p>
+              </div>
+            )}
+            {history.population && (
+              <div className="history-field">
+                <h5>Population</h5>
+                <p>
+                  <LinkedVerseText
+                    text={history.population}
+                    onSelectLocation={onSelectLocation}
+                    onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
+                    onSelectVerse={onSelectVerse}
+                    excludeId={location.id}
+                  />
+                </p>
+              </div>
+            )}
+            {history.rulers && history.rulers.length > 0 && (
+              <div className="history-field">
+                <h5>Rulers</h5>
+                <ul>
+                  {history.rulers.map((r) => (
+                    <li key={r.name}>
+                      {r.name} <span className="ruler-period">({r.period})</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {history.industry && (
+              <div className="history-field">
+                <h5>Industry</h5>
+                <p>
+                  <LinkedVerseText
+                    text={history.industry}
+                    onSelectLocation={onSelectLocation}
+                    onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
+                    onSelectVerse={onSelectVerse}
+                    excludeId={location.id}
+                  />
+                </p>
+              </div>
+            )}
+            {history.notableFacts.length > 0 && (
+              <div className="history-field">
+                <h5>Notable Facts</h5>
+                <ul>
+                  {history.notableFacts.map((fact, i) => (
+                    <li key={i}>
+                      <LinkedVerseText
+                        text={fact}
+                        onSelectLocation={onSelectLocation}
+                        onSelectPoi={onSelectPoi}
+                        onSelectPerson={onSelectPerson}
+                        onSelectTopic={onSelectTopic}
+                        onSelectVerse={onSelectVerse}
+                        excludeId={location.id}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {archaeology && (
-        <div className="archaeology-section">
-          <h4>Archaeology</h4>
-          <p className="archaeology-note">
-            <LinkedVerseText
-              text={archaeology.note}
-              onSelectLocation={onSelectLocation}
-              onSelectPoi={onSelectPoi}
-              onSelectPerson={onSelectPerson}
-              onSelectTopic={onSelectTopic}
-              onSelectVerse={onSelectVerse}
-              excludeId={location.id}
-            />
-          </p>
-          {archaeology.photos.length > 0 && (
-            <div className="archaeology-photos">
-              {archaeology.photos.map((photo) => (
-                <a
-                  key={photo.url}
-                  href={photo.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="archaeology-photo"
-                  title={photo.caption}
-                >
-                  <img src={photo.url} alt={photo.caption} loading="lazy" />
-                  <span className="archaeology-caption">{photo.caption}</span>
-                </a>
-              ))}
+          {archaeology && (
+            <div className="archaeology-section">
+              <h5>Archaeology</h5>
+              <p className="archaeology-note">
+                <LinkedVerseText
+                  text={archaeology.note}
+                  onSelectLocation={onSelectLocation}
+                  onSelectPoi={onSelectPoi}
+                  onSelectPerson={onSelectPerson}
+                  onSelectTopic={onSelectTopic}
+                  onSelectVerse={onSelectVerse}
+                  excludeId={location.id}
+                />
+              </p>
+              {archaeology.photos.length > 0 && (
+                <div className="archaeology-photos">
+                  {archaeology.photos.map((photo) => (
+                    <a
+                      key={photo.url}
+                      href={photo.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="archaeology-photo"
+                      title={photo.caption}
+                    >
+                      <img src={photo.url} alt={photo.caption} loading="lazy" />
+                      <span className="archaeology-caption">{photo.caption}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           )}
-        </div>
+        </DigDeeper>
       )}
 
       {location.sources && location.sources.length > 0 && (

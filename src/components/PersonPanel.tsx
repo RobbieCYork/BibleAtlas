@@ -1,5 +1,6 @@
 import type { Person } from "../data/types";
 import VerseList from "./VerseList";
+import { DigDeeper, Snapshot } from "./ArticleSections";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
@@ -94,6 +95,13 @@ export default function PersonPanel({
   // non-biblical kind they are keeps "church" and "world" (and anything added later) on the same
   // side of the one distinction the panel actually makes.
   const isBiblical = (person.kind ?? "biblical") === "biblical";
+  const hasBody = Boolean(
+    person.lifeStory.length ||
+      person.occupation ||
+      person.placesLived ||
+      person.controversies?.length ||
+      person.lifespanDatingNotes
+  );
 
   return (
     <div className={`location-panel person-panel ${expand ? "panel-expand" : ""}`} style={expand ? undefined : style}>
@@ -126,11 +134,13 @@ export default function PersonPanel({
           it, so a tall icon no longer leaves a dead strip) and below the summary when it is
           landscape (a wide scene would crush the text column). Chosen from the image's own
           dimensions, never per person. */}
-      <div className="person-lead">
-        {personImage && imageBeside && personFigure}
-        <p className="person-summary">{person.summary}</p>
-        {personImage && !imageBeside && personFigure}
-      </div>
+      <Snapshot>
+        <div className="person-lead">
+          {personImage && imageBeside && personFigure}
+          <p className="person-summary">{person.summary}</p>
+          {personImage && !imageBeside && personFigure}
+        </div>
+      </Snapshot>
 
       <ProfileAudioPlayer kind="person" id={person.id} />
 
@@ -161,56 +171,15 @@ export default function PersonPanel({
         />
       )}
 
-      <div className="history-section">
-        <div className="history-field">
-          <h4>Life &amp; Accomplishments</h4>
-          {person.lifeStory.map((paragraph, i) => (
-            <p key={i}>
-              <LinkedVerseText
-                text={paragraph}
-                onSelectLocation={onSelectLocation}
-                onSelectPoi={onSelectPoi}
-                onSelectPerson={onSelectPerson}
-                onSelectTopic={onSelectTopic}
-                onSelectVerse={onSelectVerse}
-                excludeId={person.id}
-              />
-            </p>
-          ))}
-        </div>
-
-        {person.occupation && (
-          <div className="history-field">
-            <h4>Occupation</h4>
-            <p>{person.occupation}</p>
-          </div>
-        )}
-
-        {person.placesLived && (
-          <div className="history-field">
-            <h4>Where They Lived</h4>
-            <p>
-              <LinkedVerseText
-                text={person.placesLived}
-                onSelectLocation={onSelectLocation}
-                onSelectPoi={onSelectPoi}
-                onSelectPerson={onSelectPerson}
-                onSelectTopic={onSelectTopic}
-                onSelectVerse={onSelectVerse}
-                excludeId={person.id}
-              />
-            </p>
-          </div>
-        )}
-
-        {person.controversies && person.controversies.length > 0 && (
-          <div className="history-field">
-            <h4>Controversies &amp; Debates</h4>
-            <ul>
-              {person.controversies.map((c, i) => (
-                <li key={i}>
+      {hasBody && (
+        <DigDeeper>
+          <div className="history-section">
+            <div className="history-field">
+              <h5>Life &amp; Accomplishments</h5>
+              {person.lifeStory.map((paragraph, i) => (
+                <p key={i}>
                   <LinkedVerseText
-                    text={c}
+                    text={paragraph}
                     onSelectLocation={onSelectLocation}
                     onSelectPoi={onSelectPoi}
                     onSelectPerson={onSelectPerson}
@@ -218,29 +187,74 @@ export default function PersonPanel({
                     onSelectVerse={onSelectVerse}
                     excludeId={person.id}
                   />
-                </li>
+                </p>
               ))}
-            </ul>
-          </div>
-        )}
+            </div>
 
-        {person.lifespanDatingNotes && (
-          <div className="history-field">
-            <h4>Dating</h4>
-            <p>
-              <LinkedVerseText
-                text={person.lifespanDatingNotes}
-                onSelectLocation={onSelectLocation}
-                onSelectPoi={onSelectPoi}
-                onSelectPerson={onSelectPerson}
-                onSelectTopic={onSelectTopic}
-                onSelectVerse={onSelectVerse}
-                excludeId={person.id}
-              />
-            </p>
+            {person.occupation && (
+              <div className="history-field">
+                <h5>Occupation</h5>
+                <p>{person.occupation}</p>
+              </div>
+            )}
+
+            {person.placesLived && (
+              <div className="history-field">
+                <h5>Where They Lived</h5>
+                <p>
+                  <LinkedVerseText
+                    text={person.placesLived}
+                    onSelectLocation={onSelectLocation}
+                    onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
+                    onSelectVerse={onSelectVerse}
+                    excludeId={person.id}
+                  />
+                </p>
+              </div>
+            )}
+
+            {person.controversies && person.controversies.length > 0 && (
+              <div className="history-field">
+                <h5>Controversies &amp; Debates</h5>
+                <ul>
+                  {person.controversies.map((c, i) => (
+                    <li key={i}>
+                      <LinkedVerseText
+                        text={c}
+                        onSelectLocation={onSelectLocation}
+                        onSelectPoi={onSelectPoi}
+                        onSelectPerson={onSelectPerson}
+                        onSelectTopic={onSelectTopic}
+                        onSelectVerse={onSelectVerse}
+                        excludeId={person.id}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {person.lifespanDatingNotes && (
+              <div className="history-field">
+                <h5>Dating</h5>
+                <p>
+                  <LinkedVerseText
+                    text={person.lifespanDatingNotes}
+                    onSelectLocation={onSelectLocation}
+                    onSelectPoi={onSelectPoi}
+                    onSelectPerson={onSelectPerson}
+                    onSelectTopic={onSelectTopic}
+                    onSelectVerse={onSelectVerse}
+                    excludeId={person.id}
+                  />
+                </p>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </DigDeeper>
+      )}
 
       {/* Whether there is a section at all is decided in one place, data/personEvidence.ts: never for
           a modern person, and never for a record with nothing of its own to say.

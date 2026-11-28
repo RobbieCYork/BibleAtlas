@@ -1,5 +1,6 @@
 import { bookIntros } from "../data/bookIntros";
 import { bookIntroOwnerId } from "../lib/verseAnnotations";
+import { DigDeeper } from "./ArticleSections";
 import LinkedVerseText from "./LinkedVerseText";
 import BackButton from "./BackButton";
 import { ArticleReadToggle } from "./ArticleReadToggle";
@@ -112,43 +113,45 @@ export default function BookIntroView({ book, onJumpToChapter, onBack, onChangeP
         </div>
       </div>
 
-      <h5>Why It Was Written</h5>
-      <p>
-        <LinkedVerseText text={intro.whyWritten} {...linkHandlers} />
-      </p>
-
-      <h5>Summary</h5>
-      {intro.summary.map((paragraph, i) => (
-        <p key={i}>
-          <LinkedVerseText text={paragraph} {...linkHandlers} />
+      <DigDeeper>
+        <h5>Why It Was Written</h5>
+        <p>
+          <LinkedVerseText text={intro.whyWritten} {...linkHandlers} />
         </p>
-      ))}
 
-      {intro.keyPassages.length > 0 && (
-        <>
-          <h5>Key Passages</h5>
-          <div className="book-intro-key-passages">
-            {intro.keyPassages.map((kp, i) => (
-              <button type="button" key={i} onClick={() => onJumpToChapter(kp.chapter, kp.verse)}>
-                <span>{kp.label}</span>
-                <span className="book-intro-key-passage-ref">
-                  {kp.chapter}
-                  {kp.verse ? `:${kp.verse}` : ""}
-                </span>
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-
-      <h5>Manuscripts &amp; Archaeological Evidence</h5>
-      <ul className="book-intro-manuscripts">
-        {intro.manuscripts.map((m, i) => (
-          <li key={i}>
-            <LinkedVerseText text={m} {...linkHandlers} />
-          </li>
+        <h5>Summary</h5>
+        {intro.summary.map((paragraph, i) => (
+          <p key={i}>
+            <LinkedVerseText text={paragraph} {...linkHandlers} />
+          </p>
         ))}
-      </ul>
+
+        {intro.keyPassages.length > 0 && (
+          <>
+            <h5>Key Passages</h5>
+            <div className="book-intro-key-passages">
+              {intro.keyPassages.map((kp, i) => (
+                <button type="button" key={i} onClick={() => onJumpToChapter(kp.chapter, kp.verse)}>
+                  <span>{kp.label}</span>
+                  <span className="book-intro-key-passage-ref">
+                    {kp.chapter}
+                    {kp.verse ? `:${kp.verse}` : ""}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        <h5>Manuscripts &amp; Archaeological Evidence</h5>
+        <ul className="book-intro-manuscripts">
+          {intro.manuscripts.map((m, i) => (
+            <li key={i}>
+              <LinkedVerseText text={m} {...linkHandlers} />
+            </li>
+          ))}
+        </ul>
+      </DigDeeper>
       <ArticleReadToggle kind="book-intro" id={intro.book} />
     </div>
   );

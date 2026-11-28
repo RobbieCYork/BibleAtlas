@@ -1,4 +1,5 @@
 import type { PointOfInterest } from "../data/types";
+import { DigDeeper, Snapshot } from "./ArticleSections";
 import LinkedVerseText from "./LinkedVerseText";
 import ReflectionPrompt from "./ReflectionPrompt";
 import ShareCardButton from "./ShareCardButton";
@@ -65,30 +66,10 @@ export default function PoiPanel({
 
       <ProfileAudioPlayer kind="poi" id={poi.id} />
 
-      <div className="history-section">
-        <div className="history-field">
-          <p>
-            <LinkedVerseText
-              text={poi.description}
-              onSelectLocation={onSelectLocation}
-              onSelectPoi={onSelectPoi}
-              onSelectPerson={onSelectPerson}
-              onSelectTopic={onSelectTopic}
-              onSelectVerse={onSelectVerse}
-              excludeId={poi.id}
-            />
-          </p>
-        </div>
-      </div>
-
-      {/* POIs carry no verse list to anchor a journal note to, so the card is prompt-only here. */}
-      {poi.reflectionPrompt && <ReflectionPrompt prompt={poi.reflectionPrompt} />}
-
-      <div className="archaeology-section">
-        <h4>Archaeology</h4>
-        <p className="archaeology-note">
+      <Snapshot>
+        <p className="person-summary">
           <LinkedVerseText
-            text={poi.archaeology.note}
+            text={poi.description}
             onSelectLocation={onSelectLocation}
             onSelectPoi={onSelectPoi}
             onSelectPerson={onSelectPerson}
@@ -97,24 +78,46 @@ export default function PoiPanel({
             excludeId={poi.id}
           />
         </p>
-        {poi.archaeology.photos.length > 0 && (
-          <div className="archaeology-photos">
-            {poi.archaeology.photos.map((photo) => (
-              <a
-                key={photo.url}
-                href={photo.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="archaeology-photo"
-                title={photo.caption}
-              >
-                <img src={photo.url} alt={photo.caption} loading="lazy" />
-                <span className="archaeology-caption">{photo.caption}</span>
-              </a>
-            ))}
+      </Snapshot>
+
+      {/* POIs carry no verse list to anchor a journal note to, so the card is prompt-only here. */}
+      {poi.reflectionPrompt && <ReflectionPrompt prompt={poi.reflectionPrompt} />}
+
+      {(poi.archaeology.note || poi.archaeology.photos.length > 0) && (
+        <DigDeeper>
+          <div className="archaeology-section">
+            <h5>Archaeology</h5>
+            <p className="archaeology-note">
+              <LinkedVerseText
+                text={poi.archaeology.note}
+                onSelectLocation={onSelectLocation}
+                onSelectPoi={onSelectPoi}
+                onSelectPerson={onSelectPerson}
+                onSelectTopic={onSelectTopic}
+                onSelectVerse={onSelectVerse}
+                excludeId={poi.id}
+              />
+            </p>
+            {poi.archaeology.photos.length > 0 && (
+              <div className="archaeology-photos">
+                {poi.archaeology.photos.map((photo) => (
+                  <a
+                    key={photo.url}
+                    href={photo.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="archaeology-photo"
+                    title={photo.caption}
+                  >
+                    <img src={photo.url} alt={photo.caption} loading="lazy" />
+                    <span className="archaeology-caption">{photo.caption}</span>
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </DigDeeper>
+      )}
 
       {poi.sources && poi.sources.length > 0 && (
         <div className="sources-section">

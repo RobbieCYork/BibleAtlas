@@ -1,5 +1,6 @@
 import type { TimelineEvent, TimelineDateCertainty } from "../data/types";
 import { timelineEvents } from "../data/timelineEvents";
+import { DigDeeper, Snapshot } from "./ArticleSections";
 import LinkedVerseText from "./LinkedVerseText";
 import ArticleHeader from "./ArticleHeader";
 import { ArticleReadCheck, ArticleReadToggle } from "./ArticleReadToggle";
@@ -84,6 +85,7 @@ export default function TimelineEventPanel({
   const hasReferences = (event.scriptureRefs?.length ?? 0) > 0 || (event.externalRefs?.length ?? 0) > 0;
   // Empty for the overwhelming majority of events — only a spanning entry has members.
   const collapsedMembers = collapsedMembersOf(event.id);
+  const hasBody = paragraphs.length > 0 || collapsedMembers.length > 0 || Boolean(event.datingNotes);
   /** Shared by every LinkedVerseText below — the same auto-link mechanism the other detail panels
    * use, so people/places/topics/events mentioned in the text link automatically. */
   const linkHandlers = {
@@ -104,51 +106,57 @@ export default function TimelineEventPanel({
         {certaintyBadge && <span className="person-tier-tag">{certaintyBadge}</span>}
       </p>
       {event.youngEarthDate && <YoungEarthDateNote onSelectTopic={onSelectTopic} />}
-      <p className="person-summary">{event.summary}</p>
+      <Snapshot>
+        <p className="person-summary">{event.summary}</p>
+      </Snapshot>
 
-      <div className="history-section">
-        <div className="history-field">
-          {paragraphs.map((paragraph, pi) => (
-            <p key={pi}>
-              <LinkedVerseText text={paragraph} {...linkHandlers} />
-            </p>
-          ))}
-        </div>
-
-        {/* The index of everything this entry stands in for. Each row opens that event's own full
-            article through the same onSelectTimelineEvent the auto-linked mentions in the prose
-            above use, so the caller's existing back trail (goBackInDetails in the Details column,
-            the overlay's own Back inside Timeline mode) carries the reader home unchanged. */}
-        {collapsedMembers.length > 0 && (
-          <div className="history-field">
-            <h4>Events included in this entry</h4>
-            <ul>
-              {collapsedMembers.map((member) => (
-                <li key={member.id}>
-                  <button
-                    type="button"
-                    className="verse-location-link"
-                    onClick={() => onSelectTimelineEvent(member.id)}
-                  >
-                    {member.title}
-                  </button>{" "}
-                  <span className="ruler-period">{member.dateLabel}</span>
-                  <p>{member.summary}</p>
-                </li>
+      {hasBody && (
+        <DigDeeper>
+          <div className="history-section">
+            <div className="history-field">
+              {paragraphs.map((paragraph, pi) => (
+                <p key={pi}>
+                  <LinkedVerseText text={paragraph} {...linkHandlers} />
+                </p>
               ))}
-            </ul>
-          </div>
-        )}
+            </div>
 
-        {event.datingNotes && (
-          <div className="history-field">
-            <h4>Dating</h4>
-            <p>
-              <LinkedVerseText text={event.datingNotes} {...linkHandlers} />
-            </p>
+            {/* The index of everything this entry stands in for. Each row opens that event's own full
+                article through the same onSelectTimelineEvent the auto-linked mentions in the prose
+                above use, so the caller's existing back trail (goBackInDetails in the Details column,
+                the overlay's own Back inside Timeline mode) carries the reader home unchanged. */}
+            {collapsedMembers.length > 0 && (
+              <div className="history-field">
+                <h5>Events included in this entry</h5>
+                <ul>
+                  {collapsedMembers.map((member) => (
+                    <li key={member.id}>
+                      <button
+                        type="button"
+                        className="verse-location-link"
+                        onClick={() => onSelectTimelineEvent(member.id)}
+                      >
+                        {member.title}
+                      </button>{" "}
+                      <span className="ruler-period">{member.dateLabel}</span>
+                      <p>{member.summary}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {event.datingNotes && (
+              <div className="history-field">
+                <h5>Dating</h5>
+                <p>
+                  <LinkedVerseText text={event.datingNotes} {...linkHandlers} />
+                </p>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </DigDeeper>
+      )}
 
       {hasReferences && (
         <div className="sources-section">
