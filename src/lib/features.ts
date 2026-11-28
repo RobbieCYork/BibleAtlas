@@ -76,6 +76,14 @@ export const ARCHAEOLOGY_MENU_ROW_VISIBLE = false;
  * calls or plan.* analytics events run. Flip to true to bring it all back. */
 export const READING_PLANS_ENABLED = false;
 
+/** Custom Map builder on the map page (components/customMap). Robbie, 2026-11-27: the "Create custom
+ * map" button will be visible to anyone and will be a paid feature, but payments are not switched on.
+ * While false only the owner in Test view sees it — lib/customMapAccess.ts is the one check that
+ * reads this, and is where a paid entitlement goes. A code switch rather than a feature_release row
+ * because a key with no row is treated as Live (see FAILURE MODES above), so a row-less flag would
+ * show the button to everyone until a migration ran. */
+export const CUSTOM_MAP_FOR_EVERYONE = false;
+
 export type FeatureKey =
   | "prayer_list"
   | "sermon_notes"

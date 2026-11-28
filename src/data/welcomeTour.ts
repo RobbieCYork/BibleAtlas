@@ -416,6 +416,7 @@ export const SWITCH_COVERAGE: {
   SOCIAL_CONNECTIONS_ENABLED: { off: "Friends, Groups and Messages are switched off." },
   ARCHAEOLOGY_MENU_ROW_VISIBLE: { off: "No menu row; Archaeology is named in the Articles step." },
   READING_PLANS_ENABLED: { off: "Reading Plans are switched off." },
+  CUSTOM_MAP_FOR_EVERYONE: { off: "The Custom Map builder is shown to the owner only until it is released, so the tour does not mention it." },
 };
 
 /** Every row of the main menus, the bottom bar and the account menu (their `data-menu` values). */

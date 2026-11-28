@@ -1,0 +1,755 @@
+/* The Custom Map builder: a full-screen workspace over the map. Chrome follows the app's theme; the
+ * map and everything saved from it keep their own fixed colours (lib/customMap/draw.ts). */
+.cm-root {
+  --tsz: var(--text-scale, 1);
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font: calc(14px * var(--tsz, 1)) / 1.45 var(--sans);
+  text-align: left;
+  outline: none;
+}
+
+.cm-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: calc(8px + var(--safe-top)) calc(12px + var(--safe-right)) 8px calc(12px + var(--safe-left));
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-bg);
+}
+
+.cm-header h1 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: 600 calc(21px * var(--row-tsz, 1)) / 1.2 var(--display);
+  color: var(--text-h);
+}
+
+.cm-root h2 {
+  margin: 4px 0 0;
+  font: 600 calc(12px * var(--tsz, 1)) / 1.4 var(--sans);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cm-root h2 span {
+  float: right;
+  letter-spacing: 0;
+}
+
+.cm-root p {
+  margin: 0;
+}
+
+.cm-button,
+.cm-icon-button,
+.cm-tabs button,
+.cm-slide-tab {
+  border: 1px solid var(--border-strong);
+  background: var(--panel-bg);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.cm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.cm-button-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.cm-icon-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.cm-button:disabled,
+.cm-icon-button:disabled,
+.cm-result:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.cm-root input[type="text"] {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--surface-sunken);
+  color: var(--text-h);
+  /* 16px or iOS zooms the page on focus. */
+  font: max(16px, calc(15px * var(--tsz, 1))) / 1.3 var(--sans);
+}
+
+/* --- Layout: add and list on the left, the map on the right; one column on a phone. --- */
+.cm-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(300px, 390px) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas:
+    "add main"
+    "panel main";
+}
+
+.cm-add {
+  grid-area: add;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 12px 8px;
+  border-right: 1px solid var(--border);
+}
+
+.cm-main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 12px 16px calc(12px + var(--safe-bottom));
+}
+
+.cm-panel {
+  grid-area: panel;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 12px calc(16px + var(--safe-bottom));
+  border-right: 1px solid var(--border);
+}
+
+.cm-panel > * {
+  flex-shrink: 0;
+}
+
+.cm-title {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.cm-root input.cm-title {
+  font: 600 max(18px, calc(21px * var(--row-tsz, 1))) / 1.3 var(--display);
+  text-align: center;
+}
+
+.cm-stage {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  aspect-ratio: 1280 / 586;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: #e4d4b0;
+}
+
+.cm-stage-map,
+.cm-stage-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cm-stage-overlay {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cm-stage .maplibregl-control-container {
+  position: relative;
+  z-index: 2;
+}
+
+.cm-stage-status {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: var(--panel-bg);
+  white-space: nowrap;
+  font-size: calc(12px * var(--tsz, 1));
+}
+
+.cm-framing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--text-muted);
+}
+
+.cm-framing .cm-button {
+  flex-shrink: 0;
+}
+
+.cm-warning {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-size: calc(13px * var(--tsz, 1));
+  color: var(--danger);
+}
+
+.cm-credit {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.cm-credit a {
+  color: inherit;
+}
+
+/* --- Slides --- */
+.cm-slides {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.cm-slides ol {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 2px 0 4px;
+  overflow-x: auto;
+  list-style: none;
+}
+
+.cm-slide-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  max-width: 190px;
+  padding: 4px 12px 4px 6px;
+  border-radius: 8px;
+}
+
+.cm-slide-tab[aria-current="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+  background: var(--accent-bg);
+}
+
+.cm-slide-number,
+.cm-place-number {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 100px;
+  background: var(--surface-sunken);
+  font-weight: 700;
+  font-size: calc(12px * var(--row-tsz, 1));
+}
+
+.cm-slide-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cm-slide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* --- Adding places --- */
+.cm-tabs {
+  display: flex;
+}
+
+.cm-tabs button {
+  flex: 1;
+  min-height: 38px;
+  font-weight: 600;
+}
+
+.cm-tabs button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.cm-tabs button:last-child {
+  border-left: 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.cm-tabs button[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.cm-search {
+  position: relative;
+}
+
+.cm-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cm-search-clear {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.cm-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: min(55dvh, 460px);
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--panel-bg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.cm-results-empty {
+  padding: 10px;
+  color: var(--text-muted);
+}
+
+.cm-result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cm-result:not(:disabled):hover,
+.cm-result:focus-visible {
+  background: var(--accent-bg);
+}
+
+.cm-result-action {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.cm-result-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.cm-result-detail,
+.cm-place-note,
+.cm-hint {
+  display: block;
+  color: var(--text-muted);
+  font-size: calc(12px * var(--tsz, 1));
+}
+
+.cm-place-note {
+  font-style: italic;
+}
+
+.cm-chip {
+  padding: 0 7px;
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  color: var(--text);
+  font-size: calc(11px * var(--tsz, 1));
+  font-weight: 500;
+}
+
+.cm-chip-disputed,
+.cm-chip-traditional,
+.cm-chip-approximate {
+  border-style: dashed;
+  border-color: var(--accent);
+}
+
+.cm-passage-form {
+  display: flex;
+  gap: 8px;
+}
+
+.cm-passage-form .cm-button {
+  flex-shrink: 0;
+}
+
+/* --- The slide's places --- */
+.cm-places {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cm-places li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-bg);
+}
+
+.cm-place-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cm-place-actions {
+  display: flex;
+  gap: 2px;
+}
+
+.cm-place-actions .cm-icon-button {
+  width: 34px;
+  height: 36px;
+  border-color: var(--border);
+}
+
+.cm-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.cm-check input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  accent-color: var(--accent);
+}
+
+.cm-start-over {
+  align-self: flex-start;
+}
+
+.cm-notice {
+  color: var(--text-muted);
+}
+
+.cm-error {
+  color: var(--danger);
+}
+
+.cm-unsaved {
+  padding: 6px 12px;
+}
+
+/* --- Sheets --- */
+.cm-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(16px + var(--safe-top)) 16px calc(16px + var(--safe-bottom));
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.cm-sheet {
+  display: flex;
+  flex-direction: column;
+  width: min(520px, 100%);
+  max-height: 100%;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  color: var(--text);
+  outline: none;
+}
+
+.cm-sheet-head,
+.cm-sheet-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+}
+
+.cm-sheet-head {
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.cm-root .cm-sheet-head h2 {
+  margin: 0;
+  font: 600 calc(19px * var(--tsz, 1)) / 1.25 var(--display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-h);
+}
+
+.cm-sheet-foot {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+}
+
+.cm-sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px;
+}
+
+.cm-sheet-body > * {
+  flex-shrink: 0;
+}
+
+.cm-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-width: 0;
+}
+
+.cm-group legend {
+  padding: 0 6px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.cm-group .cm-button {
+  align-self: flex-start;
+}
+
+.cm-choice {
+  border-color: var(--accent);
+  border-style: dashed;
+}
+
+.cm-ready {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  overflow-wrap: anywhere;
+}
+
+/* --- Presentation --- */
+.cm-present {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+  background: #000;
+  color: #fff;
+  outline: none;
+}
+
+.cm-present-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cm-present-stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+}
+
+.cm-present-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.cm-present-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 4px;
+  opacity: 0.75;
+}
+
+.cm-present-bar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cm-present-bar button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.cm-present-rotate {
+  display: none;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+@media (orientation: portrait) and (max-width: 768px) {
+  .cm-present-rotate {
+    display: block;
+    padding-bottom: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* One column: add, map, then the list scrolling underneath, so the map stays in view. */
+  .cm-body {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .cm-add,
+  .cm-panel {
+    border-right: 0;
+  }
+
+  .cm-add {
+    order: 1;
+    padding-bottom: 4px;
+  }
+
+  .cm-main {
+    order: 2;
+    flex-shrink: 0;
+    overflow: visible;
+    padding: 4px 12px 8px;
+  }
+
+  .cm-panel {
+    order: 3;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+
+  .cm-stage {
+    aspect-ratio: auto;
+    height: clamp(210px, 34dvh, 320px);
+  }
+
+  /* Keeps the list above the on-screen keyboard. */
+  .cm-results {
+    max-height: min(38dvh, 400px);
+  }
+
+  .cm-header h1 {
+    font-size: calc(18px * var(--row-tsz, 1));
+  }
+
+  .cm-header .cm-button {
+    padding: 6px 10px;
+  }
+
+  .cm-sheet-backdrop {
+    align-items: flex-end;
+    padding: calc(12px + var(--safe-top)) 0 0;
+  }
+
+  .cm-sheet {
+    width: 100%;
+    border-radius: 14px 14px 0 0;
+    padding-bottom: var(--safe-bottom);
+  }
+}

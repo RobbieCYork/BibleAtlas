@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import type maplibregl from "maplibre-gl";
 import type { Session } from "@supabase/supabase-js";
 import MapView from "./components/MapView";
@@ -61,6 +61,9 @@ import { formatWalkStopReference, getActiveSeasonalWalk, getWalkDismissKey } fro
 import SeasonalWalkPanel from "./components/SeasonalWalkPanel";
 import { TestViewStrip } from "./components/FeatureRelease";
 import { useFeature, useFeatureAdmin } from "./lib/features";
+import { useCustomMapAccess } from "./lib/customMapAccess";
+import CustomMapButton from "./components/customMap/CustomMapButton";
+import CustomMapBuilder from "./components/customMap/LazyCustomMapBuilder";
 import WelcomeTour from "./components/WelcomeTour";
 import { useWelcomeTourFirstRun } from "./lib/welcomeTourSeen";
 import { TOUR_ANCHORS } from "./data/welcomeTour";
@@ -681,6 +684,8 @@ function App() {
   const [tourOpen, setTourOpen] = useState(false);
   const openTour = () => setTourOpen(true);
   const { loaded: featureStagesLoaded } = useFeatureAdmin();
+  const customMap = useCustomMapAccess();
+  const [customMapOpen, setCustomMapOpen] = useState(false);
   const tourReady =
     authResolved &&
     !exchangingRecoveryCode &&
@@ -1750,6 +1755,7 @@ function App() {
               defaultMinimized
             />
             <ThenNowToggle mode={mapMode} onChange={setMapMode} />
+            {customMap.visible && <CustomMapButton inTesting={customMap.inTesting} onClick={() => setCustomMapOpen(true)} />}
             {hasSelection && (
               <button type="button" className="clear-selection-button" onClick={clearSelection}>
                 × Show All Pins
@@ -2068,6 +2074,11 @@ function App() {
             closeGame();
           }}
         />
+      )}
+      {customMapOpen && customMap.canUse && session && (
+        <Suspense fallback={null}>
+          <CustomMapBuilder userId={session.user.id} onClose={() => setCustomMapOpen(false)} />
+        </Suspense>
       )}
       {tourOpen && (
         <WelcomeTour
