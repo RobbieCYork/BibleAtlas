@@ -16,6 +16,8 @@ let eventIndex: Map<string, TimelineEvent[]> | null = null;
 function buildEventIndex(): Map<string, TimelineEvent[]> {
   const index = new Map<string, TimelineEvent[]>();
   for (const event of timelineEvents) {
+    // An event that is not on the timeline is no reason to offer "View in Timeline".
+    if (event.hiddenOnTimeline) continue;
     for (const entityId of event.primaryEntityIds ?? []) {
       const list = index.get(entityId);
       if (list) list.push(event);
@@ -25,7 +27,8 @@ function buildEventIndex(): Map<string, TimelineEvent[]> {
   return index;
 }
 
-/** Every timeline event whose primaryEntityIds includes this entity id (empty for most entities). */
+/** Every event on the timeline whose primaryEntityIds includes this entity id (empty for most
+ * entities). */
 export function getTimelineEventsForEntity(entityId: string): TimelineEvent[] {
   if (!eventIndex) eventIndex = buildEventIndex();
   return eventIndex.get(entityId) ?? [];

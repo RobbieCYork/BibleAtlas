@@ -782,6 +782,9 @@ The event produced one of the oldest pieces of poetry in the Bible, the Song of 
     scriptureRefs: ["Exodus 14:1-31", "Exodus 15:1-21", "Psalm 106:9-11"],
     externalRefs: [],
     primaryEntityIds: ["moses", "red-sea"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-wilderness-provision-testing",
@@ -802,6 +805,9 @@ It was also at Rephidim that Israel fought its first battle as a free nation, ag
     scriptureRefs: ["Exodus 16:1-36", "Exodus 17:1-16"],
     externalRefs: [],
     primaryEntityIds: ["moses", "aaron"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-giving-of-the-law",
@@ -842,6 +848,9 @@ Moses' own reaction on descending the mountain was fierce: he shattered the ston
     scriptureRefs: ["Exodus 32:1-35", "Deuteronomy 9:7-21"],
     externalRefs: [],
     primaryEntityIds: ["aaron", "moses"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-tabernacle-completed",
@@ -882,6 +891,9 @@ God's judgment matched the crime: the generation twenty years old and up who had
     scriptureRefs: ["Numbers 13:1-14:45", "Deuteronomy 1:19-46"],
     externalRefs: [],
     primaryEntityIds: ["moses", "joshua", "caleb", "kadesh-barnea"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-wilderness-wandering",
@@ -923,6 +935,9 @@ The episode settles, in the most forceful way possible, the question of who God 
     scriptureRefs: ["Numbers 16:1-50", "Numbers 26:9-10", "Jude 1:11"],
     externalRefs: [],
     primaryEntityIds: ["moses", "aaron"],
+    /** Off the timeline at the owner's request. The article, its links and the games keep it — see
+     * hiddenOnTimeline in types.ts. */
+    hiddenOnTimeline: true,
   },
   {
     id: "bib-exo-death-of-aaron",

@@ -455,6 +455,14 @@ export interface TimelineEvent {
    * The spanning entry is an ordinary TimelineEvent like any other — it is identified purely by
    * being named here, so there is no second field to keep in step. */
   collapsedInto?: string;
+  /** DISPLAY ONLY: this event is not part of the timeline view. It gets no mark on the canvas, is not
+   * offered by the timeline's own search box, and does not on its own make "View in Timeline" appear
+   * for a person or place. Unlike `collapsedInto`, nothing stands in for it.
+   *
+   * The record is otherwise untouched: it stays in `timelineEvents` with its id, article and route,
+   * is listed in Articles, is auto-linked from other text, has its public page, and is dealt by the
+   * games. Do not delete a record to take it off the timeline. */
+  hiddenOnTimeline?: boolean;
 }
 
 /**

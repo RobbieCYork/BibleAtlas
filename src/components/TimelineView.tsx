@@ -537,9 +537,9 @@ export default function TimelineView({
     const eventIds = new Set<string>();
     const ys: number[] = [];
     for (const e of events) {
-      // Collapsed members are never drawn, so they must not contribute a highlight or stretch the
-      // year range — that would aim at a span whose end marks don't exist on the canvas.
-      if (e.collapsedInto) continue;
+      // Collapsed and hidden events are never drawn, so they must not contribute a highlight or
+      // stretch the year range — that would aim at marks that don't exist on the canvas.
+      if (e.collapsedInto || e.hiddenOnTimeline) continue;
       if (e.id === targetId || e.primaryEntityIds?.includes(targetId)) {
         eventIds.add(e.id);
         ys.push(e.startYear);
@@ -875,7 +875,7 @@ export default function TimelineView({
         return;
       }
       const starts = events
-        .filter((e) => !e.collapsedInto && e.startYear >= from && e.startYear <= to)
+        .filter((e) => !e.collapsedInto && !e.hiddenOnTimeline && e.startYear >= from && e.startYear <= to)
         .map((e) => e.startYear);
       const first = starts.length > 0 ? Math.min(...starts) : from;
       panTo(first - JUMP_LEFT_MARGIN_PX / PX_PER_YEAR);
@@ -930,13 +930,15 @@ export default function TimelineView({
    * the canvas then draws the ONE spanning entry and NEVER its members. This is unconditional on
    * purpose: there is no "detail" mode.
    *
+   * An event marked `hiddenOnTimeline` is left off in the same way, with nothing standing in for it.
+   *
    * Nothing is removed from the dataset by any of this: `events` still holds every record, so the
    * tooltips, the article panel, Articles browse/search, the auto-linker and the games all continue
    * to see all of them — a collapsed episode is a full article that simply has no mark of its own on
    * the canvas. The one path that aims the canvas AT a specific event ("View in Timeline", or
    * picking a result from the timeline search box) is redirected to the spanning entry — see
    * `focusInfo` above — so it never aims at something undrawn. */
-  const canvasEvents = useMemo(() => events.filter((e) => !e.collapsedInto), [events]);
+  const canvasEvents = useMemo(() => events.filter((e) => !e.collapsedInto && !e.hiddenOnTimeline), [events]);
 
   /** Row-packing for the event lanes, over the WHOLE span at once: each item's footprint is its
    * mark plus the widest title pill it can carry, so no two marks in a row can touch wherever the

@@ -12,7 +12,9 @@
 const CTRL = 2, META = 4;
 const PX_PER_YEAR = 39, STEP_PX = 5 * PX_PER_YEAR;
 /* In the order the bands stack. */
-const HEIGHTS = { "bible-church": 340, life: 308, world: 184, religion: 158 };
+const HEIGHTS = { "bible-church": 262, life: 308, world: 184, religion: 158 };
+/* hiddenOnTimeline: off the canvas and out of the timeline search, still articles. */
+const REMOVED = ["Crossing of the Red Sea", "Manna, Water, and the Battle with Amalek", "The Golden Calf", "The Twelve Spies and the Refusal at Kadesh Barnea", "Korah's Rebellion"];
 
 export default async function (h) {
   const [W] = h.viewport.split("x").map(Number);
@@ -270,7 +272,7 @@ export default async function (h) {
   }
 
   h.section("search jumps");
-  for (const [query, label, year] of [["Diet of Worms", "Diet of Worms", 1521], ["Korah", "Korah's Rebellion", -1444], ["The Resurrection", "The Resurrection", 30]]) {
+  for (const [query, label, year] of [["Diet of Worms", "Diet of Worms", 1521], ["Southern Campaign", "The Southern Campaign", -1406], ["The Resurrection", "The Resurrection", 30]]) {
     await h.type('input[placeholder="Search timeline"]', query);
     await h.sleep(600);
     await h.click({ css: "button, li, [role=option]", text: query });
@@ -281,8 +283,36 @@ export default async function (h) {
     const m = await onScreen(label);
     h.assert(!!m && m.inView && Math.abs(s.centerYear - year) < 1.5, `"${query}": panned there and scrolled to it ${JSON.stringify(m)} ("${s.readout}")`);
     check(s, query);
-    if (query === "Korah") await h.screenshot(`fixed-${W}-search.png`);
+    if (query === "Southern Campaign") await h.screenshot(`fixed-${W}-search.png`);
   }
+  for (const title of REMOVED) {
+    await h.type('input[placeholder="Search timeline"]', title);
+    await h.sleep(300);
+    const rows = await h.evaluate(() => [...document.querySelectorAll(".search-results li .search-result-name")].map((e) => e.textContent));
+    h.assert(!rows.includes(title), `timeline search no longer offers "${title}" ${JSON.stringify(rows.slice(0, 3))}`);
+  }
+  await h.type('input[placeholder="Search timeline"]', "");
+  await h.evaluate(() => document.activeElement.blur());
+  await h.sleep(400);
+
+  h.section("the tallest stretches");
+  for (const [year, era, name] of [["1402", "BC", "1406bc"], ["848", "BC", "852bc"], ["1442", "BC", "1446bc"]]) {
+    await goTo(year, era);
+    await h.evaluate(() => { document.querySelector(".tl-canvas-viewport").scrollTop = 0; });
+    await park();
+    await h.sleep(400);
+    const lowest = await h.evaluate(() => {
+      const band = document.querySelector(".tl-lane-bible-church").getBoundingClientRect();
+      const vp = document.querySelector(".tl-canvas-viewport").getBoundingClientRect();
+      const marks = [...document.querySelectorAll(".tl-marker,.tl-range-bar")].map((m) => [m.getBoundingClientRect(), m.querySelector(".tl-marker-title,.tl-range-bar-label").getBoundingClientRect()])
+        .filter(([m, p]) => m.right > vp.left && p.left < vp.right && m.top < band.bottom && m.top > band.top);
+      return Math.round((band.bottom - Math.max(...marks.map(([, p]) => p.bottom))) * 10) / 10;
+    });
+    console.log(`    ${year} ${era}: space under the lowest title ${lowest}px`);
+    if (name !== "1446bc") h.assert(lowest >= 0 && lowest <= 3.5, `${name}: the last row sits on the band's bottom edge (${lowest}px under it)`);
+    await h.screenshot(`fixed-${W}-tallest-${name}.png`);
+  }
+
   const target = await h.evaluate(() => {
     const vp = document.querySelector(".tl-canvas-viewport").getBoundingClientRect();
     const el = [...document.querySelectorAll(".tl-marker")].find((e) => { const r = e.getBoundingClientRect(); return r.x > vp.x + 5 && r.right < vp.right - 5 && r.y > vp.y + 5 && r.bottom < vp.bottom - 5 && document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2) === e; });
@@ -351,15 +381,17 @@ export default async function (h) {
       vpEl.dispatchEvent(new WheelEvent("wheel", { deltaX: Math.round(vp.width * 0.75), bubbles: true, cancelable: true }));
       if (steps > 2000) break;
     }
-    return { steps, first, last, seen: seen.size, heights: [...heights], problems: [...new Set(problems)].slice(0, 8), problemCount: new Set(problems).size, maxDomPx: Math.round(maxDomPx), maxShift: Math.round(maxShift), maxNodes, badTicks, shortStrips, anonymous, overflow: document.documentElement.scrollWidth - innerWidth };
+    return { steps, first, last, titles: [...seen], seen: seen.size, heights: [...heights], problems: [...new Set(problems)].slice(0, 8), problemCount: new Set(problems).size, maxDomPx: Math.round(maxDomPx), maxShift: Math.round(maxShift), maxNodes, badTicks, shortStrips, anonymous, overflow: document.documentElement.scrollWidth - innerWidth };
   }, MEASURE);
-  console.log(`    ${JSON.stringify({ ...sweep, heights: sweep.heights })}`);
+  console.log(`    ${JSON.stringify({ ...sweep, titles: undefined })}`);
   h.assert(sweep.heights.length === 1 && sweep.heights[0] === JSON.stringify(HEIGHTS), `${sweep.steps} stops from "${sweep.first}" to "${sweep.last}": one set of band heights throughout`);
   h.assert(sweep.badTicks === 0, "five-year marks 195px apart at every stop");
   h.assert(sweep.shortStrips === 0, `the date row runs the full width at every stop (${sweep.shortStrips} short)`);
   h.assert(sweep.problemCount === 0, `no mark or label overlaps another or leaves its band ${JSON.stringify(sweep.problems)}`);
   h.assert(sweep.anonymous === 0, `no bar on screen is ever without its title (${sweep.anonymous} found)`);
-  h.assert(sweep.seen === 403, `every drawn event and lifetime comes on screen (${sweep.seen} of 403)`);
+  h.assert(sweep.seen === 398, `every drawn event and lifetime comes on screen (${sweep.seen} of 398)`);
+  const drawn = sweep.titles.filter((t) => REMOVED.some((r) => t.startsWith(r)));
+  h.assert(drawn.length === 0, `none of the five removed events is drawn anywhere ${JSON.stringify(drawn)}`);
   h.assert(sweep.maxShift <= 1024 && sweep.overflow <= 0, `largest transform ${sweep.maxShift}px, marks span at most ${sweep.maxDomPx}px, ${sweep.maxNodes} nodes at most`);
 
   h.section("long bars keep their titles");
@@ -478,7 +510,7 @@ export default async function (h) {
   await h.click({ css: ".tl-lane-menu-item", text: "Lifespans" });
   await h.sleep(500);
   s = await state();
-  h.assert(JSON.stringify(s.bands) === JSON.stringify({ "bible-church": 340, world: 184, religion: 158 }), `hiding a lane removes it and leaves the others' heights ${JSON.stringify(s.bands)}`);
+  h.assert(JSON.stringify(s.bands) === JSON.stringify({ "bible-church": 262, world: 184, religion: 158 }), `hiding a lane removes it and leaves the others' heights ${JSON.stringify(s.bands)}`);
   await h.click({ css: ".tl-lane-menu-item", text: "Lifespans" });
   await h.click({ css: ".tl-lane-menu-button[aria-label='Choose visible timelines']" });
   await h.sleep(500);
