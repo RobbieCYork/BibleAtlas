@@ -11,6 +11,7 @@ import DailyNameView from "./DailyNameView";
 import TwentyQuestionsView from "./TwentyQuestionsView";
 import type { OpenGameArticle } from "../lib/gameArticles";
 import BackButton from "./BackButton";
+import Icon from "./Icon";
 import "./Game.css";
 
 interface GameViewProps {
@@ -79,9 +80,15 @@ export default function GameView({ session, onClose, gameCenterNonce, onOpenArti
 
   return (
     <div className="game-root" data-page-bg="game-center">
-      <header className="game-header">
-        <BackButton onClick={onClose} ariaLabel="Close Games" />
-        <h2>Game Center</h2>
+      {/* The page's one header: a filled banner, so it cannot be read as another game row. The name
+          appears here only. Other game screens keep the plain .game-header bar. */}
+      <header className="game-header game-center-header">
+        <BackButton onClick={onClose} ariaLabel="Close Games" iconOnly />
+        <h2 className="games-inline-icon">
+          <Icon name="games" />
+          Game Center
+        </h2>
+        <p>Pick a game to play with friends.</p>
       </header>
       <div className="game-body">
         <GameCenter onSelectGame={selectGame} />

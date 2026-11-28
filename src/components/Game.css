@@ -45,6 +45,65 @@
 
 /* Game screens' header back button is the shared .back-btn (BackButton.tsx, styled in App.css). */
 
+/* Game Center's own header (GameView): the page's name as a filled banner rather than a card like the
+   game rows below it. --accent with --accent-contrast is the palette's own text-on-fill pair, so every
+   skin and both themes follow without rules of their own; --accent-hover only moves further from the
+   text colour, so the gradient never lowers contrast. The equal side columns centre the title on the
+   screen, not on the space Back leaves over. */
+.game-header.game-center-header {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  column-gap: 8px;
+  row-gap: 0;
+  padding: 8px 12px 14px;
+  border-bottom: 0;
+  background-color: var(--accent);
+  background-image: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: var(--accent-contrast);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+  /* Keeps the shadow above the scrolling list. */
+  position: relative;
+  z-index: 1;
+}
+
+.game-header.game-center-header h2 {
+  grid-column: 2;
+  justify-self: center;
+  justify-content: center;
+  gap: 0.3em;
+  color: inherit;
+  /* The cap keeps "Game Center" and its mark on one line between the side columns. Without it the
+     largest text size stacked the title three deep, and this header does not scroll, so it took a
+     third of a phone away from the games. It bites only on narrow screens. */
+  font-size: min(calc(28px * var(--tsz, 1)), calc((100vw - 128px) / 8.2));
+  font-weight: 700;
+  text-align: center;
+}
+
+.game-center-header p {
+  grid-column: 1 / -1;
+  color: inherit;
+  font-size: calc(14px * var(--tsz, 1));
+  text-align: center;
+}
+
+.game-center-header .back-btn {
+  color: inherit;
+}
+
+.game-center-header .back-btn:hover {
+  background: color-mix(in srgb, var(--accent-contrast) 16%, transparent);
+  border-color: transparent;
+}
+
+.game-center-header .back-btn:focus-visible {
+  outline-color: var(--accent-contrast);
+}
+
+.game-root[data-page-bg="game-center"] .game-body {
+  padding-top: 16px;
+}
+
 .game-body {
   flex: 1;
   min-height: 0;
@@ -93,7 +152,6 @@
   max-width: 640px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
 .game-center-list {
