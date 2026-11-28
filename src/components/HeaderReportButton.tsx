@@ -9,11 +9,11 @@ import { TOUR_ANCHORS } from "../data/welcomeTour";
 interface HeaderReportButtonProps {
   userId: string;
   /** Where the reader is standing, from App's `reportSurface` memo: the same value the account menu's
-   * "Report a Problem" gets, so both attach the same open article, chapter or screen. */
+   * "Report a Problem or Suggest a Feature" gets, so both attach the same open article, chapter or screen. */
   surface: ReportSurface;
 }
 
-/** The header's "Report a Problem" flag, between the social marks and the account avatar.
+/** The header's report flag ("Report a problem or suggest a feature"), between the social marks and the account avatar.
  *
  * Borrows .social-links-item so size, colour and hover/focus match the marks beside it. Render it only
  * for a real (non-guest) account.
@@ -28,8 +28,8 @@ export default function HeaderReportButton({ userId, surface }: HeaderReportButt
         type="button"
         data-tour={TOUR_ANCHORS.report}
         className="social-links-item header-report"
-        aria-label="Report a Problem"
-        title="Report a Problem"
+        aria-label="Report a problem or suggest a feature"
+        title="Report a problem or suggest a feature"
         onClick={() => setView("report")}
       >
         <Icon name="flag" />

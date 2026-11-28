@@ -3,7 +3,8 @@
  *   node scripts/signed-in-harness/run.mjs --persona member --viewport 390x844 --script scripts/signed-in-harness/examples/report-categories.mjs
  *   (also --persona administrator / owner, and at 1280x800)
  *
- * member:         the form's category is required; after sql/052 it offers the ten area categories and
+ * member:         the form's category is required; after sql/052 it offers the area categories (all but
+ *                 `idea`, which "Suggest a feature" files by itself: see report-suggest.mjs) and
  *                 preselects the one the screen makes obvious; BEFORE sql/052 (six old categories) it
  *                 preselects nothing and still files a report; My Reports names a report filed under the
  *                 retired `typo` category by its real label; no voting wording anywhere; no Admin Console.
@@ -103,8 +104,8 @@ export default async (h) => {
       options: [...s.options].map((o) => o.value).filter(Boolean), text: document.querySelector(".report-sheet").innerText };
   });
   h.assert(form.required, "category is required");
-  h.assert(form.options.join() === "incorrect_info,bible_reader,map,timeline,games,account,bug,theological,idea,other",
-    `form offers the ten active categories, retired typo hidden: ${form.options}`);
+  h.assert(form.options.join() === "incorrect_info,bible_reader,map,timeline,games,account,bug,theological,other",
+    `form offers the active categories except idea, retired typo hidden: ${form.options}`);
   const expected = /Bible reader/.test(form.from) ? "bible_reader" : /Map/.test(form.from) ? "map" : "";
   h.assert(form.value === expected, `preselected "${form.value}" for "${form.from.trim()}" (expected "${expected}")`);
   h.assert(!VOTE_WORDS.test(form.text), "form has no voting wording");
@@ -133,7 +134,7 @@ export default async (h) => {
   await h.click({ css: ".auth-menu-item", text: "Report a Problem" });
   await h.waitFor(".report-sheet select"); await h.sleep(600);
   const before = await h.evaluate(() => { const s = document.querySelector(".report-sheet select"); return { value: s.value, n: [...s.options].filter((o) => o.value).length }; });
-  h.assert(before.n === 6 && before.value === "", `old list: 6 options, nothing preselected (${JSON.stringify(before)})`);
+  h.assert(before.n === 5 && before.value === "", `old list: 5 options (idea left out), nothing preselected (${JSON.stringify(before)})`);
   await h.type(".report-sheet input[type=text]", "Pre-052 report");
   await h.type(".report-sheet textarea", "Still files.");
   h.assert(await h.evaluate(() => [...document.querySelectorAll(".report-sheet button")].find((b) => b.textContent.includes("Send report")).disabled), "Send disabled until a category is chosen");

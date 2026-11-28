@@ -341,14 +341,16 @@ export const TOUR_STEPS = [
   {
     id: "report",
     icon: "flag",
-    title: "Report a Problem",
-    body: "Spotted a mistake or something broken? Tap the flag and tell us. You can follow it under My Reports on your profile.",
-    phone: { path: [{ icon: "flag", label: "Report a Problem" }], hint: "the flag at the top" },
-    desktop: { path: [{ icon: "flag", label: "Report a Problem" }], hint: "the flag at the top" },
+    title: "Report or Suggest",
+    body: "Spotted something broken or wrong, or have an idea for a new feature? Tap the flag, then choose Report a problem or Suggest a feature. Follow both under My Reports & Suggestions on your profile.",
+    phone: { path: [{ icon: "flag", label: "Report or Suggest" }], hint: "the flag at the top" },
+    desktop: { path: [{ icon: "flag", label: "Report or Suggest" }], hint: "the flag at the top" },
     anchors: { phone: ["report"], desktop: ["report"] },
     names: [
-      { file: "components/HeaderReportButton.tsx", text: 'aria-label="Report a Problem"' },
-      { file: "components/MyProfileView.tsx", text: "My Reports" },
+      { file: "components/HeaderReportButton.tsx", text: 'aria-label="Report a problem or suggest a feature"' },
+      { file: "components/ReportIssueSheet.tsx", text: 'choice: "Report a problem"' },
+      { file: "components/ReportIssueSheet.tsx", text: 'choice: "Suggest a feature"' },
+      { file: "components/MyProfileView.tsx", text: "My Reports &amp; Suggestions" },
     ],
   },
   {

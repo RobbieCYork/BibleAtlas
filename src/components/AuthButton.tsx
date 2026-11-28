@@ -374,7 +374,7 @@ export default function AuthButton({
                 they can't file one, which is a better answer than an item that isn't there. */}
             <div className="auth-settings-divider" />
             <button type="button" data-menu="report" className="auth-menu-item" onClick={() => setMenuView("report")}>
-              <Icon name="flag" inline /> Report a Problem
+              <Icon name="flag" inline /> Report a Problem or Suggest a Feature
             </button>
             {/* App Store Review Guideline 1.2 asks for published contact information and a visible
                 account for how reporting and blocking work. This is where a reviewer — and a reader

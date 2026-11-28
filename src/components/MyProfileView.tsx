@@ -772,7 +772,7 @@ export default function MyProfileView({ userId, onDisplayNameSaved, onClose, onG
           <div className="auth-settings-divider" />
           <div className="auth-settings-section auth-settings-section-stacked myprofile-link-rows">
             <button type="button" className="myprofile-link-row" onClick={() => setSheet("myReports")}>
-              <Icon name="doc" inline /> My Reports
+              <Icon name="doc" inline /> My Reports &amp; Suggestions
             </button>
           </div>
           {deletionFeature.visible && (

@@ -287,6 +287,26 @@ export const STATUS_BLURBS: Record<ReportStatus, string> = {
   duplicate: "Already reported by someone else — merged with the original.",
 };
 
+/** The category a feature suggestion is filed under: sql/025's `idea` key ("Idea or suggestion", and
+ * "Suggestion" since sql/052). The form sets it itself when the reader chooses "Suggest a feature",
+ * so it is left out of the problem form's category picker. */
+export const SUGGESTION_CATEGORY = "idea";
+
+export function isSuggestion(report: { category: string }): boolean {
+  return report.category === SUGGESTION_CATEGORY;
+}
+
+/** STATUS_BLURBS for a suggestion: the same statuses, without the words that assume something is wrong. */
+export const SUGGESTION_STATUS_BLURBS: Record<ReportStatus, string> = {
+  new: "Waiting to be looked at. You can still edit or delete it.",
+  triaged: "Read and sorted. It can no longer be edited.",
+  accepted: "We'd like to do this. It's on the list.",
+  in_progress: "Someone is working on it now.",
+  resolved: "Done. Thank you for suggesting it.",
+  declined: "Looked at and not taken forward. Any reason given is below.",
+  duplicate: "Already suggested by someone else — merged with the original.",
+};
+
 export const SEVERITY_LABELS: Record<Severity, string> = {
   low: "Minor",
   medium: "Noticeable",
@@ -321,15 +341,22 @@ export const TARGET_KIND_LABELS: Record<TargetKind, string> = {
  * violation in the database; `report_locked:` has no distinguishing code at all; `self_assignment:`
  * and `last_owner:` share 42501 with the plain tier refusal. The prefixes are the discriminator the
  * migration deliberately provides. */
-export function humanizeReportError(err: unknown): string {
+export function humanizeReportError(err: unknown, suggestion = false): string {
   const raw = err instanceof Error ? err.message : typeof err === "string" ? err : "";
   if (raw.startsWith("rate_limited:")) {
+    if (suggestion) {
+      return "You've sent several reports or suggestions in a short time. Give it an hour and try again — the limit is there to stop a stuck button flooding the queue, not to stop you writing in.";
+    }
     return "You've filed several reports in a short time. Give it an hour and try again — the limit is there to stop a stuck button flooding the queue, not to stop you reporting things.";
   }
   if (raw.startsWith("duplicate_submission:")) {
+    if (suggestion) return "That looks like the suggestion you just sent. It's already in — no need to send it twice.";
     return "That looks like the report you just sent. It's already in — no need to send it twice.";
   }
   if (raw.startsWith("report_locked:")) {
+    if (suggestion) {
+      return "The team has already picked this suggestion up, so it can't be changed or withdrawn now. Send a new one if there's something to add.";
+    }
     return "The team has already picked this report up, so it can't be changed or withdrawn now. File a new one if there's something to add.";
   }
   if (raw.startsWith("self_assignment:")) {
@@ -350,6 +377,9 @@ export function humanizeReportError(err: unknown): string {
   // UPDATE, in either direction, with no deploy — so this path is one setting away from real, and
   // a raw Postgres string is never an acceptable thing to show a reader.
   if (raw.includes("row-level security policy")) {
+    if (suggestion) {
+      return "Sending a suggestion needs a full account, so the team can come back to you about it — guest browsing can't. Sign in with an account you created and try again.";
+    }
     return "Filing a report needs a full account, so the team can come back to you about it — guest browsing can't. Sign in with an account you created and try again.";
   }
   // The tier refusal every gated function raises, plus the bare table-grant refusal that reads the

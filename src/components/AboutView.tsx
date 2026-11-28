@@ -40,7 +40,7 @@ export default function AboutView({ userId, onClose, reportSurface }: AboutViewP
         <article className="myprofile-body-inner about-text">
           <AboutText content={content} />
           <button type="button" className="about-report" onClick={() => setReporting(true)}>
-            <Icon name="flag" inline /> Report a Problem
+            <Icon name="flag" inline /> Report a Problem or Suggest a Feature
           </button>
         </article>
       </div>
