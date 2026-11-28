@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import html2canvas from "html2canvas";
 import { SHARE_BACKGROUNDS, type ShareBackground, type ShareBackgroundCategory } from "../data/shareBackgrounds";
@@ -29,6 +29,10 @@ const CATEGORY_LABELS: { id: ShareBackgroundCategory | "all"; label: string }[] 
   { id: "pacific-northwest", label: "Northwest" },
   { id: "landscape", label: "Landscapes" },
 ];
+
+/** The card's layout width in the phone layout, where it is shrunk with a transform to leave room
+ * for the picker. Must match `.share-card-frame > .share-card-preview { width }` in App.css. */
+const PHONE_CARD_WIDTH = 300;
 
 /** How far the type scale may bend before we accept a slightly tight (or slightly airy) card. */
 const MIN_FIT = 0.62;
@@ -63,6 +67,7 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
   const [fit, setFit] = useState(1);
   /** Where the text block ended up, as card-height fractions — drives the scrim. See scrimLayers(). */
   const [region, setRegion] = useState<TextRegion>(DEFAULT_REGION);
+  const frameRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const inkRef = useRef<HTMLDivElement | null>(null);
   const editableRef = useRef<HTMLDivElement | null>(null);
@@ -122,7 +127,9 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
     // card instead of the type staying 22px while the frame grows. 1em = card width / 34, i.e. the
     // proportions were tuned at the old 340px preview and hold at any width — including the 1080px
     // the exporter rasterises at.
-    ink.style.fontSize = `${Math.max(6, card.getBoundingClientRect().width / 34)}px`;
+    // `offsetWidth`, not the bounding rect: the phone layout shrinks the card with a transform, and
+    // the type has to follow the width it is laid out at, not the width it is painted at.
+    ink.style.fontSize = `${Math.max(6, card.offsetWidth / 34)}px`;
     let scale = 1;
     const apply = (n: number) => {
       scale = n;
@@ -183,6 +190,20 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
     return () => ro.disconnect();
   }, [refit]);
 
+  // Phone layout only: the frame is the space the preview is given, and the card is scaled to fill
+  // it. Everywhere else the frame is `display: contents`, measures 0, and this does nothing.
+  useLayoutEffect(() => {
+    const frame = frameRef.current;
+    if (!frame || typeof ResizeObserver === "undefined") return;
+    const apply = () => {
+      if (frame.clientWidth) frame.style.setProperty("--card-scale", String(frame.clientWidth / PHONE_CARD_WIDTH));
+    };
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(frame);
+    return () => ro.disconnect();
+  }, [format]);
+
   const exec = (command: string, value?: string) => {
     editableRef.current?.focus();
     document.execCommand(command, false, value);
@@ -227,38 +248,44 @@ export default function ShareCardModal({ spec, filename, onClose }: ShareCardMod
         <div className="share-modal-body">
           <div className="share-card-stage">
             <div
-              ref={cardRef}
-              className="share-card-preview"
-              data-format={format}
-              style={{ aspectRatio: `${formatSpec.width} / ${formatSpec.height}` }}
+              ref={frameRef}
+              className="share-card-frame"
+              style={{ "--card-ratio": formatSpec.width / formatSpec.height } as CSSProperties}
             >
-              {/* Placeholder first (instant paint, a few hundred bytes), full photo fades over it. */}
               <div
-                className="share-card-photo-placeholder"
-                style={{ backgroundImage: `url(${background.placeholder})` }}
-                aria-hidden="true"
-              />
-              <img
-                className={`share-card-photo ${photoReady ? "ready" : ""}`}
-                src={background.file}
-                alt=""
-                aria-hidden="true"
-                draggable={false}
-              />
-              <div className="share-card-scrim" style={{ backgroundImage: scrimCss(background, region) }} aria-hidden="true" />
-              {/* The ONLY element handed to html2canvas: text on transparency. */}
-              <div ref={inkRef} className="share-card-ink" data-ink={background.textColor} data-safe={background.safeArea}>
+                ref={cardRef}
+                className="share-card-preview"
+                data-format={format}
+                style={{ aspectRatio: `${formatSpec.width} / ${formatSpec.height}` }}
+              >
+                {/* Placeholder first (instant paint, a few hundred bytes), full photo fades over it. */}
                 <div
-                  ref={editableRef}
-                  className="share-card-content"
-                  contentEditable
-                  suppressContentEditableWarning
-                  onInput={refit}
-                  aria-label="Card text"
+                  className="share-card-photo-placeholder"
+                  style={{ backgroundImage: `url(${background.placeholder})` }}
+                  aria-hidden="true"
                 />
-                <div className="share-card-footer">
-                  <span className="share-card-footer-mark">Capstone Bible</span>
-                  <span className="share-card-footer-url">capstonebible.com</span>
+                <img
+                  className={`share-card-photo ${photoReady ? "ready" : ""}`}
+                  src={background.file}
+                  alt=""
+                  aria-hidden="true"
+                  draggable={false}
+                />
+                <div className="share-card-scrim" style={{ backgroundImage: scrimCss(background, region) }} aria-hidden="true" />
+                {/* The ONLY element handed to html2canvas: text on transparency. */}
+                <div ref={inkRef} className="share-card-ink" data-ink={background.textColor} data-safe={background.safeArea}>
+                  <div
+                    ref={editableRef}
+                    className="share-card-content"
+                    contentEditable
+                    suppressContentEditableWarning
+                    onInput={refit}
+                    aria-label="Card text"
+                  />
+                  <div className="share-card-footer">
+                    <span className="share-card-footer-mark">Capstone Bible</span>
+                    <span className="share-card-footer-url">capstonebible.com</span>
+                  </div>
                 </div>
               </div>
             </div>
